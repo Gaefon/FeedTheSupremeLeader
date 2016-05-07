@@ -2,3 +2,4 @@ bin
 obj
 FeedTheSupremeLeader.layout
 *.DLL
+*.depend

@@ -35,8 +35,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/uiclass/MainWindow.hpp" />
+		<Unit filename="include/utilities/Poller/EventPoller.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/uiclass/MainWindow.cpp" />
+		<Unit filename="src/utilities/Poller/EventPoller.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
