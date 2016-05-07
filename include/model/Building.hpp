@@ -4,6 +4,10 @@
 
 class Building
 {
+	private:
+		unsigned int m_width;
+		unsigned int m_height;
+		std::string m_name;
 	public:
 		Building();
 		virtual ~Building();
@@ -11,11 +15,9 @@ class Building
 		void setWidth(unsigned int val);
 		unsigned int getHeight();
 		void setHeight(unsigned int val);
+		std::string getName();
+		void setName(std::string val);
 		virtual void drawBuilding() = 0;
-	protected:
-	private:
-		unsigned int m_width;
-		unsigned int m_height;
 };
 
 #endif // BUILDING_HPP

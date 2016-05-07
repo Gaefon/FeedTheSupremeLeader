@@ -4,6 +4,9 @@
 
 class Map
 {
+	private:
+		unsigned int m_width;
+		unsigned int m_height;
 	public:
 		Map();
 		virtual ~Map();
@@ -12,10 +15,6 @@ class Map
 		unsigned int getWidth();
 		void setHeight(unsigned int val);
 		unsigned int getHeight();
-	protected:
-	private:
-		unsigned int m_width;
-		unsigned int m_height;
 };
 
 #endif // MAP_H

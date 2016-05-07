@@ -1,4 +1,7 @@
+#include <iostream>
 #include <model/Building.hpp>
+
+using namespace std;
 
 Building::Building()
 {
@@ -23,6 +26,16 @@ unsigned int Building::getHeight()
 void Building::setHeight(unsigned int val)
 {
 	m_height = val;
+}
+
+string Building::getName()
+{
+	return m_name;
+}
+
+void Building::setName(string val)
+{
+	m_name = val;
 }
 
 Building::~Building()

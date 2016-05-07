@@ -4,14 +4,12 @@
 
 Map::Map()
 {
-	//ctor
 	m_width = DEFAULT_MAP_WIDTH;
     m_height = DEFAULT_MAP_HEIGHT;
 }
 
 Map::~Map()
 {
-	//dtor
 }
 
 void Map::setWidth(unsigned int val)
