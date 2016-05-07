@@ -1,8 +1,12 @@
 #include <model/Map.h>
 
+#include <Constants.hpp>
+
 Map::Map()
 {
 	//ctor
+	m_width = DEFAULT_MAP_WIDTH;
+    m_height = DEFAULT_MAP_HEIGHT;
 }
 
 Map::~Map()
