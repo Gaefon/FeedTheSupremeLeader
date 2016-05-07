@@ -11,6 +11,7 @@ class Building
 		void setWidth(unsigned int val);
 		unsigned int getHeight();
 		void setHeight(unsigned int val);
+		virtual void drawBuilding() = 0;
 	protected:
 	private:
 		unsigned int m_width;

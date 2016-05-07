@@ -1,26 +1,26 @@
-#include "Building.hpp"
+#include <model/Building.hpp>
 
 Building::Building()
 {
 	//ctor
 }
 
-unsigned int getWidth()
+unsigned int Building::getWidth()
 {
 	return m_width;
 }
 
-void setWidth(unsigned int val)
+void Building::setWidth(unsigned int val)
 {
 	m_width = val;
 }
 
-unsigned int getHeight()
+unsigned int Building::getHeight()
 {
 	return m_height;
 }
 
-void setHeight(unsigned int val)
+void Building::setHeight(unsigned int val)
 {
 	m_height = val;
 }
