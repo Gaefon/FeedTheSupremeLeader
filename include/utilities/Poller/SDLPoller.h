@@ -1,7 +1,7 @@
 #ifndef SDLPOLLER_H
 #define SDLPOLLER_H
 
-#include <EventPoller.h>
+#include <utilities/Poller/EventPoller.h>
 
 
 class SDLPoller : public EventPoller

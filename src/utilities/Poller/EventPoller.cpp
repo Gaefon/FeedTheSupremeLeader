@@ -14,32 +14,32 @@ EventPoller::~EventPoller()
     //dtor
 }
 
-EventPoller::subscribe(Observer *obs)
+int EventPoller::subscribe(Observer *obs)
 {
-    list<Observer *>::const_iterator iterator;
-    for(iterator = mObserverList.begin(); iterator != mObserverList.end(); ++iterator)
-    {
-        if(obs == *iterator)
-        {
-        //TODO : Gestion des messages d'erreurs (ALREADY SUBSCRIBED);
-            return -1;
-        }
-    }
-    mObserverList.push_front(obs);
-    return 0;
+	list<Observer *>::const_iterator iterator;
+	for(iterator = mObserverList.begin(); iterator != mObserverList.end(); ++iterator)
+	{
+		if(obs == *iterator)
+		{
+			//TODO : Gestion des messages d'erreurs (ALREADY SUBSCRIBED);
+			return -1;
+		}
+	}
+	mObserverList.push_front(obs);
+	return 0;
 }
 
-EventPoller::unSubscribe(Observer *obs)
+int EventPoller::unSubscribe(Observer *obs)
 {
-    mObserverList.remove(obs);
-    return 0;
+	mObserverList.remove(obs);
+	return 0;
 }
 
 void EventPoller::notify()
 {
-    list<Observer *>::const_iterator iterator;
-    for(iterator = mObserverList.begin(); iterator != mObserverList.end(); ++iterator)
-    {
-     // here
-    }
+	list<Observer *>::const_iterator iterator;
+	for(iterator = mObserverList.begin(); iterator != mObserverList.end(); ++iterator)
+	{
+		// here
+	}
 }
