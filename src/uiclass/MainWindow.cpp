@@ -1,9 +1,12 @@
+#include <SDL.h>
 #include <uiclass/MainWindow.hpp>
+#include <Constants.hpp>
+
 
 MainWindow::MainWindow()
 {
-	m_width = 640;
-	m_height = 480;
+	m_width = WINDOW_DEFAULT_WIDTH;
+	m_height = WINDOW_DEFAULT_HEIGHT;
 	m_fullscreen = false;
 }
 
@@ -39,9 +42,10 @@ void MainWindow::setFullscreen(bool val)
 
 void MainWindow::displayWindow()
 {
+	m_window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_width, m_height, 0);
 }
 
 MainWindow::~MainWindow()
 {
-	//dtor
+	SDL_DestroyWindow(m_window);
 }

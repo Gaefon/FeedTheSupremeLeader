@@ -1,0 +1,9 @@
+#ifndef CONSTANTS_HPP
+#define CONSTANTS_HPP
+
+#define WINDOW_TITLE "Lol"
+
+#define WINDOW_DEFAULT_WIDTH 640
+#define WINDOW_DEFAULT_HEIGHT 480
+
+#endif // CONSTANTS_HPP
