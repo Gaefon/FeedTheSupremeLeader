@@ -17,6 +17,7 @@ class MainWindow
 		void setHeight(unsigned int val);
 		bool getFullscreen();
 		void setFullscreen(bool val);
+		void displayWindow();
 };
 
 #endif // MAINWINDOW_HPP
