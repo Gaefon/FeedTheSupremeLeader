@@ -8,6 +8,8 @@ class MainWindow
 		unsigned int m_width;
 		unsigned int m_height;
 		bool m_fullscreen;
+
+		SDL_Window *m_window;
 	public:
 		MainWindow();
 		~MainWindow();

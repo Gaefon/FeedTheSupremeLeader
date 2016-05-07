@@ -1,4 +1,6 @@
+#include <SDL.h>
 #include <uiclass/MainWindow.hpp>
+
 
 MainWindow::MainWindow()
 {
@@ -39,9 +41,10 @@ void MainWindow::setFullscreen(bool val)
 
 void MainWindow::displayWindow()
 {
+	m_window = SDL_CreateWindow("lol", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_width, m_height, 0);
 }
 
 MainWindow::~MainWindow()
 {
-	//dtor
+	SDL_DestroyWindow(m_window);
 }
