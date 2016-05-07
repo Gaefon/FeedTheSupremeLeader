@@ -1,3 +1,4 @@
+#include <SDL.h>
 #include <utilities/Poller/Observer.h>
 #include <utilities/Poller/EventPoller.h>
 #include <utilities/Poller/SDLPoller.h>
