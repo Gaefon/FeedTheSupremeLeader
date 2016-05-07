@@ -34,9 +34,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="include/MainWindow.hpp" />
+		<Unit filename="include/uiclass/MainWindow.hpp" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/MainWindow.cpp" />
+		<Unit filename="src/uiclass/MainWindow.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
