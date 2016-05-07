@@ -5,7 +5,6 @@
 		<Option title="FeedTheSupremeLeader" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="src/model/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/FeedTheSupremeLeader" prefix_auto="1" extension_auto="1" />
@@ -39,17 +38,15 @@
 			<Add directory="/opt/local/lib" />
 		</Linker>
 		<Unit filename="include/Constants.hpp" />
-		<Unit filename="include/Map.h" />
 		<Unit filename="include/model/Building.hpp" />
+		<Unit filename="include/model/Map.h" />
 		<Unit filename="include/uiclass/MainWindow.hpp" />
 		<Unit filename="include/utilities/Poller/EventPoller.h" />
 		<Unit filename="include/utilities/Poller/Observer.h" />
 		<Unit filename="include/utilities/Poller/SDLPoller.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/Map.cpp">
-			<Option virtualFolder="src/model/" />
-		</Unit>
 		<Unit filename="src/model/Building.cpp" />
+		<Unit filename="src/model/Map.cpp" />
 		<Unit filename="src/uiclass/MainWindow.cpp" />
 		<Unit filename="src/utilities/Poller/EventPoller.cpp" />
 		<Unit filename="src/utilities/Poller/Observer.cpp" />

@@ -8,24 +8,24 @@ Building::Building()
 	//ctor
 }
 
-unsigned int Building::getWidth()
-{
-	return m_width;
-}
-
 void Building::setWidth(unsigned int val)
 {
 	m_width = val;
 }
 
-unsigned int Building::getHeight()
+unsigned int Building::getWidth()
 {
-	return m_height;
+	return m_width;
 }
 
 void Building::setHeight(unsigned int val)
 {
 	m_height = val;
+}
+
+unsigned int Building::getHeight()
+{
+	return m_height;
 }
 
 string Building::getName()

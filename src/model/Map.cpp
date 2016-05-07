@@ -1,3 +1,5 @@
+#include <SDL.h>
+
 #include <model/Map.h>
 
 #include <Constants.hpp>
@@ -30,4 +32,8 @@ void Map::setHeight(unsigned int val)
 unsigned int Map::getHeight()
 {
 	return m_height;
+}
+
+void Map::drawMap(SDL_Surface *area)
+{
 }

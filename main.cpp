@@ -12,7 +12,7 @@ int main(void)
 	SDL_Init(SDL_INIT_VIDEO);
 
 	window.displayWindow();
-	while (1)
+	while (!window.hasCloseRequest())
 	{
 	}
 

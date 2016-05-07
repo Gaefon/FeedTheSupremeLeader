@@ -15,6 +15,8 @@ class Map
 		unsigned int getWidth();
 		void setHeight(unsigned int val);
 		unsigned int getHeight();
+
+		void drawMap(SDL_Surface *area);
 };
 
 #endif // MAP_H
