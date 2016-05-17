@@ -37,9 +37,10 @@ int EventPoller::unSubscribe(Observer *obs)
 
 void EventPoller::notify()
 {
-	list<Observer *>::const_iterator iterator;
+	list<Observer *>::iterator iterator;
 	for(iterator = mObserverList.begin(); iterator != mObserverList.end(); ++iterator)
 	{
-		// here
+	    Observer *obs = *iterator;
+		obs->Respond();
 	}
 }

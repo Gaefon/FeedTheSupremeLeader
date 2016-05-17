@@ -14,6 +14,7 @@ class SDLPoller : public EventPoller
     protected:
 
     private:
+        virtual void notify()
 };
 
 #endif // SDLPOLLER_H

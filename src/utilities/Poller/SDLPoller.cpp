@@ -14,6 +14,12 @@ SDLPoller::~SDLPoller()
     //dtor
 }
 
+void SDLPoller::notify(SDL_Event event)
+{
+
+}
+
+
 void SDLPoller::Poll()
 {
     SDL_Event   event;
@@ -21,7 +27,7 @@ void SDLPoller::Poll()
     {
       if (event.type != 0)
       {
-        notify();
+        notify(event);
       }
     }
 }
