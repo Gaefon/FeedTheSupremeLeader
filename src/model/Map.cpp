@@ -88,9 +88,6 @@ void Map::onSdlEventReceived(SDL_Event event)
 				m_map_relative_position_y += event.motion.y - m_previous_y;
 				m_previous_x = event.motion.x;
 				m_previous_y = event.motion.y;
-				cout << "X : " << m_map_relative_position_x << " // Y : " << m_map_relative_position_y << endl;
-				//event.motion.x
-				//event.motion.y
 			}
 			break;
 	}
