@@ -2,13 +2,16 @@
 #define MAP_H
 
 #include <uiclass/MainWindow.hpp>
+#include <utilities/Observer/SdlObserver.h>
 
-class Map
+class Map: public SdlObserver
 {
 	private:
 		unsigned int m_width;
 		unsigned int m_height;
 		MainWindow *m_parent;
+
+		bool m_is_moving;
 
 		void drawMapGrid();
 
@@ -22,6 +25,8 @@ class Map
 		unsigned int getHeight();
 
 		void drawMap();
+
+		void onSdlEventReceived(SDL_Event event);
 };
 
 #endif // MAP_H

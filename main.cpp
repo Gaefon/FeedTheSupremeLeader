@@ -20,6 +20,7 @@ int main(int argc, char ** argv)
 
 	window.displayWindow();
 	main_poller.subscribe(&window);
+	main_poller.subscribe(&map);
 	while (!window.hasCloseRequest())
 	{
 		main_poller.Poll();

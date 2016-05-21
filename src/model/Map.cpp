@@ -9,6 +9,7 @@ Map::Map(MainWindow *par)
 	m_width = DEFAULT_MAP_WIDTH;
     m_height = DEFAULT_MAP_HEIGHT;
     m_parent = par;
+    m_is_moving = false;
 }
 
 Map::~Map()
@@ -48,4 +49,27 @@ void Map::drawMapGrid()
 void Map::drawMap()
 {
 	drawMapGrid();
+}
+
+
+void Map::onSdlEventReceived(SDL_Event event)
+{
+	switch (event.type)
+	{
+		case SDL_MOUSEBUTTONDOWN:
+			if (event.button.button == SDL_BUTTON_LEFT)
+				m_is_moving = true;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			if (event.button.button == SDL_BUTTON_LEFT)
+				m_is_moving = false;
+			break;
+		case SDL_MOUSEMOTION:
+			if (m_is_moving == true)
+			{
+				//event.motion.x
+				//event.motion.y
+			}
+			break;
+	}
 }
