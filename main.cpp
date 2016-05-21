@@ -9,6 +9,9 @@ int main(int argc, char ** argv)
 {
 	MainWindow window;
 
+	(void) argc;
+	(void) argv;
+
 	SDL_Init(SDL_INIT_VIDEO);
 
 	window.displayWindow();

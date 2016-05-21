@@ -36,4 +36,5 @@ unsigned int Map::getHeight()
 
 void Map::drawMap(SDL_Surface *area)
 {
+	(void) area;
 }

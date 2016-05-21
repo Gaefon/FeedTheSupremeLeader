@@ -2,32 +2,34 @@
 #include <utilities/Poller/Observer.h>
 #include <utilities/Poller/EventPoller.h>
 #include <utilities/Poller/SDLPoller.h>
+
 using namespace std;
 
 SDLPoller::SDLPoller()
 {
-    //ctor
+	//ctor
 }
 
 SDLPoller::~SDLPoller()
 {
-    //dtor
+	//dtor
 }
 
 void SDLPoller::notify(SDL_Event event)
 {
-
+	(void) event;
 }
 
 
 void SDLPoller::Poll()
 {
-    SDL_Event   event;
-    while (SDL_PollEvent(&event))
-    {
-      if (event.type != 0)
-      {
-        notify(event);
-      }
-    }
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type != 0)
+		{
+			notify(event);
+		}
+	}
 }

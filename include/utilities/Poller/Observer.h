@@ -4,14 +4,14 @@
 
 class Observer
 {
-    public:
-        virtual void Respond() = 0;
-        Observer();
-        virtual ~Observer();
+	public:
+		Observer();
+		virtual ~Observer();
+		virtual void Respond() = 0;
 
-    protected:
+	protected:
 
-    private:
+	private:
 };
 
 #endif // OBSERVER_H

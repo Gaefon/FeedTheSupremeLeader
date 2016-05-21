@@ -6,15 +6,15 @@
 
 class SDLPoller : public EventPoller
 {
-    public:
-        void Poll();
-        SDLPoller();
-        virtual ~SDLPoller();
+	public:
+		void Poll();
+		SDLPoller();
+		virtual ~SDLPoller();
 
-    protected:
+	protected:
 
-    private:
-        virtual void notify()
+	private:
+		void notify(SDL_Event event);
 };
 
 #endif // SDLPOLLER_H
