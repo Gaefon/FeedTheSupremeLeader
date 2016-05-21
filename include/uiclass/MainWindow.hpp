@@ -12,16 +12,21 @@ class MainWindow: public SdlObserver
 		bool m_request_close;
 
 		SDL_Window *m_window;
+		SDL_Renderer *m_renderer;
+		SDL_Surface *m_screen;
 	public:
 		MainWindow();
 		~MainWindow();
 		void setSize(unsigned int w, unsigned int h);
 		unsigned int getWidth();
 		unsigned int getHeight();
+		SDL_Renderer *getRenderer();
+		SDL_Surface *getSurface();
 		bool getFullscreen();
 		void setFullscreen(bool val);
 		bool hasCloseRequest();
 		void displayWindow();
+		void update();
 		void onSdlEventReceived(SDL_Event event);
 };
 

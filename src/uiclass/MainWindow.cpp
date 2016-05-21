@@ -28,6 +28,16 @@ unsigned int MainWindow::getHeight()
 	return m_height;
 }
 
+SDL_Renderer *MainWindow::getRenderer()
+{
+	return m_renderer;
+}
+
+SDL_Surface *MainWindow::getSurface()
+{
+	return m_screen;
+}
+
 bool MainWindow::getFullscreen()
 {
 	return m_fullscreen;
@@ -45,11 +55,19 @@ void MainWindow::setFullscreen(bool val)
 void MainWindow::displayWindow()
 {
 	m_window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_width, m_height, 0);
+	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+	m_screen = SDL_GetWindowSurface(m_window);
 }
 
 bool MainWindow::hasCloseRequest()
 {
 	return m_request_close;
+}
+
+void MainWindow::update()
+{
+	SDL_UpdateWindowSurface(m_window);
+	SDL_RenderPresent(m_renderer);
 }
 
 void MainWindow::onSdlEventReceived(SDL_Event event)
@@ -68,5 +86,6 @@ void MainWindow::onSdlEventReceived(SDL_Event event)
 
 MainWindow::~MainWindow()
 {
+	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
 }
