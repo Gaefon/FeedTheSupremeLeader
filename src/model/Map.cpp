@@ -1,10 +1,9 @@
 #include <SDL.h>
 
 #include <model/Map.h>
-
 #include <Constants.hpp>
 
-#include <iostream>
+
 
 using namespace std;
 
@@ -60,6 +59,9 @@ void Map::drawMapGrid()
 
 void Map::drawMap()
 {
+	list<Building *>::iterator it;
+	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
+		(*it)->drawBuilding();
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }

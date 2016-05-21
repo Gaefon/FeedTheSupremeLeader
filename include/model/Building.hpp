@@ -1,6 +1,7 @@
 #ifndef BUILDING_HPP
 #define BUILDING_HPP
 
+#include <iostream>
 
 class Building
 {

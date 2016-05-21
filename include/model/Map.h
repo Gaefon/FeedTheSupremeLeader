@@ -1,6 +1,9 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <list>
+
+#include <model/Building.hpp>
 #include <uiclass/MainWindow.hpp>
 #include <utilities/Observer/SdlObserver.h>
 
@@ -16,6 +19,8 @@ class Map: public SdlObserver
 		int m_previous_y;
 		int m_map_relative_position_x;
 		int m_map_relative_position_y;
+
+		std::list<Building *> m_list_building;
 
 
 		void drawMapGrid();
