@@ -2,14 +2,15 @@ SRC =	main.cpp\
 		src/model/Building.cpp\
 		src/model/Map.cpp\
 		src/uiclass/MainWindow.cpp\
+		src/uiclass/Button.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/Observer.cpp\
 		src/utilities/Poller/SDLPoller.cpp
 
-OBJ = $(SRC:%.cpp=%.o)
+OBJ =	$(SRC:%.cpp=%.o)
 
 
-NAME = feedthesupremleader
+NAME =	feedthesupremleader
 
 CXX = g++
 CXXFLAGS = -W -Wall -Werror -std=c++11 `sdl2-config --cflags` -Iinclude
