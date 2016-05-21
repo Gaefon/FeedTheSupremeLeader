@@ -2,14 +2,15 @@
 #define SDLPOLLER_H
 
 #include <utilities/Poller/EventPoller.h>
+#include <utilities/Observer/SdlObserver.h>
 
 
-class SDLPoller : public EventPoller
+class SDLPoller : public EventPoller<SdlObserver *>
 {
 	public:
-		void Poll();
 		SDLPoller();
-		virtual ~SDLPoller();
+		~SDLPoller();
+		void Poll();
 
 	protected:
 

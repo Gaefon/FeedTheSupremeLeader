@@ -52,6 +52,20 @@ bool MainWindow::hasCloseRequest()
 	return m_request_close;
 }
 
+void MainWindow::onSdlEventReceived(SDL_Event event)
+{
+	(void) event;
+	if (event.type == SDL_WINDOWEVENT)
+	{
+		switch (event.window.event)
+		{
+			case SDL_WINDOWEVENT_CLOSE:
+				m_request_close = true;
+				break;
+		}
+	}
+}
+
 MainWindow::~MainWindow()
 {
 	SDL_DestroyWindow(m_window);

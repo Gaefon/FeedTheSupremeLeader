@@ -1,8 +1,9 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
+#include <utilities/Observer/SdlObserver.h>
 
-class MainWindow
+class MainWindow: public SdlObserver
 {
 	private:
 		unsigned int m_width;
@@ -21,6 +22,7 @@ class MainWindow
 		void setFullscreen(bool val);
 		bool hasCloseRequest();
 		void displayWindow();
+		void onSdlEventReceived(SDL_Event event);
 };
 
 #endif // MAINWINDOW_HPP

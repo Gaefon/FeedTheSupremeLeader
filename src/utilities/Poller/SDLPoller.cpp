@@ -1,6 +1,4 @@
 #include <SDL.h>
-#include <utilities/Poller/Observer.h>
-#include <utilities/Poller/EventPoller.h>
 #include <utilities/Poller/SDLPoller.h>
 
 using namespace std;
@@ -18,6 +16,12 @@ SDLPoller::~SDLPoller()
 void SDLPoller::notify(SDL_Event event)
 {
 	(void) event;
+	list<SdlObserver *> observers = getObservers();
+	list<SdlObserver *>::iterator elt;
+	for (elt = observers.begin(); elt != observers.end(); elt++)
+	{
+		(*elt)->onSdlEventReceived(event);
+	}
 }
 
 

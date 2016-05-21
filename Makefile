@@ -11,7 +11,7 @@ OBJ = $(SRC:%.cpp=%.o)
 NAME = feedthesupremleader
 
 CXX = g++
-CXXFLAGS = -W -Wall -Werror `sdl2-config --cflags` -Iinclude
+CXXFLAGS = -W -Wall -Werror -std=c++11 `sdl2-config --cflags` -Iinclude
 
 LDFLAGS = `sdl2-config --libs`
 

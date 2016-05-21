@@ -2,19 +2,37 @@
 #define EVENTPOLLER_H
 
 #include <list>
+#include <utilities/Observer/SdlObserver.h>
 
+template<class T>
 class EventPoller
 {
-    public:
-        EventPoller();
-        virtual ~EventPoller();
-        int subscribe(Observer *obs);
-        int unSubscribe(Observer *obs);
-        virtual void Poll() = 0;
+	public:
+		EventPoller() {}
+		virtual ~EventPoller() {}
+		int subscribe(T obs)
+		{
+			typename std::list<T>::iterator it;
+			for (it = mObserverList.begin(); it != mObserverList.end(); it++)
+			{
+				if (obs == *it)
+					return -1;
+			}
+			mObserverList.push_front(obs);
+			return 0;
+		}
 
-    protected:
-        void notify();
-        std::list<Observer *> mObserverList;
+		int unSubscribe(T obs);
+		virtual void Poll() = 0;
+
+	protected:
+		std::list<T> getObservers()
+		{
+			return mObserverList;
+		}
+
+	private:
+		std::list<T> mObserverList;
 };
 
 #endif // EVENTPOLLER_H
