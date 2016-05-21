@@ -3,3 +3,5 @@ obj
 FeedTheSupremeLeader.layout
 *.DLL
 *.depend
+*.o
+feedthesupremleader
