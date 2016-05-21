@@ -64,6 +64,11 @@ bool MainWindow::hasCloseRequest()
 	return m_request_close;
 }
 
+void MainWindow::clear()
+{
+	SDL_RenderClear(m_renderer);
+}
+
 void MainWindow::update()
 {
 	SDL_UpdateWindowSurface(m_window);

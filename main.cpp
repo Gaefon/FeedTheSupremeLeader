@@ -24,6 +24,7 @@ int main(int argc, char ** argv)
 	while (!window.hasCloseRequest())
 	{
 		main_poller.Poll();
+		window.clear();
 		map.drawMap();
 		window.update();
 		SDL_Delay(20);

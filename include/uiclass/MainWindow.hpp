@@ -26,6 +26,7 @@ class MainWindow: public SdlObserver
 		void setFullscreen(bool val);
 		bool hasCloseRequest();
 		void displayWindow();
+		void clear();
 		void update();
 		void onSdlEventReceived(SDL_Event event);
 };
