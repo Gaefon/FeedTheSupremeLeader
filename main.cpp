@@ -24,10 +24,26 @@ void showMenu(MainWindow *window, SDLPoller *main_poller)
 	main_poller->unSubscribe(&play_button);
 }
 
+void showGame(MainWindow *window, SDLPoller *main_poller)
+{
+	Map map(window);
+
+	main_poller->subscribe(&map);
+	while (!window->hasCloseRequest())
+	{
+		//showMenu(&window, &main_poller);
+		main_poller->Poll();
+		window->clear();
+		map.drawMap();
+		window->update();
+		SDL_Delay(20);
+	}
+	main_poller->unSubscribe(&map);
+}
+
 int main(int argc, char ** argv)
 {
 	MainWindow window;
-	Map map(&window);
 	SDLPoller main_poller;
 
 	(void) argc;
@@ -37,15 +53,10 @@ int main(int argc, char ** argv)
 
 	window.displayWindow();
 	main_poller.subscribe(&window);
-	main_poller.subscribe(&map);
 	while (!window.hasCloseRequest())
 	{
 		//showMenu(&window, &main_poller);
-		main_poller.Poll();
-		window.clear();
-		map.drawMap();
-		window.update();
-		SDL_Delay(20);
+		showGame(&window, &main_poller);
 	}
 
 	SDL_Quit();
