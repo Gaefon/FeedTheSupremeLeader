@@ -8,22 +8,6 @@
 
 using namespace std;
 
-void showMenu(MainWindow *window, SDLPoller *main_poller)
-{
-	Button play_button(window, 0, 0, "ressources/play_button.bmp");
-
-	main_poller->subscribe(&play_button);
-	while (!window->hasCloseRequest())
-	{
-		main_poller->Poll();
-		window->clear();
-		play_button.draw();
-		window->update();
-		SDL_Delay(20);
-	}
-	main_poller->unSubscribe(&play_button);
-}
-
 void showGame(MainWindow *window, SDLPoller *main_poller)
 {
 	Map map(window);
@@ -41,6 +25,24 @@ void showGame(MainWindow *window, SDLPoller *main_poller)
 	main_poller->unSubscribe(&map);
 }
 
+void showMenu(MainWindow *window, SDLPoller *main_poller)
+{
+	Button play_button(window, window->getWidth() / 2, 40, "ressources/play_button.bmp");
+
+	main_poller->subscribe(&play_button);
+	while (!window->hasCloseRequest())
+	{
+		main_poller->Poll();
+		window->clear();
+		play_button.draw();
+		window->update();
+		if (play_button.isClicked())
+			showGame(window, main_poller);
+		SDL_Delay(20);
+	}
+	main_poller->unSubscribe(&play_button);
+}
+
 int main(int argc, char ** argv)
 {
 	MainWindow window;
@@ -55,8 +57,8 @@ int main(int argc, char ** argv)
 	main_poller.subscribe(&window);
 	while (!window.hasCloseRequest())
 	{
-		//showMenu(&window, &main_poller);
-		showGame(&window, &main_poller);
+		showMenu(&window, &main_poller);
+		//showGame(&window, &main_poller);
 	}
 
 	SDL_Quit();
