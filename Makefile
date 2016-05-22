@@ -1,5 +1,6 @@
 SRC =	main.cpp\
 		src/model/Building.cpp\
+		src/helper/RectHelper.cpp\
 		src/model/Map.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\
