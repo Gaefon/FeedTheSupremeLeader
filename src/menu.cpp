@@ -32,4 +32,5 @@ void showMenu(MainWindow *window, SDLPoller *main_poller)
 	}
 	main_poller->unSubscribe(&play_button);
 	main_poller->unSubscribe(&param_button);
+	main_poller->unSubscribe(&quit_button);
 }
