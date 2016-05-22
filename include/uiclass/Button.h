@@ -10,14 +10,20 @@ class Button: public SdlObserver
 {
 	private:
 		MainWindow *m_parent;
-		
+
 		SDL_Rect dst;
 		SDL_Rect src;
 		SDL_Texture *m_button_tex;
 
+bool is_over;
+		bool is_pressed;
+		bool is_clicked;
+
 	public:
 		Button(MainWindow *prnt, int pos_x, int pos_y, std::string file_name);
 		~Button();
+		bool isClicked();
+
 		void onSdlEventReceived(SDL_Event event);
 		void draw();
 };
