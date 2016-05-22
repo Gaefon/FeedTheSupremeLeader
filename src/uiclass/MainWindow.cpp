@@ -1,7 +1,9 @@
+#include <iostream>
 #include <SDL.h>
 #include <uiclass/MainWindow.hpp>
 #include <Constants.hpp>
 
+using namespace std;
 
 MainWindow::MainWindow()
 {
@@ -20,11 +22,23 @@ void MainWindow::setSize(unsigned int w, unsigned int h)
 
 unsigned int MainWindow::getWidth()
 {
+	if (m_fullscreen)
+	{
+		int w, h;
+		SDL_GetWindowSize(m_window, &w, &h);
+		return w;
+	}
 	return m_width;
 }
 
 unsigned int MainWindow::getHeight()
 {
+	if (m_fullscreen)
+	{
+		int w, h;
+		SDL_GetWindowSize(m_window, &w, &h);
+		return h;
+	}
 	return m_height;
 }
 
@@ -47,7 +61,7 @@ void MainWindow::setFullscreen(bool val)
 {
 	m_fullscreen = val;
 	if (m_fullscreen)
-		SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN);
+		SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	else
 		SDL_SetWindowFullscreen(m_window, 0);
 }

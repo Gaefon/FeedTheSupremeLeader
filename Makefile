@@ -10,7 +10,8 @@ SRC =	main.cpp\
 		src/uiclass/Button.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/Observer.cpp\
-		src/utilities/Poller/SDLPoller.cpp
+		src/utilities/Poller/SDLPoller.cpp\
+		src/utilities/Config.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
