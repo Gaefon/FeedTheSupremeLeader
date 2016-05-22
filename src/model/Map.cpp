@@ -96,18 +96,11 @@ void Map::onSdlEventReceived(SDL_Event event)
 					m_map_relative_position_x = 0;
 				if (m_map_relative_position_y >= 0)
 					m_map_relative_position_y = 0;
-				/*int calc_x_pos = m_map_relative_position_x + event.motion.x - m_previous_x;
-				int calc_y_pos = m_map_relative_position_y + event.motion.y - m_previous_y;
-				if(calc_x_pos <= (int)(m_width + m_margin) )
-				{
-					m_map_relative_position_x = calc_x_pos;
-					m_previous_x = event.motion.x;
-				}
-				if(calc_y_pos <= (int)(m_height + m_margin))
-				{
-					m_map_relative_position_y = calc_y_pos;
-					m_previous_y = event.motion.y;
-				}*/
+                if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_parent->getWidth())
+                    m_map_relative_position_x =  m_parent->getWidth() - m_width * DEFAULT_WINDOWS_TILE;
+                if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_parent->getHeight())
+                    m_map_relative_position_y = m_parent->getHeight() - m_height * DEFAULT_WINDOWS_TILE;
+
 			}
 			break;
 	}
