@@ -139,7 +139,7 @@ void Button::draw()
 
 	SDL_RenderCopy(m_parent->getRenderer(), m_button_texture, &m_src, &m_dst);
 
-	if (m_is_pressed || m_is_over)
+	if (!m_is_pressed)
 		SDL_RenderCopy(m_parent->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
 	else
 		SDL_RenderCopy(m_parent->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
