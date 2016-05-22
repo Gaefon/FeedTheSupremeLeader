@@ -15,7 +15,6 @@ void showGame(MainWindow *window, SDLPoller *main_poller)
 	main_poller->subscribe(&map);
 	while (!window->hasCloseRequest())
 	{
-		//showMenu(&window, &main_poller);
 		main_poller->Poll();
 		window->clear();
 		map.drawMap();

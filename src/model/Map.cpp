@@ -48,21 +48,21 @@ void Map::drawMapGrid()
 	for (unsigned int i = 0; i <= m_height; ++i)
 	{
 		SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 255, i * 2, 255);
-        SDL_RenderDrawLine(m_parent->getRenderer(), m_map_relative_position_x, m_map_relative_position_y + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE, m_map_relative_position_y + i * DEFAULT_WINDOWS_TILE);
+		SDL_RenderDrawLine(m_parent->getRenderer(), m_map_relative_position_x, m_map_relative_position_y + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE, m_map_relative_position_y + i * DEFAULT_WINDOWS_TILE);
 	}
 
 	for (unsigned int i = 0; i <= m_width; i++)
 	{
 		SDL_SetRenderDrawColor(m_parent->getRenderer(), 255, i * 2, 0, 255);
-        SDL_RenderDrawLine(m_parent->getRenderer(), m_map_relative_position_x + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_y, m_map_relative_position_x + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE);
+		SDL_RenderDrawLine(m_parent->getRenderer(), m_map_relative_position_x + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_y, m_map_relative_position_x + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE);
 	}
 }
 
 void Map::drawMap()
 {
-	list<Building *>::iterator it;
+	/*list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
-		(*it)->drawBuilding();
+		(*it)->drawBuilding();*/
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }
@@ -87,18 +87,27 @@ void Map::onSdlEventReceived(SDL_Event event)
 		case SDL_MOUSEMOTION:
 			if (m_is_moving == true)
 			{
-			    int calc_x_pos = m_map_relative_position_x + event.motion.x - m_previous_x;
-			    int calc_y_pos = m_map_relative_position_y + event.motion.y - m_previous_y;
-			    if(calc_x_pos <= (int)(m_width + m_margin) )
-                {
-                    m_map_relative_position_x = calc_x_pos;
-                    m_previous_x = event.motion.x;
-                }
-                if(calc_y_pos <= (int)(m_height + m_margin))
-                {
-                    m_map_relative_position_y = calc_y_pos;
-                    m_previous_y = event.motion.y;
-                }
+				m_map_relative_position_x += event.motion.x - m_previous_x;
+				m_map_relative_position_y += event.motion.y - m_previous_y;
+				m_previous_x = event.motion.x;
+				m_previous_y = event.motion.y;
+
+				if (m_map_relative_position_x >= 0)
+					m_map_relative_position_x = 0;
+				if (m_map_relative_position_y >= 0)
+					m_map_relative_position_y = 0;
+				/*int calc_x_pos = m_map_relative_position_x + event.motion.x - m_previous_x;
+				int calc_y_pos = m_map_relative_position_y + event.motion.y - m_previous_y;
+				if(calc_x_pos <= (int)(m_width + m_margin) )
+				{
+					m_map_relative_position_x = calc_x_pos;
+					m_previous_x = event.motion.x;
+				}
+				if(calc_y_pos <= (int)(m_height + m_margin))
+				{
+					m_map_relative_position_y = calc_y_pos;
+					m_previous_y = event.motion.y;
+				}*/
 			}
 			break;
 	}
