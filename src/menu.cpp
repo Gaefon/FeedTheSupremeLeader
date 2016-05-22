@@ -9,16 +9,15 @@ void showMenu(MainWindow *window)
 	Button param_button(window, 0, 100, "ressources/play_button.bmp", "Parameters");
 	Button quit_button(window, 0, 160, "ressources/play_button.bmp", "Quit");
 
-	play_button.setPosition(window->getWidth() / 2 - play_button.getWidth() / 2, 40);
-	param_button.setPosition(window->getWidth() / 2 - param_button.getWidth() / 2, 100);
-	quit_button.setPosition(window->getWidth() / 2 - quit_button.getWidth() / 2, 160);
-
 	main_poller.subscribe(window);
 	main_poller.subscribe(&play_button);
 	main_poller.subscribe(&param_button);
 	main_poller.subscribe(&quit_button);
 	while (!window->hasCloseRequest() && !request_close)
 	{
+		play_button.setPosition(window->getWidth() / 2 - play_button.getWidth() / 2, 40);
+		param_button.setPosition(window->getWidth() / 2 - param_button.getWidth() / 2, 100);
+		quit_button.setPosition(window->getWidth() / 2 - quit_button.getWidth() / 2, 160);
 		main_poller.Poll();
 		window->clear();
 		play_button.draw();
