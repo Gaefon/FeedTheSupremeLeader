@@ -4,8 +4,8 @@
 #include <uiclass/MainWindow.hpp>
 #include <utilities/Poller/SDLPoller.h>
 
-void showMenu(MainWindow *window, SDLPoller *main_poller);
-void showParameters(MainWindow *window, SDLPoller *main_poller);
-void showGame(MainWindow *window, SDLPoller *main_poller);
+void showMenu(MainWindow *window);
+void showParameters(MainWindow *window);
+void showGame(MainWindow *window);
 
 #endif

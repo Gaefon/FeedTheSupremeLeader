@@ -11,7 +11,6 @@ using namespace std;
 int main(int argc, char ** argv)
 {
 	MainWindow window;
-	SDLPoller main_poller;
 
 	(void) argc;
 	(void) argv;
@@ -20,9 +19,8 @@ int main(int argc, char ** argv)
 	TTF_Init();
 
 	window.displayWindow();
-	main_poller.subscribe(&window);
 	
-	showMenu(&window, &main_poller);
+	showMenu(&window);
 
 	TTF_Quit();
 	SDL_Quit();
