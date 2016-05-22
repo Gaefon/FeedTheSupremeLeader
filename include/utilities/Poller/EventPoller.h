@@ -22,7 +22,11 @@ class EventPoller
 			return 0;
 		}
 
-		int unSubscribe(T obs);
+		int unSubscribe(T obs)
+		{
+			mObserverList.remove(obs);
+			return 0;
+		}
 		virtual void Poll() = 0;
 
 	protected:
