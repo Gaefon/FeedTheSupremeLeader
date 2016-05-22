@@ -1,4 +1,5 @@
 SRC =	main.cpp\
+		src/parameters.cpp\
 		src/model/Building.cpp\
 		src/helper/RectHelper.cpp\
 		src/model/Map.cpp\

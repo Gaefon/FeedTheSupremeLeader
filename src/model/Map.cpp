@@ -60,9 +60,9 @@ void Map::drawMapGrid()
 
 void Map::drawMap()
 {
-	/*list<Building *>::iterator it;
+	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
-		(*it)->drawBuilding();*/
+		(*it)->drawBuilding();
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }

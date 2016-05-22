@@ -29,6 +29,22 @@ Button::~Button()
 	SDL_DestroyTexture(m_button_tex);
 }
 
+int Button::getWidth()
+{
+	return dst.w;
+}
+
+int Button::getHeight()
+{
+	return dst.h;
+}
+
+void Button::setPosition(int x, int y)
+{
+	dst.x = x;
+	dst.y = y;
+}
+
 bool Button::isClicked()
 {
 	if (is_clicked)
