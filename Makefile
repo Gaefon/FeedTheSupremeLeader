@@ -1,5 +1,7 @@
 SRC =	main.cpp\
+		src/menu.cpp\
 		src/parameters.cpp\
+		src/game.cpp\
 		src/model/Building.cpp\
 		src/helper/RectHelper.cpp\
 		src/helper/ColorHelper.cpp\
