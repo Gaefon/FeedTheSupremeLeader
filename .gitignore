@@ -1,6 +1,8 @@
 bin
 obj
-FeedTheSupremeLeader.layout
+README-SDL.txt
+SDL2-2.0.4
+FeedTheSupremeLeader.*
 *.DLL
 *.depend
 *.o

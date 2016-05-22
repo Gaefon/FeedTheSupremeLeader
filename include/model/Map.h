@@ -12,6 +12,7 @@ class Map: public SdlObserver
 	private:
 		unsigned int m_width;
 		unsigned int m_height;
+		unsigned int m_margin;
 		MainWindow *m_parent;
 
 		bool m_is_moving;
