@@ -1,55 +1,100 @@
 #include <uiclass/Button.h>
+#include <Constants.hpp>
 #include <helper/RectHelper.h>
+#include <helper/ColorHelper.h>
+
 
 using namespace std;
 
-Button::Button(MainWindow *prnt, int pos_x, int pos_y, string file_name)
+Button::Button(MainWindow *prnt, int pos_x, int pos_y, string file_name, string text)
 {
 	m_parent = prnt;
 
-	is_over = false;
-	is_pressed = false;
-	is_clicked = false;
+	m_is_over = false;
+	m_is_pressed = false;
+	m_is_clicked = false;
+
+	m_text_font = TTF_OpenFont("ressources/kremlin.ttf", 20);
 
 	SDL_Surface *img_button = SDL_LoadBMP(file_name.c_str());
-	dst.x = pos_x;
-	dst.y = pos_y;
-	dst.w = img_button->w;
-	dst.h = img_button->h / 3;
-	src.x = 0;
-	src.y = 0;
-	src.w = img_button->w;
-	src.h = img_button->h / 3;
-	m_button_tex = SDL_CreateTextureFromSurface(m_parent->getRenderer(), img_button);
+	m_dst.x = pos_x;
+	m_dst.y = pos_y;
+	m_dst.w = img_button->w;
+	m_dst.h = img_button->h / 3;
+	m_src.x = 0;
+	m_src.y = 0;
+	m_src.w = img_button->w;
+	m_src.h = img_button->h / 3;
+	m_button_texture = SDL_CreateTextureFromSurface(m_parent->getRenderer(), img_button);
 	SDL_FreeSurface(img_button);
+
+	setText(text);
 }
 
 Button::~Button()
 {
-	SDL_DestroyTexture(m_button_tex);
+	TTF_CloseFont(m_text_font);
+	SDL_DestroyTexture(m_button_text_normal);
+	SDL_DestroyTexture(m_button_text_over);
+	SDL_DestroyTexture(m_button_texture);
 }
 
 int Button::getWidth()
 {
-	return dst.w;
+	return m_dst.w;
 }
 
 int Button::getHeight()
 {
-	return dst.h;
+	return m_dst.h;
 }
 
 void Button::setPosition(int x, int y)
 {
-	dst.x = x;
-	dst.y = y;
+	m_dst.x = x;
+	m_dst.y = y;
+
+	m_dst_text.x = m_dst.x + (m_dst.w / 2) - (m_src_text.w / 2);
+	m_dst_text.y = m_dst.y + (m_dst.h / 2) - (m_src_text.h / 2);
+}
+
+void Button::setText(string text)
+{
+	SDL_Surface *srfce_normal;
+	SDL_Surface *srfce_over;
+	SDL_Color color_normal;
+	SDL_Color color_over;
+
+	ColorHelper::parseColor(&color_normal, COLOR_YELLOW);
+	ColorHelper::parseColor(&color_over, COLOR_LIGHT_YELLOW);
+
+	m_btn_str = text;
+	srfce_normal = TTF_RenderText_Blended(m_text_font, m_btn_str.c_str(), color_normal);
+	srfce_over = TTF_RenderText_Blended(m_text_font, m_btn_str.c_str(), color_over);
+
+	m_src_text.x = 0;
+	m_src_text.y = 0;
+	m_src_text.w = srfce_normal->w;
+	m_src_text.h = srfce_normal->h;
+
+	m_dst_text.x = m_dst.x + (m_dst.w / 2) - (m_src_text.w / 2);
+	m_dst_text.y = m_dst.y + (m_dst.h / 2) - (m_src_text.h / 2);
+	m_dst_text.w = srfce_normal->w;
+	m_dst_text.h = srfce_normal->h;
+
+
+	m_button_text_normal = SDL_CreateTextureFromSurface(m_parent->getRenderer(), srfce_normal);
+	m_button_text_over = SDL_CreateTextureFromSurface(m_parent->getRenderer(), srfce_over);
+
+	SDL_FreeSurface(srfce_normal);
+	SDL_FreeSurface(srfce_over);
 }
 
 bool Button::isClicked()
 {
-	if (is_clicked)
+	if (m_is_clicked)
 	{
-		is_clicked = false;
+		m_is_clicked = false;
 		return true;
 	}
 	return false;
@@ -61,35 +106,41 @@ void Button::onSdlEventReceived(SDL_Event event)
 	switch (event.type)
 	{
 		case SDL_MOUSEMOTION:
-			if (RectHelper::isInRect(&dst, event.motion.x, event.motion.y))
-				is_over = true;
+			if (RectHelper::isInRect(&m_dst, event.motion.x, event.motion.y))
+				m_is_over = true;
 			else
 			{
-				is_over = false;
-				is_pressed = false;
+				m_is_over = false;
+				m_is_pressed = false;
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			if (RectHelper::isInRect(&dst, event.button.x, event.button.y))
-				is_pressed = true;
+			if (RectHelper::isInRect(&m_dst, event.button.x, event.button.y))
+				m_is_pressed = true;
 			else
-				is_over = false;
+				m_is_over = false;
 			break;
 		case SDL_MOUSEBUTTONUP:
-			if (is_pressed && RectHelper::isInRect(&dst, event.button.x, event.button.y))
-				is_clicked = true;
-			is_pressed = false;
+			if (m_is_pressed && RectHelper::isInRect(&m_dst, event.button.x, event.button.y))
+				m_is_clicked = true;
+			m_is_pressed = false;
 			break;
 	}
 }
 
 void Button::draw()
 {
-	if (is_pressed)
-		src.y = src.h * 2;
-	else if (is_over)
-		src.y = src.h;
+	if (m_is_pressed)
+		m_src.y = m_src.h * 2;
+	else if (m_is_over)
+		m_src.y = m_src.h;
 	else
-		src.y = 0;
-	SDL_RenderCopy(m_parent->getRenderer(), m_button_tex, &src, &dst);
+		m_src.y = 0;
+
+	SDL_RenderCopy(m_parent->getRenderer(), m_button_texture, &m_src, &m_dst);
+
+	if (m_is_pressed || m_is_over)
+		SDL_RenderCopy(m_parent->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
+	else
+		SDL_RenderCopy(m_parent->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
 }

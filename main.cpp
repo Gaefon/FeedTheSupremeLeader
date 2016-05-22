@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
@@ -25,8 +26,8 @@ void showGame(MainWindow *window, SDLPoller *main_poller)
 
 void showMenu(MainWindow *window, SDLPoller *main_poller)
 {
-	Button play_button(window, 0, 40, "ressources/play_button.bmp");
-	Button param_button(window, 0, 100, "ressources/play_button.bmp");
+	Button play_button(window, 0, 40, "ressources/play_button.bmp", "Play");
+	Button param_button(window, 0, 100, "ressources/play_button.bmp", "Parameters");
 
 	play_button.setPosition(window->getWidth() / 2 - play_button.getWidth() / 2, 40);
 	param_button.setPosition(window->getWidth() / 2 - play_button.getWidth() / 2, 100);
@@ -58,6 +59,7 @@ int main(int argc, char ** argv)
 	(void) argv;
 
 	SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
 
 	window.displayWindow();
 	main_poller.subscribe(&window);
@@ -67,6 +69,7 @@ int main(int argc, char ** argv)
 		//showGame(&window, &main_poller);
 	}
 
+	TTF_Quit();
 	SDL_Quit();
 	return 0;
 }

@@ -2,6 +2,7 @@ SRC =	main.cpp\
 		src/parameters.cpp\
 		src/model/Building.cpp\
 		src/helper/RectHelper.cpp\
+		src/helper/ColorHelper.cpp\
 		src/model/Map.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\
@@ -17,7 +18,7 @@ NAME =	feedthesupremleader
 CXX = g++
 CXXFLAGS = -W -Wall -Werror -std=c++11 `sdl2-config --cflags` -Iinclude
 
-LDFLAGS = `sdl2-config --libs`
+LDFLAGS = `sdl2-config --libs` -lSDL2_ttf
 
 RM = rm -rf
 
