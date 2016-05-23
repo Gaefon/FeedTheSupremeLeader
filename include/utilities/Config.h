@@ -1,16 +1,19 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-class Config
+#include <utilities/Singleton.hpp>
+
+class Config : public Singleton<Config>
 {
+	friend class Singleton<Config>;
+
 	private:
 		Config();
-		static Config *m_instance;
 
 		bool m_fullscreen;
 
 	public:
-		static Config *getInstance();
+		//static Config *getInstance();
 		bool getFullscreen();
 		void setFullscreen(bool value);
 
