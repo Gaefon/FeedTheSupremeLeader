@@ -11,6 +11,7 @@ class MainWindow: public SdlObserver
 		bool m_fullscreen;
 		bool m_request_close;
 
+
 		SDL_Window *m_window;
 		SDL_Renderer *m_renderer;
 		SDL_Surface *m_screen;

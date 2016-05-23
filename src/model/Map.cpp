@@ -1,5 +1,4 @@
 #include <SDL.h>
-
 #include <model/Map.h>
 #include <Constants.hpp>
 
@@ -92,14 +91,14 @@ void Map::onSdlEventReceived(SDL_Event event)
 				m_previous_x = event.motion.x;
 				m_previous_y = event.motion.y;
 
-				if (m_map_relative_position_x >= 0)
-					m_map_relative_position_x = 0;
-				if (m_map_relative_position_y >= 0)
-					m_map_relative_position_y = 0;
-                if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_parent->getWidth())
-                    m_map_relative_position_x =  m_parent->getWidth() - m_width * DEFAULT_WINDOWS_TILE;
-                if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_parent->getHeight())
-                    m_map_relative_position_y = m_parent->getHeight() - m_height * DEFAULT_WINDOWS_TILE;
+				if (m_map_relative_position_x >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
+					m_map_relative_position_x = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
+				if (m_map_relative_position_y >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
+					m_map_relative_position_y = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
+                if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_parent->getWidth() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+                    m_map_relative_position_x =  m_parent->getWidth() - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+                if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_parent->getHeight() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+                    m_map_relative_position_y = m_parent->getHeight() - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
 
 			}
 			break;
