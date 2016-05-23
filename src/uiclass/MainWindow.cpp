@@ -2,8 +2,7 @@
 #include <SDL.h>
 #include <uiclass/MainWindow.hpp>
 #include <Constants.hpp>
-#include <utilities/Singleton.hpp>
-#include <uiclass/InterfaceSetup.hpp>
+
 using namespace std;
 
 MainWindow::MainWindow()
