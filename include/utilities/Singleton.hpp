@@ -21,6 +21,7 @@ class Singleton
 		~Singleton() {};
 };
 
+// on definit le m_instance a NULL ce qui permet de  savoir qu'il n'est pas instancié
 template <typename T>
 T *Singleton<T>::m_instance = NULL;
 
