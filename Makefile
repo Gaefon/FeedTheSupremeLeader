@@ -11,7 +11,8 @@ SRC =	main.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/Observer.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
-		src/utilities/Config.cpp
+		src/utilities/Config.cpp\
+		src/utilities/sounds/sounds.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
@@ -19,7 +20,7 @@ OBJ =	$(SRC:%.cpp=%.o)
 NAME =	feedthesupremleader
 
 CXX = g++
-CXXFLAGS = -W -Wall -Werror -std=c++11 `sdl2-config --cflags` -Iinclude
+CXXFLAGS = -W -Wall -std=c++11 `sdl2-config --cflags` -Iinclude
 
 LDFLAGS = `sdl2-config --libs` -lSDL2_ttf
 

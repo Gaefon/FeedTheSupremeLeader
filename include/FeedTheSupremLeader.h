@@ -3,6 +3,7 @@
 
 #include <uiclass/MainWindow.hpp>
 #include <utilities/Poller/SDLPoller.h>
+#include <utilities/sounds/sounds.h>
 
 void showMenu(MainWindow *window);
 void showParameters(MainWindow *window);
