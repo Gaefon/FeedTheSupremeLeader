@@ -1,9 +1,17 @@
 #include <utilities/sounds/sounds.h>
 
+/**
+* @constructor Sounds
+**/
 Sounds::Sounds()	{
 
 }
 
+/**
+* @function init_audio
+* @description
+* @return {void}
+**/
 int Sounds::init_audio() {
 	static Uint32 wav_length;
 	static Uint8 *wav_buffer;
@@ -33,6 +41,11 @@ int Sounds::init_audio() {
 	SDL_FreeWAV(wav_buffer);
 }
 
+/**
+* @function my_audio_callback
+* @description
+* @return {void}
+**/
 void my_audio_callback(void *userdata, Uint8 *stream, int len) {
 	if (audio_len == 0)
 		return;
