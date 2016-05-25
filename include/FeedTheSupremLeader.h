@@ -2,8 +2,7 @@
 #define FEED_THE_SUPREM_LEADER_H
 
 #include <uiclass/MainWindow.hpp>
-#include <utilities/Poller/SDLPoller.h>
-#include <utilities/sounds/sounds.h>
+//#include <utilities/Poller/SDLPoller.h>
 
 void showMenu(MainWindow *window);
 void showParameters(MainWindow *window);

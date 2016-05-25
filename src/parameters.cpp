@@ -4,6 +4,8 @@
 #include <uiclass/Button.h>
 #include <utilities/Config.h>
 
+#include <utilities/Poller/SDLPoller.h>
+
 using namespace std;
 
 string getButtonString()

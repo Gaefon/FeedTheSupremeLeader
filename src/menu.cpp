@@ -1,6 +1,8 @@
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
 
+#include <utilities/Poller/SDLPoller.h>
+
 void showMenu(MainWindow *window)
 {
 	bool request_close = false;
