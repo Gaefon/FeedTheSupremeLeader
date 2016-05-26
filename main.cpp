@@ -5,6 +5,7 @@
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
 #include <model/Map.h>
+#include <utilities/RessourceManager.h>
 
 using namespace std;
 
@@ -15,11 +16,15 @@ int main(int argc, char ** argv)
 	(void) argc;
 	(void) argv;
 
-	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
+
+	RessourceManager::getInstance()->loadImages();
 	
 	window.displayWindow();
 	showMenu(&window);
+
+	RessourceManager::getInstance()->unloadImages();
 
 	TTF_Quit();
 	SDL_Quit();

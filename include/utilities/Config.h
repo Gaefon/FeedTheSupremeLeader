@@ -13,7 +13,6 @@ class Config : public Singleton<Config>
 		bool m_fullscreen;
 
 	public:
-		//static Config *getInstance();
 		bool getFullscreen();
 		void setFullscreen(bool value);
 

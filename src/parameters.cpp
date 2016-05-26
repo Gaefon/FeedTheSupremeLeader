@@ -4,6 +4,7 @@
 #include <uiclass/Button.h>
 #include <utilities/Config.h>
 
+#include <utilities/RessourceManager.h>
 #include <utilities/Poller/SDLPoller.h>
 
 using namespace std;
@@ -27,8 +28,8 @@ void showParameters(MainWindow *window)
 {
 	SDLPoller poller;
 	bool back_clicked = false;
-	Button back_button(window, 10, 10, "ressources/play_button.bmp", "Back");
-	Button btn_fullscreen(window, 0, 0, "ressources/large_button.bmp", getButtonString());
+	Button back_button(window, 10, 10, RessourceManager::getInstance()->getMenuDefaultButton(), "Back");
+	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getMenuLargeButton(), getButtonString());
 
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);

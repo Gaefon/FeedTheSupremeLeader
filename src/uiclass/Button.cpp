@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Button::Button(MainWindow *prnt, int pos_x, int pos_y, string file_name, string text)
+Button::Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, string text)
 {
 	m_parent = prnt;
 
@@ -16,7 +16,6 @@ Button::Button(MainWindow *prnt, int pos_x, int pos_y, string file_name, string 
 
 	m_text_font = TTF_OpenFont("ressources/kremlin.ttf", 20);
 
-	SDL_Surface *img_button = SDL_LoadBMP(file_name.c_str());
 	m_dst.x = pos_x;
 	m_dst.y = pos_y;
 	m_dst.w = img_button->w;
@@ -26,7 +25,6 @@ Button::Button(MainWindow *prnt, int pos_x, int pos_y, string file_name, string 
 	m_src.w = img_button->w;
 	m_src.h = img_button->h / 3;
 	m_button_texture = SDL_CreateTextureFromSurface(m_parent->getRenderer(), img_button);
-	SDL_FreeSurface(img_button);
 
 	setText(text);
 }

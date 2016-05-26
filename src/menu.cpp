@@ -2,6 +2,7 @@
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
 #include <uiclass/Label.h>
+#include <utilities/RessourceManager.h>
 
 #include <utilities/Poller/SDLPoller.h>
 
@@ -10,9 +11,9 @@ void showMenu(MainWindow *window)
 	bool request_close = false;
 	SDLPoller main_poller;
 	Label title_label(window, 0, 0, GAME_NAME);
-	Button play_button(window, 0, 0, "ressources/play_button.bmp", "Play");
-	Button param_button(window, 0, 0, "ressources/play_button.bmp", "Parameters");
-	Button quit_button(window, 0, 0, "ressources/play_button.bmp", "Quit");
+	Button play_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Play");
+	Button param_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Parameters");
+	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Quit");
 
 	title_label.setFontSize(40);
 	main_poller.subscribe(window);

@@ -29,7 +29,7 @@ class Button: public Widget, public SdlObserver
 		bool m_is_clicked;
 
 	public:
-		Button(MainWindow *prnt, int pos_x, int pos_y, std::string file_name, std::string text);
+		Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, std::string text);
 		~Button();
 		int getWidth();
 		int getHeight();
