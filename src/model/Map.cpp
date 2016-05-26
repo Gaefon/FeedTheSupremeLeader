@@ -57,8 +57,34 @@ void Map::drawMapGrid()
 	}
 }
 
+void Map::checkCursorPosition()
+{
+	int x, y;
+
+	SDL_GetMouseState(&x, &y);
+
+	if (x <= MAP_BORDER_WIDTH_MOVE)
+		m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+	if (y <= MAP_BORDER_WIDTH_MOVE)
+		m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+	if (m_parent->getWidth() - x <= MAP_BORDER_WIDTH_MOVE)
+		m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+	if (m_parent->getHeight() - y <= MAP_BORDER_WIDTH_MOVE)
+		m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+
+	if (m_map_relative_position_x >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
+		m_map_relative_position_x = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
+	if (m_map_relative_position_y >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
+		m_map_relative_position_y = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
+	if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_parent->getWidth() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+		m_map_relative_position_x =  m_parent->getWidth() - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+	if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_parent->getHeight() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+		m_map_relative_position_y = m_parent->getHeight() - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+}
+
 void Map::drawMap()
 {
+	checkCursorPosition();
 	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
 		(*it)->drawBuilding();
@@ -69,7 +95,8 @@ void Map::drawMap()
 
 void Map::onSdlEventReceived(SDL_Event event)
 {
-	switch (event.type)
+	(void) event;
+	/*switch (event.type)
 	{
 		case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == SDL_BUTTON_LEFT)
@@ -90,17 +117,7 @@ void Map::onSdlEventReceived(SDL_Event event)
 				m_map_relative_position_y += event.motion.y - m_previous_y;
 				m_previous_x = event.motion.x;
 				m_previous_y = event.motion.y;
-
-				if (m_map_relative_position_x >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
-					m_map_relative_position_x = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
-				if (m_map_relative_position_y >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
-					m_map_relative_position_y = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
-                if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_parent->getWidth() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
-                    m_map_relative_position_x =  m_parent->getWidth() - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
-                if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_parent->getHeight() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
-                    m_map_relative_position_y = m_parent->getHeight() - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
-
 			}
 			break;
-	}
+	}*/
 }

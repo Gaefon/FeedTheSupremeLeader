@@ -34,5 +34,5 @@ class InterfaceSetup : public Singleton<InterfaceSetup>
 
 
 };
-#include<utilities/Singleton.inc>
+
 #endif // INTERFACESETUP_HPP

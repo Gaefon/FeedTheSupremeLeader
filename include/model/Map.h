@@ -16,15 +16,15 @@ class Map: public SdlObserver
 		MainWindow *m_parent;
 
 		bool m_is_moving;
-		int m_previous_x;
-		int m_previous_y;
+		/*int m_previous_x;
+		int m_previous_y;*/
 		int m_map_relative_position_x;
 		int m_map_relative_position_y;
 
 		std::list<Building *> m_list_building;
 
-
 		void drawMapGrid();
+		void checkCursorPosition();
 
 	public:
 		Map(MainWindow *par);
