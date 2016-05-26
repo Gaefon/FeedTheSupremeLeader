@@ -11,6 +11,7 @@ void showMenu(MainWindow *window)
 	bool request_close = false;
 	SDLPoller main_poller;
 	Label title_label(window, 0, 0, GAME_NAME);
+	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getMenuBackground());
 	Button play_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Play");
 	Button param_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Parameters");
 	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Quit");
@@ -28,6 +29,7 @@ void showMenu(MainWindow *window)
 		quit_button.setPosition(window->getWidth() / 2 - quit_button.getWidth() / 2, 280);
 		main_poller.Poll();
 		window->clear();
+		window->setBackground(m_button_texture);
 		title_label.draw();
 		play_button.draw();
 		param_button.draw();

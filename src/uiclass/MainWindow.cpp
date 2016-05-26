@@ -83,6 +83,34 @@ void MainWindow::clear()
 	SDL_RenderClear(m_renderer);
 }
 
+void MainWindow::setBackground(SDL_Texture *back)
+{
+	int w, h;
+	int win_w = getWidth();
+	int win_h = getHeight();
+	SDL_QueryTexture(back, NULL, NULL, &w, &h);
+	float ratio_img = (float) w / (float) h;
+	float ration_win = (float) win_w / (float) win_h;
+	SDL_Rect src_rect;
+
+	if (ratio_img > ration_win)
+	{
+		src_rect.h = h;
+		src_rect.w = (h * win_w) / win_h;
+		src_rect.x = (w - src_rect.w) / 2;
+		src_rect.y = 0;
+		
+	}
+	else
+	{
+		src_rect.w = w;
+		src_rect.h = (w * win_h) / win_w;
+		src_rect.x = 0;
+		src_rect.y = (h - src_rect.h) / 2;
+	}
+	SDL_RenderCopy(m_renderer, back, &src_rect, NULL);
+}
+
 void MainWindow::update()
 {
 	//SDL_UpdateWindowSurface(m_window);

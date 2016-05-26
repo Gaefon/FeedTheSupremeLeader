@@ -5,7 +5,7 @@
 #define GAME_NAME "Feed the supreme leader"
 
 #define WINDOW_DEFAULT_WIDTH 800
-#define WINDOW_DEFAULT_HEIGHT 600
+#define WINDOW_DEFAULT_HEIGHT 300
 
 #define MAP_BORDER_WIDTH_MOVE 20
 #define MAP_MOVE_SENSIVITY 6

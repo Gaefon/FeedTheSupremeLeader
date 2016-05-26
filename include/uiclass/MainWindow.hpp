@@ -28,6 +28,7 @@ class MainWindow: public SdlObserver
 		bool hasCloseRequest();
 		void displayWindow();
 		void clear();
+		void setBackground(SDL_Texture *back);
 		void update();
 		void onSdlEventReceived(SDL_Event event);
 };

@@ -12,12 +12,14 @@ class RessourceManager: public Singleton<RessourceManager>
 		RessourceManager();
 		SDL_Surface *m_menu_default_button;
 		SDL_Surface *m_menu_large_button;
+		SDL_Surface *m_menu_background;
 
 	public:
 		int loadImages();
 		void unloadImages();
 		SDL_Surface *getMenuDefaultButton();
 		SDL_Surface *getMenuLargeButton();
+		SDL_Surface *getMenuBackground();
 };
 
 #endif
