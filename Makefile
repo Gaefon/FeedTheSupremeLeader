@@ -8,6 +8,7 @@ SRC =	main.cpp\
 		src/model/Map.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\
+		src/uiclass/Label.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/Observer.cpp\
 		src/utilities/Poller/SDLPoller.cpp\

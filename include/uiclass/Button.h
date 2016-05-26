@@ -5,9 +5,10 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <uiclass/MainWindow.hpp>
+#include <uiclass/Widget.h>
 #include <utilities/Observer/SdlObserver.h>
 
-class Button: public SdlObserver
+class Button: public Widget, public SdlObserver
 {
 	private:
 		MainWindow *m_parent;

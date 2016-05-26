@@ -2,6 +2,7 @@
 #define CONSTANTS_HPP
 
 #define WINDOW_TITLE "Feed the supreme leader"
+#define GAME_NAME "Feed the supreme leader"
 
 #define WINDOW_DEFAULT_WIDTH 800
 #define WINDOW_DEFAULT_HEIGHT 600
