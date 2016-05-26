@@ -85,7 +85,7 @@ void MainWindow::clear()
 
 void MainWindow::update()
 {
-	SDL_UpdateWindowSurface(m_window);
+	//SDL_UpdateWindowSurface(m_window);
 	SDL_RenderPresent(m_renderer);
 }
 
