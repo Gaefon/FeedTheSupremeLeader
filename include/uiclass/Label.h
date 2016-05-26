@@ -26,6 +26,7 @@ class Label: public Widget
 		int getWidth();
 		int getHeight();
 		void setPosition(int x, int y);
+		void setFontSize(int size);
 		void setText(std::string text);
 		void draw();
 };

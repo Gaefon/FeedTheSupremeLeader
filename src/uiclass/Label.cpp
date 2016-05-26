@@ -36,6 +36,13 @@ void Label::setPosition(int x, int y)
 	m_dst.y = y;
 }
 
+void Label::setFontSize(int size)
+{
+	TTF_CloseFont(m_text_font);
+	m_text_font = TTF_OpenFont("ressources/kremlin.ttf", size);
+	setText(m_str);
+}
+
 void Label::setText(std::string text)
 {
 	SDL_Surface *srfce;
