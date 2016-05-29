@@ -1,5 +1,6 @@
 #ifndef INTERFACESETUP_HPP
 #define INTERFACESETUP_HPP
+
 #include <utilities/Singleton.hpp>
 #include <SDL.h>
 
