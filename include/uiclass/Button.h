@@ -11,8 +11,6 @@
 class Button: public Widget, public SdlObserver
 {
 	private:
-		MainWindow *m_parent;
-
 		SDL_Rect m_dst;
 		SDL_Rect m_src;
 		SDL_Rect m_dst_text;

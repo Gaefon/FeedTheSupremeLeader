@@ -10,8 +10,6 @@
 class Label: public Widget
 {
 	private:
-		MainWindow *m_parent;
-
 		SDL_Texture *m_texture_text;
 		SDL_Rect m_src;
 		SDL_Rect m_dst;

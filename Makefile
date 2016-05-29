@@ -7,6 +7,7 @@ SRC =	main.cpp\
 		src/helper/RectHelper.cpp\
 		src/helper/ColorHelper.cpp\
 		src/model/Map.cpp\
+		src/uiclass/Widget.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\
 		src/uiclass/Label.cpp\

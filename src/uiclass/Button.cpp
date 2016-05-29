@@ -6,10 +6,8 @@
 
 using namespace std;
 
-Button::Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, string text)
+Button::Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, string text): Widget(prnt)
 {
-	m_parent = prnt;
-
 	m_is_over = false;
 	m_is_pressed = false;
 	m_is_clicked = false;
@@ -24,7 +22,7 @@ Button::Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, 
 	m_src.y = 0;
 	m_src.w = img_button->w;
 	m_src.h = img_button->h / 3;
-	m_button_texture = SDL_CreateTextureFromSurface(m_parent->getRenderer(), img_button);
+	m_button_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), img_button);
 
 	setText(text);
 }
@@ -81,8 +79,8 @@ void Button::setText(string text)
 	m_dst_text.h = srfce_normal->h;
 
 
-	m_button_text_normal = SDL_CreateTextureFromSurface(m_parent->getRenderer(), srfce_normal);
-	m_button_text_over = SDL_CreateTextureFromSurface(m_parent->getRenderer(), srfce_over);
+	m_button_text_normal = SDL_CreateTextureFromSurface(getParent()->getRenderer(), srfce_normal);
+	m_button_text_over = SDL_CreateTextureFromSurface(getParent()->getRenderer(), srfce_over);
 
 	SDL_FreeSurface(srfce_normal);
 	SDL_FreeSurface(srfce_over);
@@ -135,10 +133,10 @@ void Button::draw()
 	else
 		m_src.y = 0;
 
-	SDL_RenderCopy(m_parent->getRenderer(), m_button_texture, &m_src, &m_dst);
+	SDL_RenderCopy(getParent()->getRenderer(), m_button_texture, &m_src, &m_dst);
 
 	if (!m_is_pressed)
-		SDL_RenderCopy(m_parent->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
+		SDL_RenderCopy(getParent()->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
 	else
-		SDL_RenderCopy(m_parent->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
+		SDL_RenderCopy(getParent()->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
 }

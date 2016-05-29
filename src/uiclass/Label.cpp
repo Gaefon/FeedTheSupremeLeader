@@ -2,10 +2,8 @@
 #include <uiclass/Label.h>
 #include <helper/ColorHelper.h>
 
-Label::Label(MainWindow *prnt, int x, int y, std::string text)
+Label::Label(MainWindow *prnt, int x, int y, std::string text): Widget(prnt)
 {
-	m_parent = prnt;
-
 	m_text_font = TTF_OpenFont("ressources/kremlin.ttf", 20);
 
 	m_src.x = 0;
@@ -58,12 +56,12 @@ void Label::setText(std::string text)
 	m_dst.w = srfce->w;
 	m_dst.h = srfce->h;
 
-	m_texture_text = SDL_CreateTextureFromSurface(m_parent->getRenderer(), srfce);
+	m_texture_text = SDL_CreateTextureFromSurface(getParent()->getRenderer(), srfce);
 
 	SDL_FreeSurface(srfce);
 }
 
 void Label::draw()
 {
-	SDL_RenderCopy(m_parent->getRenderer(), m_texture_text, &m_src, &m_dst);
+	SDL_RenderCopy(getParent()->getRenderer(), m_texture_text, &m_src, &m_dst);
 }
