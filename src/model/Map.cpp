@@ -107,7 +107,7 @@ void Map::drawMap()
 }
 
 
-void Map::onSdlEventReceived(SDL_Event event)
+bool Map::onSdlEventReceived(SDL_Event event)
 {
 	(void) event;
 	/*switch (event.type)
@@ -134,4 +134,5 @@ void Map::onSdlEventReceived(SDL_Event event)
 			}
 			break;
 	}*/
+	return false;
 }

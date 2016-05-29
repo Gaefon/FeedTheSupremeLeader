@@ -8,7 +8,7 @@ class SdlObserver
 	public:
 		SdlObserver() {}
 		~SdlObserver() {}
-		virtual void onSdlEventReceived(SDL_Event event) = 0;
+		virtual bool onSdlEventReceived(SDL_Event event) = 0;
 };
 
 #endif

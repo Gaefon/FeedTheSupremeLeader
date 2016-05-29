@@ -15,12 +15,12 @@ SDLPoller::~SDLPoller()
 
 void SDLPoller::notify(SDL_Event event)
 {
-	(void) event;
 	list<SdlObserver *> observers = getObservers();
 	list<SdlObserver *>::iterator elt;
 	for (elt = observers.begin(); elt != observers.end(); elt++)
 	{
-		(*elt)->onSdlEventReceived(event);
+		if ((*elt)->onSdlEventReceived(event))
+			break;
 	}
 }
 

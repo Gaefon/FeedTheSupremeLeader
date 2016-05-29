@@ -9,7 +9,7 @@ class Widget
 		MainWindow *m_parent;
 	public:
 		Widget(MainWindow *parent);
-		~Widget();
+		virtual ~Widget();
 		MainWindow *getParent();
 		virtual int getWidth() = 0;
 		virtual int getHeight() = 0;

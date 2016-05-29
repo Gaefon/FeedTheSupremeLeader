@@ -118,18 +118,18 @@ void MainWindow::update()
 	SDL_RenderPresent(m_renderer);
 }
 
-void MainWindow::onSdlEventReceived(SDL_Event event)
+bool MainWindow::onSdlEventReceived(SDL_Event event)
 {
-	(void) event;
 	if (event.type == SDL_WINDOWEVENT)
 	{
 		switch (event.window.event)
 		{
 			case SDL_WINDOWEVENT_CLOSE:
 				m_request_close = true;
-				break;
+				return true;
 		}
 	}
+	return false;
 }
 
 MainWindow::~MainWindow()

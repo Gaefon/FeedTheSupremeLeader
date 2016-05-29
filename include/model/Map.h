@@ -44,7 +44,7 @@ class Map: public SdlObserver
 
 		void drawMap();
 
-		void onSdlEventReceived(SDL_Event event);
+		bool onSdlEventReceived(SDL_Event event);
 };
 
 #endif // MAP_H

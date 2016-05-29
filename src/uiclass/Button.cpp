@@ -96,9 +96,9 @@ bool Button::isClicked()
 	return false;
 }
 
-void Button::onSdlEventReceived(SDL_Event event)
+bool Button::onSdlEventReceived(SDL_Event event)
 {
-	(void) event;
+	bool rtn_val = false;
 	switch (event.type)
 	{
 		case SDL_MOUSEMOTION:
@@ -112,16 +112,23 @@ void Button::onSdlEventReceived(SDL_Event event)
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (RectHelper::isInRect(&m_dst, event.button.x, event.button.y))
+			{
 				m_is_pressed = true;
+				rtn_val = true;
+			}
 			else
 				m_is_over = false;
 			break;
 		case SDL_MOUSEBUTTONUP:
 			if (m_is_pressed && RectHelper::isInRect(&m_dst, event.button.x, event.button.y))
+			{
 				m_is_clicked = true;
+				rtn_val = true;
+			}
 			m_is_pressed = false;
 			break;
 	}
+	return rtn_val;
 }
 
 void Button::draw()
