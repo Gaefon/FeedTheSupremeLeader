@@ -15,6 +15,9 @@ Map::Map(MainWindow *par)
 	m_is_moving = false;
 	m_map_relative_position_x = 0;
 	m_map_relative_position_y = 0;
+
+	m_display_width = m_parent->getWidth();
+	m_display_height = m_parent->getHeight();
 }
 
 Map::~Map()
@@ -40,6 +43,17 @@ unsigned int Map::getHeight()
 {
 	return m_height;
 }
+
+void Map::setDisplayWidth(int new_w)
+{
+	m_display_width = new_w;
+}
+
+void Map::setDisplayHeight(int new_h)
+{
+	m_display_height = new_h;
+}
+
 
 void Map::drawMapGrid()
 {
@@ -76,10 +90,10 @@ void Map::checkCursorPosition()
 		m_map_relative_position_x = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
 	if (m_map_relative_position_y >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
 		m_map_relative_position_y = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
-	if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_parent->getWidth() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
-		m_map_relative_position_x =  m_parent->getWidth() - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
-	if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_parent->getHeight() - (int)(m_margin * DEFAULT_WINDOWS_TILE))
-		m_map_relative_position_y = m_parent->getHeight() - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+	if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_display_width - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+		m_map_relative_position_x =  m_display_width - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+	if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_display_height - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+		m_map_relative_position_y = m_display_height - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
 }
 
 void Map::drawMap()

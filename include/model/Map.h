@@ -13,6 +13,10 @@ class Map: public SdlObserver
 		unsigned int m_width;
 		unsigned int m_height;
 		unsigned int m_margin;
+
+		unsigned int m_display_width;
+		unsigned int m_display_height;
+
 		MainWindow *m_parent;
 
 		bool m_is_moving;
@@ -34,6 +38,9 @@ class Map: public SdlObserver
 		unsigned int getWidth();
 		void setHeight(unsigned int val);
 		unsigned int getHeight();
+
+		void setDisplayWidth(int new_w);
+		void setDisplayHeight(int new_h);
 
 		void drawMap();
 

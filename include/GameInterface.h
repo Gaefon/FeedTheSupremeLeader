@@ -13,6 +13,8 @@ class GameInterface
 		MainWindow *m_parent;
 		SDLPoller *m_poller;
 		Map *m_map;
+		SDL_Rect menu_rect;
+
 	public:
 		GameInterface(MainWindow *parent, SDLPoller *poller);
 		~GameInterface();
