@@ -4,13 +4,13 @@
 #include <SDL.h>
 
 #include <uiclass/MainWindow.hpp>
+#include <uiclass/Widget.h>
 #include <utilities/Poller/SDLPoller.h>
 #include <model/Map.h>
 
-class GameInterface
+class GameInterface: public Widget
 {
 	private:
-		MainWindow *m_parent;
 		SDLPoller *m_poller;
 		Map *m_map;
 		SDL_Rect menu_rect;
@@ -18,6 +18,8 @@ class GameInterface
 	public:
 		GameInterface(MainWindow *parent, SDLPoller *poller);
 		~GameInterface();
+		int getWidth();
+		int getHeight();
 		void draw();
 };
 

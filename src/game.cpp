@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 #include <FeedTheSupremLeader.h>
-#include <GameInterface.h>
+#include <uiclass/GameInterface.h>
 #include <uiclass/Button.h>
 #include <model/Map.h>
 

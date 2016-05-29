@@ -2,7 +2,6 @@ SRC =	main.cpp\
 		src/menu.cpp\
 		src/parameters.cpp\
 		src/game.cpp\
-		src/GameInterface.cpp\
 		src/model/Building.cpp\
 		src/helper/RectHelper.cpp\
 		src/helper/ColorHelper.cpp\
@@ -11,6 +10,7 @@ SRC =	main.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\
 		src/uiclass/Label.cpp\
+		src/uiclass/GameInterface.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/Observer.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
