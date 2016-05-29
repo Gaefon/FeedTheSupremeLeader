@@ -23,11 +23,11 @@ void toggleFullscreen(MainWindow *window, Button *btn_fullscreen)
 	window->setFullscreen(Config::getInstance()->getFullscreen());
 }
 
-
 void showParameters(MainWindow *window)
 {
 	SDLPoller poller;
 	bool back_clicked = false;
+	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getMenuBackground());
 	Button back_button(window, 10, 10, RessourceManager::getInstance()->getMenuDefaultButton(), "Back");
 	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getMenuLargeButton(), getButtonString());
 
@@ -40,6 +40,7 @@ void showParameters(MainWindow *window)
 
 		poller.Poll();
 		window->clear();
+		window->setBackground(m_button_texture);
 		back_button.draw();
 		btn_fullscreen.draw();
 		window->update();
