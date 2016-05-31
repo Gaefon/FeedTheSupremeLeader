@@ -2,10 +2,11 @@ SRC =	main.cpp\
 		src/menu.cpp\
 		src/parameters.cpp\
 		src/game.cpp\
-		src/model/Building.cpp\
 		src/helper/RectHelper.cpp\
 		src/helper/ColorHelper.cpp\
 		src/model/Map.cpp\
+		src/model/Building.cpp\
+		src/model/Farm.cpp\
 		src/uiclass/Widget.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\

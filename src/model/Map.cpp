@@ -75,52 +75,52 @@ void Map::drawMapGrid()
 
 void Map::checkCursorPosition()
 {
-    if(m_parent->getFlags() & SDL_WINDOW_INPUT_FOCUS)
-    {
-        int x, y;
-        SDL_GetMouseState(&x, &y);
-        if (x <= MAP_BORDER_WIDTH_MOVE)
-        {
-            m_map_relative_position_x += MAP_MOVE_SENSIVITY;
-            if (y > (m_parent->getHeight() / 2) + m_parent->getHeight() * WIDTH_DEAD_RATIO)
-                m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
-            else if (y < (m_parent->getHeight() / 2) - m_parent->getHeight() * WIDTH_DEAD_RATIO)
-                m_map_relative_position_y += MAP_MOVE_SENSIVITY;
-        }
-        else if (y <= MAP_BORDER_WIDTH_MOVE)
-        {
-            m_map_relative_position_y += MAP_MOVE_SENSIVITY;
-            if(x > (m_parent->getWidth() / 2) + m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-                m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
-            else if (x < (m_parent->getWidth() / 2) - m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-                m_map_relative_position_x += MAP_MOVE_SENSIVITY;
-        }
-        else if (m_parent->getWidth() - x <= MAP_BORDER_WIDTH_MOVE)
-        {
-            m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
-            if (y > (m_parent->getHeight() / 2) + m_parent->getHeight() * WIDTH_DEAD_RATIO)
-                m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
-            else if (y < (m_parent->getHeight() / 2) - m_parent->getHeight() * WIDTH_DEAD_RATIO)
-                m_map_relative_position_y += MAP_MOVE_SENSIVITY;
-        }
-        else if (m_parent->getHeight() - y <= MAP_BORDER_WIDTH_MOVE)
-        {
-            m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
-            if (x > (m_parent->getWidth() / 2) + m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-                m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
-            else if(x < (m_parent->getWidth() / 2) - m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-                m_map_relative_position_x += MAP_MOVE_SENSIVITY;
-        }
+	if(m_parent->getFlags() & SDL_WINDOW_INPUT_FOCUS)
+	{
+		int x, y;
+		SDL_GetMouseState(&x, &y);
+		if (x <= MAP_BORDER_WIDTH_MOVE)
+		{
+			m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+			if (y > (m_parent->getHeight() / 2) + m_parent->getHeight() * WIDTH_DEAD_RATIO)
+				m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+			else if (y < (m_parent->getHeight() / 2) - m_parent->getHeight() * WIDTH_DEAD_RATIO)
+				m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+		}
+		else if (y <= MAP_BORDER_WIDTH_MOVE)
+		{
+			m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+			if (x > (m_parent->getWidth() / 2) + m_parent->getWidth() * HEIGHT_DEAD_RATIO)
+				m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+			else if (x < (m_parent->getWidth() / 2) - m_parent->getWidth() * HEIGHT_DEAD_RATIO)
+				m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+		}
+		else if (m_parent->getWidth() - x <= MAP_BORDER_WIDTH_MOVE)
+		{
+			m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+			if (y > (m_parent->getHeight() / 2) + m_parent->getHeight() * WIDTH_DEAD_RATIO)
+				m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+			else if (y < (m_parent->getHeight() / 2) - m_parent->getHeight() * WIDTH_DEAD_RATIO)
+				m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+		}
+		else if (m_parent->getHeight() - y <= MAP_BORDER_WIDTH_MOVE)
+		{
+			m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+			if (x > (m_parent->getWidth() / 2) + m_parent->getWidth() * HEIGHT_DEAD_RATIO)
+				m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+			else if (x < (m_parent->getWidth() / 2) - m_parent->getWidth() * HEIGHT_DEAD_RATIO)
+				m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+		}
 
-        if (m_map_relative_position_x >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
-            m_map_relative_position_x = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
-        if (m_map_relative_position_y >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
-            m_map_relative_position_y = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
-        if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_display_width - (int)(m_margin * DEFAULT_WINDOWS_TILE))
-            m_map_relative_position_x =  m_display_width - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
-        if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_display_height - (int)(m_margin * DEFAULT_WINDOWS_TILE))
-            m_map_relative_position_y = m_display_height - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
-    }
+		if (m_map_relative_position_x >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
+			m_map_relative_position_x = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
+		if (m_map_relative_position_y >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))
+			m_map_relative_position_y = 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE);
+		if (m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE < m_display_width - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+			m_map_relative_position_x =  m_display_width - m_width * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+		if (m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE < m_display_height - (int)(m_margin * DEFAULT_WINDOWS_TILE))
+			m_map_relative_position_y = m_display_height - m_height * DEFAULT_WINDOWS_TILE - (int)(m_margin * DEFAULT_WINDOWS_TILE);
+	}
 }
 
 void Map::drawMap()
@@ -128,10 +128,10 @@ void Map::drawMap()
 	checkCursorPosition();
 	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
-    {
-        cout << (*it)->getName() << endl;
+	{
+		cout << (*it)->getName() << endl;
 		(*it)->drawBuilding();
-    }
+	}
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }
@@ -151,11 +151,11 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			break;*/
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
-            {
-                Farm testfarm(m_parent);
-                cout << testfarm.getName() << endl;
-				m_list_building.push_back(&testfarm);
-            }
+			{
+				Farm *testfarm = new Farm(m_parent);
+				cout << testfarm->getName() << endl;
+				m_list_building.push_back(testfarm);
+			}
 			break; /*
 		case SDL_MOUSEMOTION:
 			if (m_is_moving == true)
@@ -167,6 +167,6 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			}
 			break;
 	}*/
-    }
+	}
 	return false;
 }
