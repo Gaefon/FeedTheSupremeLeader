@@ -1,3 +1,4 @@
+#include <Constants.hpp>
 #include <iostream>
 
 #include <FeedTheSupremLeader.h>
@@ -27,9 +28,9 @@ void showParameters(MainWindow *window)
 {
 	SDLPoller poller;
 	bool back_clicked = false;
-	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getMenuBackground());
-	Button back_button(window, 10, 10, RessourceManager::getInstance()->getMenuDefaultButton(), "Back");
-	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getMenuLargeButton(), getButtonString());
+	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getSurface(MENU_BCKGRD));
+	Button back_button(window, 10, 10, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Back");
+	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getSurface(MENU_LRG_BUTTON), getButtonString());
 
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);

@@ -1,4 +1,6 @@
 #include <SDL.h>
+#include <model/Building.hpp>
+#include <model/Farm.hpp>
 #include <model/Map.h>
 #include <Constants.hpp>
 
@@ -77,8 +79,6 @@ void Map::checkCursorPosition()
     {
         int x, y;
         SDL_GetMouseState(&x, &y);
-
-
         if (x <= MAP_BORDER_WIDTH_MOVE)
         {
             m_map_relative_position_x += MAP_MOVE_SENSIVITY;
@@ -128,7 +128,10 @@ void Map::drawMap()
 	checkCursorPosition();
 	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
+    {
+        cout << (*it)->getName() << endl;
 		(*it)->drawBuilding();
+    }
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }
@@ -136,21 +139,24 @@ void Map::drawMap()
 
 bool Map::onSdlEventReceived(SDL_Event event)
 {
-	(void) event;
-	/*switch (event.type)
+	switch (event.type)
 	{
-		case SDL_MOUSEBUTTONDOWN:
+	/*	case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				m_is_moving = true;
 				m_previous_x = event.button.x;
 				m_previous_y = event.button.y;
 			}
-			break;
+			break;*/
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
-				m_is_moving = false;
-			break;
+            {
+                Farm testfarm(m_parent);
+                cout << testfarm.getName() << endl;
+				m_list_building.push_back(&testfarm);
+            }
+			break; /*
 		case SDL_MOUSEMOTION:
 			if (m_is_moving == true)
 			{
@@ -161,5 +167,6 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			}
 			break;
 	}*/
+    }
 	return false;
 }

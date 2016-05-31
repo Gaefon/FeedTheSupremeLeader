@@ -11,10 +11,10 @@ void showMenu(MainWindow *window)
 	bool request_close = false;
 	SDLPoller main_poller;
 	Label title_label(window, 0, 0, GAME_NAME);
-	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getMenuBackground());
-	Button play_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Play");
-	Button param_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Parameters");
-	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Quit");
+	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getSurface(MENU_BCKGRD));
+	Button play_button(window, 0, 0, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Play");
+	Button param_button(window, 0, 0, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Parameters");
+	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Quit");
 
 	title_label.setFontSize(40);
 	main_poller.subscribe(window);

@@ -25,5 +25,10 @@
 #define COLOR_YELLOW 0xc4be1dff
 #define COLOR_LIGHT_YELLOW 0xede623ff
 
+#define MENU_DEF_BUTTON 0
+#define MENU_LRG_BUTTON 1
+#define MENU_BCKGRD     2
+#define ENTITY_FARM     3
+
 
 #endif // CONSTANTS_HPP

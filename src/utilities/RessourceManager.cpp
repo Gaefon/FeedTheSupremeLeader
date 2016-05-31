@@ -1,37 +1,38 @@
 #include <utilities/RessourceManager.h>
-
+#include <vector>
+#include <iostream>
 RessourceManager::RessourceManager()
 {
+    images_sfc = std::vector<SDL_Surface *>();
 }
 
 int RessourceManager::loadImages()
 {
-	m_menu_default_button = SDL_LoadBMP("ressources/play_button.bmp");
-	m_menu_large_button = SDL_LoadBMP("ressources/large_button.bmp");
-	m_menu_background = SDL_LoadBMP("ressources/menu_background.bmp");
-
+    loadButtons();
+    images_sfc.push_back(SDL_LoadBMP("ressources/menu_background.bmp"));
+    loadBuildings();
 	return 0;
-}	
+}
+void RessourceManager::loadButtons()
+{
+    images_sfc.push_back(SDL_LoadBMP("ressources/play_button.bmp"));
+	images_sfc.push_back(SDL_LoadBMP("ressources/large_button.bmp"));
+}
 
+void RessourceManager::loadBuildings()
+{
+    images_sfc.push_back(SDL_LoadBMP("ressources/farm.bmp"));
+}
 void RessourceManager::unloadImages()
 {
-	SDL_FreeSurface(m_menu_default_button);
-	SDL_FreeSurface(m_menu_large_button);
-	SDL_FreeSurface(m_menu_background);
+    std::vector<SDL_Surface *>::iterator it;
+    images_sfc.clear();
 }
 
-SDL_Surface *RessourceManager::getMenuDefaultButton()
+SDL_Surface *RessourceManager::getSurface(int index)
 {
-	return m_menu_default_button;
+    return images_sfc.at(index);
 }
 
-SDL_Surface *RessourceManager::getMenuLargeButton()
-{
-	return m_menu_large_button;
-}
 
-SDL_Surface *RessourceManager::getMenuBackground()
-{
-	return m_menu_background;
-}
 

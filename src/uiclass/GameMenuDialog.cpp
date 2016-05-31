@@ -1,3 +1,4 @@
+#include <Constants.hpp>
 #include <uiclass/GameMenuDialog.h>
 #include <utilities/RessourceManager.h>
 GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int h): Widget(parent)
@@ -13,7 +14,7 @@ GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int
 	m_is_visible = false;
 	m_is_goto_menu_requested = false;
 
-	m_btn_menu = new Button(getParent(), 0, 0, RessourceManager::getInstance()->getMenuDefaultButton(), "Main menu");
+	m_btn_menu = new Button(getParent(), 0, 0, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Main menu");
 	m_btn_menu->setPosition(getParent()->getWidth() / 2 - m_btn_menu->getWidth() / 2, getParent()->getHeight() / 2 - m_height / 2 + 40);
 
 	poller->subscribe(m_btn_menu);
