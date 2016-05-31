@@ -23,6 +23,7 @@ class MainWindow: public SdlObserver
 		unsigned int getHeight();
 		SDL_Renderer *getRenderer();
 		SDL_Surface *getSurface();
+		Uint32 getFlags();
 		bool getFullscreen();
 		void setFullscreen(bool val);
 		bool hasCloseRequest();

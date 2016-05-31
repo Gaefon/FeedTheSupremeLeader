@@ -20,6 +20,11 @@ void MainWindow::setSize(unsigned int w, unsigned int h)
 	SDL_SetWindowSize(m_window, m_width, m_height);
 }
 
+Uint32 MainWindow::getFlags()
+{
+    return SDL_GetWindowFlags(m_window);
+}
+
 unsigned int MainWindow::getWidth()
 {
 	if (m_fullscreen)
@@ -100,7 +105,7 @@ void MainWindow::setBackground(SDL_Texture *back)
 		src_rect.w = (h * win_w) / win_h;
 		src_rect.x = (w - src_rect.w) / 2;
 		src_rect.y = 0;
-		
+
 	}
 	else
 	{

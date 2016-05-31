@@ -39,6 +39,7 @@ int Sounds::init_audio() {
 
 	SDL_CloseAudio();
 	SDL_FreeWAV(wav_buffer);
+	return(0);
 }
 
 /**
