@@ -1,6 +1,7 @@
 #include <Constants.hpp>
 #include <uiclass/GameMenuDialog.h>
 #include <utilities/RessourceManager.h>
+
 GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int h): Widget(parent)
 {
 	m_width = w;

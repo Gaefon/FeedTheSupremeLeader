@@ -22,10 +22,12 @@ void RessourceManager::loadButtons()
 void RessourceManager::loadBuildings()
 {
     images_sfc.push_back(SDL_LoadBMP("ressources/farm.bmp"));
+    images_sfc.push_back(SDL_LoadBMP("ressources/btn_menu_game.bmp"));
 }
 void RessourceManager::unloadImages()
 {
     std::vector<SDL_Surface *>::iterator it;
+    // faut pas oublier de faire les appel a SDL_FreeSurface;
     images_sfc.clear();
 }
 

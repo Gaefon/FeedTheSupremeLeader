@@ -24,7 +24,11 @@ Button::Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, 
 	m_src.h = img_button->h / 3;
 	m_button_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), img_button);
 
-	setText(text);
+	m_button_text_normal = NULL;
+	m_button_text_over = NULL;
+
+	if (text.length() > 0)
+		setText(text);
 }
 
 Button::~Button()
@@ -142,8 +146,11 @@ void Button::draw()
 
 	SDL_RenderCopy(getParent()->getRenderer(), m_button_texture, &m_src, &m_dst);
 
-	if (!m_is_pressed)
-		SDL_RenderCopy(getParent()->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
-	else
-		SDL_RenderCopy(getParent()->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
+	if (m_button_text_normal != NULL && m_button_text_over != NULL)
+	{
+		if (!m_is_pressed)
+			SDL_RenderCopy(getParent()->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
+		else
+			SDL_RenderCopy(getParent()->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
+	}
 }

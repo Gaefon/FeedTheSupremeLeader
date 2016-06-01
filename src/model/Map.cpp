@@ -150,12 +150,12 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			}
 			break;*/
 		case SDL_MOUSEBUTTONUP:
-			if (event.button.button == SDL_BUTTON_LEFT)
+			/*if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				Farm *testfarm = new Farm(m_parent);
 				cout << testfarm->getName() << endl;
 				m_list_building.push_back(testfarm);
-			}
+			}*/
 			break; /*
 		case SDL_MOUSEMOTION:
 			if (m_is_moving == true)
