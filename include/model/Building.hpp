@@ -18,8 +18,10 @@ class Building
 		Building(MainWindow *prt);
 		virtual ~Building();
 		unsigned int getWidth();
+		unsigned int getDisplayWidth();
 		void setWidth(unsigned int val);
 		unsigned int getHeight();
+		unsigned int getDisplayHeight();
 		void setHeight(unsigned int val);
 
 		unsigned int getPosX();

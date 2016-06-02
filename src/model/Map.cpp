@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <math.h>
 #include <model/Building.hpp>
 #include <model/Farm.hpp>
 #include <model/Map.h>
@@ -152,6 +153,7 @@ void Map::drawMap()
 
 bool Map::onSdlEventReceived(SDL_Event event)
 {
+	bool rtn_val = false;
 	switch (event.type)
 	{
 		/*case SDL_MOUSEBUTTONDOWN:
@@ -165,34 +167,34 @@ bool Map::onSdlEventReceived(SDL_Event event)
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				// si click sur la map
 				if (m_tmp_building != NULL)
 				{
 					m_list_building.push_front(m_tmp_building);
 					m_tmp_building = NULL;
+					rtn_val = true;
 				}
 			}
 			break;
 		case SDL_MOUSEMOTION:
 			if (m_tmp_building != NULL)
 			{
-				int pos_grid_x = (event.motion.x - m_map_relative_position_x) / DEFAULT_WINDOWS_TILE;
-				int pos_grid_y = (event.motion.y - m_map_relative_position_y) / DEFAULT_WINDOWS_TILE;
+				int pos_grid_x = roundf((event.motion.x - m_map_relative_position_x - (m_tmp_building->getDisplayWidth() / 2.0f)) / (float) DEFAULT_WINDOWS_TILE);
+				int pos_grid_y = roundf((event.motion.y - m_map_relative_position_y - (m_tmp_building->getDisplayHeight() / 2.0f)) / (float) DEFAULT_WINDOWS_TILE);
 
 				if (pos_grid_x < 0)
 					pos_grid_x = 0;
-				else if (pos_grid_x >= DEFAULT_MAP_WIDTH)
-					pos_grid_x = DEFAULT_MAP_WIDTH - 1;
+				else if (pos_grid_x >= DEFAULT_MAP_WIDTH - (int) m_tmp_building->getWidth())
+					pos_grid_x = DEFAULT_MAP_WIDTH - m_tmp_building->getWidth();
 
 				if (pos_grid_y < 0)
 					pos_grid_y = 0;
-				else if (pos_grid_y >= DEFAULT_MAP_HEIGHT)
-					pos_grid_y = DEFAULT_MAP_HEIGHT - 1;
+				else if (pos_grid_y >= DEFAULT_MAP_HEIGHT - (int) m_tmp_building->getHeight())
+					pos_grid_y = DEFAULT_MAP_HEIGHT - m_tmp_building->getHeight();
 
 				m_tmp_building->setPosX(pos_grid_x);
 				m_tmp_building->setPosY(pos_grid_y);
 			}
 			break;
 	}
-	return false;
+	return rtn_val;
 }

@@ -18,12 +18,22 @@ GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int
 	m_btn_menu = new Button(getParent(), 0, 0, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Main menu");
 	m_btn_menu->setPosition(getParent()->getWidth() / 2 - m_btn_menu->getWidth() / 2, getParent()->getHeight() / 2 - m_height / 2 + 40);
 
-	poller->subscribe(m_btn_menu);
+	m_poller = poller;
 }
 
 GameMenuDialog::~GameMenuDialog()
 {
 	delete m_btn_menu;
+}
+
+void GameMenuDialog::registerButtons()
+{
+	m_poller->subscribe(m_btn_menu);
+}
+
+void GameMenuDialog::unregisterButton()
+{
+	m_poller->unSubscribe(m_btn_menu);
 }
 
 int GameMenuDialog::getWidth()
@@ -58,6 +68,10 @@ bool GameMenuDialog::onSdlEventReceived(SDL_Event event)
 	if (event.key.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
 	{
 		m_is_visible = !m_is_visible;
+		if (m_is_visible)
+			registerButtons();
+		else
+			unregisterButton();
 		return true;
 	}
 	if (m_is_visible)

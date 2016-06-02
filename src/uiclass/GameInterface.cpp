@@ -9,7 +9,6 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 	m_map = new Map(getParent());
 	m_poller->subscribe(m_map);
 
-
 	menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
 	menu_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
 	menu_rect.w = getParent()->getWidth() - GAME_INTERFACE_BUILDING_MENU_WIDTH;

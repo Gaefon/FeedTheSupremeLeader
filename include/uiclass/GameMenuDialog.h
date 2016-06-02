@@ -16,6 +16,10 @@ class GameMenuDialog: public Widget, public SdlObserver
 		bool m_is_visible;
 		bool m_is_goto_menu_requested;
 		Button *m_btn_menu;
+		SDLPoller *m_poller;
+
+		void registerButtons();
+		void unregisterButton();
 
 	public:
 		GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int h);

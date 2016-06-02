@@ -11,24 +11,34 @@ Building::Building(MainWindow *prt)
 	m_parent = prt;
 }
 
-void Building::setWidth(unsigned int val)
-{
-	m_width = val;
-}
-
 unsigned int Building::getWidth()
 {
 	return m_width;
 }
 
-void Building::setHeight(unsigned int val)
+unsigned int Building::getDisplayWidth()
 {
-	m_height = val;
+	return m_width * DEFAULT_WINDOWS_TILE;
+}
+
+void Building::setWidth(unsigned int val)
+{
+	m_width = val;
 }
 
 unsigned int Building::getHeight()
 {
 	return m_height;
+}
+
+unsigned int Building::getDisplayHeight()
+{
+	return m_height * DEFAULT_WINDOWS_TILE;
+}
+
+void Building::setHeight(unsigned int val)
+{
+	m_height = val;
 }
 
 unsigned int Building::getPosX()
