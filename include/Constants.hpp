@@ -32,6 +32,7 @@
 #define MENU_BCKGRD     2
 #define ENTITY_FARM     3
 #define BTN_MENU_GAME   4
+#define BTN_MENU_GAME_CANCEL 5
 
 
 #endif // CONSTANTS_HPP

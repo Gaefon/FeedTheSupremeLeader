@@ -28,11 +28,13 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 	btn_road = new Button(getParent(), 48, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
 	btn_school = new Button(getParent(), 96, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
 	btn_farm = new Button(getParent(), 0, building_rect.y + 48, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
+	btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, building_rect.y + 144, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME_CANCEL), "");
 
 	m_poller->subscribe(btn_home);
 	m_poller->subscribe(btn_road);
 	m_poller->subscribe(btn_school);
 	m_poller->subscribe(btn_farm);
+	m_poller->subscribe(btn_cancel);
 
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
 }
@@ -68,7 +70,10 @@ void GameInterface::draw()
 	btn_road->draw();
 	btn_school->draw();
 	btn_farm->draw();
+	btn_cancel->draw();
 
 	if (btn_farm->isClicked())
 		m_map->setTmpBuilding(new Farm(getParent()));
+	if (btn_cancel->isClicked())
+		m_map->setTmpBuilding(NULL);
 }
