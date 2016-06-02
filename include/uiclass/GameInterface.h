@@ -21,6 +21,7 @@ class GameInterface: public Widget
 		Button *btn_home;
 		Button *btn_road;
 		Button *btn_school;
+		Button *btn_farm;
 
 	public:
 		GameInterface(MainWindow *parent, SDLPoller *poller);

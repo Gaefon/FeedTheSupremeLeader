@@ -1,4 +1,5 @@
 #include <Constants.hpp>
+#include <model/Farm.hpp>
 #include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
 
@@ -27,10 +28,12 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 	btn_home = new Button(getParent(), 0, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
 	btn_road = new Button(getParent(), 48, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
 	btn_school = new Button(getParent(), 96, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
+	btn_farm = new Button(getParent(), 0, building_rect.y + 48, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
 
 	m_poller->subscribe(btn_home);
 	m_poller->subscribe(btn_road);
 	m_poller->subscribe(btn_school);
+	m_poller->subscribe(btn_farm);
 
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
 }
@@ -65,4 +68,8 @@ void GameInterface::draw()
 	btn_home->draw();
 	btn_road->draw();
 	btn_school->draw();
+	btn_farm->draw();
+
+	if (btn_farm->isClicked())
+		m_map->setTmpBuilding(new Farm(getParent()));
 }

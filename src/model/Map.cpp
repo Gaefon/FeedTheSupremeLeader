@@ -18,12 +18,15 @@ Map::Map(MainWindow *par)
 	m_map_relative_position_x = 0;
 	m_map_relative_position_y = 0;
 
+	m_tmp_building = NULL;
+
 	m_display_width = m_parent->getWidth();
 	m_display_height = m_parent->getHeight();
 }
 
 Map::~Map()
 {
+	delete m_tmp_building;
 }
 
 void Map::setWidth(unsigned int val)
@@ -56,6 +59,12 @@ void Map::setDisplayHeight(int new_h)
 	m_display_height = new_h;
 }
 
+void Map::setTmpBuilding(Building *tmp)
+{
+	if (m_tmp_building != NULL)
+		delete m_tmp_building;
+	m_tmp_building = tmp;
+}
 
 void Map::drawMapGrid()
 {
@@ -129,8 +138,12 @@ void Map::drawMap()
 	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
 	{
-		cout << (*it)->getName() << endl;
-		(*it)->drawBuilding();
+		(*it)->drawBuilding(m_map_relative_position_x, m_map_relative_position_y);
+	}
+
+	if (m_tmp_building != NULL)
+	{
+		m_tmp_building->drawBuilding(m_map_relative_position_x, m_map_relative_position_y);
 	}
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
@@ -141,7 +154,7 @@ bool Map::onSdlEventReceived(SDL_Event event)
 {
 	switch (event.type)
 	{
-	/*	case SDL_MOUSEBUTTONDOWN:
+		/*case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				m_is_moving = true;
@@ -150,23 +163,36 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			}
 			break;*/
 		case SDL_MOUSEBUTTONUP:
-			/*if (event.button.button == SDL_BUTTON_LEFT)
+			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				Farm *testfarm = new Farm(m_parent);
-				cout << testfarm->getName() << endl;
-				m_list_building.push_back(testfarm);
-			}*/
-			break; /*
-		case SDL_MOUSEMOTION:
-			if (m_is_moving == true)
-			{
-				m_map_relative_position_x += event.motion.x - m_previous_x;
-				m_map_relative_position_y += event.motion.y - m_previous_y;
-				m_previous_x = event.motion.x;
-				m_previous_y = event.motion.y;
+				// si click sur la map
+				if (m_tmp_building != NULL)
+				{
+					m_list_building.push_front(m_tmp_building);
+					m_tmp_building = NULL;
+				}
 			}
 			break;
-	}*/
+		case SDL_MOUSEMOTION:
+			if (m_tmp_building != NULL)
+			{
+				int pos_grid_x = (event.motion.x - m_map_relative_position_x) / DEFAULT_WINDOWS_TILE;
+				int pos_grid_y = (event.motion.y - m_map_relative_position_y) / DEFAULT_WINDOWS_TILE;
+
+				if (pos_grid_x < 0)
+					pos_grid_x = 0;
+				else if (pos_grid_x >= DEFAULT_MAP_WIDTH)
+					pos_grid_x = DEFAULT_MAP_WIDTH - 1;
+
+				if (pos_grid_y < 0)
+					pos_grid_y = 0;
+				else if (pos_grid_y >= DEFAULT_MAP_HEIGHT)
+					pos_grid_y = DEFAULT_MAP_HEIGHT - 1;
+
+				m_tmp_building->setPosX(pos_grid_x);
+				m_tmp_building->setPosY(pos_grid_y);
+			}
+			break;
 	}
 	return false;
 }

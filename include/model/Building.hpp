@@ -9,22 +9,28 @@ class Building
 	private:
 		unsigned int m_width;
 		unsigned int m_height;
+		unsigned int m_pos_x;
+		unsigned int m_pos_y;
 		std::string m_name;
 		MainWindow *m_parent;
-		SDL_Texture *m_texture;
 
 	public:
-        Building();
 		Building(MainWindow *prt);
 		virtual ~Building();
 		unsigned int getWidth();
 		void setWidth(unsigned int val);
 		unsigned int getHeight();
 		void setHeight(unsigned int val);
+
+		unsigned int getPosX();
+		void setPosX(unsigned int val);
+		unsigned int getPosY();
+		void setPosY(unsigned int val);
+
 		std::string getName();
 		MainWindow *getParent();
 		void setName(std::string val);
-		virtual void drawBuilding();
+		virtual void drawBuilding(int rel_x, int rel_y) = 0;
 };
 
 #endif // BUILDING_HPP

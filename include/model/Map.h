@@ -24,6 +24,7 @@ class Map: public SdlObserver
 		int m_map_relative_position_y;
 
 		std::list<Building *> m_list_building;
+		Building *m_tmp_building;
 
 		void drawMapGrid();
 		void checkCursorPosition();
@@ -39,6 +40,8 @@ class Map: public SdlObserver
 
 		void setDisplayWidth(int new_w);
 		void setDisplayHeight(int new_h);
+
+		void setTmpBuilding(Building *tmp);
 
 		void drawMap();
 
