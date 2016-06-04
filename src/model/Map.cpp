@@ -4,6 +4,7 @@
 #include <model/Farm.hpp>
 #include <model/Map.h>
 #include <Constants.hpp>
+#include <utilities/BuildingHelper.h>
 
 
 
@@ -145,6 +146,17 @@ void Map::drawMap()
 	if (m_tmp_building != NULL)
 	{
 		m_tmp_building->drawBuilding(m_map_relative_position_x, m_map_relative_position_y);
+		if (!BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
+		{
+			SDL_Rect rect_overlay_building;
+
+			rect_overlay_building.x = m_tmp_building->getPosX() * DEFAULT_WINDOWS_TILE + m_map_relative_position_x;
+			rect_overlay_building.y = m_tmp_building->getPosY() * DEFAULT_WINDOWS_TILE + m_map_relative_position_y;
+			rect_overlay_building.w = m_tmp_building->getDisplayWidth();
+			rect_overlay_building.h = m_tmp_building->getDisplayHeight();
+			SDL_SetRenderDrawColor(m_parent->getRenderer(), 255, 0, 0, 64);
+			SDL_RenderFillRect(m_parent->getRenderer(), &rect_overlay_building);
+		}
 	}
 	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
@@ -167,7 +179,7 @@ bool Map::onSdlEventReceived(SDL_Event event)
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (m_tmp_building != NULL)
+				if (m_tmp_building != NULL && BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
 				{
 					m_list_building.push_front(m_tmp_building);
 					m_tmp_building = NULL;

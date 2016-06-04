@@ -16,7 +16,8 @@ SRC =	main.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
 		src/utilities/Config.cpp\
-		src/utilities/RessourceManager.cpp
+		src/utilities/RessourceManager.cpp\
+		src/utilities/BuildingHelper.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
