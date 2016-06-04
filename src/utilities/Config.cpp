@@ -6,12 +6,15 @@ Config::Config()
 	m_fullscreen = false;
 }
 
-bool Config::getFullscreen()
+bool Config::get(Config::Variable var)
 {
-	return m_fullscreen;
+	if (var == Fullscreen)
+		return m_fullscreen;
+	return false;
 }
 
-void Config::setFullscreen(bool value)
+void Config::set(Config::Variable var, bool value)
 {
-	m_fullscreen = value;
+	if (var == Fullscreen)
+		m_fullscreen = value;
 }

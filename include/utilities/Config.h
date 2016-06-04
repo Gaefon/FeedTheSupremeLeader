@@ -7,14 +7,20 @@ class Config : public Singleton<Config>
 {
 	friend class Singleton<Config>;
 
+	public:
+		enum Variable
+		{
+			Fullscreen
+		};
+
 	private:
 		Config();
 
 		bool m_fullscreen;
 
 	public:
-		bool getFullscreen();
-		void setFullscreen(bool value);
+		void set(Variable var, bool value);
+		bool get(Variable var);
 
 };
 

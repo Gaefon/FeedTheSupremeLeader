@@ -12,16 +12,16 @@ using namespace std;
 
 string getButtonString()
 {
-	if (Config::getInstance()->getFullscreen())
+	if (Config::getInstance()->get(Config::Fullscreen))
 		return "Fullscreen : On";
 	return "Fullscreen : Off";
 }
 
 void toggleFullscreen(MainWindow *window, Button *btn_fullscreen)
 {
-	Config::getInstance()->setFullscreen(!Config::getInstance()->getFullscreen());
+	Config::getInstance()->set(Config::Fullscreen, !Config::getInstance()->get(Config::Fullscreen));
 	btn_fullscreen->setText(getButtonString());
-	window->setFullscreen(Config::getInstance()->getFullscreen());
+	window->setFullscreen(Config::getInstance()->get(Config::Fullscreen));
 }
 
 void showParameters(MainWindow *window)
