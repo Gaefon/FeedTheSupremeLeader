@@ -30,9 +30,10 @@
 #define MENU_DEF_BUTTON 0
 #define MENU_LRG_BUTTON 1
 #define MENU_BCKGRD     2
-#define ENTITY_FARM     3
-#define BTN_MENU_GAME   4
-#define BTN_MENU_GAME_CANCEL 5
+#define DEFAULT_TILE    3
+#define ENTITY_FARM     4
+#define BTN_MENU_GAME   5
+#define BTN_MENU_GAME_CANCEL 6
 
 
 #endif // CONSTANTS_HPP

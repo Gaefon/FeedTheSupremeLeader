@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <list>
+#include <SDL.h>
 
 #include <model/Building.hpp>
 #include <uiclass/MainWindow.hpp>
@@ -25,6 +26,9 @@ class Map: public SdlObserver
 
 		std::list<Building *> m_list_building;
 		Building *m_tmp_building;
+
+		SDL_Texture *m_texture_tile;
+		SDL_Rect draw_tile_surface;
 
 		void drawMapGrid();
 		void checkCursorPosition();

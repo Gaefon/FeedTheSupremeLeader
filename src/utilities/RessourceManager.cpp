@@ -10,6 +10,7 @@ int RessourceManager::loadImages()
 {
 	loadButtons();
 	images_sfc.push_back(SDL_LoadBMP("ressources/menu_background.bmp"));
+	images_sfc.push_back(SDL_LoadBMP("ressources/default_tile.bmp"));
 	loadBuildings();
 	return 0;
 }

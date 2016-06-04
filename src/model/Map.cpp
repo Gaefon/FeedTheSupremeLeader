@@ -5,7 +5,7 @@
 #include <model/Map.h>
 #include <Constants.hpp>
 #include <utilities/BuildingHelper.h>
-
+#include <utilities/RessourceManager.h>
 
 
 using namespace std;
@@ -24,6 +24,13 @@ Map::Map(MainWindow *par)
 
 	m_display_width = m_parent->getWidth();
 	m_display_height = m_parent->getHeight();
+
+	m_texture_tile = SDL_CreateTextureFromSurface(m_parent->getRenderer(), RessourceManager::getInstance()->getSurface(DEFAULT_TILE));
+	draw_tile_surface.x = 0;
+	draw_tile_surface.y = 0;
+	draw_tile_surface.w = DEFAULT_WINDOWS_TILE;
+	draw_tile_surface.h = DEFAULT_WINDOWS_TILE;
+
 }
 
 Map::~Map()
@@ -70,8 +77,17 @@ void Map::setTmpBuilding(Building *tmp)
 
 void Map::drawMapGrid()
 {
+	for (unsigned int i = 0; i < m_height; ++i)
+	{
+		for (unsigned int j = 0; j < m_width; j++)
+		{
+			draw_tile_surface.x = j * DEFAULT_WINDOWS_TILE + m_map_relative_position_x;
+			draw_tile_surface.y = i * DEFAULT_WINDOWS_TILE + m_map_relative_position_y;
+			SDL_RenderCopy(m_parent->getRenderer(), m_texture_tile, NULL, &draw_tile_surface);
+		}
+	}
 
-	for (unsigned int i = 0; i <= m_height; ++i)
+	/*for (unsigned int i = 0; i <= m_height; ++i)
 	{
 		SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 255, i * 2, 255);
 		SDL_RenderDrawLine(m_parent->getRenderer(), m_map_relative_position_x, m_map_relative_position_y + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_x + m_width * DEFAULT_WINDOWS_TILE, m_map_relative_position_y + i * DEFAULT_WINDOWS_TILE);
@@ -81,7 +97,7 @@ void Map::drawMapGrid()
 	{
 		SDL_SetRenderDrawColor(m_parent->getRenderer(), 255, i * 2, 0, 255);
 		SDL_RenderDrawLine(m_parent->getRenderer(), m_map_relative_position_x + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_y, m_map_relative_position_x + i * DEFAULT_WINDOWS_TILE, m_map_relative_position_y + m_height * DEFAULT_WINDOWS_TILE);
-	}
+	}*/
 }
 
 void Map::checkCursorPosition()
@@ -137,6 +153,7 @@ void Map::checkCursorPosition()
 void Map::drawMap()
 {
 	checkCursorPosition();
+	drawMapGrid();
 	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
 	{
@@ -158,7 +175,6 @@ void Map::drawMap()
 			SDL_RenderFillRect(m_parent->getRenderer(), &rect_overlay_building);
 		}
 	}
-	drawMapGrid();
 	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }
 
