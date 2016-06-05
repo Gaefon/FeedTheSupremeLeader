@@ -9,6 +9,7 @@ class Minimap: public Widget
 {
 	private:
 		Map *m_map;
+		SDL_Rect m_map_pos_rect;
 		SDL_Rect draw_rect;
 		SDL_Color default_color;
 

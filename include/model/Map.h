@@ -45,6 +45,9 @@ class Map: public SdlObserver
 		void setDisplayWidth(int new_w);
 		void setDisplayHeight(int new_h);
 
+		int getTilePosX();
+		int getTilePosY();
+
 		void setTmpBuilding(Building *tmp);
 		std::list<Building *> *getBuildings();
 

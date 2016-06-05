@@ -68,6 +68,16 @@ void Map::setDisplayHeight(int new_h)
 	m_display_height = new_h;
 }
 
+int Map::getTilePosX()
+{
+	return roundf(m_map_relative_position_x / DEFAULT_WINDOWS_TILE);
+}
+
+int Map::getTilePosY()
+{
+	return roundf(m_map_relative_position_y / DEFAULT_WINDOWS_TILE);
+}
+
 void Map::setTmpBuilding(Building *tmp)
 {
 	if (m_tmp_building != NULL)
