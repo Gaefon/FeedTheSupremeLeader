@@ -35,6 +35,7 @@ void Minimap::draw()
 {
 	list<Building *> *blds = m_map->getBuildings();
 	SDL_Rect tmp;
+	SDL_Color *tmp_color;
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), default_color.r, default_color.g, default_color.b, default_color.a);
 	SDL_RenderFillRect(getParent()->getRenderer(), &draw_rect);
 
@@ -44,8 +45,9 @@ void Minimap::draw()
 		tmp.y = (*it)->getPosY() + draw_rect.y;
 		tmp.w = (*it)->getWidth();
 		tmp.h = (*it)->getHeight();
+		tmp_color = (*it)->getMinimapBuidingColor();
 
-		SDL_SetRenderDrawColor(getParent()->getRenderer(), 255, 255, 255, 255);
+		SDL_SetRenderDrawColor(getParent()->getRenderer(), tmp_color->r, tmp_color->g, tmp_color->b, tmp_color->a);
 		SDL_RenderFillRect(getParent()->getRenderer(), &tmp);
 	}
 }

@@ -2,6 +2,7 @@
 #define BUILDING_HPP
 
 #include <iostream>
+#include <SDL.h>
 #include <uiclass/MainWindow.hpp>
 
 class Building
@@ -33,6 +34,7 @@ class Building
 		MainWindow *getParent();
 		void setName(std::string val);
 		virtual void drawBuilding(int rel_x, int rel_y) = 0;
+		virtual SDL_Color *getMinimapBuidingColor() = 0;
 };
 
 #endif // BUILDING_HPP

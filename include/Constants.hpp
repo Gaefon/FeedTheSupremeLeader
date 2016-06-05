@@ -28,6 +28,7 @@
 #define COLOR_LIGHT_YELLOW 0xede623ff
 
 #define COLOR_GREEN_MAP 0x1eb800ff
+#define COLOR_FARM_MINIMAP 0x8f552dff
 
 #define MENU_DEF_BUTTON 0
 #define MENU_LRG_BUTTON 1
