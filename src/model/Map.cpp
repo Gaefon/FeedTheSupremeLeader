@@ -75,6 +75,11 @@ void Map::setTmpBuilding(Building *tmp)
 	m_tmp_building = tmp;
 }
 
+list<Building *> *Map::getBuildings()
+{
+	return &m_list_building;
+}
+
 void Map::drawMapGrid()
 {
 	for (unsigned int i = 0; i < m_height; ++i)

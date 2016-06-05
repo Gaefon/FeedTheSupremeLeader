@@ -7,6 +7,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 {
 	m_poller = poller;
 	m_map = new Map(getParent());
+	m_minimap = new Minimap(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT, m_map);
+
 	m_poller->subscribe(m_map);
 
 	menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
@@ -71,6 +73,7 @@ void GameInterface::draw()
 	btn_school->draw();
 	btn_farm->draw();
 	btn_cancel->draw();
+	m_minimap->draw();
 
 	if (btn_farm->isClicked())
 		m_map->setTmpBuilding(new Farm(getParent()));
