@@ -6,6 +6,7 @@
 #include <uiclass/Button.h>
 #include <model/Map.h>
 #include <utilities/RessourceManager.h>
+#include <utilities/Config.h>
 
 using namespace std;
 
@@ -20,8 +21,10 @@ int main(int argc, char ** argv)
 	TTF_Init();
 
 	RessourceManager::getInstance()->loadImages();
-	
+	Config::getInstance()->readConfiguration();
+
 	window.displayWindow();
+	window.setFullscreen(Config::getInstance()->get(Config::Fullscreen));
 	showMenu(&window);
 
 	RessourceManager::getInstance()->unloadImages();
