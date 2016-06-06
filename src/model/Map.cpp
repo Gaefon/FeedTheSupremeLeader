@@ -78,6 +78,12 @@ int Map::getTilePosY()
 	return roundf(m_map_relative_position_y / DEFAULT_WINDOWS_TILE);
 }
 
+void Map::setTileMapPos(int pos_x, int pos_y)
+{
+	m_map_relative_position_x = - pos_x * DEFAULT_WINDOWS_TILE;
+	m_map_relative_position_y = - pos_y * DEFAULT_WINDOWS_TILE;
+}
+
 void Map::setTmpBuilding(Building *tmp)
 {
 	if (m_tmp_building != NULL)
