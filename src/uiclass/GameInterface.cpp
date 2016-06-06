@@ -1,7 +1,10 @@
+#include <iostream>
 #include <Constants.hpp>
 #include <model/Farm.hpp>
 #include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
+
+using namespace std;
 
 GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(parent)
 {
@@ -40,6 +43,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 	m_poller->subscribe(m_btn_farm);
 	m_poller->subscribe(m_btn_cancel);
 	m_poller->subscribe(m_minimap);
+
+	m_map->getPoller()->subscribe(this);
 
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
 }
@@ -84,4 +89,10 @@ void GameInterface::draw()
 		m_map->setTmpBuilding(new Farm(getParent()));
 	if (m_btn_cancel->isClicked())
 		m_map->setTmpBuilding(NULL);
+}
+
+bool GameInterface::onBuidingClicked(Building *building)
+{
+	cout << building->getName() << endl;
+	return true;
 }

@@ -7,10 +7,11 @@
 #include <uiclass/Widget.h>
 #include <uiclass/Button.h>
 #include <utilities/Poller/SDLPoller.h>
+#include <utilities/Observer/MapObserver.h>
 #include <model/Map.h>
 #include <uiclass/Minimap.h>
 
-class GameInterface: public Widget
+class GameInterface: public Widget, public MapObserver
 {
 	private:
 		SDLPoller *m_poller;
@@ -32,6 +33,7 @@ class GameInterface: public Widget
 		int getWidth();
 		int getHeight();
 		void draw();
+		bool onBuidingClicked(Building *building);
 };
 
 #endif

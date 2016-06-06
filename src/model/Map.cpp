@@ -239,11 +239,10 @@ bool Map::onSdlEventReceived(SDL_Event event)
 					{
 						unsigned int x_clicked = (event.button.x - m_map_relative_position_x) / DEFAULT_WINDOWS_TILE;
 						unsigned int y_clicked = (event.button.y - m_map_relative_position_y) / DEFAULT_WINDOWS_TILE;
-
 						for (list<Building *>::iterator it = m_list_building.begin(); it != m_list_building.end(); ++it)
 						{
-							if (x_clicked >= (*it)->getPosX() && y_clicked < (*it)->getPosX() + (*it)->getWidth() && 
-								y_clicked >= (*it)->getPosY() && y_clicked < (*it)->getPosY() + (*it)->getHeight())
+							if (x_clicked >= (*it)->getPosX() && x_clicked < ((*it)->getPosX() + (*it)->getWidth()) && 
+								y_clicked >= (*it)->getPosY() && y_clicked < ((*it)->getPosY() + (*it)->getHeight()))
 							{
 								m_poller.notifyBuildingSelected(*it);
 								break;
