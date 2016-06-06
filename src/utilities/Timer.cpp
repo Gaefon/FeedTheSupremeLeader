@@ -25,7 +25,6 @@ void Timer::getTimeDifference() {
   long timeTmp;
 
   timeTmp = current_time - m_last_time;
-  cout << timeTmp << endl;
   if (timeTmp > FRAME_PAUSE_DURATION)
     timeTmp = FRAME_PAUSE_DURATION;
   SDL_Delay(FRAME_PAUSE_DURATION - timeTmp);

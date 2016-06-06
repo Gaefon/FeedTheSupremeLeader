@@ -4,6 +4,8 @@
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
 #include <utilities/Config.h>
+#include <SDL.h>
+#include <utilities/Timer.h>
 
 #include <utilities/RessourceManager.h>
 #include <utilities/Poller/SDLPoller.h>
@@ -36,6 +38,7 @@ void showParameters(MainWindow *window)
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(window);
 
+	Timer::getInstance()->setLastTime(SDL_GetTicks());
 	while (!window->hasCloseRequest() && !back_clicked)
 	{
 		btn_fullscreen.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 80);
@@ -52,6 +55,7 @@ void showParameters(MainWindow *window)
 		}
 		if (btn_fullscreen.isClicked())
 			toggleFullscreen(window, &btn_fullscreen);
-		SDL_Delay(20);
+		// SDL_Delay(20);
+		Timer::getInstance()->getTimeDifference();
 	}
 }
