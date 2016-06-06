@@ -9,22 +9,22 @@ RessourceManager::RessourceManager()
 int RessourceManager::loadImages()
 {
 	loadButtons();
-	images_sfc.push_back(SDL_LoadBMP("ressources/menu_background.bmp"));
-	images_sfc.push_back(SDL_LoadBMP("ressources/default_tile.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Menu_Background, SDL_LoadBMP("ressources/menu_background.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Default_tile, SDL_LoadBMP("ressources/default_tile.bmp"));
 	loadBuildings();
 	return 0;
 }
 void RessourceManager::loadButtons()
 {
-	images_sfc.push_back(SDL_LoadBMP("ressources/play_button.bmp"));
-	images_sfc.push_back(SDL_LoadBMP("ressources/large_button.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Menu_Default_Button, SDL_LoadBMP("ressources/play_button.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Menu_Large_Button, SDL_LoadBMP("ressources/large_button.bmp"));
 }
 
 void RessourceManager::loadBuildings()
 {
-	images_sfc.push_back(SDL_LoadBMP("ressources/farm.bmp"));
-	images_sfc.push_back(SDL_LoadBMP("ressources/btn_menu_game.bmp"));
-	images_sfc.push_back(SDL_LoadBMP("ressources/btn_menu_game_cancel.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Farm, SDL_LoadBMP("ressources/farm.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Button_Menu_Game, SDL_LoadBMP("ressources/btn_menu_game.bmp"));
+	images_sfc.insert(images_sfc.begin() + RessourceManager::Button_Menu_Game_Cancel, SDL_LoadBMP("ressources/btn_menu_game_cancel.bmp"));
 }
 void RessourceManager::unloadImages()
 {

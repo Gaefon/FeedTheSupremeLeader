@@ -12,7 +12,6 @@ class Config : public Singleton<Config>
 		{
 			Fullscreen
 		};
-
 	private:
 		Config();
 

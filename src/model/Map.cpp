@@ -25,7 +25,7 @@ Map::Map(MainWindow *par)
 	m_display_width = m_parent->getWidth();
 	m_display_height = m_parent->getHeight();
 
-	m_texture_tile = SDL_CreateTextureFromSurface(m_parent->getRenderer(), RessourceManager::getInstance()->getSurface(DEFAULT_TILE));
+	m_texture_tile = SDL_CreateTextureFromSurface(m_parent->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Default_tile));
 	draw_tile_surface.x = 0;
 	draw_tile_surface.y = 0;
 	draw_tile_surface.w = DEFAULT_WINDOWS_TILE;

@@ -28,11 +28,11 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 
 	m_minimap->setPosition(getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2 - m_minimap->getWidth() / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2 - m_minimap->getHeight() / 2);
 
-	m_btn_home = new Button(getParent(), 0, m_building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	m_btn_road = new Button(getParent(), 48, m_building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	m_btn_school = new Button(getParent(), 96, m_building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	m_btn_farm = new Button(getParent(), 0, m_building_rect.y + 48, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, m_building_rect.y + 144, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME_CANCEL), "");
+	m_btn_home = new Button(getParent(), 0, m_building_rect.y, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+	m_btn_road = new Button(getParent(), 48, m_building_rect.y, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+	m_btn_school = new Button(getParent(), 96, m_building_rect.y, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+	m_btn_farm = new Button(getParent(), 0, m_building_rect.y + 48, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, m_building_rect.y + 144, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 
 	m_poller->subscribe(m_btn_home);
 	m_poller->subscribe(m_btn_road);
