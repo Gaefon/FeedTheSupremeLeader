@@ -3,6 +3,7 @@
 
 #include <uiclass/Minimap.h>
 #include <helper/ColorHelper.h>
+#include <helper/RectHelper.h>
 #include <Constants.hpp>
 
 using namespace std;
@@ -20,6 +21,8 @@ Minimap::Minimap(MainWindow *parent, int pos_x, int pos_y, Map *map): Widget(par
 	m_map_pos_rect.y = 0;
 	m_map_pos_rect.w = roundf(getParent()->getWidth() / DEFAULT_WINDOWS_TILE);
 	m_map_pos_rect.h = roundf((getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT) / DEFAULT_WINDOWS_TILE);
+
+	m_is_clicked = false;
 }
 
 Minimap::~Minimap()
@@ -40,6 +43,33 @@ void Minimap::setPosition(int x, int y)
 {
 	m_draw_rect.x = x;
 	m_draw_rect.y = y;
+}
+
+bool Minimap::onSdlEventReceived(SDL_Event event)
+{
+	bool is_over = RectHelper::isInRect(&m_draw_rect, event.button.x, event.button.y);
+	switch (event.type)
+	{
+		case SDL_MOUSEBUTTONDOWN:
+			if (is_over)
+			{
+				m_is_clicked = true;
+				m_map->setTileMapPos(event.motion.x - m_draw_rect.x - m_map_pos_rect.w / 2, event.motion.y - m_draw_rect.y - m_map_pos_rect.h / 2);
+			}
+			break;
+		case SDL_MOUSEMOTION:
+			if (is_over && m_is_clicked)
+			{
+				m_map->setTileMapPos(event.motion.x - m_draw_rect.x - m_map_pos_rect.w / 2, event.motion.y - m_draw_rect.y - m_map_pos_rect.h / 2);
+			}
+			else
+				m_is_clicked = false;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			m_is_clicked = false;
+			break;
+	}
+	return false;
 }
 
 void Minimap::draw()

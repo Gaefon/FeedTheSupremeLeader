@@ -2,18 +2,13 @@
 #define RESSOURCE_MANAGER_H
 
 #include <vector>
+#include <string>
 #include <SDL.h>
 #include <utilities/Singleton.hpp>
 
 class RessourceManager: public Singleton<RessourceManager>
 {
 	friend class Singleton<RessourceManager>;
-
-	private:
-		RessourceManager();
-		std::vector<SDL_Surface *> images_sfc;
-        void loadButtons();
-        void loadBuildings();
 
 	public:
         enum DrawableEntities
@@ -24,12 +19,19 @@ class RessourceManager: public Singleton<RessourceManager>
             Default_tile = 3,
             Farm = 4,
             Button_Menu_Game = 5,
-            Button_Menu_Game_Cancel = 6
+            Button_Menu_Game_Cancel = 6,
+            END_OF_ENUM = 7,
         };
 		int loadImages();
 		void unloadImages();
 
 		SDL_Surface *getSurface(int index);
+
+	private:
+		std::vector<SDL_Surface *> images_sfc;
+		std::string m_accesspaths[END_OF_ENUM];
+		RessourceManager();
+		void loadAccessPath();
 
 };
 

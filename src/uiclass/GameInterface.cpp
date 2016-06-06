@@ -39,6 +39,7 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 	m_poller->subscribe(m_btn_school);
 	m_poller->subscribe(m_btn_farm);
 	m_poller->subscribe(m_btn_cancel);
+	m_poller->subscribe(m_minimap);
 
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
 }

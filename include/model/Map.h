@@ -47,6 +47,7 @@ class Map: public SdlObserver
 
 		int getTilePosX();
 		int getTilePosY();
+		void setTileMapPos(int pos_x, int pos_y);
 
 		void setTmpBuilding(Building *tmp);
 		std::list<Building *> *getBuildings();
