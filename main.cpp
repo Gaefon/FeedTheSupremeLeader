@@ -20,7 +20,8 @@ int main(int argc, char ** argv)
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
 
-	RessourceManager::getInstance()->loadImages();
+	if(RessourceManager::getInstance()->loadImages() < 0)
+        SDL_Quit();
 	Config::getInstance()->readConfiguration();
 
 	window.displayWindow();

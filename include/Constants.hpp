@@ -37,6 +37,7 @@
 #define ENTITY_FARM     4
 #define BTN_MENU_GAME   5
 #define BTN_MENU_GAME_CANCEL 6
+#define FRAME_PAUSE_DURATION 30
 
 #define CONFIG_FILE_NAME "config.json"
 
