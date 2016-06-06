@@ -249,7 +249,6 @@ bool Map::onSdlEventReceived(SDL_Event event)
 								break;
 							}
 						}
-						//if (event.button.x)
 					}
 				}
 			}
