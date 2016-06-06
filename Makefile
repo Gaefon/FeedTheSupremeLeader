@@ -18,7 +18,8 @@ SRC =	main.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
 		src/utilities/Config.cpp\
 		src/utilities/RessourceManager.cpp\
-		src/utilities/BuildingHelper.cpp
+		src/utilities/BuildingHelper.cpp\
+		src/lib/jsonCpp/jsoncpp.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 

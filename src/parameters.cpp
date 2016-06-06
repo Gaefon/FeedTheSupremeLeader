@@ -35,6 +35,7 @@ void showParameters(MainWindow *window)
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(window);
+
 	while (!window->hasCloseRequest() && !back_clicked)
 	{
 		btn_fullscreen.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 80);
@@ -45,8 +46,10 @@ void showParameters(MainWindow *window)
 		back_button.draw();
 		btn_fullscreen.draw();
 		window->update();
-		if (back_button.isClicked())
+		if (back_button.isClicked()) {
 			back_clicked = true;
+			Config::getInstance()->saveConfiguration();
+		}
 		if (btn_fullscreen.isClicked())
 			toggleFullscreen(window, &btn_fullscreen);
 		SDL_Delay(20);

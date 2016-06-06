@@ -2,6 +2,9 @@
 #define CONFIG_H
 
 #include <utilities/Singleton.hpp>
+#include <lib/jsonCpp/json.h>
+#include <iostream>
+#include <fstream>
 
 class Config : public Singleton<Config>
 {
@@ -21,7 +24,9 @@ class Config : public Singleton<Config>
 	public:
 		void set(Variable var, bool value);
 		bool get(Variable var);
-
+		void saveConfiguration();
+		void readConfiguration();
+		
 };
 
 #endif
