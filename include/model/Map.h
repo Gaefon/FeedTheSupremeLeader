@@ -8,6 +8,8 @@
 #include <uiclass/MainWindow.hpp>
 #include <utilities/Observer/SdlObserver.h>
 
+#include <utilities/Poller/MapPoller.h>
+
 class Map: public SdlObserver
 {
 	private:
@@ -31,6 +33,8 @@ class Map: public SdlObserver
 		SDL_Rect draw_tile_surface;
 		SDL_Rect m_map_surface;
 
+		MapPoller m_poller;
+
 		void drawMapGrid();
 		void checkCursorPosition();
 
@@ -52,6 +56,8 @@ class Map: public SdlObserver
 
 		void setTmpBuilding(Building *tmp);
 		std::list<Building *> *getBuildings();
+
+		MapPoller *getPoller();
 
 		void drawMap();
 

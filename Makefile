@@ -16,6 +16,7 @@ SRC =	main.cpp\
 		src/uiclass/Minimap.cpp\
 		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
+		src/utilities/Poller/MapPoller.cpp\
 		src/utilities/Config.cpp\
 		src/utilities/RessourceManager.cpp\
 		src/utilities/BuildingHelper.cpp\
