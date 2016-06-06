@@ -15,7 +15,7 @@ GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int
 	m_is_visible = false;
 	m_is_goto_menu_requested = false;
 
-	m_btn_menu = new Button(getParent(), 0, 0, RessourceManager::getInstance()->getSurface(MENU_DEF_BUTTON), "Main menu");
+	m_btn_menu = new Button(getParent(), 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Main menu");
 	m_btn_menu->setPosition(getParent()->getWidth() / 2 - m_btn_menu->getWidth() / 2, getParent()->getHeight() / 2 - m_height / 2 + 40);
 
 	m_poller = poller;

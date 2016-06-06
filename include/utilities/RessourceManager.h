@@ -16,6 +16,16 @@ class RessourceManager: public Singleton<RessourceManager>
         void loadBuildings();
 
 	public:
+        enum DrawableEntities
+        {
+            Menu_Default_Button = 0,
+            Menu_Large_Button = 1,
+            Menu_Background = 2,
+            Default_tile = 3,
+            Farm = 4,
+            Button_Menu_Game = 5,
+            Button_Menu_Game_Cancel = 6
+        };
 		int loadImages();
 		void unloadImages();
 
