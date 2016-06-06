@@ -7,36 +7,38 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 {
 	m_poller = poller;
 	m_map = new Map(getParent());
-	m_minimap = new Minimap(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT, m_map);
+	m_minimap = new Minimap(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2, m_map);
 
 	m_poller->subscribe(m_map);
 
-	menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
-	menu_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
-	menu_rect.w = getParent()->getWidth() - GAME_INTERFACE_BUILDING_MENU_WIDTH;
-	menu_rect.h = GAME_INTERFACE_MENU_HEIGHT;
+	m_menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
+	m_menu_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
+	m_menu_rect.w = getParent()->getWidth() - GAME_INTERFACE_BUILDING_MENU_WIDTH;
+	m_menu_rect.h = GAME_INTERFACE_MENU_HEIGHT;
 
-	building_rect.x = 0;
-	building_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
-	building_rect.w = GAME_INTERFACE_BUILDING_MENU_WIDTH;
-	building_rect.h = GAME_INTERFACE_MENU_HEIGHT;
+	m_building_rect.x = 0;
+	m_building_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
+	m_building_rect.w = GAME_INTERFACE_BUILDING_MENU_WIDTH;
+	m_building_rect.h = GAME_INTERFACE_MENU_HEIGHT;
 
-	map_rect.x = getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH;
-	map_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
-	map_rect.w = GAME_INTERFACE_MAP_WIDTH;
-	map_rect.h = GAME_INTERFACE_MENU_HEIGHT;
+	m_map_rect.x = getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH;
+	m_map_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
+	m_map_rect.w = GAME_INTERFACE_MAP_WIDTH;
+	m_map_rect.h = GAME_INTERFACE_MENU_HEIGHT;
 
-	btn_home = new Button(getParent(), 0, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	btn_road = new Button(getParent(), 48, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	btn_school = new Button(getParent(), 96, building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	btn_farm = new Button(getParent(), 0, building_rect.y + 48, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
-	btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, building_rect.y + 144, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME_CANCEL), "");
+	m_minimap->setPosition(getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2 - m_minimap->getWidth() / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2 - m_minimap->getHeight() / 2);
 
-	m_poller->subscribe(btn_home);
-	m_poller->subscribe(btn_road);
-	m_poller->subscribe(btn_school);
-	m_poller->subscribe(btn_farm);
-	m_poller->subscribe(btn_cancel);
+	m_btn_home = new Button(getParent(), 0, m_building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
+	m_btn_road = new Button(getParent(), 48, m_building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
+	m_btn_school = new Button(getParent(), 96, m_building_rect.y, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
+	m_btn_farm = new Button(getParent(), 0, m_building_rect.y + 48, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME), "");
+	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, m_building_rect.y + 144, RessourceManager::getInstance()->getSurface(BTN_MENU_GAME_CANCEL), "");
+
+	m_poller->subscribe(m_btn_home);
+	m_poller->subscribe(m_btn_road);
+	m_poller->subscribe(m_btn_school);
+	m_poller->subscribe(m_btn_farm);
+	m_poller->subscribe(m_btn_cancel);
 
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
 }
@@ -44,9 +46,11 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 GameInterface::~GameInterface()
 {
 	delete m_map;
-	delete btn_home;
-	delete btn_road;
-	delete btn_school;
+	delete m_btn_home;
+	delete m_btn_road;
+	delete m_btn_school;
+	delete m_btn_farm;
+	delete m_btn_cancel;
 }
 
 int GameInterface::getWidth()
@@ -63,20 +67,20 @@ void GameInterface::draw()
 {
 	m_map->drawMap();
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), 0, 0, 255, 255);
-	SDL_RenderFillRect(getParent()->getRenderer(), &menu_rect);
+	SDL_RenderFillRect(getParent()->getRenderer(), &m_menu_rect);
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), 0, 255, 0, 255);
-	SDL_RenderFillRect(getParent()->getRenderer(), &building_rect);
+	SDL_RenderFillRect(getParent()->getRenderer(), &m_building_rect);
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), 255, 0, 0, 255);
-	SDL_RenderFillRect(getParent()->getRenderer(), &map_rect);
-	btn_home->draw();
-	btn_road->draw();
-	btn_school->draw();
-	btn_farm->draw();
-	btn_cancel->draw();
+	SDL_RenderFillRect(getParent()->getRenderer(), &m_map_rect);
+	m_btn_home->draw();
+	m_btn_road->draw();
+	m_btn_school->draw();
+	m_btn_farm->draw();
+	m_btn_cancel->draw();
 	m_minimap->draw();
 
-	if (btn_farm->isClicked())
+	if (m_btn_farm->isClicked())
 		m_map->setTmpBuilding(new Farm(getParent()));
-	if (btn_cancel->isClicked())
+	if (m_btn_cancel->isClicked())
 		m_map->setTmpBuilding(NULL);
 }

@@ -16,15 +16,15 @@ class GameInterface: public Widget
 		SDLPoller *m_poller;
 		Map *m_map;
 		Minimap *m_minimap;
-		SDL_Rect menu_rect;
-		SDL_Rect map_rect;
-		SDL_Rect building_rect;
+		SDL_Rect m_menu_rect;
+		SDL_Rect m_map_rect;
+		SDL_Rect m_building_rect;
 
-		Button *btn_home;
-		Button *btn_road;
-		Button *btn_school;
-		Button *btn_farm;
-		Button *btn_cancel;
+		Button *m_btn_home;
+		Button *m_btn_road;
+		Button *m_btn_school;
+		Button *m_btn_farm;
+		Button *m_btn_cancel;
 
 	public:
 		GameInterface(MainWindow *parent, SDLPoller *poller);
