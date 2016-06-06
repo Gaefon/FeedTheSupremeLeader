@@ -30,7 +30,7 @@ class Building
 		unsigned int getPosY();
 		void setPosY(unsigned int val);
 
-		std::string getName();
+		virtual std::string getName() = 0;
 		MainWindow *getParent();
 		void setName(std::string val);
 		virtual void drawBuilding(int rel_x, int rel_y) = 0;

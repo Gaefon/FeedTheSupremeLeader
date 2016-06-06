@@ -38,5 +38,8 @@
 #define BTN_MENU_GAME   5
 #define BTN_MENU_GAME_CANCEL 6
 
+#define CONFIG_FILE_NAME "config.json"
+
+#define FARM_NAME "Farm"
 
 #endif // CONSTANTS_HPP

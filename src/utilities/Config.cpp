@@ -1,5 +1,6 @@
 #include <iostream>
 #include <utilities/Config.h>
+#include <Constants.hpp>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ void Config::set(Config::Variable var, bool value)
 
 void Config::readConfiguration()
 {
-	ifstream config_file("config.json");
+	ifstream config_file(CONFIG_FILE_NAME);
 	Json::Value root;
   Json::Reader reader;
 
@@ -43,7 +44,7 @@ void Config::saveConfiguration()
 	Json::Value root;
 	Json::Reader reader;
 	Json::StyledStreamWriter writer;
-	ifstream config_file_i("config.json");
+	ifstream config_file_i(CONFIG_FILE_NAME);
 
 	bool parsing_successful = reader.parse(config_file_i, root, false);
 	if (!parsing_successful)
@@ -51,7 +52,7 @@ void Config::saveConfiguration()
 		cerr << reader.getFormatedErrorMessages() << endl;
 	}
 	root["fullscreen"] = m_fullscreen;
-	ofstream config_file_o("config.json");
+	ofstream config_file_o(CONFIG_FILE_NAME);
   writer.write(config_file_o, root);
 	config_file_i.close();
 	config_file_o.close();

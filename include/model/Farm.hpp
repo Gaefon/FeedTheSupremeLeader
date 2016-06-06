@@ -16,7 +16,8 @@ class Farm : public Building
         ~Farm();
 
         void drawBuilding(int rel_x, int rel_y);
-        SDL_Color *getMinimapBuidingColor();
+				std::string getName();
+				SDL_Color *getMinimapBuidingColor();
 };
 
 #endif // FARM_HPP
