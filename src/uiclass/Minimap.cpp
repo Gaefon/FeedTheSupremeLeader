@@ -47,6 +47,7 @@ void Minimap::setPosition(int x, int y)
 
 bool Minimap::onSdlEventReceived(SDL_Event event)
 {
+	bool rtn_val = false;
 	bool is_over = RectHelper::isInRect(&m_draw_rect, event.button.x, event.button.y);
 	switch (event.type)
 	{
@@ -55,12 +56,14 @@ bool Minimap::onSdlEventReceived(SDL_Event event)
 			{
 				m_is_clicked = true;
 				m_map->setTileMapPos(event.motion.x - m_draw_rect.x - m_map_pos_rect.w / 2, event.motion.y - m_draw_rect.y - m_map_pos_rect.h / 2);
+				rtn_val = true;
 			}
 			break;
 		case SDL_MOUSEMOTION:
 			if (is_over && m_is_clicked)
 			{
 				m_map->setTileMapPos(event.motion.x - m_draw_rect.x - m_map_pos_rect.w / 2, event.motion.y - m_draw_rect.y - m_map_pos_rect.h / 2);
+				rtn_val = true;
 			}
 			else
 				m_is_clicked = false;
@@ -69,7 +72,7 @@ bool Minimap::onSdlEventReceived(SDL_Event event)
 			m_is_clicked = false;
 			break;
 	}
-	return false;
+	return rtn_val;
 }
 
 void Minimap::draw()

@@ -5,6 +5,7 @@
 #include <model/Map.h>
 #include <Constants.hpp>
 #include <utilities/BuildingHelper.h>
+#include <helper/RectHelper.h>
 #include <utilities/RessourceManager.h>
 
 
@@ -30,6 +31,11 @@ Map::Map(MainWindow *par)
 	draw_tile_surface.y = 0;
 	draw_tile_surface.w = DEFAULT_WINDOWS_TILE;
 	draw_tile_surface.h = DEFAULT_WINDOWS_TILE;
+
+	m_map_surface.x = 0;
+	m_map_surface.y = 0;
+	m_map_surface.w = m_parent->getWidth();
+	m_map_surface.h = m_parent->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
 
 }
 
@@ -216,11 +222,22 @@ bool Map::onSdlEventReceived(SDL_Event event)
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (m_tmp_building != NULL && BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
+				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y ))
 				{
-					m_list_building.push_front(m_tmp_building);
-					m_tmp_building = NULL;
-					rtn_val = true;
+					if (m_tmp_building != NULL && BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
+					{
+						m_list_building.push_front(m_tmp_building);
+						m_tmp_building = NULL;
+						rtn_val = true;
+					}
+					else
+					{
+						int x_clicked = (event.button.x - m_map_relative_position_x) / DEFAULT_WINDOWS_TILE;
+						int y_clicked = (event.button.y - m_map_relative_position_y) / DEFAULT_WINDOWS_TILE;
+
+						//for ()
+						//if (event.button.x)
+					}
 				}
 			}
 			break;

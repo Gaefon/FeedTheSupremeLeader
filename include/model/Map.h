@@ -29,6 +29,7 @@ class Map: public SdlObserver
 
 		SDL_Texture *m_texture_tile;
 		SDL_Rect draw_tile_surface;
+		SDL_Rect m_map_surface;
 
 		void drawMapGrid();
 		void checkCursorPosition();
