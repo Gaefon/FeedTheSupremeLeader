@@ -51,7 +51,7 @@ void Config::saveConfiguration()
 	}
 	root["fullscreen"] = m_fullscreen;
 	ofstream config_file_o(CONFIG_FILE_NAME);
-  writer.write(config_file_o, root);
+    writer.write(config_file_o, root);
 	config_file_i.close();
 	config_file_o.close();
 }

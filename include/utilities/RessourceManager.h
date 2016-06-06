@@ -20,7 +20,8 @@ class RessourceManager: public Singleton<RessourceManager>
             Farm = 4,
             Button_Menu_Game = 5,
             Button_Menu_Game_Cancel = 6,
-            END_OF_ENUM = 7,
+            Medium_Slider = 7,
+            END_OF_ENUM = 8,
         };
 		int loadImages();
 		void unloadImages();
