@@ -30,7 +30,7 @@ void Config::readConfiguration()
 	bool parsing_successful = reader.parse(config_file, root, false);
 	if (!parsing_successful)
 	{
-		cout << reader.getFormatedErrorMessages() << endl;
+		cerr << reader.getFormatedErrorMessages() << endl;
 	}
 	if (root["fullscreen"].isNull() == false) {
 		m_fullscreen = root["fullscreen"].asBool();
@@ -48,7 +48,7 @@ void Config::saveConfiguration()
 	bool parsing_successful = reader.parse(config_file_i, root, false);
 	if (!parsing_successful)
 	{
-		cout << reader.getFormatedErrorMessages() << endl;
+		cerr << reader.getFormatedErrorMessages() << endl;
 	}
 	root["fullscreen"] = m_fullscreen;
 	ofstream config_file_o("config.json");
