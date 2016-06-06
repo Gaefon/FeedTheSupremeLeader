@@ -3,6 +3,7 @@
 
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
+#include <uiclass/Slider.h>
 #include <utilities/Config.h>
 
 #include <utilities/RessourceManager.h>
@@ -31,7 +32,9 @@ void showParameters(MainWindow *window)
 	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Background));
 	Button back_button(window, 10, 10, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Back");
 	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getButtonString());
+	Slider slider_test(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
+	//poller.subscribe(&slider_test);
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(window);
@@ -45,6 +48,7 @@ void showParameters(MainWindow *window)
 		window->setBackground(m_button_texture);
 		back_button.draw();
 		btn_fullscreen.draw();
+		//slider_test.draw();
 		window->update();
 		if (back_button.isClicked()) {
 			back_clicked = true;
