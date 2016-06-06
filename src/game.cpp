@@ -6,6 +6,7 @@
 #include <uiclass/Button.h>
 #include <uiclass/GameMenuDialog.h>
 #include <model/Map.h>
+#include <utilities/timer.h>
 
 #include <utilities/Poller/SDLPoller.h>
 
@@ -17,6 +18,7 @@ void showGame(MainWindow *window)
 
 	poller.subscribe(window);
 	poller.subscribe(&game_menu);
+	Timer::getInstance()->setLastTime(SDL_GetTicks());
 	while (!window->hasCloseRequest() && !game_menu.isGotoMenuRequested())
 	{
 		poller.Poll();
@@ -24,6 +26,7 @@ void showGame(MainWindow *window)
 		game_iface.draw();
 		game_menu.draw();
 		window->update();
-		SDL_Delay(20);
+		Timer::getInstance()->getTimeDifference();
+		// SDL_Delay(20);
 	}
 }

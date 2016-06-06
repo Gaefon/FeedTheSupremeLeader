@@ -3,6 +3,8 @@
 #include <uiclass/Button.h>
 #include <uiclass/Label.h>
 #include <utilities/RessourceManager.h>
+#include <SDL.h>
+#include <utilities/Timer.h>
 
 #include <utilities/Poller/SDLPoller.h>
 
@@ -21,6 +23,7 @@ void showMenu(MainWindow *window)
 	main_poller.subscribe(&play_button);
 	main_poller.subscribe(&param_button);
 	main_poller.subscribe(&quit_button);
+	Timer::getInstance()->setLastTime(SDL_GetTicks());
 	while (!window->hasCloseRequest() && !request_close)
 	{
 		title_label.setPosition(window->getWidth() / 2 - title_label.getWidth() / 2, 40);
@@ -41,6 +44,7 @@ void showMenu(MainWindow *window)
 			showParameters(window);
 		if (quit_button.isClicked())
 			request_close = true;
-		SDL_Delay(20);
+		// SDL_Delay(20);
+		Timer::getInstance()->getTimeDifference();
 	}
 }
