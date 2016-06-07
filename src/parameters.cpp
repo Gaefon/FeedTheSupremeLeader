@@ -24,9 +24,9 @@ string getButtonString()
 string getMusicButtonString()
 {
 	if (!Config::getInstance()->getMusic())
-		return "Music : On";
-	else
 		return "Music : Off";
+	else
+		return "Music : On";
 }
 
 void toggleMusic(Button *btn_audio)
