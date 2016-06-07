@@ -8,7 +8,7 @@ using namespace std;
 
 Farm::Farm(MainWindow *prt) : Building(prt)
 {
-	Building::setName("Farm");
+	Building::setName(FARM_NAME);
 	Building::setHeight(5);
 	Building::setWidth(5);
 	m_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Farm));
@@ -31,11 +31,6 @@ void Farm::drawBuilding(int rel_x, int rel_y)
 	draw_surface.x = (getPosX() * DEFAULT_WINDOWS_TILE) + rel_x;
 	draw_surface.y = (getPosY() * DEFAULT_WINDOWS_TILE) + rel_y;
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
-}
-
-string Farm::getName()
-{
-	return FARM_NAME;
 }
 
 SDL_Color *Farm::getMinimapBuidingColor()

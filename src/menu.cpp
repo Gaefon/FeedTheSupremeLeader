@@ -19,7 +19,7 @@ void showMenu(MainWindow *window)
 	Button param_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Parameters");
 	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Quit");
 
-	title_label.setFontSize(40);
+	title_label.setFont(RessourceManager::KremlinFont40);
 	main_poller.subscribe(window);
 	main_poller.subscribe(&play_button);
 	main_poller.subscribe(&param_button);

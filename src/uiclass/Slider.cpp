@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Slider::Slider(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_slider) : Widget(prnt)
+Slider::Slider(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_slider, int custom_width) : Widget(prnt)
 {
     m_is_over = false;
     m_is_sliding = false;
@@ -13,10 +13,12 @@ Slider::Slider(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_slider) 
 
     m_dst.x = pos_x;
 	m_dst.y = pos_y;
-	m_dst.w = img_slider->w;
+	if(custom_width == 0)
+        m_dst.w = img_slider->w;
+    else
+        m_dst.w = custom_width;
 	m_dst.h = img_slider->h / 3;
 	m_src.x = 0;
-	m_src.y = 0;
 	m_src.w = img_slider->w;
 	m_src.h = img_slider->h / 3;
 	m_slider_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), img_slider);
@@ -34,6 +36,15 @@ int Slider::getHeight()
 	return m_dst.h;
 }
 
+int Slider::getValue()
+{
+	return m_value;
+}
+
+bool Slider::isSliding()
+{
+    return m_is_sliding;
+}
 void Slider::setPosition(int x, int y)
 {
 	m_dst.x = x;
@@ -42,19 +53,16 @@ void Slider::setPosition(int x, int y)
 
 bool Slider::onSdlEventReceived(SDL_Event event)
 {
-	int rtn_val = m_value;
+	bool rtn_val = false;
 	switch (event.type)
 	{
-	    int x, y;
-	    SDL_GetMouseState(&x, &y);
 		case SDL_MOUSEMOTION:
-			if (RectHelper::isInRect(&m_dst, event.motion.x, event.motion.y))
-				m_is_over = true;
+			if (RectHelper::isInRect(&m_dst, event.motion.x, event.motion.y) && m_is_sliding)
+            {
+                m_value = (event.motion.x - m_dst.x) * 100 / m_dst.w;
+            }
 			else
-			{
-				m_is_over = false;
 				m_is_sliding = false;
-			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (RectHelper::isInRect(&m_dst, event.button.x, event.button.y))
@@ -65,11 +73,8 @@ bool Slider::onSdlEventReceived(SDL_Event event)
 				m_is_over = false;
 			break;
 		case SDL_MOUSEBUTTONUP:
-			if (m_is_sliding && RectHelper::isInRect(&m_dst, event.button.x, event.button.y))
-			{
-				m_is_sliding = false;
-				rtn_val = rtn_val - (m_dst.x - x);
-			}
+		    if(m_is_sliding)
+                m_value = (event.motion.x - m_dst.x) * 100 / m_dst.w;
 			m_is_sliding = false;
 			break;
 	}
@@ -78,20 +83,33 @@ bool Slider::onSdlEventReceived(SDL_Event event)
 
 void Slider::draw()
 {
-	if (m_is_sliding)
-		m_src.y = m_src.h * 2;
-	else if (m_is_over)
-		m_src.y = m_src.h;
-	else
-		m_src.y = 0;
-
-	SDL_RenderCopy(getParent()->getRenderer(), m_slider_texture, &m_src, &m_dst);
-/*
-	if (m_sli_text_normal != NULL && m_button_text_over != NULL)
-	{
-		if (!m_is_pressed)
-			SDL_RenderCopy(getParent()->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
-		else
-			SDL_RenderCopy(getParent()->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
-	}*/
+    drawBar();
+    drawSquare();
 }
+
+void Slider::drawBar()
+{
+    SDL_Rect bar_src = m_src;
+    SDL_Rect bar_part_dst = m_dst;
+    SDL_Rect bar_part_src = m_src;
+
+    bar_src.y = 0;
+    bar_part_dst.w = m_dst.w * m_value / 100;
+    bar_part_src.y = m_src.h;
+    SDL_RenderCopy(getParent()->getRenderer(), m_slider_texture, &bar_src, &m_dst);
+    SDL_RenderCopy(getParent()->getRenderer(), m_slider_texture, &bar_part_src, &bar_part_dst);
+}
+
+void Slider::drawSquare()
+{
+    SDL_Rect square_dst = m_dst;
+    SDL_Rect square_src = m_src;
+    square_dst.w = square_dst.h = 20;
+    square_dst.x = m_dst.x + m_dst.w * m_value / 100 - square_dst.w / 2;
+    square_src.x = 0;
+    square_src.w = square_src.h = 20;
+    square_src.y = square_src.h * 2;
+    SDL_RenderCopy(getParent()->getRenderer(), m_slider_texture, &square_src, &square_dst);
+}
+
+

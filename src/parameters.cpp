@@ -59,6 +59,7 @@ void showParameters(MainWindow *window)
 	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getButtonString());
 	Button btn_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getMusicButtonString());
 	Slider slider_test(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
+	//Slider slider_test(window, 50, 50, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
 	//poller.subscribe(&slider_test);
 	poller.subscribe(&back_button);

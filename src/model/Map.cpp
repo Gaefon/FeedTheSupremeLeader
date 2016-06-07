@@ -207,7 +207,6 @@ void Map::drawMap()
 			SDL_RenderFillRect(m_parent->getRenderer(), &rect_overlay_building);
 		}
 	}
-	SDL_SetRenderDrawColor(m_parent->getRenderer(), 0, 0, 0, 255);
 }
 
 

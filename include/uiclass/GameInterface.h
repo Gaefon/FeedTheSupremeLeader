@@ -6,6 +6,7 @@
 #include <uiclass/MainWindow.hpp>
 #include <uiclass/Widget.h>
 #include <uiclass/Button.h>
+#include <uiclass/Label.h>
 #include <utilities/Poller/SDLPoller.h>
 #include <utilities/Observer/MapObserver.h>
 #include <model/Map.h>
@@ -26,6 +27,8 @@ class GameInterface: public Widget, public MapObserver
 		Button *m_btn_school;
 		Button *m_btn_farm;
 		Button *m_btn_cancel;
+
+		Label *m_label_buiding_name;
 
 	public:
 		GameInterface(MainWindow *parent, SDLPoller *poller);
