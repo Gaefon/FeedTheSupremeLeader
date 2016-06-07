@@ -34,7 +34,7 @@ void showParameters(MainWindow *window)
 	SDL_Texture *m_button_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Background));
 	Button back_button(window, 10, 10, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Back");
 	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getButtonString());
-	Slider slider_test(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
+	//Slider slider_test(window, 50, 50, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
 	//poller.subscribe(&slider_test);
 	poller.subscribe(&back_button);
