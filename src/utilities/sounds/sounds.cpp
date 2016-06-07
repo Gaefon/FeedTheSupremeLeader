@@ -44,8 +44,8 @@ void Sounds::resumeMusic() {
 	Mix_ResumeMusic();
 }
 
-void Sounds::loadWav(char *wavName) {
-	m_menu_click = Mix_LoadWAV(wavName);
+void Sounds::loadWav(string wavName) {
+	m_menu_click = Mix_LoadWAV(wavName.c_str());
 	Mix_VolumeChunk(m_menu_click, MIX_MAX_VOLUME);
 	Mix_PlayChannel(1, m_menu_click, 0);
 }
