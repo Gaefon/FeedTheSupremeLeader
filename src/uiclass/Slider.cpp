@@ -89,11 +89,14 @@ void Slider::draw()
 
 void Slider::drawBar()
 {
-    SDL_Rect bar_src = m_src;
+    SDL_Rect bar_src;
     SDL_Rect bar_part_dst = m_dst;
     SDL_Rect bar_part_src = m_src;
 
+    bar_src.x = m_src.x;
     bar_src.y = 0;
+	bar_src.w = m_src.w;
+	bar_src.h = m_src.h;
     bar_part_dst.w = m_dst.w * m_value / 100;
     bar_part_src.y = m_src.h;
     SDL_RenderCopy(getParent()->getRenderer(), m_slider_texture, &bar_src, &m_dst);
@@ -104,10 +107,10 @@ void Slider::drawSquare()
 {
     SDL_Rect square_dst = m_dst;
     SDL_Rect square_src = m_src;
-    square_dst.w = square_dst.h = 20;
+    square_dst.w = square_dst.h = m_src.h;
     square_dst.x = m_dst.x + m_dst.w * m_value / 100 - square_dst.w / 2;
     square_src.x = 0;
-    square_src.w = square_src.h = 20;
+    square_src.w = square_src.h = m_src.h;
     square_src.y = square_src.h * 2;
     SDL_RenderCopy(getParent()->getRenderer(), m_slider_texture, &square_src, &square_dst);
 }

@@ -4,6 +4,7 @@
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
 #include <uiclass/Slider.h>
+#include <uiclass/Label.h>
 #include <utilities/Config.h>
 #include <SDL.h>
 #include <utilities/Timer.h>
@@ -58,13 +59,14 @@ void showParameters(MainWindow *window)
 	Button back_button(window, 10, 10, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Back");
 	Button btn_fullscreen(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getButtonString());
 	Button btn_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getMusicButtonString());
-	Slider slider_test(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
-	//Slider slider_test(window, 50, 50, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
+	Label lbl_map(window, 0, 0, "Map sensivity");
+	Slider slider_map_sensivity(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
-	//poller.subscribe(&slider_test);
+
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(&btn_audio);
+	poller.subscribe(&slider_map_sensivity);
 	poller.subscribe(window);
 
 	Timer::getInstance()->setLastTime(SDL_GetTicks());
@@ -72,6 +74,8 @@ void showParameters(MainWindow *window)
 	{
 		btn_fullscreen.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 80);
 		btn_audio.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 140);
+		lbl_map.setPosition(window->getWidth() / 2 - lbl_map.getWidth() / 2, 200);
+		slider_map_sensivity.setPosition(window->getWidth() / 2 - slider_map_sensivity.getWidth() / 2, 230);
 
 		poller.Poll();
 		window->clear();
@@ -79,18 +83,19 @@ void showParameters(MainWindow *window)
 		back_button.draw();
 		btn_fullscreen.draw();
 		btn_audio.draw();
-		//slider_test.draw();
+		slider_map_sensivity.draw();
+		lbl_map.draw();
+
 		window->update();
-		if (back_button.isClicked()) {
+		if (back_button.isClicked())
+		{
 			back_clicked = true;
 			Config::getInstance()->saveConfiguration();
 		}
 		if (btn_fullscreen.isClicked())
 			toggleFullscreen(window, &btn_fullscreen);
-		if (btn_audio.isClicked()) {
+		if (btn_audio.isClicked())
 			toggleMusic(&btn_audio);
-		}
-		// SDL_Delay(20);
 		Timer::getInstance()->getTimeDifference();
 	}
 }
