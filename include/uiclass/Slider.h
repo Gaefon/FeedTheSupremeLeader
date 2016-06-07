@@ -17,12 +17,15 @@ class Slider : public Widget, public SdlObserver
         bool m_is_over;
         bool m_is_sliding;
         int m_value;
+        void drawBar();
+        void drawSquare();
 
     public:
-        Slider(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_slider);
+        Slider(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_slider, int custom_width = 0);
         ~Slider();
         int getWidth();
 		int getHeight();
+		int getValue();
 		void setPosition(int x, int y);
 		bool isSliding();
 
