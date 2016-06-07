@@ -22,6 +22,7 @@ class RessourceManager: public Singleton<RessourceManager>
 			Farm,
 			House,
 			School,
+			Road,
 			Button_Menu_Game,
 			Button_Menu_Game_Cancel,
 			Medium_Slider,

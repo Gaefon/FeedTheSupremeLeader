@@ -3,6 +3,7 @@
 #include <model/Farm.hpp>
 #include <model/School.h>
 #include <model/House.h>
+#include <model/Road.h>
 #include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
 
@@ -99,6 +100,8 @@ void GameInterface::draw()
 		m_map->setTmpBuilding(new School(getParent()));
 	if (m_btn_farm->isClicked())
 		m_map->setTmpBuilding(new Farm(getParent()));
+	if (m_btn_road->isClicked())
+		m_map->setTmpBuilding(new Road(getParent()));
 	if (m_btn_cancel->isClicked())
 		m_map->setTmpBuilding(NULL);
 }
