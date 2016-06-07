@@ -19,13 +19,16 @@ class Config : public Singleton<Config>
 		Config();
 
 		bool m_fullscreen;
+		bool m_music;
 
 	public:
 		void set(Variable var, bool value);
+		void setMusic(bool shouldEnableMusic);
+		bool getMusic();
 		bool get(Variable var);
 		void saveConfiguration();
 		void readConfiguration();
-		
+
 };
 
 #endif

@@ -22,7 +22,8 @@ SRC =	main.cpp\
 		src/utilities/RessourceManager.cpp\
 		src/utilities/BuildingHelper.cpp\
 		src/lib/jsonCpp/jsoncpp.cpp\
-		src/utilities/Timer.cpp
+		src/utilities/Timer.cpp\
+		src/utilities/sounds/sounds.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
@@ -32,7 +33,7 @@ NAME =	feedthesupremleader
 CXX = g++
 CXXFLAGS = -W -Wall -std=c++11 `sdl2-config --cflags` -Iinclude
 
-LDFLAGS = `sdl2-config --libs` -lSDL2_ttf -lm
+LDFLAGS = `sdl2-config --libs` -lSDL2_ttf -lSDL2_mixer -lm
 
 RM = rm -rf
 

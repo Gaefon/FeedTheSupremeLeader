@@ -5,6 +5,7 @@
 #include <utilities/RessourceManager.h>
 #include <SDL.h>
 #include <utilities/Timer.h>
+#include <utilities/sounds/sounds.h>
 
 #include <utilities/Poller/SDLPoller.h>
 
@@ -38,10 +39,15 @@ void showMenu(MainWindow *window)
 		param_button.draw();
 		quit_button.draw();
 		window->update();
-		if (play_button.isClicked())
+		if (play_button.isClicked()) {
+			Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
+			Sounds::getInstance()->pauseMusic();
 			showGame(window);
-		if (param_button.isClicked())
-			showParameters(window);
+		}
+		if (param_button.isClicked()) {
+				Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
+				showParameters(window);
+		}
 		if (quit_button.isClicked())
 			request_close = true;
 		// SDL_Delay(20);
