@@ -1,10 +1,11 @@
 #include <Constants.hpp>
 #include <uiclass/Label.h>
 #include <helper/ColorHelper.h>
+#include <utilities/RessourceManager.h>
 
 Label::Label(MainWindow *prnt, int x, int y, std::string text): Widget(prnt)
 {
-	m_text_font = TTF_OpenFont("ressources/kremlin.ttf", 20);
+	m_text_font = RessourceManager::getInstance()->getFont(RessourceManager::KremlinFont20);
 
 	m_src.x = 0;
 	m_src.y = 0;
@@ -14,7 +15,6 @@ Label::Label(MainWindow *prnt, int x, int y, std::string text): Widget(prnt)
 
 Label::~Label()
 {
-	TTF_CloseFont(m_text_font);
 	SDL_DestroyTexture(m_texture_text);
 }
 
@@ -34,10 +34,9 @@ void Label::setPosition(int x, int y)
 	m_dst.y = y;
 }
 
-void Label::setFontSize(int size)
+void Label::setFont(RessourceManager::FontEntities font)
 {
-	TTF_CloseFont(m_text_font);
-	m_text_font = TTF_OpenFont("ressources/kremlin.ttf", size);
+	m_text_font = RessourceManager::getInstance()->getFont(font);
 	setText(m_str);
 }
 

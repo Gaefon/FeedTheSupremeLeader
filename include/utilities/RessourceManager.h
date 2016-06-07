@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <SDL.h>
+#include <SDL_ttf.h>
+
 #include <utilities/Singleton.hpp>
 
 class RessourceManager: public Singleton<RessourceManager>
@@ -23,14 +25,29 @@ class RessourceManager: public Singleton<RessourceManager>
             Medium_Slider = 7,
             END_OF_ENUM = 8,
         };
+
+        enum FontEntities
+        {
+            KremlinFont40 = 0,
+            KremlinFont20,
+            LatoFont20,
+            END_OF_FONTS
+        };
 		int loadImages();
+        int loadFonts();
 		void unloadImages();
+        void unloadFonts();
 
 		SDL_Surface *getSurface(int index);
+        TTF_Font *getFont(FontEntities font);
 
 	private:
 		std::vector<SDL_Surface *> images_sfc;
+        std::vector<TTF_Font *> m_fonts;
+
 		std::string m_accesspaths[END_OF_ENUM];
+        std::string m_fontspaths[END_OF_FONTS];
+        int m_fonts_size[END_OF_FONTS];
 		RessourceManager();
 		void loadAccessPath();
 

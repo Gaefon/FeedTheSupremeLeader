@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 #include <uiclass/MainWindow.hpp>
 #include <uiclass/Widget.h>
+#include <utilities/RessourceManager.h>
 
 class Label: public Widget
 {
@@ -24,7 +25,7 @@ class Label: public Widget
 		int getWidth();
 		int getHeight();
 		void setPosition(int x, int y);
-		void setFontSize(int size);
+		void setFont(RessourceManager::FontEntities font);
 		void setText(std::string text);
 		void draw();
 };

@@ -20,7 +20,16 @@ int main(int argc, char ** argv)
 	TTF_Init();
 
 	if(RessourceManager::getInstance()->loadImages() < 0)
+	{
         SDL_Quit();
+        return EXIT_FAILURE;
+	}
+
+	if(RessourceManager::getInstance()->loadFonts() < 0)
+	{
+        SDL_Quit();
+        return EXIT_FAILURE;
+	}
 	Config::getInstance()->readConfiguration();
 
 	window.displayWindow();
