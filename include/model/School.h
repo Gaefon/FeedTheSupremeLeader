@@ -1,10 +1,11 @@
-#ifndef FARM_HPP
-#define FARM_HPP
+#ifndef SCHOOL_HPP
+#define SCHOOL_HPP
 
+#include <string>
 #include <model/Building.hpp>
 #include <uiclass/MainWindow.hpp>
 
-class Farm : public Building
+class School : public Building
 {
 	private:
 		SDL_Texture *m_texture;
@@ -12,11 +13,11 @@ class Farm : public Building
 		SDL_Color m_map_color;
 
 	public:
-		Farm(MainWindow* prt);
-		~Farm();
+		School(MainWindow* prt);
+		~School();
 
 		void drawBuilding(int rel_x, int rel_y);
 		SDL_Color *getMinimapBuidingColor();
 };
 
-#endif // FARM_HPP
+#endif
