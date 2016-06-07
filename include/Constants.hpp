@@ -12,8 +12,8 @@
 #define WIDTH_DEAD_RATIO 0.2f
 #define HEIGHT_DEAD_RATIO 0.1f
 
-#define DEFAULT_MAP_HEIGHT 100
-#define DEFAULT_MAP_WIDTH 100
+#define DEFAULT_MAP_HEIGHT 150
+#define DEFAULT_MAP_WIDTH 150
 #define DEFAULT_MAP_MARGIN 5
 
 #define DEFAULT_WINDOWS_TILE 24
@@ -30,6 +30,7 @@
 #define COLOR_GREEN_MAP 0x1eb800ff
 #define COLOR_FARM_MINIMAP 0x8f552dff
 #define COLOR_HOUSE_MINIMAP 0x006fd9ff
+#define COLOR_ROAD_MINIMAP 0xb68a00ff
 
 #define MENU_DEF_BUTTON 0
 #define MENU_LRG_BUTTON 1
@@ -47,5 +48,6 @@
 #define FARM_NAME "Farm"
 #define HOUSE_NAME "House"
 #define SCHOOL_NAME "School"
+#define ROAD_NAME "Road"
 
 #endif // CONSTANTS_HPP

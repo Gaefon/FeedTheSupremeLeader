@@ -3,6 +3,7 @@
 #include <model/Farm.hpp>
 #include <model/School.h>
 #include <model/House.h>
+#include <model/Road.h>
 #include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
 
@@ -39,7 +40,7 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller): Widget(pare
 	m_btn_farm = new Button(getParent(), 0, m_building_rect.y + 48, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
 	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, m_building_rect.y + 144, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 
-	m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "123");
+	m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
 	m_label_buiding_name->setFont(RessourceManager::LatoFont20);
 
 	m_poller->subscribe(m_btn_home);
@@ -99,12 +100,21 @@ void GameInterface::draw()
 		m_map->setTmpBuilding(new School(getParent()));
 	if (m_btn_farm->isClicked())
 		m_map->setTmpBuilding(new Farm(getParent()));
+	if (m_btn_road->isClicked())
+		m_map->setTmpBuilding(new Road(getParent()));
 	if (m_btn_cancel->isClicked())
 		m_map->setTmpBuilding(NULL);
 }
 
 bool GameInterface::onBuidingClicked(Building *building)
 {
-	m_label_buiding_name->setText(building->getName());
+	if (building != NULL)
+	{
+		m_label_buiding_name->setText(building->getName());
+	}
+	else
+	{
+		m_label_buiding_name->setText("");
+	}
 	return true;
 }

@@ -9,6 +9,7 @@ SRC =	main.cpp\
 		src/model/Farm.cpp\
 		src/model/House.cpp\
 		src/model/School.cpp\
+		src/model/Road.cpp\
 		src/uiclass/Widget.cpp\
 		src/uiclass/MainWindow.cpp\
 		src/uiclass/Button.cpp\

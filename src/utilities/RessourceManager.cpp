@@ -19,6 +19,7 @@ void RessourceManager::loadAccessPath()
 	m_accesspaths[Farm] = "ressources/farm.bmp";
 	m_accesspaths[House] = "ressources/house.bmp";
 	m_accesspaths[School] = "ressources/school.bmp";
+	m_accesspaths[Road] = "ressources/road.bmp";
 	m_accesspaths[Button_Menu_Game] = "ressources/btn_menu_game.bmp";
 	m_accesspaths[Button_Menu_Game_Cancel] = "ressources/btn_menu_game_cancel.bmp";
 	m_accesspaths[Medium_Slider] = "ressources/slider.bmp";
