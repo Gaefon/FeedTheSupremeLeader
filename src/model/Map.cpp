@@ -228,25 +228,32 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			{
 				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y ))
 				{
-					if (m_tmp_building != NULL && BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
+					if (m_tmp_building != NULL)
 					{
-						m_list_building.push_front(m_tmp_building);
-						m_tmp_building = NULL;
+						if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
+						{
+							m_list_building.push_front(m_tmp_building);
+							m_tmp_building = NULL;
+						}
 						rtn_val = true;
 					}
 					else
 					{
 						unsigned int x_clicked = (event.button.x - m_map_relative_position_x) / DEFAULT_WINDOWS_TILE;
 						unsigned int y_clicked = (event.button.y - m_map_relative_position_y) / DEFAULT_WINDOWS_TILE;
+						bool did_notify = false;
 						for (list<Building *>::iterator it = m_list_building.begin(); it != m_list_building.end(); ++it)
 						{
 							if (x_clicked >= (*it)->getPosX() && x_clicked < ((*it)->getPosX() + (*it)->getWidth()) && 
 								y_clicked >= (*it)->getPosY() && y_clicked < ((*it)->getPosY() + (*it)->getHeight()))
 							{
 								m_poller.notifyBuildingSelected(*it);
+								did_notify = true;
 								break;
 							}
 						}
+						if (!did_notify)
+							m_poller.notifyBuildingSelected(NULL);
 					}
 				}
 			}

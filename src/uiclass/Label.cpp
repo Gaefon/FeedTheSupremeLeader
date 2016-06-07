@@ -48,6 +48,9 @@ void Label::setText(std::string text)
 	ColorHelper::parseColor(&color_text, COLOR_YELLOW);
 	m_str = text;
 
+	if (m_str.length() == 0)
+		m_str = " ";
+
 	srfce = TTF_RenderText_Blended(m_text_font, m_str.c_str(), color_text);
 
 	m_src.w = srfce->w;
