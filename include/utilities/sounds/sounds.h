@@ -23,7 +23,6 @@ class Sounds : public Singleton<Sounds>
     public:
 
     Sounds();
-    int init_audio();
     void initMixerAudio();
     void closeMixerAudio();
     void loadMusic();
