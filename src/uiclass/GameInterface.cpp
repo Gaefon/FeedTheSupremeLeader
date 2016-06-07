@@ -1,6 +1,8 @@
 #include <iostream>
 #include <Constants.hpp>
 #include <model/Farm.hpp>
+#include <model/School.h>
+#include <model/House.h>
 #include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
 
@@ -60,6 +62,8 @@ GameInterface::~GameInterface()
 	delete m_btn_school;
 	delete m_btn_farm;
 	delete m_btn_cancel;
+
+	delete m_label_buiding_name;
 }
 
 int GameInterface::getWidth()
@@ -89,6 +93,10 @@ void GameInterface::draw()
 	m_minimap->draw();
 	m_label_buiding_name->draw();
 
+	if (m_btn_home->isClicked())
+		m_map->setTmpBuilding(new House(getParent()));
+	if (m_btn_school->isClicked())
+		m_map->setTmpBuilding(new School(getParent()));
 	if (m_btn_farm->isClicked())
 		m_map->setTmpBuilding(new Farm(getParent()));
 	if (m_btn_cancel->isClicked())

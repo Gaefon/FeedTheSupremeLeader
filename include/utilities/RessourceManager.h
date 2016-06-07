@@ -13,41 +13,43 @@ class RessourceManager: public Singleton<RessourceManager>
 	friend class Singleton<RessourceManager>;
 
 	public:
-        enum DrawableEntities
-        {
-            Menu_Default_Button = 0,
-            Menu_Large_Button = 1,
-            Menu_Background = 2,
-            Default_tile = 3,
-            Farm = 4,
-            Button_Menu_Game = 5,
-            Button_Menu_Game_Cancel = 6,
-            Medium_Slider = 7,
-            END_OF_ENUM = 8,
-        };
+		enum DrawableEntities
+		{
+			Menu_Default_Button = 0,
+			Menu_Large_Button,
+			Menu_Background,
+			Default_tile,
+			Farm,
+			House,
+			School,
+			Button_Menu_Game,
+			Button_Menu_Game_Cancel,
+			Medium_Slider,
+			END_OF_ENUM,
+		};
 
-        enum FontEntities
-        {
-            KremlinFont40 = 0,
-            KremlinFont20,
-            LatoFont20,
-            END_OF_FONTS
-        };
+		enum FontEntities
+		{
+			KremlinFont40 = 0,
+			KremlinFont20,
+			LatoFont20,
+			END_OF_FONTS
+		};
 		int loadImages();
-        int loadFonts();
+		int loadFonts();
 		void unloadImages();
-        void unloadFonts();
+		void unloadFonts();
 
 		SDL_Surface *getSurface(int index);
-        TTF_Font *getFont(FontEntities font);
+		TTF_Font *getFont(FontEntities font);
 
 	private:
 		std::vector<SDL_Surface *> images_sfc;
-        std::vector<TTF_Font *> m_fonts;
+		std::vector<TTF_Font *> m_fonts;
 
 		std::string m_accesspaths[END_OF_ENUM];
-        std::string m_fontspaths[END_OF_FONTS];
-        int m_fonts_size[END_OF_FONTS];
+		std::string m_fontspaths[END_OF_FONTS];
+		int m_fonts_size[END_OF_FONTS];
 		RessourceManager();
 		void loadAccessPath();
 
