@@ -1,5 +1,6 @@
 #include <iostream>
 #include <utilities/Config.h>
+#include <utilities/sounds/sounds.h>
 #include <Constants.hpp>
 
 using namespace std;
@@ -7,6 +8,7 @@ using namespace std;
 Config::Config()
 {
 	m_fullscreen = false;
+	m_music = true;
 }
 
 bool Config::get(Config::Variable var)
@@ -22,6 +24,15 @@ void Config::set(Config::Variable var, bool value)
 		m_fullscreen = value;
 }
 
+void Config::setMusic(bool shouldEnableMusic)	{
+	// cout << "Set music to : " << shouldEnableMusic << endl;
+	m_music = shouldEnableMusic;
+}
+
+bool Config::getMusic()	{
+	return m_music;
+}
+
 void Config::readConfiguration()
 {
 	ifstream config_file(CONFIG_FILE_NAME);
@@ -33,6 +44,11 @@ void Config::readConfiguration()
 		return;
 	if (root["fullscreen"].isNull() == false) {
 		m_fullscreen = root["fullscreen"].asBool();
+	}
+	if (root["music"].isNull() == false) {
+		m_music = root["music"].asBool();
+		if (m_music == false)
+			Sounds::getInstance()->pauseMusic();
 	}
 	config_file.close();
 }
@@ -50,6 +66,7 @@ void Config::saveConfiguration()
 		// cout  << reader.getFormatedErrorMessages() << endl;
 	}
 	root["fullscreen"] = m_fullscreen;
+	root["music"] = m_music;
 	ofstream config_file_o(CONFIG_FILE_NAME);
     writer.write(config_file_o, root);
 	config_file_i.close();

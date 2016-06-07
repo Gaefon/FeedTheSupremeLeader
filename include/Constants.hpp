@@ -41,6 +41,8 @@
 #define BTN_MENU_GAME_CANCEL 6
 #define FRAME_PAUSE_DURATION 30
 
+#define MENU_CLICK_WAV "ressources/sounds/clickMenu.wav"
+
 #define CONFIG_FILE_NAME "config.json"
 
 #define FARM_NAME "Farm"
