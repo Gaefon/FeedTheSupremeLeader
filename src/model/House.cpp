@@ -32,11 +32,6 @@ void House::drawBuilding(int rel_x, int rel_y)
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
 }
 
-string House::getName()
-{
-	return HOUSE_NAME;
-}
-
 SDL_Color *House::getMinimapBuidingColor()
 {
 	return &m_map_color;

@@ -32,11 +32,6 @@ void School::drawBuilding(int rel_x, int rel_y)
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
 }
 
-string School::getName()
-{
-	return Building::getName();
-}
-
 SDL_Color *School::getMinimapBuidingColor()
 {
 	return &m_map_color;

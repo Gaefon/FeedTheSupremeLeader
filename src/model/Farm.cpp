@@ -33,11 +33,6 @@ void Farm::drawBuilding(int rel_x, int rel_y)
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
 }
 
-string Farm::getName()
-{
-	return Building::getName();
-}
-
 SDL_Color *Farm::getMinimapBuidingColor()
 {
 	return &m_map_color;

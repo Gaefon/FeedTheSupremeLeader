@@ -17,7 +17,6 @@ class School : public Building
 		~School();
 
 		void drawBuilding(int rel_x, int rel_y);
-		std::string getName();
 		SDL_Color *getMinimapBuidingColor();
 };
 
