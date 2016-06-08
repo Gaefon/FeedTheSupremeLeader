@@ -1,8 +1,7 @@
 #ifndef VILLAGE_H
 #define VILLAGE_H
 
-#include <utilities/Poller/VillagePoller.h>
-class Village : VillagePoller
+class Village
 {
     private:
         unsigned int m_population;
@@ -11,7 +10,6 @@ class Village : VillagePoller
         int m_merit;
         int m_favor;
         int m_weight_contribution;
-        void notify(Village *village);
 
 
     public:

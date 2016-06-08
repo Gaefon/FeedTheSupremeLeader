@@ -10,6 +10,7 @@ class Farm : public Building
 		SDL_Texture *m_texture;
 		SDL_Rect draw_surface;
 		SDL_Color m_map_color;
+		int m_production_rate;
 
 	public:
 		Farm(MainWindow* prt);

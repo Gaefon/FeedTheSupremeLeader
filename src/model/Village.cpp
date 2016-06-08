@@ -69,16 +69,6 @@ void Village::setWeightContribution(int weight_contribution)
 }
 
 
-void Village::notify(Village *village)
-{
-    list<VillageObserver *> observers = getObservers();
-	list<VillageObserver *>::iterator elt;
-	for (elt = observers.begin(); elt != observers.end(); elt++)
-	{
-		if ((*elt)->onVillageUpdateRequest(village))
-			break;
-	}
-}
 /*VillagePoller *Village::getPoller()
 {
     return m_village_poller;
