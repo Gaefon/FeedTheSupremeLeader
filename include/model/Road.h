@@ -16,6 +16,7 @@ class Road: public Building
 		Road(MainWindow* prt);
 		~Road();
 
+        bool onVillageUpdateRequest(Village *village);
 		void drawBuilding(int rel_x, int rel_y);
 		SDL_Color *getMinimapBuidingColor();
 };

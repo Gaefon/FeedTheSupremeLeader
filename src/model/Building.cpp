@@ -81,3 +81,5 @@ Building::~Building()
 {
 	//dtor
 }
+
+

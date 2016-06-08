@@ -32,6 +32,11 @@ void Road::drawBuilding(int rel_x, int rel_y)
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
 }
 
+bool Road::onVillageUpdateRequest(Village *village)
+{
+    return true;
+}
+
 SDL_Color *Road::getMinimapBuidingColor()
 {
 	return &m_map_color;
