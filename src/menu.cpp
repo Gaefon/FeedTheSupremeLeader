@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include <utilities/Timer.h>
 #include <utilities/sounds/sounds.h>
+#include <utilities/Config.h>
 
 #include <utilities/Poller/SDLPoller.h>
 
@@ -42,7 +43,9 @@ void showMenu(MainWindow *window)
 		if (play_button.isClicked())
 		{
 			Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
-			Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
+			if (Config::getInstance()->getBool(Config::Music)) {
+					Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
+			}
 			showGame(window);
 		}
 		if (param_button.isClicked())

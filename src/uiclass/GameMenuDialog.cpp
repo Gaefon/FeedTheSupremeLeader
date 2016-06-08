@@ -2,6 +2,7 @@
 #include <uiclass/GameMenuDialog.h>
 #include <utilities/RessourceManager.h>
 #include <utilities/sounds/sounds.h>
+#include <utilities/Config.h>
 
 GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int h): Widget(parent)
 {
@@ -57,7 +58,9 @@ void GameMenuDialog::draw()
 	if (m_is_visible)
 	{
 		if (m_btn_menu->isClicked())	{
-				Sounds::getInstance()->resumeMusic();
+			if (Config::getInstance()->getBool(Config::Music)) {
+					Sounds::getInstance()->loadMusic(MENU_MUSIQUE);
+			}
 				m_is_goto_menu_requested = true;
 		}
 		SDL_SetRenderDrawColor(getParent()->getRenderer(), 48, 48, 48, 255);
