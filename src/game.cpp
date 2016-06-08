@@ -6,7 +6,7 @@
 #include <uiclass/Button.h>
 #include <uiclass/GameMenuDialog.h>
 #include <model/Map.h>
-#include <utilities/timer.h>
+#include <utilities/Timer.h>
 
 #include <utilities/Poller/SDLPoller.h>
 

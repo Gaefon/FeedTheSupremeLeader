@@ -15,9 +15,9 @@ void showMenu(MainWindow *window)
 	SDLPoller main_poller;
 	Label title_label(window, 0, 0, GAME_NAME);
 	SDL_Texture *m_bg_texture = SDL_CreateTextureFromSurface(window->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Background));
-	Button play_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Play");
-	Button param_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Parameters");
-	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Quit");
+	Button play_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), "Play");
+	Button param_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), "Parameters");
+	Button quit_button(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), "Quit");
 
 	title_label.setFont(RessourceManager::KremlinFont40);
 	main_poller.subscribe(window);
@@ -27,10 +27,10 @@ void showMenu(MainWindow *window)
 	Timer::getInstance()->setLastTime(SDL_GetTicks());
 	while (!window->hasCloseRequest() && !request_close)
 	{
-		title_label.setPosition(window->getWidth() / 2 - title_label.getWidth() / 2, 40);
-		play_button.setPosition(window->getWidth() / 2 - play_button.getWidth() / 2, 160);
-		param_button.setPosition(window->getWidth() / 2 - param_button.getWidth() / 2, 220);
-		quit_button.setPosition(window->getWidth() / 2 - quit_button.getWidth() / 2, 280);
+		title_label.setPosition(window->getWidth() / 2 - title_label.getWidth() / 2, window->getHeight() / 4);
+		play_button.setPosition(window->getWidth() / 2 - play_button.getWidth() / 2, window->getHeight() / 2 - 80);
+		param_button.setPosition(window->getWidth() / 2 - param_button.getWidth() / 2, window->getHeight() / 2 - 20);
+		quit_button.setPosition(window->getWidth() / 2 - quit_button.getWidth() / 2, window->getHeight() / 2 + 40);
 		main_poller.Poll();
 		window->clear();
 		window->setBackground(m_bg_texture);
@@ -41,7 +41,6 @@ void showMenu(MainWindow *window)
 		window->update();
 		if (play_button.isClicked()) {
 			Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
-			// Sounds::getInstance()->pauseMusic();
 			Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
 			showGame(window);
 		}
