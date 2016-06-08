@@ -46,6 +46,8 @@
 #define FRAME_PAUSE_DURATION 40
 
 #define MENU_CLICK_WAV "ressources/sounds/clickMenu.wav"
+#define MENU_MUSIQUE "ressources/sounds/menu.mp3"
+#define GAME_MUSIQUE "ressources/sounds/game.mp3"
 
 #define CONFIG_FILE_NAME "config.json"
 
