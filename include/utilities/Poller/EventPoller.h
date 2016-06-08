@@ -27,8 +27,6 @@ class EventPoller
 			mObserverList.remove(obs);
 			return 0;
 		}
-		virtual void Poll() = 0;
-
 	protected:
 		std::list<T> getObservers()
 		{

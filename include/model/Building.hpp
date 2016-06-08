@@ -3,11 +3,12 @@
 
 #include <iostream>
 #include <SDL.h>
+#include <utilities/Observer/VillageObserver.h>
 #include <uiclass/MainWindow.hpp>
 
-class Building
+class Building : public VillageObserver
 {
-	private:
+    private:
 		unsigned int m_width;
 		unsigned int m_height;
 		unsigned int m_pos_x;

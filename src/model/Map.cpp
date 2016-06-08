@@ -240,6 +240,7 @@ bool Map::onSdlEventReceived(SDL_Event event)
 						if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
 						{
 							m_list_building.push_front(m_tmp_building);
+							m_poller.notifyBuildingBuilt(m_tmp_building);
 							m_tmp_building = NULL;
 						}
 						rtn_val = true;
@@ -251,7 +252,7 @@ bool Map::onSdlEventReceived(SDL_Event event)
 						bool did_notify = false;
 						for (list<Building *>::iterator it = m_list_building.begin(); it != m_list_building.end(); ++it)
 						{
-							if (x_clicked >= (*it)->getPosX() && x_clicked < ((*it)->getPosX() + (*it)->getWidth()) && 
+							if (x_clicked >= (*it)->getPosX() && x_clicked < ((*it)->getPosX() + (*it)->getWidth()) &&
 								y_clicked >= (*it)->getPosY() && y_clicked < ((*it)->getPosY() + (*it)->getHeight()))
 							{
 								m_poller.notifyBuildingSelected(*it);

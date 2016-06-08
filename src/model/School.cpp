@@ -32,6 +32,11 @@ void School::drawBuilding(int rel_x, int rel_y)
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
 }
 
+bool School::onVillageUpdateRequest(Village *village)
+{
+    return true;
+}
+
 SDL_Color *School::getMinimapBuidingColor()
 {
 	return &m_map_color;

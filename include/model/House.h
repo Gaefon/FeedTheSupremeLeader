@@ -16,6 +16,7 @@ class House : public Building
 		House(MainWindow* prt);
 		~House();
 
+        bool onVillageUpdateRequest(Village *village);
 		void drawBuilding(int rel_x, int rel_y);
 		SDL_Color *getMinimapBuidingColor();
 };

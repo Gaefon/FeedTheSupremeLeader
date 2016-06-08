@@ -9,12 +9,14 @@
 #include <utilities/Timer.h>
 
 #include <utilities/Poller/SDLPoller.h>
+#include <model/Village.h>
 
 void showGame(MainWindow *window)
 {
 	SDLPoller poller;
+	VillagePoller village_poller;
 	GameMenuDialog game_menu(window, &poller, 300, 200);
-	GameInterface game_iface(window, &poller);
+	GameInterface game_iface(window, &poller, &village_poller);
 
 	poller.subscribe(window);
 	poller.subscribe(&game_menu);

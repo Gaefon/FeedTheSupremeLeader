@@ -1,6 +1,6 @@
 #include <Constants.hpp>
 #include <iostream>
-
+#include <math.h>
 #include <FeedTheSupremLeader.h>
 #include <uiclass/Button.h>
 #include <uiclass/Slider.h>
