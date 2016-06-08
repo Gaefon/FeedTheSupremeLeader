@@ -62,11 +62,14 @@ void showParameters(MainWindow *window)
 	Button btn_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getMusicButtonString());
 	Label lbl_map(window, 0, 0, "Map sensivity");
 	Slider slider_map_sensivity(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
+	Label lbl_audio(window, 0, 0, "Volume");
+	Slider slider_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
 	slider_map_sensivity.setValue(roundf(((Config::getInstance()->getInt(Config::MapSensivity) - MIN_MAP_SENSIVITY) * 100.0f) / (MAX_MAP_SENSIVITY - MIN_MAP_SENSIVITY)));
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(&btn_audio);
+  poller.subscribe(&slider_audio);
 	poller.subscribe(&slider_map_sensivity);
 	poller.subscribe(window);
 
@@ -77,6 +80,8 @@ void showParameters(MainWindow *window)
 		btn_audio.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 140);
 		lbl_map.setPosition(window->getWidth() / 2 - lbl_map.getWidth() / 2, 200);
 		slider_map_sensivity.setPosition(window->getWidth() / 2 - slider_map_sensivity.getWidth() / 2, 230);
+		lbl_audio.setPosition(window->getWidth() / 2 - lbl_audio.getWidth() / 2, 260);
+		slider_audio.setPosition(window->getWidth() / 2 - slider_audio.getWidth() / 2, 290);
 
 		poller.Poll();
 		window->clear();
@@ -85,6 +90,8 @@ void showParameters(MainWindow *window)
 		btn_fullscreen.draw();
 		btn_audio.draw();
 		slider_map_sensivity.draw();
+		lbl_audio.draw();
+		slider_audio.draw();
 		lbl_map.draw();
 
 		window->update();

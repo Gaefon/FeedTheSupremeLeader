@@ -10,6 +10,7 @@ Config::Config()
 	m_fullscreen = false;
 	m_music = true;
 	m_map_sensivity = DEFAULT_MAP_SENSIVITY;
+	m_audio_volume = 50;
 }
 
 bool Config::getBool(Config::Variable var)
@@ -25,6 +26,8 @@ int Config::getInt(Config::Variable var)
 {
 	if (var == MapSensivity)
 		return m_map_sensivity;
+	else if (var == AudioVolume)
+		return m_audio_volume;
 	return 0;
 }
 
