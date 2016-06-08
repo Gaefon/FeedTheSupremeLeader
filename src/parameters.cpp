@@ -31,7 +31,6 @@ string getMusicButtonString()
 
 void toggleMusic(Button *btn_audio)
 {
-	cout << Config::getInstance()->getBool(Config::Music) << endl;
 	if (Config::getInstance()->getBool(Config::Music))
 		Sounds::getInstance()->pauseMusic();
 	else
