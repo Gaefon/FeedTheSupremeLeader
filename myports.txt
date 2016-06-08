@@ -1,7 +1,0 @@
-  bzip2 @1.0.6_0 (active) platform='darwin 14' archs='x86_64'
-  freetype @2.6.3_0 (active) platform='darwin 14' archs='x86_64'
-  libpng @1.6.21_0 (active) platform='darwin 14' archs='x86_64'
-  libsdl2 @2.0.3_0 platform='darwin 14' archs='x86_64'
-  libsdl2 @2.0.4_0 (active) platform='darwin 14' archs='x86_64'
-  libsdl2_ttf @2.0.14_0 (active) platform='darwin 14' archs='x86_64'
-  zlib @1.2.8_0 (active) platform='darwin 14' archs='x86_64'

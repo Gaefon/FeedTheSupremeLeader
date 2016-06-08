@@ -1,3 +1,0 @@
-libsdl2
-libsdl2
-libsdl2_ttf
