@@ -13,19 +13,22 @@ class Config : public Singleton<Config>
 	public:
 		enum Variable
 		{
-			Fullscreen
+			Fullscreen,
+			Music,
+			MapSensivity
 		};
 	private:
 		Config();
 
 		bool m_fullscreen;
 		bool m_music;
+		int m_map_sensivity;
 
 	public:
 		void set(Variable var, bool value);
-		void setMusic(bool shouldEnableMusic);
-		bool getMusic();
-		bool get(Variable var);
+		void set(Variable var, int value);
+		bool getBool(Variable var);
+		int getInt(Variable var);
 		void saveConfiguration();
 		void readConfiguration();
 

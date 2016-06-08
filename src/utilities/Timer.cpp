@@ -31,6 +31,6 @@ void Timer::getTimeDifference()
 		timeTmp = FRAME_PAUSE_DURATION;
 		cerr << "Pause too long" << endl;
 	}
-	SDL_Delay(FRAME_PAUSE_DURATION - timeTmp);
+	//SDL_Delay(FRAME_PAUSE_DURATION - timeTmp);
 	m_last_time = current_time;
 }

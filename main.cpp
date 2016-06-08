@@ -6,6 +6,7 @@
 #include <uiclass/Button.h>
 #include <model/Map.h>
 #include <utilities/RessourceManager.h>
+#include <Constants.hpp>
 #include <utilities/Config.h>
 #include <utilities/sounds/sounds.h>
 
@@ -22,21 +23,21 @@ int main(int argc, char ** argv)
 
 	if(RessourceManager::getInstance()->loadImages() < 0)
 	{
-      SDL_Quit();
-      return EXIT_FAILURE;
+		SDL_Quit();
+		return EXIT_FAILURE;
 	}
 
 	if(RessourceManager::getInstance()->loadFonts() < 0)
 	{
-      SDL_Quit();
-      return EXIT_FAILURE;
+		SDL_Quit();
+		return EXIT_FAILURE;
 	}
 
 	Sounds::getInstance()->initMixerAudio();
-	Sounds::getInstance()->loadMusic();
+	Sounds::getInstance()->loadMusic(MENU_MUSIQUE);
 	Config::getInstance()->readConfiguration();
 	window.displayWindow();
-	window.setFullscreen(Config::getInstance()->get(Config::Fullscreen));
+	window.setFullscreen(Config::getInstance()->getBool(Config::Fullscreen));
 	showMenu(&window);
 
 	RessourceManager::getInstance()->unloadImages();

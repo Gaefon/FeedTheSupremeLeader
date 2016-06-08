@@ -25,7 +25,7 @@ class Sounds : public Singleton<Sounds>
     Sounds();
     void initMixerAudio();
     void closeMixerAudio();
-    void loadMusic();
+    void loadMusic(std::string music);
     void pauseMusic();
     void resumeMusic();
     void loadWav(std::string wavName);

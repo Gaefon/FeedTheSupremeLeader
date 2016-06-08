@@ -8,7 +8,11 @@
 #define WINDOW_DEFAULT_HEIGHT 600
 
 #define MAP_BORDER_WIDTH_MOVE 20
-#define MAP_MOVE_SENSIVITY 6
+
+#define MIN_MAP_SENSIVITY 1
+#define DEFAULT_MAP_SENSIVITY 6
+#define MAX_MAP_SENSIVITY 20
+
 #define WIDTH_DEAD_RATIO 0.2f
 #define HEIGHT_DEAD_RATIO 0.1f
 
@@ -42,6 +46,8 @@
 #define FRAME_PAUSE_DURATION 40
 
 #define MENU_CLICK_WAV "ressources/sounds/clickMenu.wav"
+#define MENU_MUSIQUE "ressources/sounds/menu.mp3"
+#define GAME_MUSIQUE "ressources/sounds/game.mp3"
 
 #define CONFIG_FILE_NAME "config.json"
 
