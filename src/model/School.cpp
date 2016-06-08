@@ -34,6 +34,7 @@ void School::drawBuilding(int rel_x, int rel_y)
 
 bool School::onVillageUpdateRequest(Village *village)
 {
+	(void) village;
     return true;
 }
 

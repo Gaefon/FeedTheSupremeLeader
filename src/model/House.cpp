@@ -39,5 +39,6 @@ SDL_Color *House::getMinimapBuidingColor()
 
 bool House::onVillageUpdateRequest(Village *village)
 {
+	(void) village;
     return true;
 }

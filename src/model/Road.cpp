@@ -34,6 +34,7 @@ void Road::drawBuilding(int rel_x, int rel_y)
 
 bool Road::onVillageUpdateRequest(Village *village)
 {
+	(void) village;
     return true;
 }
 
