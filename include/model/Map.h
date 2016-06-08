@@ -20,6 +20,8 @@ class Map: public SdlObserver
 		unsigned int m_display_width;
 		unsigned int m_display_height;
 
+		int m_move_sensivity;
+
 		MainWindow *m_parent;
 
 		bool m_is_moving;

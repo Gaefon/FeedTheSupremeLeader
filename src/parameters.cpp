@@ -17,38 +17,40 @@ using namespace std;
 
 string getButtonString()
 {
-	if (Config::getInstance()->get(Config::Fullscreen))
+	if (Config::getInstance()->getBool(Config::Fullscreen))
 		return "Fullscreen : On";
 	return "Fullscreen : Off";
 }
 
 string getMusicButtonString()
 {
-	if (!Config::getInstance()->getMusic())
+	if (!Config::getInstance()->getBool(Config::Music))
 		return "Music : Off";
-	else
-		return "Music : On";
+	return "Music : On";
 }
 
 void toggleMusic(Button *btn_audio)
 {
-	cout << Config::getInstance()->getMusic() << endl;
-	if (Config::getInstance()->getMusic())	{
-			// cout << "Pause" << endl;
-			Sounds::getInstance()->pauseMusic();
-	} else {
-			// cout << "Resume" << endl;
-			Sounds::getInstance()->resumeMusic();
-	}
-	Config::getInstance()->setMusic(!Config::getInstance()->getMusic());
+	cout << Config::getInstance()->getBool(Config::Music) << endl;
+	if (Config::getInstance()->getBool(Config::Music))
+		Sounds::getInstance()->pauseMusic();
+	else
+		Sounds::getInstance()->resumeMusic();
+	Config::getInstance()->set(Config::Music, !Config::getInstance()->getBool(Config::Music));
 	btn_audio->setText(getMusicButtonString());
 }
 
 void toggleFullscreen(MainWindow *window, Button *btn_fullscreen)
 {
-	Config::getInstance()->set(Config::Fullscreen, !Config::getInstance()->get(Config::Fullscreen));
+	Config::getInstance()->set(Config::Fullscreen, !Config::getInstance()->getBool(Config::Fullscreen));
 	btn_fullscreen->setText(getButtonString());
-	window->setFullscreen(Config::getInstance()->get(Config::Fullscreen));
+	window->setFullscreen(Config::getInstance()->getBool(Config::Fullscreen));
+}
+
+void setMapSensivity(Slider *slider)
+{
+	int sensivity = roundf((slider->getValue() * (MAX_MAP_SENSIVITY - MIN_MAP_SENSIVITY)) / 100.0f) + MIN_MAP_SENSIVITY;
+	Config::getInstance()->set(Config::MapSensivity, sensivity);
 }
 
 void showParameters(MainWindow *window)
@@ -62,7 +64,7 @@ void showParameters(MainWindow *window)
 	Label lbl_map(window, 0, 0, "Map sensivity");
 	Slider slider_map_sensivity(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
-
+	slider_map_sensivity.setValue(roundf(((Config::getInstance()->getInt(Config::MapSensivity) - MIN_MAP_SENSIVITY) * 100.0f) / (MAX_MAP_SENSIVITY - MIN_MAP_SENSIVITY)));
 	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(&btn_audio);
@@ -96,6 +98,8 @@ void showParameters(MainWindow *window)
 			toggleFullscreen(window, &btn_fullscreen);
 		if (btn_audio.isClicked())
 			toggleMusic(&btn_audio);
+		if (slider_map_sensivity.slideFinished())
+			setMapSensivity(&slider_map_sensivity);
 		Timer::getInstance()->getTimeDifference();
 	}
 }

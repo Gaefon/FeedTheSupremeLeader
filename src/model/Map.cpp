@@ -7,6 +7,7 @@
 #include <utilities/BuildingHelper.h>
 #include <helper/RectHelper.h>
 #include <utilities/RessourceManager.h>
+#include <utilities/Config.h>
 
 
 using namespace std;
@@ -25,6 +26,8 @@ Map::Map(MainWindow *par)
 
 	m_display_width = m_parent->getWidth();
 	m_display_height = m_parent->getHeight();
+
+	m_move_sensivity = Config::getInstance()->getInt(Config::MapSensivity);
 
 	m_texture_tile = SDL_CreateTextureFromSurface(m_parent->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Default_tile));
 	draw_tile_surface.x = 0;
@@ -139,35 +142,35 @@ void Map::checkCursorPosition()
 		SDL_GetMouseState(&x, &y);
 		if (x <= MAP_BORDER_WIDTH_MOVE)
 		{
-			m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+			m_map_relative_position_x += m_move_sensivity;
 			if (y > (m_parent->getHeight() / 2) + m_parent->getHeight() * WIDTH_DEAD_RATIO)
-				m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+				m_map_relative_position_y -= m_move_sensivity;
 			else if (y < (m_parent->getHeight() / 2) - m_parent->getHeight() * WIDTH_DEAD_RATIO)
-				m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+				m_map_relative_position_y += m_move_sensivity;
 		}
 		else if (y <= MAP_BORDER_WIDTH_MOVE)
 		{
-			m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+			m_map_relative_position_y += m_move_sensivity;
 			if (x > (m_parent->getWidth() / 2) + m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-				m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+				m_map_relative_position_x -= m_move_sensivity;
 			else if (x < (m_parent->getWidth() / 2) - m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-				m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+				m_map_relative_position_x += m_move_sensivity;
 		}
 		else if (m_parent->getWidth() - x <= MAP_BORDER_WIDTH_MOVE)
 		{
-			m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+			m_map_relative_position_x -= m_move_sensivity;
 			if (y > (m_parent->getHeight() / 2) + m_parent->getHeight() * WIDTH_DEAD_RATIO)
-				m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+				m_map_relative_position_y -= m_move_sensivity;
 			else if (y < (m_parent->getHeight() / 2) - m_parent->getHeight() * WIDTH_DEAD_RATIO)
-				m_map_relative_position_y += MAP_MOVE_SENSIVITY;
+				m_map_relative_position_y += m_move_sensivity;
 		}
 		else if (m_parent->getHeight() - y <= MAP_BORDER_WIDTH_MOVE)
 		{
-			m_map_relative_position_y -= MAP_MOVE_SENSIVITY;
+			m_map_relative_position_y -= m_move_sensivity;
 			if (x > (m_parent->getWidth() / 2) + m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-				m_map_relative_position_x -= MAP_MOVE_SENSIVITY;
+				m_map_relative_position_x -= m_move_sensivity;
 			else if (x < (m_parent->getWidth() / 2) - m_parent->getWidth() * HEIGHT_DEAD_RATIO)
-				m_map_relative_position_x += MAP_MOVE_SENSIVITY;
+				m_map_relative_position_x += m_move_sensivity;
 		}
 
 		if (m_map_relative_position_x >= 0 + (int)(m_margin * DEFAULT_WINDOWS_TILE))

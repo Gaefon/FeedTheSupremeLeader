@@ -22,21 +22,21 @@ int main(int argc, char ** argv)
 
 	if(RessourceManager::getInstance()->loadImages() < 0)
 	{
-      SDL_Quit();
-      return EXIT_FAILURE;
+		SDL_Quit();
+		return EXIT_FAILURE;
 	}
 
 	if(RessourceManager::getInstance()->loadFonts() < 0)
 	{
-      SDL_Quit();
-      return EXIT_FAILURE;
+		SDL_Quit();
+		return EXIT_FAILURE;
 	}
 
 	Sounds::getInstance()->initMixerAudio();
 	Sounds::getInstance()->loadMusic();
 	Config::getInstance()->readConfiguration();
 	window.displayWindow();
-	window.setFullscreen(Config::getInstance()->get(Config::Fullscreen));
+	window.setFullscreen(Config::getInstance()->getBool(Config::Fullscreen));
 	showMenu(&window);
 
 	RessourceManager::getInstance()->unloadImages();
