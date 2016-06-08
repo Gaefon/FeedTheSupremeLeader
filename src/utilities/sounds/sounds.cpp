@@ -51,6 +51,10 @@ void Sounds::resumeMusic()
 	Mix_ResumeMusic();
 }
 
+void Sounds::setMusicVolume(int volume)	{
+	Mix_VolumeMusic(volume);
+}
+
 void Sounds::loadWav(string wavName)
 {
 	m_menu_click = Mix_LoadWAV(wavName.c_str());

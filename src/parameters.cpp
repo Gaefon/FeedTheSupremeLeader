@@ -52,6 +52,11 @@ void setMapSensivity(Slider *slider)
 	Config::getInstance()->set(Config::MapSensivity, sensivity);
 }
 
+void setAudioVolume(Slider *slider) {
+  int volume = int((slider->getValue() * MIX_MAX_VOLUME) / 100);
+  Config::getInstance()->set(Config::AudioVolume, volume);
+}
+
 void showParameters(MainWindow *window)
 {
 	SDLPoller poller;
@@ -66,7 +71,8 @@ void showParameters(MainWindow *window)
 	Slider slider_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
 	slider_map_sensivity.setValue(roundf(((Config::getInstance()->getInt(Config::MapSensivity) - MIN_MAP_SENSIVITY) * 100.0f) / (MAX_MAP_SENSIVITY - MIN_MAP_SENSIVITY)));
-	poller.subscribe(&back_button);
+  slider_audio.setValue(Config::getInstance()->getInt(Config::AudioVolume));
+  poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(&btn_audio);
   poller.subscribe(&slider_audio);
@@ -106,6 +112,8 @@ void showParameters(MainWindow *window)
 			toggleMusic(&btn_audio);
 		if (slider_map_sensivity.slideFinished())
 			setMapSensivity(&slider_map_sensivity);
+    if (slider_audio.slideFinished())
+      setAudioVolume(&slider_audio);
 		Timer::getInstance()->getTimeDifference();
 	}
 }

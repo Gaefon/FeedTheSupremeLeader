@@ -1,6 +1,9 @@
 #include <model/Village.h>
 #include <Constants.hpp>
+#include <iostream>
+
 using namespace std;
+
 Village::Village()
 {
    // m_map = game_map;
