@@ -20,13 +20,17 @@ void Timer::setLastTime(long last_time)
 	m_last_time = last_time;
 }
 
-void Timer::getTimeDifference() {
-  int current_time = SDL_GetTicks();
-  long timeTmp;
+void Timer::getTimeDifference()
+{
+	int current_time = SDL_GetTicks();
+	long timeTmp;
 
-  timeTmp = current_time - m_last_time;
-  if (timeTmp > FRAME_PAUSE_DURATION)
-    timeTmp = FRAME_PAUSE_DURATION;
-  SDL_Delay(FRAME_PAUSE_DURATION - timeTmp);
-  m_last_time = current_time;
+	timeTmp = current_time - m_last_time;
+	if (timeTmp > FRAME_PAUSE_DURATION)
+	{
+		timeTmp = FRAME_PAUSE_DURATION;
+		cerr << "Pause too long" << endl;
+	}
+	SDL_Delay(FRAME_PAUSE_DURATION - timeTmp);
+	m_last_time = current_time;
 }

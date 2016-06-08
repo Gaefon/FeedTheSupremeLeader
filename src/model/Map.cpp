@@ -106,12 +106,16 @@ void Map::drawMapGrid()
 {
 	for (unsigned int i = 0; i < m_height; ++i)
 	{
+		draw_tile_surface.y = i * DEFAULT_WINDOWS_TILE + m_map_relative_position_y;
 		for (unsigned int j = 0; j < m_width; j++)
 		{
 			draw_tile_surface.x = j * DEFAULT_WINDOWS_TILE + m_map_relative_position_x;
-			draw_tile_surface.y = i * DEFAULT_WINDOWS_TILE + m_map_relative_position_y;
 			SDL_RenderCopy(m_parent->getRenderer(), m_texture_tile, NULL, &draw_tile_surface);
+			if (draw_tile_surface.x >= m_map_surface.w)
+				break;
 		}
+		if (draw_tile_surface.y >= m_map_surface.h)
+			break;
 	}
 
 	/*for (unsigned int i = 0; i <= m_height; ++i)
@@ -190,6 +194,8 @@ void Map::drawMap()
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
 	{
 		(*it)->drawBuilding(m_map_relative_position_x, m_map_relative_position_y);
+		if (draw_tile_surface.x >= m_map_surface.w || draw_tile_surface.y >= m_map_surface.h)
+				break;
 	}
 
 	if (m_tmp_building != NULL)
