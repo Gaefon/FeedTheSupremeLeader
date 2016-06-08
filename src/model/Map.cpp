@@ -194,8 +194,6 @@ void Map::drawMap()
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
 	{
 		(*it)->drawBuilding(m_map_relative_position_x, m_map_relative_position_y);
-		if (draw_tile_surface.x >= m_map_surface.w || draw_tile_surface.y >= m_map_surface.h)
-				break;
 	}
 
 	if (m_tmp_building != NULL)
