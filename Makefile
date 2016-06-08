@@ -18,7 +18,6 @@ SRC =	main.cpp\
 		src/uiclass/GameInterface.cpp\
 		src/uiclass/Minimap.cpp\
 		src/uiclass/Slider.cpp\
-		src/utilities/Poller/EventPoller.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
 		src/utilities/Poller/MapPoller.cpp\
 		src/utilities/Config.cpp\

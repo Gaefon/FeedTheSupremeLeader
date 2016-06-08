@@ -39,18 +39,19 @@ void showMenu(MainWindow *window)
 		param_button.draw();
 		quit_button.draw();
 		window->update();
-		if (play_button.isClicked()) {
+		if (play_button.isClicked())
+		{
 			Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
 			Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
 			showGame(window);
 		}
-		if (param_button.isClicked()) {
+		if (param_button.isClicked())
+		{
 				Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
 				showParameters(window);
 		}
 		if (quit_button.isClicked())
 			request_close = true;
-		// SDL_Delay(20);
 		Timer::getInstance()->getTimeDifference();
 	}
 }
