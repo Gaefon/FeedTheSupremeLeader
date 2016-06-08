@@ -6,6 +6,7 @@
 #include <uiclass/Button.h>
 #include <model/Map.h>
 #include <utilities/RessourceManager.h>
+#include <Constants.hpp>
 #include <utilities/Config.h>
 #include <utilities/sounds/sounds.h>
 
@@ -33,7 +34,7 @@ int main(int argc, char ** argv)
 	}
 
 	Sounds::getInstance()->initMixerAudio();
-	Sounds::getInstance()->loadMusic();
+	Sounds::getInstance()->loadMusic(MENU_MUSIQUE);
 	Config::getInstance()->readConfiguration();
 	window.displayWindow();
 	window.setFullscreen(Config::getInstance()->get(Config::Fullscreen));

@@ -1,4 +1,5 @@
 #include <utilities/sounds/sounds.h>
+#include <Constants.hpp>
 
 using namespace std;
 
@@ -31,8 +32,8 @@ void Sounds::closeMixerAudio() {
 	Mix_CloseAudio();
 }
 
-void Sounds::loadMusic() {
-	m_menu_music = Mix_LoadMUS("ressources/sounds/menu.mp3");
+void Sounds::loadMusic(string music) {
+	m_menu_music = Mix_LoadMUS(music.c_str());
   Mix_PlayMusic(m_menu_music, -1);
 }
 

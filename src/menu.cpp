@@ -41,7 +41,8 @@ void showMenu(MainWindow *window)
 		window->update();
 		if (play_button.isClicked()) {
 			Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
-			Sounds::getInstance()->pauseMusic();
+			// Sounds::getInstance()->pauseMusic();
+			Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
 			showGame(window);
 		}
 		if (param_button.isClicked()) {
