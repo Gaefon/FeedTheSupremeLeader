@@ -105,8 +105,11 @@ bool Slider::onSdlEventReceived(SDL_Event event)
 
 void Slider::draw()
 {
-	drawBar();
-	drawSquare();
+	if (isVisible())
+	{
+		drawBar();
+		drawSquare();
+	}
 }
 
 void Slider::drawBar()

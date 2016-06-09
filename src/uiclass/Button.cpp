@@ -136,20 +136,23 @@ bool Button::onSdlEventReceived(SDL_Event event)
 
 void Button::draw()
 {
-	if (m_is_pressed)
-		m_src.y = m_src.h * 2;
-	else if (m_is_over)
-		m_src.y = m_src.h;
-	else
-		m_src.y = 0;
-
-	SDL_RenderCopy(getParent()->getRenderer(), m_button_texture, &m_src, &m_dst);
-
-	if (m_button_text_normal != NULL && m_button_text_over != NULL)
+	if (isVisible())
 	{
-		if (!m_is_pressed)
-			SDL_RenderCopy(getParent()->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
+		if (m_is_pressed)
+			m_src.y = m_src.h * 2;
+		else if (m_is_over)
+			m_src.y = m_src.h;
 		else
-			SDL_RenderCopy(getParent()->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
+			m_src.y = 0;
+
+		SDL_RenderCopy(getParent()->getRenderer(), m_button_texture, &m_src, &m_dst);
+
+		if (m_button_text_normal != NULL && m_button_text_over != NULL)
+		{
+			if (!m_is_pressed)
+				SDL_RenderCopy(getParent()->getRenderer(), m_button_text_normal, &m_src_text, &m_dst_text);
+			else
+				SDL_RenderCopy(getParent()->getRenderer(), m_button_text_over, &m_src_text, &m_dst_text);
+		}
 	}
 }

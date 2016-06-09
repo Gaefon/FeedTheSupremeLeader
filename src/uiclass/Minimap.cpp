@@ -77,26 +77,29 @@ bool Minimap::onSdlEventReceived(SDL_Event event)
 
 void Minimap::draw()
 {
-	list<Building *> *blds = m_map->getBuildings();
-	SDL_Rect tmp;
-	SDL_Color *tmp_color;
-	SDL_SetRenderDrawColor(getParent()->getRenderer(), m_default_color.r, m_default_color.g, m_default_color.b, m_default_color.a);
-	SDL_RenderFillRect(getParent()->getRenderer(), &m_draw_rect);
-
-	// draw map rectangle on the minimap
-	m_map_pos_rect.x = m_draw_rect.x - m_map->getTilePosX();
-	m_map_pos_rect.y = m_draw_rect.y - m_map->getTilePosY();
-	SDL_SetRenderDrawColor(getParent()->getRenderer(), 255, 255, 255, 255);
-	SDL_RenderDrawRect(getParent()->getRenderer(), &m_map_pos_rect);
-
-	for (list<Building *>::iterator it = blds->begin(); it != blds->end(); ++it)
+	if (isVisible())
 	{
-		tmp.x = (*it)->getPosX() + m_draw_rect.x;
-		tmp.y = (*it)->getPosY() + m_draw_rect.y;
-		tmp.w = (*it)->getWidth();
-		tmp.h = (*it)->getHeight();
-		tmp_color = (*it)->getMinimapBuidingColor();
-		SDL_SetRenderDrawColor(getParent()->getRenderer(), tmp_color->r, tmp_color->g, tmp_color->b, tmp_color->a);
-		SDL_RenderFillRect(getParent()->getRenderer(), &tmp);
+		list<Building *> *blds = m_map->getBuildings();
+		SDL_Rect tmp;
+		SDL_Color *tmp_color;
+		SDL_SetRenderDrawColor(getParent()->getRenderer(), m_default_color.r, m_default_color.g, m_default_color.b, m_default_color.a);
+		SDL_RenderFillRect(getParent()->getRenderer(), &m_draw_rect);
+
+		// draw map rectangle on the minimap
+		m_map_pos_rect.x = m_draw_rect.x - m_map->getTilePosX();
+		m_map_pos_rect.y = m_draw_rect.y - m_map->getTilePosY();
+		SDL_SetRenderDrawColor(getParent()->getRenderer(), 255, 255, 255, 255);
+		SDL_RenderDrawRect(getParent()->getRenderer(), &m_map_pos_rect);
+
+		for (list<Building *>::iterator it = blds->begin(); it != blds->end(); ++it)
+		{
+			tmp.x = (*it)->getPosX() + m_draw_rect.x;
+			tmp.y = (*it)->getPosY() + m_draw_rect.y;
+			tmp.w = (*it)->getWidth();
+			tmp.h = (*it)->getHeight();
+			tmp_color = (*it)->getMinimapBuidingColor();
+			SDL_SetRenderDrawColor(getParent()->getRenderer(), tmp_color->r, tmp_color->g, tmp_color->b, tmp_color->a);
+			SDL_RenderFillRect(getParent()->getRenderer(), &tmp);
+		}
 	}
 }

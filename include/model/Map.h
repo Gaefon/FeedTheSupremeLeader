@@ -58,6 +58,7 @@ class Map: public SdlObserver
 		void setTileMapPos(int pos_x, int pos_y);
 
 		void setTmpBuilding(Building *tmp);
+		void removeBuilding(Building *to_remove);
 		std::list<Building *> *getBuildings();
 
 		MapPoller *getPoller();

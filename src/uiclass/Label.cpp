@@ -65,5 +65,8 @@ void Label::setText(std::string text)
 
 void Label::draw()
 {
-	SDL_RenderCopy(getParent()->getRenderer(), m_texture_text, &m_src, &m_dst);
+	if (isVisible())
+	{
+		SDL_RenderCopy(getParent()->getRenderer(), m_texture_text, &m_src, &m_dst);
+	}
 }
