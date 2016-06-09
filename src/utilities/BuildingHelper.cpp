@@ -1,4 +1,9 @@
 #include <utilities/BuildingHelper.h>
+#include <model/Farm.hpp>
+#include <model/House.h>
+#include <model/Road.h>
+#include <model/Building.hpp>
+#include <model/School.h>
 
 using namespace std;
 
@@ -31,4 +36,17 @@ bool BuildingHelper::isBuildingPlaceValid(list<Building *> list_building, Buildi
 		}
 	}
 	return true;
+}
+
+Building * BuildingHelper::getCopyOfTmpBuilding(Building *tmp_building, MainWindow *m_parent)	{
+	if (dynamic_cast<Farm*>(tmp_building) != NULL)	{
+		return new Farm(m_parent);
+  }	else if (dynamic_cast<House*>(tmp_building) != NULL)	{
+		return new House(m_parent);
+	} else if (dynamic_cast<Road*>(tmp_building) != NULL)	{
+		return new Road(m_parent);
+	} else if (dynamic_cast<School*>(tmp_building) != NULL)	{
+		return new School(m_parent);
+	}
+	return NULL;
 }
