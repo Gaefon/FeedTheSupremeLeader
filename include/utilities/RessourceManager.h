@@ -28,6 +28,7 @@ class RessourceManager: public Singleton<RessourceManager>
 			Button_Menu_Game,
 			Button_Menu_Game_Cancel,
 			Medium_Slider,
+			Counter_bg,
 			END_OF_ENUM
 		};
 

@@ -25,7 +25,7 @@ void RessourceManager::loadAccessPath()
 	m_accesspaths[Button_Menu_Game] = "ressources/btn_menu_game.bmp";
 	m_accesspaths[Button_Menu_Game_Cancel] = "ressources/btn_menu_game_cancel.bmp";
 	m_accesspaths[Medium_Slider] = "ressources/slider.bmp";
-
+    m_accesspaths[Counter_bg] = "ressources/counterbg.bmp";
 
 	m_fontspaths[KremlinFont40] = "ressources/kremlin.ttf";
 	m_fontspaths[KremlinFont20] = "ressources/kremlin.ttf";

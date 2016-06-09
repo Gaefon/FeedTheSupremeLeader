@@ -25,9 +25,13 @@ class GameInterface: public Widget, public MapObserver
 		SDL_Rect m_menu_rect;
 		SDL_Rect m_map_rect;
 		SDL_Rect m_building_rect;
+		SDL_Rect m_counter1_rect;
+        SDL_Rect m_counter2_rect;
+
 
 		SDL_Texture *m_button_back_texture;
 		SDL_Texture *m_map_back_texture;
+		SDL_Texture *m_counter_texture;
 
 		Button *m_btn_home;
 		Button *m_btn_road;
@@ -37,6 +41,7 @@ class GameInterface: public Widget, public MapObserver
 
 		Label *m_label_buiding_name;
 		Label *m_label_population;
+		Label *m_label_food;
 		void drawRessourceCounter();
 
 	public:

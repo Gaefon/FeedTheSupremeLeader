@@ -37,6 +37,17 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
     m_map_rect.w = GAME_INTERFACE_MAP_WIDTH;
     m_map_rect.h = GAME_INTERFACE_MENU_HEIGHT;
 
+    m_counter_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Counter_bg));
+    m_counter1_rect.x = getParent()->getWidth() - 127;
+    m_counter1_rect.y = 20;
+    m_counter1_rect.w = 97;
+    m_counter1_rect.h = 29;
+
+    m_counter2_rect.x = getParent()->getWidth() - 227;
+    m_counter2_rect.y = 20;
+    m_counter2_rect.w = 97;
+    m_counter2_rect.h = 29;
+
     m_minimap->setPosition(getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2 - m_minimap->getWidth() / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2 - m_minimap->getHeight() / 2);
 
     m_btn_home = new Button(getParent(), 12, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
@@ -47,8 +58,10 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
     m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
     m_label_buiding_name->setFont(RessourceManager::LatoFont20);
-    m_label_population= new Label(getParent(), getParent()->getWidth() - 100, 20, "");
+    m_label_population= new Label(getParent(), getParent()->getWidth() - 200, 20, "");
     m_label_population->setFont(RessourceManager::LatoFont20);
+    m_label_food = new Label(getParent(), getParent()->getWidth() - 100, 20, "");
+    m_label_food->setFont(RessourceManager::LatoFont20);
 
 
     m_poller->subscribe(m_btn_home);
@@ -93,9 +106,15 @@ void GameInterface::drawRessourceCounter()
     std::stringstream ss;
     ss << m_village->getPopulation();
     string str = ss.str();
+    ss.str("");
     m_label_population->setText(str);
     m_label_population->draw();
+    ss << m_village->getFood();
+    str = ss.str();
+    m_label_food->setText(str);
+    m_label_food->draw();
 }
+
 void GameInterface::draw()
 {
 	m_map->drawMap();
@@ -111,7 +130,8 @@ void GameInterface::draw()
 	m_btn_cancel->draw();
 	m_minimap->draw();
 	m_label_buiding_name->draw();
-
+    SDL_RenderCopy(getParent()->getRenderer(), m_counter_texture, NULL, &m_counter1_rect);
+    SDL_RenderCopy(getParent()->getRenderer(), m_counter_texture, NULL, &m_counter2_rect);
     drawRessourceCounter();
 
 	if (m_btn_home->isClicked())
@@ -124,6 +144,7 @@ void GameInterface::draw()
 		m_map->setTmpBuilding(new Road(getParent()));
 	if (m_btn_cancel->isClicked())
 		m_map->setTmpBuilding(NULL);
+
 }
 
 bool GameInterface::onBuidingClicked(Building *building)
