@@ -40,6 +40,7 @@ class GameInterface: public Widget, public MapObserver
 		Button *m_btn_destroy_build;
 
 		Label *m_label_buiding_name;
+		Label *m_label_population;
 		void drawRessourceCounter();
 
 	public:
