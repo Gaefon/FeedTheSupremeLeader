@@ -16,7 +16,7 @@ School::School(MainWindow *prt) : Building(prt)
 	draw_surface.w = 4 * DEFAULT_WINDOWS_TILE;
 	draw_surface.h = 4 * DEFAULT_WINDOWS_TILE;
 
-	ColorHelper::parseColor(&m_map_color, COLOR_HOUSE_MINIMAP);
+	ColorHelper::parseColor(&m_map_color, COLOR_SCHOOL_MINIMAP);
 }
 
 School::~School()

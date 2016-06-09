@@ -16,6 +16,7 @@ void RessourceManager::loadAccessPath()
 	m_accesspaths[Default_tile] = "ressources/default_tile.bmp";
 	m_accesspaths[Menu_Default_Button] = "ressources/play_button.bmp";
 	m_accesspaths[Menu_Large_Button] = "ressources/large_button.bmp";
+	m_accesspaths[BackgroundMenuMap] = "ressources/background_menu_map.bmp";
 	m_accesspaths[Farm] = "ressources/farm.bmp";
 	m_accesspaths[House] = "ressources/house.bmp";
 	m_accesspaths[School] = "ressources/school.bmp";
@@ -44,6 +45,7 @@ int RessourceManager::loadImages()
 			cerr << "error during image initialization "  << m_accesspaths[i] << endl;
 			return -1;
 		}
+		SDL_SetColorKey(images_sfc.at(i), SDL_TRUE, SDL_MapRGB(images_sfc.at(i)->format, 0xff, 0x00, 0xff));
 	}
 	return 0;
 }

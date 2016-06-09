@@ -28,6 +28,7 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
     m_building_rect.w = GAME_INTERFACE_BUILDING_MENU_WIDTH;
     m_building_rect.h = GAME_INTERFACE_MENU_HEIGHT;
 
+    m_map_back_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::BackgroundMenuMap));
     m_map_rect.x = getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH;
     m_map_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
     m_map_rect.w = GAME_INTERFACE_MAP_WIDTH;
@@ -58,6 +59,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
 GameInterface::~GameInterface()
 {
+	SDL_DestroyTexture(m_map_back_texture);
+
     delete m_map;
     delete m_btn_home;
     delete m_btn_road;
@@ -85,8 +88,7 @@ void GameInterface::draw()
 	SDL_RenderFillRect(getParent()->getRenderer(), &m_menu_rect);
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), 48, 48, 48, 255);
 	SDL_RenderFillRect(getParent()->getRenderer(), &m_building_rect);
-	SDL_SetRenderDrawColor(getParent()->getRenderer(), 48, 48, 48, 255);
-	SDL_RenderFillRect(getParent()->getRenderer(), &m_map_rect);
+	SDL_RenderCopy(getParent()->getRenderer(), m_map_back_texture, NULL, &m_map_rect);
 	m_btn_home->draw();
 	m_btn_road->draw();
 	m_btn_school->draw();
