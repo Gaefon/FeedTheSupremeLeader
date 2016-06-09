@@ -22,6 +22,9 @@ class GameInterface: public Widget, public MapObserver
 		Village *m_village;
 		Map *m_map;
 		Minimap *m_minimap;
+
+		Building *m_building_clicked;
+
 		SDL_Rect m_menu_rect;
 		SDL_Rect m_map_rect;
 		SDL_Rect m_building_rect;
@@ -34,6 +37,7 @@ class GameInterface: public Widget, public MapObserver
 		Button *m_btn_school;
 		Button *m_btn_farm;
 		Button *m_btn_cancel;
+		Button *m_btn_destroy_build;
 
 		Label *m_label_buiding_name;
 		void drawRessourceCounter();
