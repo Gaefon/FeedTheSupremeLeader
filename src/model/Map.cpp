@@ -233,7 +233,7 @@ bool Map::onSdlEventReceived(SDL_Event event)
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y ))
+				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y))
 				{
 					if (m_tmp_building != NULL)
 					{
@@ -263,6 +263,14 @@ bool Map::onSdlEventReceived(SDL_Event event)
 						if (!did_notify)
 							m_poller.notifyBuildingSelected(NULL);
 					}
+				}
+			}
+			else if (event.button.button == SDL_BUTTON_RIGHT)
+			{
+				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y) && m_tmp_building != NULL)
+				{
+					setTmpBuilding(NULL);
+					rtn_val = true;
 				}
 			}
 			break;
