@@ -40,6 +40,6 @@ SDL_Color *Farm::getMinimapBuidingColor()
 
 bool Farm::onVillageUpdateRequest(Village *village)
 {
-	(void) village;
+	cout << "Farm update received" << endl;
     return true;
 }

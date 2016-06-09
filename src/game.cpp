@@ -10,7 +10,9 @@
 
 #include <utilities/Poller/SDLPoller.h>
 #include <model/Village.h>
+#include <Constants.hpp>
 
+using namespace std;
 void showGame(MainWindow *window)
 {
 	SDLPoller poller;
@@ -25,18 +27,18 @@ void showGame(MainWindow *window)
 	Timer::getInstance()->setLastTime(SDL_GetTicks());
 	while (!window->hasCloseRequest() && !game_menu.isGotoMenuRequested())
 	{
-	    iteration++;
+	    iteration += FRAME_PAUSE_DURATION;
 		poller.Poll();
 		window->clear();
 		game_iface.draw();
 		game_menu.draw();
 		window->update();
 		Timer::getInstance()->getTimeDifference();
-		if (iteration == 25)
+		cout << iteration << " game" << endl;
+		if (iteration == 5000)
         {
             iteration = 0;
             village_poller.notify(&village);
-
         }
 		// SDL_Delay(20);
 	}
