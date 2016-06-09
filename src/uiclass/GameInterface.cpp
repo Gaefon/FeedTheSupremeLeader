@@ -98,8 +98,6 @@ void GameInterface::draw()
 	m_map->drawMap();
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), 0, 0, 255, 255);
 	SDL_RenderFillRect(getParent()->getRenderer(), &m_menu_rect);
-	/*SDL_SetRenderDrawColor(getParent()->getRenderer(), 48, 48, 48, 255);
-	SDL_RenderFillRect(getParent()->getRenderer(), &m_building_rect);*/
 
 	SDL_RenderCopy(getParent()->getRenderer(), m_button_back_texture, NULL, &m_building_rect);
 	SDL_RenderCopy(getParent()->getRenderer(), m_map_back_texture, NULL, &m_map_rect);

@@ -61,6 +61,11 @@ void Building::setPosY(unsigned int val)
 	m_pos_y = val;
 }
 
+bool Building::isDraggable()
+{
+	return false;
+}
+
 MainWindow *Building::getParent()
 {
 	return m_parent;

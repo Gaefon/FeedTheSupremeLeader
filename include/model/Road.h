@@ -18,6 +18,7 @@ class Road: public Building
 
         bool onVillageUpdateRequest(Village *village);
 		void drawBuilding(int rel_x, int rel_y);
+		bool isDraggable();
 		SDL_Color *getMinimapBuidingColor();
 };
 
