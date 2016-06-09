@@ -25,6 +25,7 @@ class Sounds : public Singleton<Sounds>
     void loadMusic(std::string music);
     void pauseMusic();
     void resumeMusic();
+    void setMusicVolume(int volume);
     void loadWav(std::string wavName);
 
 

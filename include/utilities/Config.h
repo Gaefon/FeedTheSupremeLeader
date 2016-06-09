@@ -15,7 +15,8 @@ class Config : public Singleton<Config>
 		{
 			Fullscreen,
 			Music,
-			MapSensivity
+			MapSensivity,
+			AudioVolume
 		};
 	private:
 		Config();
@@ -23,6 +24,7 @@ class Config : public Singleton<Config>
 		bool m_fullscreen;
 		bool m_music;
 		int m_map_sensivity;
+		int m_audio_volume;
 
 	public:
 		void set(Variable var, bool value);

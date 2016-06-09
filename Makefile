@@ -26,7 +26,8 @@ SRC =	main.cpp\
 		src/utilities/BuildingHelper.cpp\
 		src/utilities/Timer.cpp\
 		src/utilities/sounds/sounds.cpp\
-		src/lib/jsonCpp/jsoncpp.cpp
+		src/lib/jsonCpp/jsoncpp.cpp\
+		src/model/Village.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
