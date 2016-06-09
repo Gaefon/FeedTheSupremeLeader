@@ -71,7 +71,7 @@ void showParameters(MainWindow *window)
 	Slider slider_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 
 	slider_map_sensivity.setValue(roundf(((Config::getInstance()->getInt(Config::MapSensivity) - MIN_MAP_SENSIVITY) * 100.0f) / (MAX_MAP_SENSIVITY - MIN_MAP_SENSIVITY)));
-  slider_audio.setValue(Config::getInstance()->getInt(Config::AudioVolume));
+  slider_audio.setValue(Config::getInstance()->getInt(Config::AudioVolume) * 100 / 128);
   poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(&btn_audio);
