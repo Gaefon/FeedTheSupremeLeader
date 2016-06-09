@@ -8,6 +8,7 @@ class BuildingHelper
 {
 	public:
 		static bool isBuildingPlaceValid(std::list<Building *> list_building, Building *building);
+		static Building * getCopyOfTmpBuilding(Building *tmp_building, MainWindow *m_parent);
 };
 
 #endif

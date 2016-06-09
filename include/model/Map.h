@@ -39,6 +39,7 @@ class Map: public SdlObserver
 
 		void drawMapGrid();
 		void checkCursorPosition();
+		// Building * getCopyOfTmpBuilding(Building *tmp_building);
 
 	public:
 		Map(MainWindow *par);
