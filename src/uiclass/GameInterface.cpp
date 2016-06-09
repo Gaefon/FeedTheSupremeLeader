@@ -47,6 +47,9 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
     m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
     m_label_buiding_name->setFont(RessourceManager::LatoFont20);
+    m_label_population= new Label(getParent(), getParent()->getWidth() - 100, 20, "");
+    m_label_population->setFont(RessourceManager::LatoFont20);
+
 
     m_poller->subscribe(m_btn_home);
     m_poller->subscribe(m_btn_road);
@@ -72,6 +75,7 @@ GameInterface::~GameInterface()
     delete m_btn_cancel;
 
     delete m_label_buiding_name;
+    delete m_label_population;
 }
 
 int GameInterface::getWidth()
@@ -89,9 +93,8 @@ void GameInterface::drawRessourceCounter()
     std::stringstream ss;
     ss << m_village->getPopulation();
     string str = ss.str();
-    Label lbl_population(getParent(), getParent()->getWidth() - 100, 20, str);
-    lbl_population.setFont(RessourceManager::LatoFont20);
-    lbl_population.draw();
+    m_label_population->setText(str);
+    m_label_population->draw();
 }
 void GameInterface::draw()
 {
