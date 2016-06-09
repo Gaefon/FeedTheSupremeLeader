@@ -24,6 +24,8 @@ class GameInterface: public Widget, public MapObserver
 		SDL_Rect m_map_rect;
 		SDL_Rect m_building_rect;
 
+		SDL_Texture *m_map_back_texture;
+
 		Button *m_btn_home;
 		Button *m_btn_road;
 		Button *m_btn_school;

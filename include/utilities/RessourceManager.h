@@ -18,6 +18,7 @@ class RessourceManager: public Singleton<RessourceManager>
 			Menu_Default_Button = 0,
 			Menu_Large_Button,
 			Menu_Background,
+			BackgroundMenuMap,
 			Default_tile,
 			Farm,
 			House,
@@ -26,7 +27,7 @@ class RessourceManager: public Singleton<RessourceManager>
 			Button_Menu_Game,
 			Button_Menu_Game_Cancel,
 			Medium_Slider,
-			END_OF_ENUM,
+			END_OF_ENUM
 		};
 
 		enum FontEntities
