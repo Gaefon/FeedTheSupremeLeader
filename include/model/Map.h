@@ -25,6 +25,7 @@ class Map: public SdlObserver
 		MainWindow *m_parent;
 
 		bool m_is_moving;
+		bool m_is_button_down;
 		int m_map_relative_position_x;
 		int m_map_relative_position_y;
 
@@ -39,7 +40,7 @@ class Map: public SdlObserver
 
 		void drawMapGrid();
 		void checkCursorPosition();
-		// Building * getCopyOfTmpBuilding(Building *tmp_building);
+		void addBuildingIfPossible();
 
 	public:
 		Map(MainWindow *par);

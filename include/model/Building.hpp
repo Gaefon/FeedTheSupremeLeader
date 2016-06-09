@@ -31,6 +31,8 @@ class Building : public VillageObserver
 		unsigned int getPosY();
 		void setPosY(unsigned int val);
 
+		virtual bool isDraggable();
+
 		std::string getName();
 		MainWindow *getParent();
 		void setName(std::string val);

@@ -21,6 +21,7 @@ Map::Map(MainWindow *par)
 	m_margin = DEFAULT_MAP_MARGIN;
 	m_parent = par;
 	m_is_moving = false;
+	m_is_button_down = false;
 	m_map_relative_position_x = 0;
 	m_map_relative_position_y = 0;
 
@@ -218,49 +219,42 @@ void Map::drawMap()
 	}
 }
 
-// Building * Map::getCopyOfTmpBuilding(Building *tmp_building)	{
-// 	if (dynamic_cast<Farm*>(tmp_building) != NULL)	{
-// 		return new Farm(m_parent);
-//   }	else if (dynamic_cast<House*>(tmp_building) != NULL)	{
-// 		return new House(m_parent);
-// 	} else if (dynamic_cast<Road*>(tmp_building) != NULL)	{
-// 		return new Road(m_parent);
-// 	} else if (dynamic_cast<School*>(tmp_building) != NULL)	{
-// 		return new School(m_parent);
-// 	}
-// 	return NULL;
-// }
-
+void Map::addBuildingIfPossible()
+{
+	if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
+	{
+		Building *tmp_copy = BuildingHelper::getCopyOfTmpBuilding(m_tmp_building, m_parent);
+		m_list_building.push_front(m_tmp_building);
+		m_poller.notifyBuildingBuilt(m_tmp_building);
+		m_tmp_building = tmp_copy;
+		m_tmp_building->setPosX(m_tmp_building->getPosX());
+		m_tmp_building->setPosY(m_tmp_building->getPosY());
+	}
+}
 
 bool Map::onSdlEventReceived(SDL_Event event)
 {
 	bool rtn_val = false;
 	switch (event.type)
 	{
-		/*case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				m_is_moving = true;
-				m_previous_x = event.button.x;
-				m_previous_y = event.button.y;
+				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y))
+				{
+					m_is_button_down = true;
+				}
 			}
-			break;*/
+			break;
 		case SDL_MOUSEBUTTONUP:
+			m_is_button_down = false;
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y))
 				{
 					if (m_tmp_building != NULL)
 					{
-						if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
-						{
-							Building *tmp_copy = BuildingHelper::getCopyOfTmpBuilding(m_tmp_building, m_parent);
-							m_list_building.push_front(m_tmp_building);
-							m_poller.notifyBuildingBuilt(m_tmp_building);
-							m_tmp_building = tmp_copy;
-							m_tmp_building->setPosX(m_tmp_building->getPosX());
-							m_tmp_building->setPosY(m_tmp_building->getPosY());
-						}
+						addBuildingIfPossible();
 						rtn_val = true;
 					}
 					else
@@ -293,6 +287,8 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			}
 			break;
 		case SDL_MOUSEMOTION:
+			if (!RectHelper::isInRect(&m_map_surface, event.motion.x, event.motion.y))
+				m_is_button_down = false;
 			if (m_tmp_building != NULL)
 			{
 				int pos_grid_x = roundf((event.motion.x - m_map_relative_position_x - (m_tmp_building->getDisplayWidth() / 2.0f)) / (float) DEFAULT_WINDOWS_TILE);
@@ -310,6 +306,9 @@ bool Map::onSdlEventReceived(SDL_Event event)
 
 				m_tmp_building->setPosX(pos_grid_x);
 				m_tmp_building->setPosY(pos_grid_y);
+
+				if (m_is_button_down == true && m_tmp_building->isDraggable())
+					addBuildingIfPossible();
 			}
 			break;
 	}

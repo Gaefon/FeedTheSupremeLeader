@@ -32,6 +32,11 @@ void Road::drawBuilding(int rel_x, int rel_y)
 	SDL_RenderCopy(getParent()->getRenderer(), m_texture, NULL, &draw_surface);
 }
 
+bool Road::isDraggable()
+{
+	return true;
+}
+
 bool Road::onVillageUpdateRequest(Village *village)
 {
 	(void) village;
