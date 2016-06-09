@@ -44,7 +44,7 @@
 #define ENTITY_FARM     4
 #define BTN_MENU_GAME   5
 #define BTN_MENU_GAME_CANCEL 6
-#define FRAME_PAUSE_DURATION 40
+#define FRAME_PAUSE_DURATION 20
 
 #define MENU_CLICK_WAV "ressources/sounds/clickMenu.wav"
 #define MENU_MUSIQUE "ressources/sounds/menu.mp3"
