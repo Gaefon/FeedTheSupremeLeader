@@ -11,6 +11,7 @@
 #include <helper/RectHelper.h>
 #include <utilities/RessourceManager.h>
 #include <utilities/Config.h>
+#include <utilities/sounds/sounds.h>
 
 using namespace std;
 
@@ -42,7 +43,6 @@ Map::Map(MainWindow *par)
 	m_map_surface.y = 0;
 	m_map_surface.w = m_parent->getWidth();
 	m_map_surface.h = m_parent->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
-
 }
 
 Map::~Map()
@@ -106,6 +106,7 @@ void Map::setTmpBuilding(Building *tmp)
 void Map::removeBuilding(Building *to_remove)
 {
 	m_list_building.remove(to_remove);
+	Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingDestroy));
 }
 
 list<Building *> *Map::getBuildings()
@@ -229,11 +230,12 @@ void Map::addBuildingIfPossible()
 	if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
 	{
 		Building *tmp_copy = BuildingHelper::getCopyOfTmpBuilding(m_tmp_building, m_parent);
+		Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingBuild));
 		m_list_building.push_front(m_tmp_building);
 		m_poller.notifyBuildingBuilt(m_tmp_building);
+		tmp_copy->setPosX(m_tmp_building->getPosX());
+		tmp_copy->setPosY(m_tmp_building->getPosY());
 		m_tmp_building = tmp_copy;
-		m_tmp_building->setPosX(m_tmp_building->getPosX());
-		m_tmp_building->setPosY(m_tmp_building->getPosY());
 	}
 }
 
