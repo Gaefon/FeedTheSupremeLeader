@@ -2,13 +2,15 @@
 #include <math.h>
 #include <model/Building.hpp>
 #include <model/Farm.hpp>
+#include <model/House.h>
+#include <model/Road.h>
+#include <model/School.h>
 #include <model/Map.h>
 #include <Constants.hpp>
 #include <utilities/BuildingHelper.h>
 #include <helper/RectHelper.h>
 #include <utilities/RessourceManager.h>
 #include <utilities/Config.h>
-
 
 using namespace std;
 
@@ -216,6 +218,19 @@ void Map::drawMap()
 	}
 }
 
+// Building * Map::getCopyOfTmpBuilding(Building *tmp_building)	{
+// 	if (dynamic_cast<Farm*>(tmp_building) != NULL)	{
+// 		return new Farm(m_parent);
+//   }	else if (dynamic_cast<House*>(tmp_building) != NULL)	{
+// 		return new House(m_parent);
+// 	} else if (dynamic_cast<Road*>(tmp_building) != NULL)	{
+// 		return new Road(m_parent);
+// 	} else if (dynamic_cast<School*>(tmp_building) != NULL)	{
+// 		return new School(m_parent);
+// 	}
+// 	return NULL;
+// }
+
 
 bool Map::onSdlEventReceived(SDL_Event event)
 {
@@ -239,9 +254,10 @@ bool Map::onSdlEventReceived(SDL_Event event)
 					{
 						if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
 						{
+							Building *tmp_copy = BuildingHelper::getCopyOfTmpBuilding(m_tmp_building, m_parent);
 							m_list_building.push_front(m_tmp_building);
 							m_poller.notifyBuildingBuilt(m_tmp_building);
-							m_tmp_building = NULL;
+							m_tmp_building = tmp_copy;
 						}
 						rtn_val = true;
 					}
