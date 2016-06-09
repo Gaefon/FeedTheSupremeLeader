@@ -20,9 +20,10 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
     m_menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
     m_menu_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
-    m_menu_rect.w = getParent()->getWidth() - GAME_INTERFACE_BUILDING_MENU_WIDTH;
+    m_menu_rect.w = getParent()->getWidth() - GAME_INTERFACE_BUILDING_MENU_WIDTH - GAME_INTERFACE_MAP_WIDTH;
     m_menu_rect.h = GAME_INTERFACE_MENU_HEIGHT;
 
+	m_button_back_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::BackgroundMenuButton));
     m_building_rect.x = 0;
     m_building_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
     m_building_rect.w = GAME_INTERFACE_BUILDING_MENU_WIDTH;
@@ -36,11 +37,11 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
     m_minimap->setPosition(getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2 - m_minimap->getWidth() / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2 - m_minimap->getHeight() / 2);
 
-    m_btn_home = new Button(getParent(), 0, m_building_rect.y, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-    m_btn_road = new Button(getParent(), 48, m_building_rect.y, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-    m_btn_school = new Button(getParent(), 96, m_building_rect.y, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-    m_btn_farm = new Button(getParent(), 0, m_building_rect.y + 48, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-    m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48, m_building_rect.y + 144, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
+    m_btn_home = new Button(getParent(), 12, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+    m_btn_road = new Button(getParent(), 60, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+    m_btn_school = new Button(getParent(), 108, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+    m_btn_farm = new Button(getParent(), 156, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+    m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48 - 12, m_building_rect.y + 144 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 
     m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
     m_label_buiding_name->setFont(RessourceManager::LatoFont20);
@@ -86,8 +87,10 @@ void GameInterface::draw()
 	m_map->drawMap();
 	SDL_SetRenderDrawColor(getParent()->getRenderer(), 0, 0, 255, 255);
 	SDL_RenderFillRect(getParent()->getRenderer(), &m_menu_rect);
-	SDL_SetRenderDrawColor(getParent()->getRenderer(), 48, 48, 48, 255);
-	SDL_RenderFillRect(getParent()->getRenderer(), &m_building_rect);
+	/*SDL_SetRenderDrawColor(getParent()->getRenderer(), 48, 48, 48, 255);
+	SDL_RenderFillRect(getParent()->getRenderer(), &m_building_rect);*/
+
+	SDL_RenderCopy(getParent()->getRenderer(), m_button_back_texture, NULL, &m_building_rect);
 	SDL_RenderCopy(getParent()->getRenderer(), m_map_back_texture, NULL, &m_map_rect);
 	m_btn_home->draw();
 	m_btn_road->draw();
