@@ -47,6 +47,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48 - 12, m_building_rect.y + 144 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 	m_btn_destroy_build = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 12, getParent()->getHeight() - 48 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 
+	m_btn_destroy_build->hide();
+
 	m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
 	m_label_buiding_name->setFont(RessourceManager::LatoFont20);
 
@@ -139,10 +141,12 @@ bool GameInterface::onBuidingClicked(Building *building)
 	if (building != NULL)
 	{
 		m_label_buiding_name->setText(building->getName());
+		m_btn_destroy_build->show();
 	}
 	else
 	{
 		m_label_buiding_name->setText("");
+		m_btn_destroy_build->hide();
 	}
 	return true;
 }
