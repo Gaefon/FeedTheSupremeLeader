@@ -19,6 +19,7 @@ class RessourceManager: public Singleton<RessourceManager>
 			Menu_Large_Button,
 			Menu_Background,
 			BackgroundMenuMap,
+			BackgroundMenuButton,
 			Default_tile,
 			Farm,
 			House,
