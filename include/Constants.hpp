@@ -49,6 +49,9 @@
 #define MENU_CLICK_WAV "ressources/sounds/clickMenu.wav"
 #define MENU_MUSIQUE "ressources/sounds/menu.mp3"
 #define GAME_MUSIQUE "ressources/sounds/game.mp3"
+#define SOUND_BUILDING_BUILD "ressources/sounds/building_build.wav"
+#define SOUND_BUILDING_DESTROY "ressources/sounds/building_destroy.wav"
+#define SOUND_MENU_SELECT "ressources/sounds/menu_select.wav"
 
 #define CONFIG_FILE_NAME "config.json"
 

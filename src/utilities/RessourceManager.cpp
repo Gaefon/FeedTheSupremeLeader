@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <utilities/RessourceManager.h>
+#include <Constants.hpp>
 
 using namespace std;
 
@@ -34,6 +35,10 @@ void RessourceManager::loadAccessPath()
 	m_fonts_size[KremlinFont40] = 40;
 	m_fonts_size[KremlinFont20] = 20;
 	m_fonts_size[LatoFont20] = 20;
+
+	m_sounds_paths[BuildingBuild] = SOUND_BUILDING_BUILD;
+	m_sounds_paths[BuildingDestroy] = SOUND_BUILDING_DESTROY;
+	m_sounds_paths[MenuClick] = SOUND_MENU_SELECT;
 }
 
 int RessourceManager::loadImages()
@@ -65,6 +70,20 @@ int RessourceManager::loadFonts()
 	return 0;
 }
 
+int RessourceManager::loadSounds()
+{
+	for (int i = 0; i < END_OF_SOUNDS; i++)
+	{
+		m_sounds.insert(m_sounds.begin() + i, Mix_LoadWAV(m_sounds_paths[i].c_str()));
+		if (m_sounds.at(i) == NULL)
+		{
+			cerr << "error during sound initialization : "  << m_sounds_paths[i] << endl;
+			return -1;
+		}
+	}
+	return 0;
+}
+
 void RessourceManager::unloadImages()
 {
 	std::vector<SDL_Surface *>::iterator it;
@@ -77,6 +96,11 @@ void RessourceManager::unloadFonts()
 	m_fonts.clear();
 }
 
+void RessourceManager::unloadSounds()
+{
+	m_sounds.clear();
+}
+
 SDL_Surface *RessourceManager::getSurface(int index)
 {
 	return images_sfc.at(index);
@@ -85,6 +109,11 @@ SDL_Surface *RessourceManager::getSurface(int index)
 TTF_Font *RessourceManager::getFont(FontEntities font)
 {
 	return m_fonts.at(font);
+}
+
+Mix_Chunk *RessourceManager::getSound(SoundEntities snd)
+{
+	return m_sounds.at(snd);
 }
 
 
