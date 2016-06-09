@@ -258,6 +258,8 @@ bool Map::onSdlEventReceived(SDL_Event event)
 							m_list_building.push_front(m_tmp_building);
 							m_poller.notifyBuildingBuilt(m_tmp_building);
 							m_tmp_building = tmp_copy;
+							m_tmp_building->setPosX(m_tmp_building->getPosX());
+							m_tmp_building->setPosY(m_tmp_building->getPosY());
 						}
 						rtn_val = true;
 					}
