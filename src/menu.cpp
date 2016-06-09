@@ -42,16 +42,17 @@ void showMenu(MainWindow *window)
 		window->update();
 		if (play_button.isClicked())
 		{
-			Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
-			if (Config::getInstance()->getBool(Config::Music)) {
-					Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
+			//Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::MenuClick));
+			if (Config::getInstance()->getBool(Config::Music))
+			{
+				Sounds::getInstance()->loadMusic(GAME_MUSIQUE);
 			}
 			showGame(window);
 		}
 		if (param_button.isClicked())
 		{
-				Sounds::getInstance()->loadWav(MENU_CLICK_WAV);
-				showParameters(window);
+			//Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::MenuClick));
+			showParameters(window);
 		}
 		if (quit_button.isClicked())
 			request_close = true;
