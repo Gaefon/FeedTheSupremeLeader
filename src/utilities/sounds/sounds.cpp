@@ -19,7 +19,7 @@ Sounds::Sounds()
 **/
 void Sounds::initMixerAudio()
 {
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
 	{
 		cerr << Mix_GetError() << endl;
 	}
@@ -51,13 +51,20 @@ void Sounds::resumeMusic()
 	Mix_ResumeMusic();
 }
 
-void Sounds::setMusicVolume(int volume)	{
+void Sounds::setMusicVolume(int volume)
+{
 	Mix_VolumeMusic(volume);
 }
 
-void Sounds::loadWav(string wavName)
+/*void Sounds::loadWav(string wavName)
 {
 	m_menu_click = Mix_LoadWAV(wavName.c_str());
 	Mix_VolumeChunk(m_menu_click, MIX_MAX_VOLUME);
 	Mix_PlayChannel(1, m_menu_click, 0);
+}*/
+
+void Sounds::playWav(Mix_Chunk *chunk)
+{
+	Mix_VolumeChunk(chunk, MIX_MAX_VOLUME);
+	Mix_PlayChannel(1, chunk, 0);
 }

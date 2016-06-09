@@ -20,6 +20,7 @@ int main(int argc, char ** argv)
 	(void) argv;
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
+	Sounds::getInstance()->initMixerAudio();
 
 	if(RessourceManager::getInstance()->loadImages() < 0)
 	{
@@ -33,7 +34,12 @@ int main(int argc, char ** argv)
 		return EXIT_FAILURE;
 	}
 
-	Sounds::getInstance()->initMixerAudio();
+	if (RessourceManager::getInstance()->loadSounds() < 0)
+	{
+		SDL_Quit();
+		return EXIT_FAILURE;
+	}
+
 	Sounds::getInstance()->loadMusic(MENU_MUSIQUE);
 	Config::getInstance()->readConfiguration();
 	window.displayWindow();
@@ -41,6 +47,8 @@ int main(int argc, char ** argv)
 	showMenu(&window);
 
 	RessourceManager::getInstance()->unloadImages();
+	RessourceManager::getInstance()->unloadFonts();
+	RessourceManager::getInstance()->unloadSounds();
 	Sounds::getInstance()->closeMixerAudio();
 	TTF_Quit();
 	SDL_Quit();
