@@ -9,6 +9,7 @@
 #include <uiclass/Label.h>
 #include <utilities/Poller/SDLPoller.h>
 #include <utilities/Poller/VillagePoller.h>
+#include <model/Village.h>
 #include <utilities/Observer/MapObserver.h>
 #include <model/Map.h>
 #include <uiclass/Minimap.h>
@@ -18,6 +19,7 @@ class GameInterface: public Widget, public MapObserver
 	private:
 		SDLPoller *m_poller;
 		VillagePoller *m_village_poller;
+		Village *m_village;
 		Map *m_map;
 		Minimap *m_minimap;
 		SDL_Rect m_menu_rect;
@@ -34,9 +36,10 @@ class GameInterface: public Widget, public MapObserver
 		Button *m_btn_cancel;
 
 		Label *m_label_buiding_name;
+		void drawRessourceCounter();
 
 	public:
-		GameInterface(MainWindow *parent, SDLPoller *poller, VillagePoller *village_poller);
+		GameInterface(MainWindow *parent, SDLPoller *poller, VillagePoller *village_poller, Village *village);
 		~GameInterface();
 		int getWidth();
 		int getHeight();

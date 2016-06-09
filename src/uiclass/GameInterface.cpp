@@ -6,16 +6,18 @@
 #include <model/Road.h>
 #include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
-GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePoller *village_poller): Widget(parent)
+GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePoller *village_poller, Village *village): Widget(parent)
 {
     m_poller = poller;
     m_village_poller = village_poller;
+    m_village = village;
     m_map = new Map(getParent());
     m_minimap = new Minimap(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2, m_map);
-
     m_poller->subscribe(m_map);
 
     m_menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
@@ -82,6 +84,15 @@ int GameInterface::getHeight()
     return getParent()->getHeight();
 }
 
+void GameInterface::drawRessourceCounter()
+{
+    std::stringstream ss;
+    ss << m_village->getPopulation();
+    string str = ss.str();
+    Label lbl_population(getParent(), getParent()->getWidth() - 100, 20, str);
+    lbl_population.setFont(RessourceManager::LatoFont20);
+    lbl_population.draw();
+}
 void GameInterface::draw()
 {
 	m_map->drawMap();
@@ -99,6 +110,8 @@ void GameInterface::draw()
 	m_btn_cancel->draw();
 	m_minimap->draw();
 	m_label_buiding_name->draw();
+
+    drawRessourceCounter();
 
 	if (m_btn_home->isClicked())
 		m_map->setTmpBuilding(new House(getParent()));

@@ -24,7 +24,7 @@ class Map: public SdlObserver
 
 		MainWindow *m_parent;
 
-		bool m_is_moving;
+		bool m_button_down;
 		int m_map_relative_position_x;
 		int m_map_relative_position_y;
 

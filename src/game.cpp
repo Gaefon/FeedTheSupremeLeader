@@ -19,7 +19,7 @@ void showGame(MainWindow *window)
 	VillagePoller village_poller;
 	Village village;
 	GameMenuDialog game_menu(window, &poller, 300, 200);
-	GameInterface game_iface(window, &poller, &village_poller);
+	GameInterface game_iface(window, &poller, &village_poller, &village);
 	int iteration = 0;
 
 	poller.subscribe(window);
@@ -41,6 +41,5 @@ void showGame(MainWindow *window)
             village.setSchooledPopulation(0);
             village_poller.notify(&village);
         }
-		// SDL_Delay(20);
 	}
 }

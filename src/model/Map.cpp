@@ -20,7 +20,6 @@ Map::Map(MainWindow *par)
 	m_height = DEFAULT_MAP_HEIGHT;
 	m_margin = DEFAULT_MAP_MARGIN;
 	m_parent = par;
-	m_is_moving = false;
 	m_map_relative_position_x = 0;
 	m_map_relative_position_y = 0;
 
@@ -245,12 +244,12 @@ bool Map::onSdlEventReceived(SDL_Event event)
 				m_previous_y = event.button.y;
 			}
 			break;*/
-		case SDL_MOUSEBUTTONUP:
+		case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y))
 				{
-					if (m_tmp_building != NULL)
+				    if (m_tmp_building != NULL)
 					{
 						if (BuildingHelper::isBuildingPlaceValid(m_list_building ,m_tmp_building))
 						{
