@@ -3,6 +3,7 @@
 #include <Constants.hpp>
 #include <utilities/RessourceManager.h>
 #include <helper/ColorHelper.h>
+#include <model/Village.h>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ Farm::Farm(MainWindow *prt) : Building(prt)
 	Building::setName(FARM_NAME);
 	Building::setHeight(5);
 	Building::setWidth(5);
+	m_production_rate = 1;
 	m_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Farm));
 	draw_surface.x = 0;
 	draw_surface.y = 0;
@@ -38,8 +40,18 @@ SDL_Color *Farm::getMinimapBuidingColor()
 	return &m_map_color;
 }
 
+int Farm::getProductionRate()
+{
+    return m_production_rate;
+}
+
+void Farm::setProductionRate(int production)
+{
+    m_production_rate = production;
+}
+
 bool Farm::onVillageUpdateRequest(Village *village)
 {
-	cout << "Farm update received" << endl;
+	village->setFood(village->getFood() + getProductionRate());
     return true;
 }

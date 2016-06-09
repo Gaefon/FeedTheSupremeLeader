@@ -82,4 +82,7 @@ Building::~Building()
 	//dtor
 }
 
-
+unsigned int Building::hasMaxOccupancy()
+{
+    return (0);
+}

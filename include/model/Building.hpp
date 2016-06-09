@@ -36,6 +36,9 @@ class Building : public VillageObserver
 		void setName(std::string val);
 		virtual void drawBuilding(int rel_x, int rel_y) = 0;
 		virtual SDL_Color *getMinimapBuidingColor() = 0;
+		virtual bool onVillageUpdateRequest(Village *village) = 0;
+
+		virtual unsigned int hasMaxOccupancy();
 };
 
 #endif // BUILDING_HPP

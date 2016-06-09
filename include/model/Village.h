@@ -5,6 +5,7 @@ class Village
 {
     private:
         unsigned int m_population;
+        unsigned int m_schooled_population;
         unsigned int m_workers;
         unsigned int m_food;
         int m_merit;
@@ -18,6 +19,8 @@ class Village
 
         unsigned int getPopulation();
         void setPopulation(unsigned int population);
+        unsigned int getSchooledPopulation();
+        void setSchooledPopulation(unsigned int population);
         unsigned int getWorkers();
         void setWorkers(unsigned int workers);
         unsigned int getFood();

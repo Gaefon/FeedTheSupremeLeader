@@ -1,7 +1,7 @@
 #ifndef VILLAGE_OBSERVER_H
 #define VILLAGE_OBSERVER_H
-
-class Village;
+#include <model/Village.h>
+//class Village;
 
 class VillageObserver
 {

@@ -34,10 +34,11 @@ void showGame(MainWindow *window)
 		game_menu.draw();
 		window->update();
 		Timer::getInstance()->getTimeDifference();
-		cout << iteration << " game" << endl;
-		if (iteration == 5000)
+		if (iteration >= 5000)
         {
             iteration = 0;
+            village.setPopulation(0);
+            village.setSchooledPopulation(0);
             village_poller.notify(&village);
         }
 		// SDL_Delay(20);
