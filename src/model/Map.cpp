@@ -257,7 +257,7 @@ bool Map::onSdlEventReceived(SDL_Event event)
 			{
 				if (RectHelper::isInRect(&m_map_surface, event.button.x, event.button.y))
 				{
-					if (m_tmp_building != NULL)
+				    if (m_tmp_building != NULL)
 					{
 						addBuildingIfPossible();
 						rtn_val = true;

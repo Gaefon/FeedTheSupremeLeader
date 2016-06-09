@@ -34,7 +34,7 @@ void School::drawBuilding(int rel_x, int rel_y)
 
 bool School::onVillageUpdateRequest(Village *village)
 {
-	(void) village;
+	village->setSchooledPopulation(village->getSchooledPopulation() + getOccupancy());
     return true;
 }
 
@@ -42,3 +42,29 @@ SDL_Color *School::getMinimapBuidingColor()
 {
 	return &m_map_color;
 }
+
+unsigned int School::getOccupancy()
+{
+    return m_occupancy;
+}
+
+void School::setOccupancy(unsigned int occupancy)
+{
+    m_occupancy = occupancy;
+}
+
+void School::setMaxOccupancy(unsigned int occupancy)
+{
+    m_max_occupancy = occupancy;
+}
+unsigned int School::getMaxOccupancy()
+{
+    return m_max_occupancy;
+}
+
+
+unsigned int School::hasMaxOccupancy()
+{
+    return (getMaxOccupancy());
+}
+

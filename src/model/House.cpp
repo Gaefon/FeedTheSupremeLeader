@@ -1,4 +1,5 @@
 #include <model/House.h>
+#include <model/Village.h>
 #include <Constants.hpp>
 #include <utilities/RessourceManager.h>
 #include <helper/ColorHelper.h>
@@ -11,6 +12,8 @@ House::House(MainWindow *prt) : Building(prt)
 	Building::setHeight(3);
 	Building::setWidth(3);
 	m_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::House));
+	m_occupancy = 0;
+	m_max_occupancy = 6;
 	draw_surface.x = 0;
 	draw_surface.y = 0;
 	draw_surface.w = 3 * DEFAULT_WINDOWS_TILE;
@@ -37,8 +40,33 @@ SDL_Color *House::getMinimapBuidingColor()
 	return &m_map_color;
 }
 
+unsigned int House::getOccupancy()
+{
+    return m_occupancy;
+}
+
+void House::setOccupancy(unsigned int occupancy)
+{
+    m_occupancy = occupancy;
+}
+
+unsigned int House::getMaxOccupancy()
+{
+    return m_max_occupancy;
+}
+
+void House::setMaxOccupancy(unsigned int occupancy)
+{
+    m_max_occupancy = occupancy;
+}
+
 bool House::onVillageUpdateRequest(Village *village)
 {
-	(void) village;
+	village->setPopulation(village->getPopulation() + getOccupancy());
     return true;
+}
+
+unsigned int House::hasMaxOccupancy()
+{
+    return (getMaxOccupancy());
 }

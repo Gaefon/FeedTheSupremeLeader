@@ -23,7 +23,6 @@ class Map: public SdlObserver
 		int m_move_sensivity;
 
 		MainWindow *m_parent;
-
 		bool m_is_moving;
 		bool m_is_button_down;
 		int m_map_relative_position_x;

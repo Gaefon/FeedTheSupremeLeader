@@ -57,7 +57,7 @@
 #define SCHOOL_NAME "School"
 #define ROAD_NAME "Road"
 
-#define STARTING_POPULATION 2
+#define STARTING_POPULATION 0
 #define STARTING_FOOD 100
 #define STARTING_MERIT 0
 #define STARTING_FAVOR 0

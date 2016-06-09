@@ -27,6 +27,16 @@ void Village::setPopulation(unsigned int population)
 {
     m_population = population;
 }
+unsigned int Village::getSchooledPopulation()
+{
+    return m_schooled_population;
+
+}
+void Village::setSchooledPopulation(unsigned int population)
+{
+    m_schooled_population = population;
+}
+
 
 unsigned int Village::getWorkers()
 {
@@ -71,8 +81,3 @@ void Village::setWeightContribution(int weight_contribution)
     m_weight_contribution = weight_contribution;
 }
 
-
-/*VillagePoller *Village::getPoller()
-{
-    return m_village_poller;
-}*/
