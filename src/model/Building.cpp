@@ -86,8 +86,22 @@ Building::~Building()
 {
 	//dtor
 }
+void Building::setMaxOccupancy(unsigned int pop)
+{
+    (void) pop;
+}
 
-unsigned int Building::hasMaxOccupancy()
+unsigned int Building::getMaxOccupancy()
+{
+    return (0);
+}
+
+void Building::setOccupancy(unsigned int pop)
+{
+    (void) pop;
+}
+
+unsigned int Building::getOccupancy()
 {
     return (0);
 }

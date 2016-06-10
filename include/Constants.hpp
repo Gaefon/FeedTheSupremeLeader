@@ -60,9 +60,14 @@
 #define SCHOOL_NAME "School"
 #define ROAD_NAME "Road"
 
+#define HOUSING_ATTRACTIVENESS 0.2;
+
 #define STARTING_POPULATION 0
 #define STARTING_FOOD 100
 #define STARTING_MERIT 0
 #define STARTING_FAVOR 0
+
+#define MAX_MERIT 5000
+#define MAX_FAVOR 5000
 
 #endif // CONSTANTS_HPP

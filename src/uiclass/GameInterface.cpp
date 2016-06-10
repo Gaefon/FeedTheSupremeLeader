@@ -7,14 +7,14 @@
 #include <model/School.h>
 #include <model/House.h>
 #include <model/Road.h>
+#include <model/Village.h>
 #include <utilities/RessourceManager.h>
 
 using namespace std;
 
-GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePoller *village_poller, Village *village): Widget(parent)
+GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *village): Widget(parent)
 {
 	m_poller = poller;
-	m_village_poller = village_poller;
 	m_village = village;
 	m_building_clicked = NULL;
 	m_map = new Map(getParent());
@@ -61,9 +61,9 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
 	m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
 	m_label_buiding_name->setFont(RessourceManager::LatoFont20);
-	m_label_population= new Label(getParent(), getParent()->getWidth() - 200, 20, "");
+	m_label_population= new Label(getParent(), getParent()->getWidth() - 205, 22, "");
 	m_label_population->setFont(RessourceManager::LatoFont20);
-	m_label_food = new Label(getParent(), getParent()->getWidth() - 100, 20, "");
+	m_label_food = new Label(getParent(), getParent()->getWidth() - 105, 22, "");
 	m_label_food->setFont(RessourceManager::LatoFont20);;
 
 	m_commissar = new Commissar(getParent(), 0, 0);
@@ -74,6 +74,7 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
 	m_map->getPoller()->subscribe(this);
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
+	village->setMap(m_map);
 }
 
 GameInterface::~GameInterface()
@@ -188,23 +189,13 @@ bool GameInterface::onBuidingClicked(Building *building)
 	m_building_clicked = building;
 	if (building != NULL)
 	{
-		m_label_buiding_name->setText(building->getName());
+	   m_label_buiding_name->setText(building->getName());
 		m_btn_destroy_build->show();
 	}
 	else
 	{
 		m_label_buiding_name->setText("");
 		m_btn_destroy_build->hide();
-	}
-	return true;
-}
-
-bool GameInterface::onBuildingBuilt(Building *building)
-{
-	if (building != NULL)
-	{
-		m_village_poller->subscribe(building);
-		m_commissar->displayText("I'm the Commissar !", 2000);
 	}
 	return true;
 }

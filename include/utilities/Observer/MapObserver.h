@@ -9,7 +9,6 @@ class MapObserver
 		MapObserver() {}
 		~MapObserver() {}
 		virtual bool onBuidingClicked(Building *building) = 0;
-		virtual bool onBuildingBuilt(Building *building) = 0;
 };
 
 #endif

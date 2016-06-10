@@ -238,7 +238,6 @@ void Map::addBuildingIfPossible()
 		Building *tmp_copy = BuildingHelper::getCopyOfTmpBuilding(m_tmp_building, m_parent);
 		Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingBuild));
 		m_list_building.push_front(m_tmp_building);
-		m_poller.notifyBuildingBuilt(m_tmp_building);
 		tmp_copy->setPosX(m_tmp_building->getPosX());
 		tmp_copy->setPosY(m_tmp_building->getPosY());
 		m_tmp_building = tmp_copy;

@@ -3,8 +3,6 @@
 #include <SDL_ttf.h>
 
 #include <FeedTheSupremLeader.h>
-#include <uiclass/Button.h>
-#include <model/Map.h>
 #include <utilities/RessourceManager.h>
 #include <Constants.hpp>
 #include <utilities/Config.h>

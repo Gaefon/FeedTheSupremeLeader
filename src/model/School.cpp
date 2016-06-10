@@ -2,6 +2,7 @@
 #include <Constants.hpp>
 #include <utilities/RessourceManager.h>
 #include <helper/ColorHelper.h>
+#include <model/Village.h>
 
 using namespace std;
 

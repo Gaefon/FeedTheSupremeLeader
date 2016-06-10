@@ -21,7 +21,6 @@ SRC =	main.cpp\
 		src/uiclass/Commissar.cpp\
 		src/utilities/Poller/SDLPoller.cpp\
 		src/utilities/Poller/MapPoller.cpp\
-		src/utilities/Poller/VillagePoller.cpp\
 		src/utilities/Config.cpp\
 		src/utilities/RessourceManager.cpp\
 		src/utilities/BuildingHelper.cpp\

@@ -3,9 +3,7 @@
 
 #include <FeedTheSupremLeader.h>
 #include <uiclass/GameInterface.h>
-#include <uiclass/Button.h>
 #include <uiclass/GameMenuDialog.h>
-#include <model/Map.h>
 #include <utilities/Timer.h>
 
 #include <utilities/Poller/SDLPoller.h>
@@ -16,31 +14,38 @@ using namespace std;
 
 void showGame(MainWindow *window)
 {
-	SDLPoller poller;
-	VillagePoller village_poller;
-	Village village;
-	GameInterface game_iface(window, &poller, &village_poller, &village);
-	GameMenuDialog game_menu(window, &game_iface, &poller, 300, 200);
-	int iteration = 0;
+    SDLPoller poller;
+    Village village;
+    GameInterface game_iface(window, &poller, &village);
+    GameMenuDialog game_menu(window, &game_iface, &poller, 300, 200);
+    int iteration = 0;
 
-	poller.subscribe(window);
-	poller.subscribe(&game_menu);
-	Timer::getInstance()->setLastTime(SDL_GetTicks());
-	while (!window->hasCloseRequest() && !game_menu.isGotoMenuRequested())
-	{
-	    iteration += FRAME_PAUSE_DURATION;
-		poller.Poll();
-		window->clear();
-		game_iface.draw();
-		game_menu.draw();
-		window->update();
-		Timer::getInstance()->getTimeDifference();
-		if (iteration >= 5000)
+    poller.subscribe(window);
+    poller.subscribe(&game_menu);
+    Timer::getInstance()->setLastTime(SDL_GetTicks());
+    while (!window->hasCloseRequest() && !game_menu.isGotoMenuRequested())
+    {
+        iteration += FRAME_PAUSE_DURATION;
+        poller.Poll();
+        window->clear();
+        game_iface.draw();
+        game_menu.draw();
+        window->update();
+        Timer::getInstance()->getTimeDifference();
+        if (iteration >= 5000)
         {
             iteration = 0;
-            village.setPopulation(0);
-            village.setSchooledPopulation(0);
-            village_poller.notify(&village);
+            village.setHousingCapacity(0);
+            list<Building *>::iterator it;
+            for (it =  village.getMap()->getBuildings()->begin(); it !=  village.getMap()->getBuildings()->end(); it++)
+            {
+                (*it)->onVillageUpdateRequest(&village);
+            }
+
+            village.managePopulation();
+            cout << village.getPopulation() << endl;
+            cout << village.getHousedPopulation() << endl;
+            cout << village.getHousingCapacity() << endl;
         }
-	}
+    }
 }
