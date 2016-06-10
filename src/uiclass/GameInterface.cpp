@@ -54,7 +54,7 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
 	m_btn_home = new Button(getParent(), 12, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
 	m_btn_road = new Button(getParent(), 60, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-	m_btn_school = new Button(getParent(), 108, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+	m_btn_school = new Button(getParent(), 108, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_School_Game), "");
 	m_btn_farm = new Button(getParent(), 156, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
 	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48 - 12, m_building_rect.y + 144 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 	m_btn_destroy_build = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 12, getParent()->getHeight() - 48 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
@@ -185,4 +185,3 @@ bool GameInterface::onBuildingBuilt(Building *building)
 	}
 	return true;
 }
-
