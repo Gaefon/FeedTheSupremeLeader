@@ -12,6 +12,7 @@
 #include <utilities/Observer/MapObserver.h>
 #include <model/Map.h>
 #include <uiclass/Minimap.h>
+#include <uiclass/Commissar.h>
 
 class GameInterface: public Widget, public MapObserver
 {
@@ -44,6 +45,9 @@ class GameInterface: public Widget, public MapObserver
 		Label *m_label_buiding_name;
 		Label *m_label_population;
 		Label *m_label_food;
+
+		Commissar *m_commissar;
+
 		void drawRessourceCounter();
 
 	public:

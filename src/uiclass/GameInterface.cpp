@@ -52,10 +52,10 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *vil
 
 	m_minimap->setPosition(getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2 - m_minimap->getWidth() / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2 - m_minimap->getHeight() / 2);
 
-	m_btn_home = new Button(getParent(), 12, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-	m_btn_road = new Button(getParent(), 60, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-	m_btn_school = new Button(getParent(), 108, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
-	m_btn_farm = new Button(getParent(), 156, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game), "");
+	m_btn_home = new Button(getParent(), 12, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_House_Game), "");
+	m_btn_road = new Button(getParent(), 60, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Road_Game), "");
+	m_btn_school = new Button(getParent(), 108, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_School_Game), "");
+	m_btn_farm = new Button(getParent(), 156, m_building_rect.y + 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Farm_Game), "");
 	m_btn_cancel = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH - 48 - 12, m_building_rect.y + 144 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 	m_btn_destroy_build = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 12, getParent()->getHeight() - 48 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 	m_btn_destroy_build->hide();
@@ -66,6 +66,10 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *vil
 	m_label_population->setFont(RessourceManager::LatoFont20);
 	m_label_food = new Label(getParent(), getParent()->getWidth() - 105, 22, "");
 	m_label_food->setFont(RessourceManager::LatoFont20);;
+
+	m_commissar = new Commissar(getParent(), 0, 0);
+
+	m_minimap->setToCenter();
 
 	m_poller->subscribe(m_btn_home);
 	m_poller->subscribe(m_btn_road);
@@ -143,6 +147,7 @@ void GameInterface::draw()
 	SDL_RenderCopy(getParent()->getRenderer(), m_counter_texture, NULL, &m_counter2_rect);
 	drawRessourceCounter();
 
+	m_commissar->draw();
 
 	if (m_btn_home->isClicked())
 		m_map->setTmpBuilding(new House(getParent()));
@@ -177,5 +182,3 @@ bool GameInterface::onBuidingClicked(Building *building)
 	}
 	return true;
 }
-
-

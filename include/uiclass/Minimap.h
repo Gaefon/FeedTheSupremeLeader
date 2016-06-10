@@ -22,6 +22,7 @@ class Minimap: public Widget, public SdlObserver
 		int getWidth();
 		int getHeight();
 		void setPosition(int x, int y);
+		void setToCenter();
 		bool onSdlEventReceived(SDL_Event event);
 		void draw();
 };

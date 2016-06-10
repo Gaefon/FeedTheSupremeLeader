@@ -24,9 +24,14 @@ void RessourceManager::loadAccessPath()
 	m_accesspaths[School] = "ressources/school.bmp";
 	m_accesspaths[Road] = "ressources/road.bmp";
 	m_accesspaths[Button_Menu_Game] = "ressources/btn_menu_game.bmp";
+	m_accesspaths[Button_School_Game] = "ressources/school_button.bmp";
+	m_accesspaths[Button_Road_Game] = "ressources/road_button.bmp";
+	m_accesspaths[Button_Farm_Game] = "ressources/farm_button.bmp";
+	m_accesspaths[Button_House_Game] = "ressources/house_button.bmp";
 	m_accesspaths[Button_Menu_Game_Cancel] = "ressources/btn_menu_game_cancel.bmp";
 	m_accesspaths[Medium_Slider] = "ressources/slider.bmp";
     m_accesspaths[Counter_bg] = "ressources/counterbg.bmp";
+    m_accesspaths[Commissar] = "ressources/commissar.bmp";
 
 	m_fontspaths[KremlinFont40] = "ressources/kremlin.ttf";
 	m_fontspaths[KremlinFont20] = "ressources/kremlin.ttf";
@@ -115,6 +120,3 @@ Mix_Chunk *RessourceManager::getSound(SoundEntities snd)
 {
 	return m_sounds.at(snd);
 }
-
-
-

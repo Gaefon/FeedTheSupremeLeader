@@ -19,6 +19,10 @@ class RessourceManager: public Singleton<RessourceManager>
 			Menu_Default_Button = 0,
 			Menu_Large_Button,
 			Menu_Background,
+			Button_School_Game,
+			Button_Farm_Game,
+			Button_House_Game,
+			Button_Road_Game,
 			BackgroundMenuMap,
 			BackgroundMenuButton,
 			Default_tile,
@@ -30,6 +34,7 @@ class RessourceManager: public Singleton<RessourceManager>
 			Button_Menu_Game_Cancel,
 			Medium_Slider,
 			Counter_bg,
+			Commissar,
 			END_OF_ENUM
 		};
 
