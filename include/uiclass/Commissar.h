@@ -11,10 +11,14 @@ class Commissar: public Widget
 {
 	private:
 		SDL_Texture *m_commissar_photo;
+		SDL_Texture *m_text_texture;
 		SDL_Rect rect_img;
+		SDL_Rect rect_text;
 
 		unsigned int m_duration;
 		std::string m_current_text;
+
+		TTF_Font *m_text_font;
 
 	public:
 		Commissar(MainWindow *prnt, int pos_x, int pos_y);

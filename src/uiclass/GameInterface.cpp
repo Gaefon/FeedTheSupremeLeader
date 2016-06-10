@@ -69,6 +69,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
 	m_commissar = new Commissar(getParent(), 0, 0);
 
+	m_minimap->setToCenter();
+
 	m_poller->subscribe(m_btn_home);
 	m_poller->subscribe(m_btn_road);
 	m_poller->subscribe(m_btn_school);
@@ -185,6 +187,7 @@ bool GameInterface::onBuildingBuilt(Building *building)
 	if (building != NULL)
 	{
 		m_village_poller->subscribe(building);
+		m_commissar->displayText("I'm the Commissar !", 2000);
 	}
 	return true;
 }

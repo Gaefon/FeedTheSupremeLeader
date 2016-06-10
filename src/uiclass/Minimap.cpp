@@ -45,6 +45,11 @@ void Minimap::setPosition(int x, int y)
 	m_draw_rect.y = y;
 }
 
+void Minimap::setToCenter()
+{
+	m_map->setTileMapPos(m_draw_rect.w / 2 - m_map_pos_rect.w / 2, m_draw_rect.h / 2 - m_map_pos_rect.h / 2);
+}
+
 bool Minimap::onSdlEventReceived(SDL_Event event)
 {
 	bool rtn_val = false;
