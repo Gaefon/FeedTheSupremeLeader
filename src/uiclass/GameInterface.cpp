@@ -160,6 +160,7 @@ void GameInterface::draw()
 
 void GameInterface::subscribeInterface()
 {
+	m_map->setEnabled(true);
 	m_poller->subscribe(m_map);
 	m_poller->subscribe(m_btn_home);
 	m_poller->subscribe(m_btn_road);
@@ -171,6 +172,7 @@ void GameInterface::subscribeInterface()
 }
 void GameInterface::unsubscribeInterface()
 {
+	m_map->setEnabled(false);
 	m_poller->unSubscribe(m_map);
 	m_poller->unSubscribe(m_btn_home);
 	m_poller->unSubscribe(m_btn_road);

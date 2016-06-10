@@ -32,6 +32,7 @@ Map::Map(MainWindow *par)
 	m_display_height = m_parent->getHeight();
 
 	m_move_sensivity = Config::getInstance()->getInt(Config::MapSensivity);
+	m_is_map_move_enabled = true;
 
 	m_texture_tile = SDL_CreateTextureFromSurface(m_parent->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Default_tile));
 	draw_tile_surface.x = 0;
@@ -96,6 +97,11 @@ void Map::setTileMapPos(int pos_x, int pos_y)
 	m_map_relative_position_y = - pos_y * DEFAULT_WINDOWS_TILE;
 }
 
+void Map::setEnabled(bool enable)
+{
+	m_is_map_move_enabled = enable;
+}
+
 void Map::setTmpBuilding(Building *tmp)
 {
 	if (m_tmp_building != NULL)
@@ -145,7 +151,7 @@ void Map::drawMapGrid()
 
 void Map::checkCursorPosition()
 {
-	if(m_parent->getFlags() & SDL_WINDOW_INPUT_FOCUS)
+	if(m_is_map_move_enabled && m_parent->getFlags() & SDL_WINDOW_INPUT_FOCUS)
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);

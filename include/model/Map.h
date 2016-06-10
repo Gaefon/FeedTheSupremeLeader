@@ -21,6 +21,7 @@ class Map: public SdlObserver
 		unsigned int m_display_height;
 
 		int m_move_sensivity;
+		bool m_is_map_move_enabled;
 
 		MainWindow *m_parent;
 		bool m_is_moving;
@@ -56,6 +57,8 @@ class Map: public SdlObserver
 		int getTilePosX();
 		int getTilePosY();
 		void setTileMapPos(int pos_x, int pos_y);
+
+		void setEnabled(bool enable);
 
 		void setTmpBuilding(Building *tmp);
 		void removeBuilding(Building *to_remove);

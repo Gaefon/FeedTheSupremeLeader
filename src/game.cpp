@@ -13,6 +13,7 @@
 #include <Constants.hpp>
 
 using namespace std;
+
 void showGame(MainWindow *window)
 {
 	SDLPoller poller;
