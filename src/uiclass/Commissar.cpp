@@ -1,6 +1,8 @@
 #include <uiclass/Commissar.h>
 #include <utilities/RessourceManager.h>
 
+using namespace std;
+
 Commissar::Commissar(MainWindow *prnt, int pos_x, int pos_y): Widget(prnt)
 {
 	SDL_Surface *img_com = RessourceManager::getInstance()->getSurface(RessourceManager::Commissar);
@@ -14,6 +16,12 @@ Commissar::Commissar(MainWindow *prnt, int pos_x, int pos_y): Widget(prnt)
 Commissar::~Commissar()
 {
 	SDL_DestroyTexture(m_commissar_photo);
+}
+
+void Commissar::displayText(string text, unsigned int ms)
+{
+	m_duration = ms;
+	m_current_text = text;
 }
 
 int Commissar::getWidth()

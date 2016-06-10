@@ -67,6 +67,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 	m_label_food = new Label(getParent(), getParent()->getWidth() - 100, 20, "");
 	m_label_food->setFont(RessourceManager::LatoFont20);;
 
+	m_commissar = new Commissar(getParent(), 0, 0);
+
 	m_poller->subscribe(m_btn_home);
 	m_poller->subscribe(m_btn_road);
 	m_poller->subscribe(m_btn_school);
@@ -142,6 +144,7 @@ void GameInterface::draw()
 	SDL_RenderCopy(getParent()->getRenderer(), m_counter_texture, NULL, &m_counter2_rect);
 	drawRessourceCounter();
 
+	m_commissar->draw();
 
 	if (m_btn_home->isClicked())
 		m_map->setTmpBuilding(new House(getParent()));
