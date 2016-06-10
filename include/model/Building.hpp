@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <SDL.h>
-#include <utilities/Observer/VillageObserver.h>
 #include <uiclass/MainWindow.hpp>
 
-class Building : public VillageObserver
+class Village;
+
+class Building
 {
     private:
 		unsigned int m_width;
@@ -40,7 +41,12 @@ class Building : public VillageObserver
 		virtual SDL_Color *getMinimapBuidingColor() = 0;
 		virtual bool onVillageUpdateRequest(Village *village) = 0;
 
-		virtual unsigned int hasMaxOccupancy();
+        virtual unsigned int getMaxOccupancy();
+        virtual void setMaxOccupancy(unsigned int pop);
+        virtual unsigned int getOccupancy();
+        virtual void setOccupancy(unsigned int pop);
+
+
 };
 
 #endif // BUILDING_HPP

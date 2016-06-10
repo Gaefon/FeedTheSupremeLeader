@@ -12,7 +12,6 @@ class MapPoller : public EventPoller<MapObserver *>
 		MapPoller();
 		~MapPoller();
 		void notifyBuildingSelected(Building *building);
-		void notifyBuildingBuilt(Building *building);
 		void Poll();
 };
 

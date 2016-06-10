@@ -7,7 +7,6 @@
 #include <model/Building.hpp>
 #include <uiclass/MainWindow.hpp>
 #include <utilities/Observer/SdlObserver.h>
-
 #include <utilities/Poller/MapPoller.h>
 
 class Map: public SdlObserver

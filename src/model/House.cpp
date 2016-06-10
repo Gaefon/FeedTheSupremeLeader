@@ -62,11 +62,6 @@ void House::setMaxOccupancy(unsigned int occupancy)
 
 bool House::onVillageUpdateRequest(Village *village)
 {
-	village->setPopulation(village->getPopulation() + getOccupancy());
+    village->setHousingCapacity(village->getHousingCapacity() + getMaxOccupancy());
     return true;
-}
-
-unsigned int House::hasMaxOccupancy()
-{
-    return (getMaxOccupancy());
 }

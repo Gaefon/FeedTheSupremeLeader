@@ -8,7 +8,6 @@
 #include <uiclass/Button.h>
 #include <uiclass/Label.h>
 #include <utilities/Poller/SDLPoller.h>
-#include <utilities/Poller/VillagePoller.h>
 #include <model/Village.h>
 #include <utilities/Observer/MapObserver.h>
 #include <model/Map.h>
@@ -18,7 +17,6 @@ class GameInterface: public Widget, public MapObserver
 {
 	private:
 		SDLPoller *m_poller;
-		VillagePoller *m_village_poller;
 		Village *m_village;
 		Map *m_map;
 		Minimap *m_minimap;
@@ -49,13 +47,12 @@ class GameInterface: public Widget, public MapObserver
 		void drawRessourceCounter();
 
 	public:
-		GameInterface(MainWindow *parent, SDLPoller *poller, VillagePoller *village_poller, Village *village);
+		GameInterface(MainWindow *parent, SDLPoller *poller, Village *village);
 		~GameInterface();
 		int getWidth();
 		int getHeight();
 		void draw();
 		bool onBuidingClicked(Building *building);
-		bool onBuildingBuilt(Building *building);
 };
 
 #endif
