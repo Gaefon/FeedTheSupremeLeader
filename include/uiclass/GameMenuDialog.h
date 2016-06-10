@@ -3,6 +3,7 @@
 
 #include <uiclass/Widget.h>
 #include <uiclass/Button.h>
+#include <uiclass/GameInterface.h>
 #include <utilities/Poller/SDLPoller.h>
 #include <utilities/Observer/SdlObserver.h>
 
@@ -17,12 +18,13 @@ class GameMenuDialog: public Widget, public SdlObserver
 		bool m_is_goto_menu_requested;
 		Button *m_btn_menu;
 		SDLPoller *m_poller;
+		GameInterface *m_iface;
 
 		void registerButtons();
 		void unregisterButton();
 
 	public:
-		GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int h);
+		GameMenuDialog(MainWindow *parent, GameInterface *iface, SDLPoller *poller, int w, int h);
 		~GameMenuDialog();
 		int getWidth();
 		int getHeight();

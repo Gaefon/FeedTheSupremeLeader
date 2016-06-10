@@ -58,6 +58,8 @@ class GameInterface: public Widget, public MapObserver
 		int getWidth();
 		int getHeight();
 		void draw();
+		void subscribeInterface();
+		void unsubscribeInterface();
 		bool onBuidingClicked(Building *building);
 		bool onBuildingBuilt(Building *building);
 };

@@ -1,13 +1,13 @@
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <uiclass/GameInterface.h>
 #include <Constants.hpp>
 #include <model/Farm.hpp>
 #include <model/School.h>
 #include <model/House.h>
 #include <model/Road.h>
-#include <uiclass/GameInterface.h>
 #include <utilities/RessourceManager.h>
-#include <string>
-#include <sstream>
 
 using namespace std;
 
@@ -19,7 +19,6 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 	m_building_clicked = NULL;
 	m_map = new Map(getParent());
 	m_minimap = new Minimap(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2, m_map);
-	m_poller->subscribe(m_map);
 
 	m_menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
 	m_menu_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
@@ -71,16 +70,9 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, VillagePolle
 
 	m_minimap->setToCenter();
 
-	m_poller->subscribe(m_btn_home);
-	m_poller->subscribe(m_btn_road);
-	m_poller->subscribe(m_btn_school);
-	m_poller->subscribe(m_btn_farm);
-	m_poller->subscribe(m_btn_cancel);
-	m_poller->subscribe(m_btn_destroy_build);
-	m_poller->subscribe(m_minimap);
+	subscribeInterface();
 
 	m_map->getPoller()->subscribe(this);
-
 	m_map->setDisplayHeight(getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT);
 }
 
@@ -164,6 +156,29 @@ void GameInterface::draw()
 		m_map->removeBuilding(m_building_clicked);
 		onBuidingClicked(NULL);
 	}
+}
+
+void GameInterface::subscribeInterface()
+{
+	m_poller->subscribe(m_map);
+	m_poller->subscribe(m_btn_home);
+	m_poller->subscribe(m_btn_road);
+	m_poller->subscribe(m_btn_school);
+	m_poller->subscribe(m_btn_farm);
+	m_poller->subscribe(m_btn_cancel);
+	m_poller->subscribe(m_btn_destroy_build);
+	m_poller->subscribe(m_minimap);
+}
+void GameInterface::unsubscribeInterface()
+{
+	m_poller->unSubscribe(m_map);
+	m_poller->unSubscribe(m_btn_home);
+	m_poller->unSubscribe(m_btn_road);
+	m_poller->unSubscribe(m_btn_school);
+	m_poller->unSubscribe(m_btn_farm);
+	m_poller->unSubscribe(m_btn_cancel);
+	m_poller->unSubscribe(m_btn_destroy_build);
+	m_poller->unSubscribe(m_minimap);
 }
 
 bool GameInterface::onBuidingClicked(Building *building)

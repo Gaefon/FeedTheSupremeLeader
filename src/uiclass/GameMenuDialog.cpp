@@ -4,10 +4,12 @@
 #include <utilities/sounds/sounds.h>
 #include <utilities/Config.h>
 
-GameMenuDialog::GameMenuDialog(MainWindow *parent, SDLPoller *poller, int w, int h): Widget(parent)
+GameMenuDialog::GameMenuDialog(MainWindow *parent, GameInterface *iface, SDLPoller *poller, int w, int h): Widget(parent)
 {
 	m_width = w;
 	m_height = h;
+
+	m_iface = iface;
 
 	rect_back.x = getParent()->getWidth() / 2 - m_width / 2;
 	rect_back.y = getParent()->getHeight() / 2 - m_height / 2;
@@ -30,11 +32,13 @@ GameMenuDialog::~GameMenuDialog()
 
 void GameMenuDialog::registerButtons()
 {
+	m_iface->unsubscribeInterface();
 	m_poller->subscribe(m_btn_menu);
 }
 
 void GameMenuDialog::unregisterButton()
 {
+	m_iface->subscribeInterface();
 	m_poller->unSubscribe(m_btn_menu);
 }
 

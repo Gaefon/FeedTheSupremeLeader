@@ -18,8 +18,8 @@ void showGame(MainWindow *window)
 	SDLPoller poller;
 	VillagePoller village_poller;
 	Village village;
-	GameMenuDialog game_menu(window, &poller, 300, 200);
 	GameInterface game_iface(window, &poller, &village_poller, &village);
+	GameMenuDialog game_menu(window, &game_iface, &poller, 300, 200);
 	int iteration = 0;
 
 	poller.subscribe(window);
