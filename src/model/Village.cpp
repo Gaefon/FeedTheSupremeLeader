@@ -55,7 +55,6 @@ void Village::setPopulation(unsigned int population)
         m_schooled_population = population;
     }
 
-
     unsigned int Village::getWorkers()
     {
         return m_population;
@@ -113,13 +112,12 @@ void Village::setPopulation(unsigned int population)
         list<Building *>::iterator it;
         while (m_population > m_housed_population && m_housed_population < m_housing_capacity)
         {
-            cout << "test" << endl;
             for (it =  getMap()->getBuildings()->begin(); it !=  getMap()->getBuildings()->end(); it++)
             {
                 if((*it)->getMaxOccupancy() - (*it)->getOccupancy() > 0)
                 {
                   (*it)->setOccupancy((*it)->getOccupancy() + 1);
-                  setHousedPopulation(getHousedPopulation() +  1);
+                  m_housed_population ++;
                 }
             }
         }
@@ -127,8 +125,7 @@ void Village::setPopulation(unsigned int population)
 
     void Village::managePopulation()
     {
-        float immigrated_population;
-        float base_growth = m_population * 1.03f;
+        float base_growth = m_population * 0.03f;
 
         if (m_population == 0)
         {
@@ -136,11 +133,12 @@ void Village::setPopulation(unsigned int population)
         }
         else if (m_housing_capacity > m_population)
         {
-            int base_immigration = (m_housing_capacity - m_population) * HOUSING_ATTRACTIVENESS;
-            int bonus_immigration = base_immigration * (1 + (m_merit / MAX_MERIT * 3 + m_favor / MAX_FAVOR) / 4);
-            immigrated_population = base_immigration  + bonus_immigration;
-            m_population = m_population + base_growth + immigrated_population;
+            float base_immigration = (m_housing_capacity - m_population) * HOUSING_ATTRACTIVENESS;
+            float bonus_immigration = base_immigration * (1 + (m_merit / MAX_MERIT * 3 + m_favor / MAX_FAVOR) / 4);
+            float immigrated_population = base_immigration  + bonus_immigration;
+            m_population = m_population + immigrated_population;
         }
+        m_population = m_population + base_growth;
         distributePopulation();
     }
 
