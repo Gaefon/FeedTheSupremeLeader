@@ -9,7 +9,7 @@ class Village;
 
 class Building
 {
-    private:
+	private:
 		unsigned int m_width;
 		unsigned int m_height;
 		unsigned int m_pos_x;
@@ -41,10 +41,16 @@ class Building
 		virtual SDL_Color *getMinimapBuidingColor() = 0;
 		virtual bool onVillageUpdateRequest(Village *village) = 0;
 
-        virtual unsigned int getMaxOccupancy();
-        virtual void setMaxOccupancy(unsigned int pop);
-        virtual unsigned int getOccupancy();
-        virtual void setOccupancy(unsigned int pop);
+		virtual unsigned int getMaxOccupancy();
+		virtual void setMaxOccupancy(unsigned int pop);
+		virtual unsigned int getOccupancy();
+		virtual void setOccupancy(unsigned int pop);
+
+		virtual unsigned int getMaxWorkers();
+		virtual void setMaxWorkers(unsigned int pop);
+		virtual unsigned int getWorkers();
+		virtual void setWorkers(unsigned int pop);
+
 
 
 };

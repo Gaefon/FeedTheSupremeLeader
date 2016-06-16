@@ -199,6 +199,14 @@ bool GameInterface::onBuidingClicked(Building *building)
 			tmp << m_building_clicked->getOccupancy() << " / " << m_building_clicked->getMaxOccupancy();
 			m_label_buiding_population->setText(tmp.str());
 		}
+		else if (m_building_clicked->getMaxWorkers() > 0)
+		{
+			stringstream tmp;
+			tmp << m_building_clicked->getWorkers() << " / " << m_building_clicked->getMaxWorkers();
+			m_label_buiding_population->setText(tmp.str());
+		}
+		else
+			m_label_buiding_population->setText("");
 		m_btn_destroy_build->show();
 	}
 	else

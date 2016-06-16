@@ -13,6 +13,8 @@ Farm::Farm(MainWindow *prt) : Building(prt)
 	Building::setHeight(5);
 	Building::setWidth(5);
 	m_production_rate = 1;
+	m_max_workers = 10;
+	m_nb_workers = 0;
 	m_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Farm));
 	draw_surface.x = 0;
 	draw_surface.y = 0;
@@ -52,6 +54,26 @@ void Farm::setProductionRate(int production)
 
 bool Farm::onVillageUpdateRequest(Village *village)
 {
-	village->setFood(village->getFood() + getProductionRate());
+	village->setFood(village->getFood() + (getProductionRate() * m_nb_workers));
     return true;
+}
+
+void Farm::setMaxWorkers(unsigned int pop)
+{
+	m_max_workers = pop;
+}
+
+unsigned int Farm::getMaxWorkers()
+{
+	return m_max_workers;
+}
+
+void Farm::setWorkers(unsigned int pop)
+{
+	m_nb_workers = pop;
+}
+
+unsigned int Farm::getWorkers()
+{
+	return m_nb_workers;
 }

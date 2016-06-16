@@ -43,9 +43,12 @@ void showGame(MainWindow *window)
             }
 
             village.managePopulation();
-            cout << village.getPopulation() << endl;
-            cout << village.getHousedPopulation() << endl;
-            cout << village.getHousingCapacity() << endl;
+            cout << "-----------------------VILLAGE-------------------------" << endl;
+            cout << "total population : " << village.getPopulation() << endl;
+            cout << "housed population : " << village.getHousedPopulation() << endl;
+            cout << "housing capacity : " << village.getHousingCapacity() << endl;
+            cout << "bums : " << (village.getPopulation() - village.getHousedPopulation()) << endl;
+            cout << "-------------------------------------------------------" << endl;
         }
     }
 }
