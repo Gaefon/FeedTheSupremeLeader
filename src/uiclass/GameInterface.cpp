@@ -61,6 +61,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *vil
 
 	m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
 	m_label_buiding_name->setFont(RessourceManager::LatoFont20);
+	m_label_buiding_population = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 48, "");
+	m_label_buiding_population->setFont(RessourceManager::LatoFont20);
 	m_label_population= new Label(getParent(), getParent()->getWidth() - 205, 22, "");
 	m_label_population->setFont(RessourceManager::LatoFont20);
 	m_label_food = new Label(getParent(), getParent()->getWidth() - 105, 22, "");
@@ -134,6 +136,7 @@ void GameInterface::draw()
 
 	m_minimap->draw();
 	m_label_buiding_name->draw();
+	m_label_buiding_population->draw();
 
 	SDL_RenderCopy(getParent()->getRenderer(), m_counter_texture, NULL, &m_counter1_rect);
 	SDL_RenderCopy(getParent()->getRenderer(), m_counter_texture, NULL, &m_counter2_rect);
@@ -187,14 +190,21 @@ void GameInterface::unsubscribeInterface()
 bool GameInterface::onBuidingClicked(Building *building)
 {
 	m_building_clicked = building;
-	if (building != NULL)
+	if (m_building_clicked != NULL)
 	{
-	   m_label_buiding_name->setText(building->getName());
+		m_label_buiding_name->setText(m_building_clicked->getName());
+		if (m_building_clicked->getMaxOccupancy() > 0)
+		{
+			stringstream tmp;
+			tmp << m_building_clicked->getOccupancy() << " / " << m_building_clicked->getMaxOccupancy();
+			m_label_buiding_population->setText(tmp.str());
+		}
 		m_btn_destroy_build->show();
 	}
 	else
 	{
 		m_label_buiding_name->setText("");
+		m_label_buiding_population->setText("");
 		m_btn_destroy_build->hide();
 	}
 	return true;
