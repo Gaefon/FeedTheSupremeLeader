@@ -10,6 +10,7 @@ class Village
         unsigned int m_housing_capacity;
         unsigned int m_schooled_population;
         unsigned int m_workers;
+        unsigned int m_workers_capacity;
         unsigned int m_food;
         int m_merit;
         int m_favor;
@@ -31,6 +32,8 @@ class Village
         void setHousingCapacity(unsigned int housing);
         unsigned int getWorkers();
         void setWorkers(unsigned int workers);
+		unsigned int getWorkersCapacity();
+		void setWorkersCapacity(unsigned int workers);
         unsigned int getFood();
         void setFood(unsigned int food);
         int getMerit();

@@ -58,13 +58,24 @@ void Village::setSchooledPopulation(unsigned int population)
 
 unsigned int Village::getWorkers()
 {
-    return m_population;
+    return m_workers;
 }
 
 void Village::setWorkers(unsigned int workers)
 {
     m_workers = workers;
 }
+
+unsigned int Village::getWorkersCapacity()
+{
+	return m_workers_capacity;
+}
+
+void Village::setWorkersCapacity(unsigned int workers)
+{
+	m_workers_capacity = workers;
+}
+
 unsigned int Village::getFood()
 {
     return m_food;
@@ -123,6 +134,18 @@ void Village::distributePopulation()
             }
         }
     }
+
+	while (m_population > m_workers && m_workers < m_workers_capacity)
+	{
+		for (it = getMap()->getBuildings()->begin(); it != getMap()->getBuildings()->end() && m_population > m_workers; it++)
+		{
+			if((*it)->getMaxWorkers() - (*it)->getWorkers() > 0)
+			{
+				(*it)->setWorkers((*it)->getWorkers() + 1);
+				m_workers++;
+			}
+		}
+	}
 }
 
 void Village::managePopulation()

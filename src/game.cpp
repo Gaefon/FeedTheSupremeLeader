@@ -36,6 +36,7 @@ void showGame(MainWindow *window)
         {
             iteration = 0;
             village.setHousingCapacity(0);
+            village.setWorkersCapacity(0);
             list<Building *>::iterator it;
             for (it =  village.getMap()->getBuildings()->begin(); it !=  village.getMap()->getBuildings()->end(); it++)
             {
@@ -48,6 +49,9 @@ void showGame(MainWindow *window)
             cout << "housed population : " << village.getHousedPopulation() << endl;
             cout << "housing capacity : " << village.getHousingCapacity() << endl;
             cout << "bums : " << (village.getPopulation() - village.getHousedPopulation()) << endl;
+            cout << "workers capacity : " << village.getWorkersCapacity() << endl;
+            cout << "workers : " << village.getWorkers() << endl;
+            cout << "wankers : " << (village.getPopulation() - village.getWorkers()) << endl;
             cout << "-------------------------------------------------------" << endl;
         }
     }

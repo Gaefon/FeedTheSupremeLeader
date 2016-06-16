@@ -55,6 +55,7 @@ void Farm::setProductionRate(int production)
 bool Farm::onVillageUpdateRequest(Village *village)
 {
 	village->setFood(village->getFood() + (getProductionRate() * m_nb_workers));
+	village->setWorkersCapacity(village->getWorkersCapacity() + m_max_workers);
     return true;
 }
 
