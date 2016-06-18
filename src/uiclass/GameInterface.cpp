@@ -20,6 +20,8 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *vil
 	m_map = new Map(getParent());
 	m_minimap = new Minimap(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH / 2, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT / 2, m_map);
 
+	m_food_to_send = 1;
+
 	m_menu_rect.x = GAME_INTERFACE_BUILDING_MENU_WIDTH;
 	m_menu_rect.y = getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT;
 	m_menu_rect.w = getParent()->getWidth() - GAME_INTERFACE_BUILDING_MENU_WIDTH - GAME_INTERFACE_MAP_WIDTH;
@@ -59,6 +61,10 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *vil
 	m_btn_destroy_build = new Button(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 12, getParent()->getHeight() - 48 - 12, RessourceManager::getInstance()->getSurface(RessourceManager::Button_Menu_Game_Cancel), "");
 	m_btn_destroy_build->hide();
 
+	m_btn_add_food = new Button(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH - 48, getParent()->getHeight() - 96, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Small_Button), "+");
+	m_btn_remove_food = new Button(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH - 158, getParent()->getHeight() - 96, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Small_Button), "-");
+	m_btn_send_food = new Button(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH - 158, getParent()->getHeight() - 48, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Default_Button), "Send food");
+
 	m_label_buiding_name = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 24, "");
 	m_label_buiding_name->setFont(RessourceManager::LatoFont20);
 	m_label_buiding_population = new Label(getParent(), GAME_INTERFACE_BUILDING_MENU_WIDTH + 24, getParent()->getHeight() - GAME_INTERFACE_MENU_HEIGHT + 48, "");
@@ -66,7 +72,10 @@ GameInterface::GameInterface(MainWindow *parent, SDLPoller *poller, Village *vil
 	m_label_population= new Label(getParent(), getParent()->getWidth() - 205, 22, "");
 	m_label_population->setFont(RessourceManager::LatoFont20);
 	m_label_food = new Label(getParent(), getParent()->getWidth() - 105, 22, "");
-	m_label_food->setFont(RessourceManager::LatoFont20);;
+	m_label_food->setFont(RessourceManager::LatoFont20);
+
+	m_label_food_to_send = new Label(getParent(), getParent()->getWidth() - GAME_INTERFACE_MAP_WIDTH - 100, getParent()->getHeight() - 96, "0");
+	m_label_food_to_send->setFont(RessourceManager::LatoFont20);
 
 	m_commissar = new Commissar(getParent(), 0, 0);
 
@@ -92,7 +101,13 @@ GameInterface::~GameInterface()
 	delete m_btn_destroy_build;
 
 	delete m_label_buiding_name;
+	delete m_label_buiding_population;
 	delete m_label_population;
+	delete m_label_food;
+
+	delete m_btn_add_food;
+	delete m_btn_remove_food;
+	delete m_btn_send_food;
 }
 
 int GameInterface::getWidth()
@@ -134,6 +149,10 @@ void GameInterface::draw()
 	m_btn_cancel->draw();
 	m_btn_destroy_build->draw();
 
+	m_btn_add_food->draw();
+	m_btn_remove_food->draw();
+	m_btn_send_food->draw();
+
 	m_minimap->draw();
 	m_label_buiding_name->draw();
 	m_label_buiding_population->draw();
@@ -155,6 +174,24 @@ void GameInterface::draw()
 	if (m_btn_cancel->isClicked())
 		m_map->setTmpBuilding(NULL);
 
+	if (m_btn_add_food->isPressed())
+	{
+		m_food_to_send++;
+		if (m_food_to_send > m_village->getFood())
+			m_food_to_send = m_village->getFood();
+		m_label_food_to_send->setText(std::to_string(m_food_to_send));
+
+	}
+	if (m_btn_remove_food->isPressed())
+	{
+		m_food_to_send--;
+		if (m_food_to_send < 1)
+			m_food_to_send = 1;
+		m_label_food_to_send->setText(std::to_string(m_food_to_send));
+	}
+
+	m_label_food_to_send->draw();
+
 	if (m_btn_destroy_build->isClicked() && m_building_clicked != NULL)
 	{
 		m_map->removeBuilding(m_building_clicked);
@@ -172,6 +209,9 @@ void GameInterface::subscribeInterface()
 	m_poller->subscribe(m_btn_farm);
 	m_poller->subscribe(m_btn_cancel);
 	m_poller->subscribe(m_btn_destroy_build);
+	m_poller->subscribe(m_btn_add_food);
+	m_poller->subscribe(m_btn_remove_food);
+	m_poller->subscribe(m_btn_send_food);
 	m_poller->subscribe(m_minimap);
 }
 void GameInterface::unsubscribeInterface()
@@ -184,6 +224,9 @@ void GameInterface::unsubscribeInterface()
 	m_poller->unSubscribe(m_btn_farm);
 	m_poller->unSubscribe(m_btn_cancel);
 	m_poller->unSubscribe(m_btn_destroy_build);
+	m_poller->unSubscribe(m_btn_add_food);
+	m_poller->unSubscribe(m_btn_remove_food);
+	m_poller->unSubscribe(m_btn_send_food);
 	m_poller->unSubscribe(m_minimap);
 }
 

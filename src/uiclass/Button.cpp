@@ -99,6 +99,11 @@ bool Button::isClicked()
 	return false;
 }
 
+bool Button::isPressed()
+{
+	return m_is_pressed;
+}
+
 bool Button::onSdlEventReceived(SDL_Event event)
 {
 	bool rtn_val = false;

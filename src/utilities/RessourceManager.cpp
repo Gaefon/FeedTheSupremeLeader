@@ -17,6 +17,7 @@ void RessourceManager::loadAccessPath()
 	m_accesspaths[Default_tile] = "ressources/default_tile.bmp";
 	m_accesspaths[Menu_Default_Button] = "ressources/play_button.bmp";
 	m_accesspaths[Menu_Large_Button] = "ressources/large_button.bmp";
+	m_accesspaths[Menu_Small_Button] = "ressources/small_button.bmp";
 	m_accesspaths[BackgroundMenuMap] = "ressources/background_menu_map.bmp";
 	m_accesspaths[BackgroundMenuButton] = "ressources/background_menu_button.bmp";
 	m_accesspaths[Farm] = "ressources/farm.bmp";

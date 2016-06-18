@@ -23,6 +23,8 @@ class GameInterface: public Widget, public MapObserver
 		Minimap *m_minimap;
 		Commissar *m_commissar;
 
+		unsigned int m_food_to_send;
+
 		Building *m_building_clicked;
 
 		SDL_Rect m_menu_rect;
@@ -30,7 +32,6 @@ class GameInterface: public Widget, public MapObserver
 		SDL_Rect m_building_rect;
 		SDL_Rect m_counter1_rect;
         SDL_Rect m_counter2_rect;
-
 
 		SDL_Texture *m_button_back_texture;
 		SDL_Texture *m_map_back_texture;
@@ -43,10 +44,15 @@ class GameInterface: public Widget, public MapObserver
 		Button *m_btn_cancel;
 		Button *m_btn_destroy_build;
 
+		Button *m_btn_add_food;
+		Button *m_btn_remove_food;
+		Button *m_btn_send_food;
+
 		Label *m_label_buiding_name;
 		Label *m_label_buiding_population;
 		Label *m_label_population;
 		Label *m_label_food;
+		Label *m_label_food_to_send;
 
 		void drawRessourceCounter();
 

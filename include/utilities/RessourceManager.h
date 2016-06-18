@@ -18,6 +18,7 @@ class RessourceManager: public Singleton<RessourceManager>
 		{
 			Menu_Default_Button = 0,
 			Menu_Large_Button,
+			Menu_Small_Button,
 			Menu_Background,
 			Button_School_Game,
 			Button_Farm_Game,

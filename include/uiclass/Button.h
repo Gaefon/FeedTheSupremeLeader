@@ -34,6 +34,7 @@ class Button: public Widget, public SdlObserver
 		void setPosition(int x, int y);
 		void setText(std::string text);
 		bool isClicked();
+		bool isPressed();
 
 		bool onSdlEventReceived(SDL_Event event);
 		void draw();
