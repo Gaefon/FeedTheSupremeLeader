@@ -41,6 +41,7 @@ class Village
 		void setMerit(int merit);
 		int getFavor();
 		void setFavor(int favor);
+		void destroyBuilding(Building *building);
 		int getWeightContribution();
 		void setWeightContribution(int weigth_contribution);
 		Map *getMap();

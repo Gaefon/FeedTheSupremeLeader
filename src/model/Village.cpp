@@ -107,6 +107,16 @@ void Village::setFavor(int favor)
 {
 	m_favor = favor;
 }
+
+void Village::destroyBuilding(Building *building)
+{
+	if (building->getMaxOccupancy() > 0)
+		m_housed_population -= building->getOccupancy();
+
+	if (building->getMaxWorkers() > 0)
+		m_workers -= building->getWorkers();
+}
+
 int Village::getWeightContribution()
 {
 	return m_weight_contribution;

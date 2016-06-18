@@ -201,6 +201,7 @@ void GameInterface::draw()
 
 	if (m_btn_destroy_build->isClicked() && m_building_clicked != NULL)
 	{
+		m_village->destroyBuilding(m_building_clicked);
 		m_map->removeBuilding(m_building_clicked);
 		onBuidingClicked(NULL);
 	}
