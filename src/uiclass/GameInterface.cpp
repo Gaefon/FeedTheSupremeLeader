@@ -3,6 +3,7 @@
 #include <sstream>
 #include <uiclass/GameInterface.h>
 #include <Constants.hpp>
+#include <GameStrings.h>
 #include <model/Farm.hpp>
 #include <model/School.h>
 #include <model/House.h>
@@ -188,6 +189,12 @@ void GameInterface::draw()
 		if (m_food_to_send < 1)
 			m_food_to_send = 1;
 		m_label_food_to_send->setText(std::to_string(m_food_to_send));
+	}
+
+	if (m_btn_send_food->isClicked() && m_food_to_send <= m_village->getFood())
+	{
+		m_commissar->displayText(COMMISSAR_SEND_FOOD, 2000);
+		m_village->sendFood(m_food_to_send);
 	}
 
 	m_label_food_to_send->draw();
