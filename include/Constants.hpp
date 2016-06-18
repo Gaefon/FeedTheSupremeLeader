@@ -37,13 +37,6 @@
 #define COLOR_SCHOOL_MINIMAP 0x911391ff
 #define COLOR_ROAD_MINIMAP 0xb68a00ff
 
-#define MENU_DEF_BUTTON 0
-#define MENU_LRG_BUTTON 1
-#define MENU_BCKGRD     2
-#define DEFAULT_TILE    3
-#define ENTITY_FARM     4
-#define BTN_MENU_GAME   5
-#define BTN_MENU_GAME_CANCEL 6
 #define FRAME_PAUSE_DURATION 20
 
 #define MENU_CLICK_WAV "ressources/sounds/clickMenu.wav"
