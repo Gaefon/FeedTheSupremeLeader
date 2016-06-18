@@ -211,11 +211,19 @@ MapPoller *Map::getPoller()
 
 void Map::drawMap()
 {
+	int x_pos;
+	int y_pos;
+
 	checkCursorPosition();
 	drawMapGrid();
 	list<Building *>::iterator it;
 	for (it = m_list_building.begin(); it != m_list_building.end(); it++)
 	{
+		x_pos = (*it)->getPosX() * DEFAULT_WINDOWS_TILE + m_map_relative_position_x;
+		y_pos = (*it)->getPosY() * DEFAULT_WINDOWS_TILE + m_map_relative_position_y;
+		if ((x_pos >= (int) m_map_surface.w) || y_pos >= (int) m_map_surface.h ||
+			(x_pos + (int) (*it)->getDisplayWidth()) < 0 || (y_pos + (int) (*it)->getDisplayHeight()) < 0)
+			continue;
 		(*it)->drawBuilding(m_map_relative_position_x, m_map_relative_position_y);
 	}
 
