@@ -23,6 +23,8 @@ class House : public Building
 		void setMaxOccupancy(unsigned int max_occupancy);
 		void drawBuilding(int rel_x, int rel_y);
 		SDL_Color *getMinimapBuidingColor();
+		unsigned int getPrice();
+		
 		bool onVillageUpdateRequest(Village *village);
 		unsigned int hasMaxOccupancy();
 };

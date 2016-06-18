@@ -47,3 +47,8 @@ SDL_Color *Road::getMinimapBuidingColor()
 {
 	return &m_map_color;
 }
+
+unsigned int Road::getPrice()
+{
+	return PRICE_ROAD;
+}

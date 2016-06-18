@@ -20,6 +20,7 @@ class Road: public Building
 		void drawBuilding(int rel_x, int rel_y);
 		bool isDraggable();
 		SDL_Color *getMinimapBuidingColor();
+		unsigned int getPrice();
 };
 
 #endif

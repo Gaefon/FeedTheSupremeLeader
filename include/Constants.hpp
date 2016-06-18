@@ -61,6 +61,12 @@
 #define STARTING_FAVOR 0
 #define MERIT_FOOD_FACTOR 3
 
+#define PRICE_ROAD 10
+#define PRICE_HOUSE 100
+#define PRICE_FARM 150
+#define PRICE_SCHOOL 500
+
+
 #define MAX_MERIT 5000
 #define MAX_FAVOR 5000
 

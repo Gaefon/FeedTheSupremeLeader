@@ -21,6 +21,8 @@ class School : public Building
         bool onVillageUpdateRequest(Village *village);
 		void drawBuilding(int rel_x, int rel_y);
 		SDL_Color *getMinimapBuidingColor();
+		unsigned int getPrice();
+		
         unsigned int getOccupancy();
         void setOccupancy(unsigned int occupancy);
         unsigned int getMaxOccupancy();

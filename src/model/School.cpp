@@ -44,6 +44,11 @@ SDL_Color *School::getMinimapBuidingColor()
 	return &m_map_color;
 }
 
+unsigned int School::getPrice()
+{
+	return PRICE_SCHOOL;
+}
+
 unsigned int School::getOccupancy()
 {
     return m_occupancy;

@@ -268,3 +268,14 @@ bool GameInterface::onBuidingClicked(Building *building)
 	}
 	return true;
 }
+
+bool GameInterface::onBuildingBuildt(Building *building)
+{
+	if (building->getPrice() > m_village->getMerit())
+	{
+		m_commissar->displayText(COMMISSAR_NOT_ENOUGH_MERIT);
+		return false;
+	}
+	m_village->addBuilding(building);
+	return true;
+}

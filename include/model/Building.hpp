@@ -40,6 +40,7 @@ class Building
 		virtual void drawBuilding(int rel_x, int rel_y) = 0;
 		virtual SDL_Color *getMinimapBuidingColor() = 0;
 		virtual bool onVillageUpdateRequest(Village *village) = 0;
+		virtual unsigned int getPrice() = 0;
 
 		virtual unsigned int getMaxOccupancy();
 		virtual void setMaxOccupancy(unsigned int pop);

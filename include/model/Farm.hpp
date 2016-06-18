@@ -23,6 +23,7 @@ class Farm : public Building
         bool onVillageUpdateRequest(Village *village);
 		void drawBuilding(int rel_x, int rel_y);
 		SDL_Color *getMinimapBuidingColor();
+		unsigned int getPrice();
 
 		unsigned int getMaxWorkers();
 		void setMaxWorkers(unsigned int pop);

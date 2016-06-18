@@ -23,7 +23,7 @@ class Commissar: public Widget
 	public:
 		Commissar(MainWindow *prnt, int pos_x, int pos_y);
 		~Commissar();
-		void displayText(std::string text, unsigned int ms);
+		void displayText(std::string text, unsigned int ms = 2000);
 		int getWidth();
 		int getHeight();
 		void draw();

@@ -91,11 +91,11 @@ void Village::sendFood(unsigned int amount)
 	m_merit += amount * MERIT_FOOD_FACTOR;
 }
 
-int Village::getMerit()
+unsigned int Village::getMerit()
 {
 	return m_merit;
 }
-void Village::setMerit(int merit)
+void Village::setMerit(unsigned int merit)
 {
 	m_merit = merit;
 }
@@ -106,6 +106,11 @@ int Village::getFavor()
 void Village::setFavor(int favor)
 {
 	m_favor = favor;
+}
+
+void Village::addBuilding(Building *building)
+{
+	m_merit -= building->getPrice();
 }
 
 void Village::destroyBuilding(Building *building)

@@ -42,6 +42,11 @@ SDL_Color *Farm::getMinimapBuidingColor()
 	return &m_map_color;
 }
 
+unsigned int Farm::getPrice()
+{
+	return PRICE_FARM;
+}
+
 int Farm::getProductionRate()
 {
     return m_production_rate;

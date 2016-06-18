@@ -22,6 +22,18 @@ void MapPoller::notifyBuildingSelected(Building *building)
 	}
 }
 
+bool MapPoller::notifyBuildingBuildt(Building *building)
+{
+	list<MapObserver *> observers = getObservers();
+	list<MapObserver *>::iterator elt;
+	for (elt = observers.begin(); elt != observers.end(); elt++)
+	{
+		if (!(*elt)->onBuildingBuildt(building))
+			return false;
+	}
+	return true;
+}
+
 
 void MapPoller::Poll()
 {

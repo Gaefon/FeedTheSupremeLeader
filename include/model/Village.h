@@ -12,7 +12,7 @@ class Village
 		unsigned int m_workers;
 		unsigned int m_workers_capacity;
 		unsigned int m_food;
-		int m_merit;
+		unsigned int m_merit;
 		int m_favor;
 		int m_weight_contribution;
 		Map *m_map;
@@ -37,10 +37,11 @@ class Village
 		unsigned int getFood();
 		void setFood(unsigned int food);
 		void sendFood(unsigned int amount);
-		int getMerit();
-		void setMerit(int merit);
+		unsigned int getMerit();
+		void setMerit(unsigned int merit);
 		int getFavor();
 		void setFavor(int favor);
+		void addBuilding(Building *building);
 		void destroyBuilding(Building *building);
 		int getWeightContribution();
 		void setWeightContribution(int weigth_contribution);

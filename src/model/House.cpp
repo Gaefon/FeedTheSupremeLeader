@@ -40,6 +40,11 @@ SDL_Color *House::getMinimapBuidingColor()
 	return &m_map_color;
 }
 
+unsigned int House::getPrice()
+{
+	return PRICE_HOUSE;
+}
+
 unsigned int House::getOccupancy()
 {
     return m_occupancy;

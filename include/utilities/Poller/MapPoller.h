@@ -12,6 +12,7 @@ class MapPoller : public EventPoller<MapObserver *>
 		MapPoller();
 		~MapPoller();
 		void notifyBuildingSelected(Building *building);
+		bool notifyBuildingBuildt(Building *building);
 		void Poll();
 };
 

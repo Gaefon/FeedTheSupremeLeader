@@ -65,6 +65,7 @@ class GameInterface: public Widget, public MapObserver
 		void subscribeInterface();
 		void unsubscribeInterface();
 		bool onBuidingClicked(Building *building);
+		bool onBuildingBuildt(Building *building);
 };
 
 #endif
