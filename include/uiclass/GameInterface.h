@@ -21,6 +21,7 @@ class GameInterface: public Widget, public MapObserver
 		Village *m_village;
 		Map *m_map;
 		Minimap *m_minimap;
+		Commissar *m_commissar;
 
 		Building *m_building_clicked;
 
@@ -46,8 +47,6 @@ class GameInterface: public Widget, public MapObserver
 		Label *m_label_buiding_population;
 		Label *m_label_population;
 		Label *m_label_food;
-
-		Commissar *m_commissar;
 
 		void drawRessourceCounter();
 

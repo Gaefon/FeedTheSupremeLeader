@@ -49,6 +49,7 @@ Map::Map(MainWindow *par)
 Map::~Map()
 {
 	delete m_tmp_building;
+	SDL_DestroyTexture(m_texture_tile);
 }
 
 void Map::setWidth(unsigned int val)
@@ -125,9 +126,13 @@ void Map::drawMapGrid()
 	for (unsigned int i = 0; i < m_height; ++i)
 	{
 		draw_tile_surface.y = i * DEFAULT_WINDOWS_TILE + m_map_relative_position_y;
+		if (draw_tile_surface.y + draw_tile_surface.w < 0)
+			continue;
 		for (unsigned int j = 0; j < m_width; j++)
 		{
 			draw_tile_surface.x = j * DEFAULT_WINDOWS_TILE + m_map_relative_position_x;
+			if (draw_tile_surface.x + draw_tile_surface.w < 0)
+				continue;
 			SDL_RenderCopy(m_parent->getRenderer(), m_texture_tile, NULL, &draw_tile_surface);
 			if (draw_tile_surface.x >= m_map_surface.w)
 				break;
