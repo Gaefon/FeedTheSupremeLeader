@@ -4,6 +4,8 @@
 #include <Constants.hpp>
 #include <GameStrings.h>
 
+#include <OpenGL/gl.h>
+
 using namespace std;
 
 MainWindow::MainWindow()
@@ -74,10 +76,11 @@ void MainWindow::setFullscreen(bool val)
 
 void MainWindow::displayWindow()
 {
-	m_window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_width, m_height, 0);
+	m_window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_width, m_height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
 	m_screen = SDL_GetWindowSurface(m_window);
+	m_gl_context = SDL_GL_CreateContext(m_window);
 }
 
 bool MainWindow::hasCloseRequest()
@@ -89,6 +92,7 @@ void MainWindow::clear()
 {
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_renderer);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void MainWindow::setBackground(SDL_Texture *back)
@@ -141,6 +145,7 @@ bool MainWindow::onSdlEventReceived(SDL_Event event)
 
 MainWindow::~MainWindow()
 {
+	SDL_GL_DeleteContext(m_gl_context);
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
 }
