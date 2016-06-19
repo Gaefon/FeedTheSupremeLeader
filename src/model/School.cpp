@@ -1,5 +1,6 @@
 #include <model/School.h>
 #include <Constants.hpp>
+#include <GameStrings.h>
 #include <utilities/RessourceManager.h>
 #include <helper/ColorHelper.h>
 #include <model/Village.h>

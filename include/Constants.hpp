@@ -1,9 +1,6 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
-#define WINDOW_TITLE "Feed the supreme leader"
-#define GAME_NAME "Feed the supreme leader"
-
 #define WINDOW_DEFAULT_WIDTH 800
 #define WINDOW_DEFAULT_HEIGHT 600
 
@@ -47,11 +44,6 @@
 #define SOUND_MENU_SELECT "ressources/sounds/menu_select.wav"
 
 #define CONFIG_FILE_NAME "config.json"
-
-#define FARM_NAME "Farm"
-#define HOUSE_NAME "House"
-#define SCHOOL_NAME "School"
-#define ROAD_NAME "Road"
 
 #define HOUSING_ATTRACTIVENESS 0.2;
 

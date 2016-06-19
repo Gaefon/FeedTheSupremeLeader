@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <uiclass/MainWindow.hpp>
 #include <Constants.hpp>
+#include <GameStrings.h>
 
 using namespace std;
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <model/Farm.hpp>
 #include <Constants.hpp>
+#include <GameStrings.h>
 #include <utilities/RessourceManager.h>
 #include <helper/ColorHelper.h>
 #include <model/Village.h>
