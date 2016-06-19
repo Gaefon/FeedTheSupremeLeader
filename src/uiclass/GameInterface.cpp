@@ -180,7 +180,9 @@ void GameInterface::draw()
 		m_food_to_send++;
 		if (m_food_to_send > m_village->getFood())
 			m_food_to_send = m_village->getFood();
-		m_label_food_to_send->setText(std::to_string(m_food_to_send));
+		stringstream ss;
+		ss << m_food_to_send;
+		m_label_food_to_send->setText(ss.str());
 
 	}
 	if (m_btn_remove_food->isPressed())
@@ -188,7 +190,9 @@ void GameInterface::draw()
 		m_food_to_send--;
 		if (m_food_to_send < 1)
 			m_food_to_send = 1;
-		m_label_food_to_send->setText(std::to_string(m_food_to_send));
+		stringstream ss;
+		ss << m_food_to_send;
+		m_label_food_to_send->setText(ss.str());
 	}
 
 	if (m_btn_send_food->isClicked() && m_food_to_send <= m_village->getFood())
