@@ -5,6 +5,7 @@
 #include <GameStrings.h>
 
 #include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
 
 using namespace std;
 
@@ -72,6 +73,7 @@ void MainWindow::setFullscreen(bool val)
 		SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	else
 		SDL_SetWindowFullscreen(m_window, 0);
+	//gluPerspective(90, (double) getWidth() / (double) getHeight(), 1.0f, 1000.0f);
 }
 
 void MainWindow::displayWindow()
@@ -81,6 +83,7 @@ void MainWindow::displayWindow()
 	SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
 	m_screen = SDL_GetWindowSurface(m_window);
 	m_gl_context = SDL_GL_CreateContext(m_window);
+	//gluPerspective(90, (double) getWidth() / (double) getHeight(), 1.0f, 1000.0f);
 }
 
 bool MainWindow::hasCloseRequest()
