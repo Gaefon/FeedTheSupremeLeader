@@ -183,7 +183,6 @@ void GameInterface::draw()
 		stringstream ss;
 		ss << m_food_to_send;
 		m_label_food_to_send->setText(ss.str());
-
 	}
 	if (m_btn_remove_food->isPressed())
 	{
