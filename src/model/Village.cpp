@@ -208,15 +208,11 @@ void Village::managePopulation()
 
 	// we feed the population
 	unsigned int food_needed = m_population * POPULATION_FEED_FACTOR;
-	cout << "Food needed : " << food_needed << endl;
 	if (food_needed > m_food)
 	{
 		// famine
 		m_pop_not_feed = ceilf((float)(food_needed - m_food) / (float) POPULATION_FEED_FACTOR);
 		m_food = 0;
-		cout << "FAMINE food : " << m_food << endl;
-		cout << "FAMINE pop not fed : " << m_pop_not_feed << endl;
-		cout << "FAMINE pop : " << m_population << endl;
 	}
 	else
 		m_food -= food_needed;
