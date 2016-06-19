@@ -12,7 +12,7 @@ Button::Button(MainWindow *prnt, int pos_x, int pos_y, SDL_Surface *img_button, 
 	m_is_pressed = false;
 	m_is_clicked = false;
 
-	m_text_font = RessourceManager::getInstance()->getFont(RessourceManager::KremlinFont20);
+	m_text_font = RessourceManager::getInstance()->getFont(RessourceManager::RedOctoberFont20);
 
 	m_dst.x = pos_x;
 	m_dst.y = pos_y;

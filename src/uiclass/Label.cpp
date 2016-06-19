@@ -5,7 +5,7 @@
 
 Label::Label(MainWindow *prnt, int x, int y, std::string text): Widget(prnt)
 {
-	m_text_font = RessourceManager::getInstance()->getFont(RessourceManager::KremlinFont20);
+	m_text_font = RessourceManager::getInstance()->getFont(RessourceManager::RedOctoberFont20);
 
 	m_src.x = 0;
 	m_src.y = 0;

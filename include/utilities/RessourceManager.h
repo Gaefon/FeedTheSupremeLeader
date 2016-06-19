@@ -41,8 +41,8 @@ class RessourceManager: public Singleton<RessourceManager>
 
 		enum FontEntities
 		{
-			KremlinFont40 = 0,
-			KremlinFont20,
+			RedOctoberFont40 = 0,
+			RedOctoberFont20,
 			LatoFont20,
 			END_OF_FONTS
 		};

@@ -34,12 +34,16 @@ void RessourceManager::loadAccessPath()
     m_accesspaths[Counter_bg] = "ressources/counterbg.bmp";
     m_accesspaths[Commissar] = "ressources/commissar.bmp";
 
-	m_fontspaths[KremlinFont40] = "ressources/kremlin.ttf";
-	m_fontspaths[KremlinFont20] = "ressources/kremlin.ttf";
+	// m_fontspaths[KremlinFont40] = "ressources/kremlin.ttf";
+	// m_fontspaths[KremlinFont20] = "ressources/kremlin.ttf";
+	m_fontspaths[RedOctoberFont40] = "ressources/red_october_regular.ttf",
+	m_fontspaths[RedOctoberFont20] = "ressources/red_october_regular.ttf",
 	m_fontspaths[LatoFont20] = "ressources/lato.ttf";
 
-	m_fonts_size[KremlinFont40] = 40;
-	m_fonts_size[KremlinFont20] = 20;
+	// m_fonts_size[KremlinFont40] = 40;
+	// m_fonts_size[KremlinFont20] = 20;
+	m_fonts_size[RedOctoberFont40] = 40,
+	m_fonts_size[RedOctoberFont20] = 20,
 	m_fonts_size[LatoFont20] = 20;
 
 	m_sounds_paths[BuildingBuild] = SOUND_BUILDING_BUILD;
