@@ -11,6 +11,7 @@ Village::Village()
 	m_housed_population = 0;
 	m_housing_capacity = 0;
 	m_workers = 0;
+	m_pop_not_feed = 0;
 	m_food = STARTING_FOOD;
 	m_merit = STARTING_MERIT;
 	m_favor = STARTING_FAVOR;
@@ -167,22 +168,73 @@ void Village::distributePopulation()
 			}
 		}
 	}
+
+	// remove not feed population from houses and farms
+	unsigned int not_feed_tmp = m_pop_not_feed;
+	while (not_feed_tmp > 0 && m_housed_population > 0)
+	{
+		for (it = getMap()->getBuildings()->begin(); it != getMap()->getBuildings()->end(); it++)
+		{
+			if ((*it)->getMaxOccupancy() > 0 && (*it)->getOccupancy() > 0)
+			{
+				(*it)->setOccupancy((*it)->getOccupancy() - 1);
+				not_feed_tmp--;
+				m_housed_population--;
+			}
+		}
+	}
+
+	not_feed_tmp = m_pop_not_feed;
+	while (not_feed_tmp > 0 && m_workers > 0)
+	{
+		for (it = getMap()->getBuildings()->begin(); it != getMap()->getBuildings()->end(); it++)
+		{
+			if ((*it)->getMaxWorkers() > 0 && (*it)->getWorkers() > 0)
+			{
+				(*it)->setWorkers((*it)->getWorkers() - 1);
+				not_feed_tmp--;
+				m_workers--;
+			}
+		}
+	}
+
+	m_population -= m_pop_not_feed;
+	m_pop_not_feed = 0;
 }
 
 void Village::managePopulation()
 {
 	float base_growth = m_population * 0.03f;
 
-	if (m_population == 0)
+	// we feed the population
+	unsigned int food_needed = m_population * POPULATION_FEED_FACTOR;
+	cout << "Food needed : " << food_needed << endl;
+	if (food_needed > m_food)
 	{
-		m_population = m_housing_capacity / 2;
+		// famine
+		m_pop_not_feed = ceilf((float)(food_needed - m_food) / (float) POPULATION_FEED_FACTOR);
+		m_food = 0;
+		cout << "FAMINE food : " << m_food << endl;
+		cout << "FAMINE pop not fed : " << m_pop_not_feed << endl;
+		cout << "FAMINE pop : " << m_population << endl;
 	}
-	else if (m_housing_capacity > m_population)
+	else
+		m_food -= food_needed;
+
+	//m_food -= m_population * POPULATION_FEED_FACTOR;
+	if (m_pop_not_feed == 0)
 	{
-		float base_immigration = (m_housing_capacity - m_population) * HOUSING_ATTRACTIVENESS;
-		float bonus_immigration = base_immigration * (1 + (m_merit / MAX_MERIT * 3 + m_favor / MAX_FAVOR) / 4);
-		float immigrated_population = base_immigration  + bonus_immigration;
-		m_population = m_population + immigrated_population;
+		if (m_population == 0)
+		{
+			m_population = m_housing_capacity / 2;
+		}
+		else if (m_housing_capacity > m_population)
+		{
+			float base_immigration = (m_housing_capacity - m_population) * HOUSING_ATTRACTIVENESS;
+			float bonus_immigration = base_immigration * (1 + (m_merit / MAX_MERIT * 3 + m_favor / MAX_FAVOR) / 4);
+			float immigrated_population = base_immigration  + bonus_immigration;
+			m_population = m_population + immigrated_population;
+		}
 	}
 	m_population = m_population + base_growth;
 	distributePopulation();

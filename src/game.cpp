@@ -42,7 +42,6 @@ void showGame(MainWindow *window)
 			{
 				(*it)->onVillageUpdateRequest(&village);
 			}
-
 			village.managePopulation();
 			cout << "-----------------------VILLAGE-------------------------" << endl;   
 			cout << "merit : " << village.getMerit() << endl;

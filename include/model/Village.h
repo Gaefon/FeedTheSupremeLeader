@@ -12,6 +12,7 @@ class Village
 		unsigned int m_workers;
 		unsigned int m_workers_capacity;
 		unsigned int m_food;
+		unsigned int m_pop_not_feed;
 		unsigned int m_merit;
 		int m_favor;
 		int m_weight_contribution;

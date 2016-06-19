@@ -12,7 +12,7 @@ Farm::Farm(MainWindow *prt) : Building(prt)
 	Building::setName(FARM_NAME);
 	Building::setHeight(5);
 	Building::setWidth(5);
-	m_production_rate = 1;
+	m_production_rate = FARM_PRODUCTION_RATE;
 	m_max_workers = 10;
 	m_nb_workers = 0;
 	m_texture = SDL_CreateTextureFromSurface(getParent()->getRenderer(), RessourceManager::getInstance()->getSurface(RessourceManager::Farm));
