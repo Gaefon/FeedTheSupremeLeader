@@ -113,7 +113,8 @@ void Map::setTmpBuilding(Building *tmp)
 void Map::removeBuilding(Building *to_remove)
 {
 	m_list_building.remove(to_remove);
-	Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingDestroy));
+	if (Config::getInstance()->getBool(Config::SoundsEffects))
+		Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingDestroy));
 }
 
 list<Building *> *Map::getBuildings()
@@ -251,7 +252,8 @@ void Map::addBuildingIfPossible()
 		Building *tmp_copy = BuildingHelper::getCopyOfTmpBuilding(m_tmp_building, m_parent);
 		if (m_poller.notifyBuildingBuildt(m_tmp_building))
 		{
-			Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingBuild));
+			if (Config::getInstance()->getBool(Config::SoundsEffects))
+				Sounds::getInstance()->playWav(RessourceManager::getInstance()->getSound(RessourceManager::BuildingBuild));
 			m_list_building.push_front(m_tmp_building);
 			tmp_copy->setPosX(m_tmp_building->getPosX());
 			tmp_copy->setPosY(m_tmp_building->getPosY());
