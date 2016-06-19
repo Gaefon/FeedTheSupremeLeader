@@ -1,6 +1,7 @@
 #include <model/Village.h>
 #include <Constants.hpp>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 

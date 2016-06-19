@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_ttf.h>
-
 #include <FeedTheSupremLeader.h>
 #include <utilities/RessourceManager.h>
 #include <Constants.hpp>
@@ -9,7 +8,6 @@
 #include <utilities/sounds/sounds.h>
 
 using namespace std;
-
 int main(int argc, char ** argv)
 {
 	MainWindow window;
