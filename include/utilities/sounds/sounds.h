@@ -27,7 +27,6 @@ class Sounds : public Singleton<Sounds>
 		void pauseMusic();
 		void resumeMusic();
 		void setMusicVolume(int volume);
-		//void loadWav(std::string wavName);
 		void playWav(Mix_Chunk *chunk);
 };
 

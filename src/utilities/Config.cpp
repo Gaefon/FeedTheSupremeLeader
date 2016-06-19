@@ -1,6 +1,5 @@
 #include <iostream>
 #include <utilities/Config.h>
-#include <utilities/sounds/sounds.h>
 #include <Constants.hpp>
 
 using namespace std;
@@ -9,6 +8,7 @@ Config::Config()
 {
 	m_fullscreen = false;
 	m_music = true;
+	m_sounds_effects = true;
 	m_map_sensivity = DEFAULT_MAP_SENSIVITY;
 	m_audio_volume = 64;
 }
@@ -19,6 +19,8 @@ bool Config::getBool(Config::Variable var)
 		return m_fullscreen;
 	else if (var == Music)
 		return m_music;
+	else if (var == SoundsEffects)
+		return m_sounds_effects;
 	return false;
 }
 
@@ -37,16 +39,16 @@ void Config::set(Config::Variable var, bool value)
 		m_fullscreen = value;
 	else if (var == Music)
 		m_music = value;
+	else if (var == SoundsEffects)
+		m_sounds_effects = value;
 }
 
 void Config::set(Config::Variable var, int value)
 {
 	if (var == MapSensivity)
 		m_map_sensivity = value;
-	if (var == AudioVolume) {
-		Sounds::getInstance()->setMusicVolume(value);
+	if (var == AudioVolume)
 		m_audio_volume = value;
-	}
 }
 
 void Config::readConfiguration()
@@ -60,16 +62,16 @@ void Config::readConfiguration()
 		return;
 	if (root["fullscreen"].isNull() == false)
 		m_fullscreen = root["fullscreen"].asBool();
-	if (root["music"].isNull() == false) {
+	if (root["music"].isNull() == false)
 		m_music = root["music"].asBool();
-		if (m_music == false)
-			Sounds::getInstance()->pauseMusic();
-	}
+	if (!root["sounds_effects"].isNull())
+		m_sounds_effects = root["sounds_effects"].asBool();
 	if (root["map_sensivity"].isNull() == false)
 		m_map_sensivity = root["map_sensivity"].asInt();
-	if (root["music_volume"].isNull() == false) {
-			m_audio_volume = root["music_volume"].asInt();
-			Sounds::getInstance()->setMusicVolume(m_audio_volume);
+	if (root["music_volume"].isNull() == false)
+	{
+		m_audio_volume = root["music_volume"].asInt();
+		//Sounds::getInstance()->setMusicVolume(m_audio_volume);
 	}
 	config_file.close();
 }
@@ -90,6 +92,7 @@ void Config::saveConfiguration()
 	root["music"] = m_music;
 	root["map_sensivity"] = m_map_sensivity;
 	root["music_volume"] = m_audio_volume;
+	root["sounds_effects"] = m_sounds_effects;
 	// root["music_volume"] =
 	ofstream config_file_o(CONFIG_FILE_NAME);
     writer.write(config_file_o, root);

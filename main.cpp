@@ -38,8 +38,11 @@ int main(int argc, char ** argv)
 		return EXIT_FAILURE;
 	}
 
-	Sounds::getInstance()->loadMusic(MENU_MUSIQUE);
 	Config::getInstance()->readConfiguration();
+	Sounds::getInstance()->loadMusic(MENU_MUSIQUE);
+	Sounds::getInstance()->setMusicVolume(Config::getInstance()->getInt(Config::AudioVolume));
+	if (!Config::getInstance()->getBool(Config::Music))
+		Sounds::getInstance()->pauseMusic();
 	window.displayWindow();
 	window.setFullscreen(Config::getInstance()->getBool(Config::Fullscreen));
 	showMenu(&window);

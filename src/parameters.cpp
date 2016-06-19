@@ -29,6 +29,13 @@ string getMusicButtonString()
 	return "Music : On";
 }
 
+string getSoundsEffectButtonString()
+{
+	if (!Config::getInstance()->getBool(Config::SoundsEffects))
+		return "Sounds effects : Off";
+	return "Sounds effects : On";
+}
+
 void toggleMusic(Button *btn_audio)
 {
 	if (Config::getInstance()->getBool(Config::Music))
@@ -37,6 +44,12 @@ void toggleMusic(Button *btn_audio)
 		Sounds::getInstance()->resumeMusic();
 	Config::getInstance()->set(Config::Music, !Config::getInstance()->getBool(Config::Music));
 	btn_audio->setText(getMusicButtonString());
+}
+
+void toggleSoundsEffects(Button *btn)
+{
+	Config::getInstance()->set(Config::SoundsEffects, !Config::getInstance()->getBool(Config::SoundsEffects));
+	btn->setText(getSoundsEffectButtonString());
 }
 
 void toggleFullscreen(MainWindow *window, Button *btn_fullscreen)
@@ -53,8 +66,9 @@ void setMapSensivity(Slider *slider)
 }
 
 void setAudioVolume(Slider *slider) {
-  int volume = int((slider->getValue() * MIX_MAX_VOLUME) / 100);
-  Config::getInstance()->set(Config::AudioVolume, volume);
+	int volume = int((slider->getValue() * MIX_MAX_VOLUME) / 100);
+	Config::getInstance()->set(Config::AudioVolume, volume);
+	Sounds::getInstance()->setMusicVolume(volume);
 }
 
 void showParameters(MainWindow *window)
@@ -69,25 +83,31 @@ void showParameters(MainWindow *window)
 	Slider slider_map_sensivity(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
 	Label lbl_audio(window, 0, 0, "Volume");
 	Slider slider_audio(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Medium_Slider));
+	Label lbl_sound_effects(window, 0, 0, "Sounds effects");
+	Button btn_sound_effects(window, 0, 0, RessourceManager::getInstance()->getSurface(RessourceManager::Menu_Large_Button), getSoundsEffectButtonString());
+
 
 	slider_map_sensivity.setValue(roundf(((Config::getInstance()->getInt(Config::MapSensivity) - MIN_MAP_SENSIVITY) * 100.0f) / (MAX_MAP_SENSIVITY - MIN_MAP_SENSIVITY)));
-  slider_audio.setValue(Config::getInstance()->getInt(Config::AudioVolume) * 100 / 128);
-  poller.subscribe(&back_button);
+	slider_audio.setValue(Config::getInstance()->getInt(Config::AudioVolume) * 100 / 128);
+	poller.subscribe(&back_button);
 	poller.subscribe(&btn_fullscreen);
 	poller.subscribe(&btn_audio);
-  poller.subscribe(&slider_audio);
+	poller.subscribe(&slider_audio);
 	poller.subscribe(&slider_map_sensivity);
+	poller.subscribe(&btn_sound_effects);
 	poller.subscribe(window);
 
 	Timer::getInstance()->setLastTime(SDL_GetTicks());
 	while (!window->hasCloseRequest() && !back_clicked)
 	{
 		btn_fullscreen.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 80);
-		btn_audio.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 140);
-		lbl_map.setPosition(window->getWidth() / 2 - lbl_map.getWidth() / 2, 200);
-		slider_map_sensivity.setPosition(window->getWidth() / 2 - slider_map_sensivity.getWidth() / 2, 230);
-		lbl_audio.setPosition(window->getWidth() / 2 - lbl_audio.getWidth() / 2, 260);
-		slider_audio.setPosition(window->getWidth() / 2 - slider_audio.getWidth() / 2, 290);
+		lbl_map.setPosition(window->getWidth() / 2 - lbl_map.getWidth() / 2, 140);
+		slider_map_sensivity.setPosition(window->getWidth() / 2 - slider_map_sensivity.getWidth() / 2, 170);	
+		lbl_audio.setPosition(window->getWidth() / 2 - lbl_audio.getWidth() / 2, 214);
+		btn_audio.setPosition(window->getWidth() / 2 - btn_fullscreen.getWidth() / 2, 244);
+		slider_audio.setPosition(window->getWidth() / 2 - slider_audio.getWidth() / 2, 294);
+		lbl_sound_effects.setPosition(window->getWidth() / 2 - lbl_sound_effects.getWidth() / 2, 338);
+		btn_sound_effects.setPosition(window->getWidth() / 2 - btn_sound_effects.getWidth() / 2, 368);
 
 		poller.Poll();
 		window->clear();
@@ -99,6 +119,8 @@ void showParameters(MainWindow *window)
 		lbl_audio.draw();
 		slider_audio.draw();
 		lbl_map.draw();
+		lbl_sound_effects.draw();
+		btn_sound_effects.draw();
 
 		window->update();
 		if (back_button.isClicked())
@@ -112,8 +134,11 @@ void showParameters(MainWindow *window)
 			toggleMusic(&btn_audio);
 		if (slider_map_sensivity.slideFinished())
 			setMapSensivity(&slider_map_sensivity);
-    if (slider_audio.slideFinished())
-      setAudioVolume(&slider_audio);
+
+		if (slider_audio.slideFinished())
+			setAudioVolume(&slider_audio);
+		if (btn_sound_effects.isClicked())
+			toggleSoundsEffects(&btn_sound_effects);
 		Timer::getInstance()->getTimeDifference();
 	}
 }

@@ -16,13 +16,15 @@ class Config : public Singleton<Config>
 			Fullscreen,
 			Music,
 			MapSensivity,
-			AudioVolume
+			AudioVolume,
+			SoundsEffects
 		};
 	private:
 		Config();
 
 		bool m_fullscreen;
 		bool m_music;
+		bool m_sounds_effects;
 		int m_map_sensivity;
 		int m_audio_volume;
 
