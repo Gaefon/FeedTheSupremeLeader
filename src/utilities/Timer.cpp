@@ -28,7 +28,7 @@ void Timer::getTimeDifference()
 	timeTmp = current_time - m_last_time;
 	if (timeTmp > FRAME_PAUSE_DURATION)
 	{
-		cerr << "[" << current_time << "] Pause too long : " << timeTmp << " ms" << endl;
+		// cerr << "[" << current_time << "] Pause too long : " << timeTmp << " ms" << endl;
 		timeTmp = FRAME_PAUSE_DURATION;
 	}
 	SDL_Delay(FRAME_PAUSE_DURATION - timeTmp);

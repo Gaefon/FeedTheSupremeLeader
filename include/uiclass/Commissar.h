@@ -14,6 +14,7 @@ class Commissar: public Widget
 		SDL_Texture *m_text_texture;
 		SDL_Rect rect_img;
 		SDL_Rect rect_text;
+		// int m_displayed_char;
 
 		unsigned int m_duration;
 		std::string m_current_text;
