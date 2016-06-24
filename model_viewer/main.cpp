@@ -8,6 +8,7 @@
 
 #include "Shader.h"
 #include "Camera.h"
+#include "Model.h"
 
 int main(int argc, char **argv)
 {
@@ -22,6 +23,8 @@ int main(int argc, char **argv)
 	glm::vec3 cam_pos(0.0f, 0.0f, 2.0f);
 	glm::vec3 cam_target(2.0f, 2.0f, 0.0f);
 	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
+	Model model(argv[1]);
+	
 	
 	SDL_Init(SDL_INIT_VIDEO);
 	

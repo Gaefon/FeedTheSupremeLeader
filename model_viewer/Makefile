@@ -1,6 +1,7 @@
 SRC =	main.cpp\
 		Shader.cpp\
-		Camera.cpp
+		Camera.cpp\
+		Model.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
