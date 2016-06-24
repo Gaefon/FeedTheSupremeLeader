@@ -11,6 +11,8 @@ class Model
 {
 	private:
 		std::vector<glm::vec3> vertices;
+		
+		std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
 		void loadFile(std::string file_name);
 	public:
 		Model(std::string file_name);

@@ -12,6 +12,18 @@ Model::~Model()
 {
 }
 
+vector<string> Model::splitStr(string data, string delimiter)
+{
+	vector<string> lst;
+	
+	int first_space = data.find(delimiter);
+	lst.push_back(data.substr(0, first_space));
+	int second_space = data.substr(first_space + 1).find(delimiter) + first_space + 1;
+	lst.push_back(data.substr(first_space + 1, second_space - first_space - 1));
+	lst.push_back(data.substr(second_space + 1));
+	
+	return lst;
+}
 
 void Model::loadFile(string file_name)
 {
@@ -30,12 +42,8 @@ void Model::loadFile(string file_name)
 			data = line.substr(line.find(" ") + 1);
 			if (type == "v")
 			{
-				int first_space = data.find(" ");
-				string x = data.substr(0, first_space);
-				int second_space = data.substr(first_space + 1).find(" ") + first_space + 1;
-				string y = data.substr(first_space + 1, second_space - first_space - 1);
-				string z = data.substr(second_space + 1);
-				tmp_vert.push_back(glm::vec3(stof(x), stof(y), stof(z)));
+				vector<string> coords = splitStr(data);
+				tmp_vert.push_back(glm::vec3(stof(coords.at(0)), stof(coords.at(1)), stof(coords.at(2))));
 			}
 			else if (type == "f")
 			{
