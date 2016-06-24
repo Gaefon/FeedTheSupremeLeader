@@ -1,6 +1,9 @@
 #include "Model.h"
 #include <fstream>
 
+#include <stdlib.h>
+#include <time.h>
+
 using namespace std;
 
 Model::Model(string file_name)
@@ -10,6 +13,7 @@ Model::Model(string file_name)
 
 Model::~Model()
 {
+	delete arr_vertices;
 }
 
 vector<string> Model::splitStr(string data, string delimiter)
@@ -32,6 +36,10 @@ void Model::loadFile(string file_name)
 	string type;
 	string data;
 	std::vector<glm::vec3> tmp_vert;
+	std::vector<glm::vec3> tmp_colors;
+	
+	
+	srand(time(NULL));
 	
 	fd.open(file_name);
 	if (fd.is_open())
@@ -47,8 +55,49 @@ void Model::loadFile(string file_name)
 			}
 			else if (type == "f")
 			{
+				float r = (float) rand() / (float) RAND_MAX;
+				float g = (float) rand() / (float) RAND_MAX;
+				float b = (float) rand() / (float) RAND_MAX;
+				vector<string> coords = splitStr(data);
+				for (vector<string>::iterator it = coords.begin(); it != coords.end(); it++)
+				{
+					vector<string> vertex = splitStr(*it, "/");
+					vertices.push_back(tmp_vert.at(stoi(vertex.at(0)) - 1));
+					tmp_colors.push_back(glm::vec3(r, g, b));
+				}
 			}
 		}
 		fd.close();
+		
+		arr_vertices = new float[vertices.size() * 3];
+		arr_colors =  new float[vertices.size() * 3];
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			arr_vertices[i * 3] = vertices[i].x;
+			arr_vertices[i * 3 + 1] = vertices[i].y;
+			arr_vertices[i * 3 + 2] = vertices[i].z;
+			
+			arr_colors[i * 3] = tmp_colors[i].x;
+			arr_colors[i * 3 + 1] = tmp_colors[i].y;
+			arr_colors[i * 3 + 2] = tmp_colors[i].z;
+		}
 	}
 }
+
+void Model::render(Camera camera, Shader shader)
+{
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, arr_vertices);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, arr_colors);
+	glEnableVertexAttribArray(1);
+	
+	glUniformMatrix4fv(glGetUniformLocation(shader.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(camera.getModelview()));
+	glUniformMatrix4fv(glGetUniformLocation(shader.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(camera.getProjection()));
+		
+	
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(0);
+}
+

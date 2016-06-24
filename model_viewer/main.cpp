@@ -20,10 +20,9 @@ int main(int argc, char **argv)
 	bool finished = false;
 	SDL_Event event;
 	Camera camera;
-	glm::vec3 cam_pos(0.0f, 0.0f, 2.0f);
+	glm::vec3 cam_pos(-0.5f, -0.5f, 2.5f);
 	glm::vec3 cam_target(2.0f, 2.0f, 0.0f);
 	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
-	Model model(argv[1]);
 	
 	
 	SDL_Init(SDL_INIT_VIDEO);
@@ -44,6 +43,7 @@ int main(int argc, char **argv)
 	
 	glEnable(GL_DEPTH_TEST);
 	
+	Model model(argv[1]);
 	float vertices[] =
 	{
 		0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 3.0f, 0.0f, 0.0f,
@@ -74,6 +74,7 @@ int main(int argc, char **argv)
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, colors);
 		glEnableVertexAttribArray(1);
 		
+		
 		glUniformMatrix4fv(glGetUniformLocation(shader_color.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(camera.getModelview()));
 		glUniformMatrix4fv(glGetUniformLocation(shader_color.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(camera.getProjection()));
 		
@@ -81,6 +82,9 @@ int main(int argc, char **argv)
 		
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(0);
+		
+		model.render(camera, shader_color);
+		
 		glUseProgram(0);
 		SDL_GL_SwapWindow(window);
 		SDL_Delay(20);
