@@ -17,7 +17,9 @@ class Model
 {
 	private:
 		std::vector<glm::vec3> vertices;
+		std::vector<glm::vec3> normals;
 		float *arr_vertices;
+		float *arr_normals;
 		float *arr_colors;
 		
 		std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
