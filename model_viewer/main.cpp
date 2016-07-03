@@ -27,6 +27,10 @@ int main(int argc, char **argv)
 	
 	SDL_Init(SDL_INIT_VIDEO);
 	
+	// antialiasing
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
+	
 	window = SDL_CreateWindow("lol", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	gl_context = SDL_GL_CreateContext(window);
 	
