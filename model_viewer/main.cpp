@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Scene.h"
 
 int main(int argc, char **argv)
 {
@@ -20,6 +21,7 @@ int main(int argc, char **argv)
 	bool finished = false;
 	float angle = 0.0f;
 	SDL_Event event;
+	Scene scene;
 	Camera camera;
 	glm::vec3 cam_pos(2.0f, 2.0f, 2.0f);
 	glm::vec3 cam_target(1.0f, 1.0f, 1.0f);
@@ -39,6 +41,8 @@ int main(int argc, char **argv)
 	
 	camera.setPerspectice(90.0f, 800.0f / 600.0f, 0.1f, 100.0f);
 	
+	scene.setCamera(&camera);
+	
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -50,7 +54,21 @@ int main(int argc, char **argv)
 	
 	Model model(argv[1]);
 	model.setShader(&shader_color);
-	float vertices[] =
+	
+	Model floor;
+	floor.setShader(&shader_color);
+	floor.addVertice(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	
+	floor.addVertice(glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.createModel();
+	
+	scene.addModel(&floor);
+	scene.addModel(&model);
+	/*float vertices[] =
 	{
 		0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 3.0f, 0.0f, 0.0f,
 		3.0f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 3.0f, 3.0f, 0.0f
@@ -60,7 +78,7 @@ int main(int argc, char **argv)
 	{
 		0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f,
 		0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f
-	};
+	};*/
 	
 	while(!finished)
 	{
@@ -77,7 +95,7 @@ int main(int argc, char **argv)
 		cam_pos.y = sin(angle / 360 * 2 * M_PI) * 3.0f + 1.0f;
 		camera.setLookAt(cam_pos, cam_target, cam_vert);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices);
+		/*glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, colors);
 		glEnableVertexAttribArray(1);
@@ -89,9 +107,9 @@ int main(int argc, char **argv)
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		
 		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(0);*/
 		
-		model.render(camera);
+		scene.render();
 		
 		glUseProgram(0);
 		SDL_GL_SwapWindow(window);

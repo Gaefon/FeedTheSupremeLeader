@@ -18,6 +18,7 @@ class Model
 	private:
 		std::vector<glm::vec3> vertices;
 		std::vector<glm::vec3> normals;
+		std::vector<glm::vec3> colors;
 		glm::mat4 normal_matrix;
 		float *arr_vertices;
 		float *arr_normals;
@@ -28,10 +29,13 @@ class Model
 		std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
 		void loadFile(std::string file_name);
 	public:
+		Model();
 		Model(std::string file_name);
 		~Model();
 		void setShader(Shader *shader);
-		void render(Camera camera);
+		void addVertice(glm::vec3 vert, glm::vec3 color, glm::vec3 normal);
+		void createModel();
+		void render(Camera *camera);
 };
 
 #endif

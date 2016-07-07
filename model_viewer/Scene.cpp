@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+using namespace std;
+
 
 Scene::Scene()
 {
@@ -21,4 +23,6 @@ void Scene::addModel(Model *model)
 
 void Scene::render()
 {
+	for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); it++)
+		(*it)->render(m_cam);
 }
