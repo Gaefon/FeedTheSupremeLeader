@@ -9,6 +9,8 @@ using namespace std;
 Model::Model(string file_name)
 {
 	loadFile(file_name);
+	m_shader = NULL;
+	normal_matrix = glm::mat4(1.0f);//(glm::vec3(1.0f), 1.0f);
 }
 
 Model::~Model()
@@ -59,10 +61,10 @@ void Model::loadFile(string file_name)
 				tmp_normals.push_back(glm::vec3(stof(coords.at(0)), stof(coords.at(1)), stof(coords.at(2))));
 			}
 			else if (type == "f")
-			{
-				float r = (float) rand() / (float) RAND_MAX;
-				float g = (float) rand() / (float) RAND_MAX;
-				float b = (float) rand() / (float) RAND_MAX;
+			{				
+				float r = 1.0f;
+				float g = 1.0f;
+				float b = 1.0f;
 				vector<string> coords = splitStr(data);
 				for (vector<string>::iterator it = coords.begin(); it != coords.end(); it++)
 				{
@@ -76,7 +78,7 @@ void Model::loadFile(string file_name)
 		fd.close();
 		
 		arr_vertices = new float[vertices.size() * 3];
-		arr_normals =  new float[vertices.size() * 3];
+		arr_normals =  new float[normals.size() * 3];
 		arr_colors =  new float[vertices.size() * 3];
 		for (unsigned int i = 0; i < vertices.size(); i++)
 		{
@@ -95,19 +97,28 @@ void Model::loadFile(string file_name)
 	}
 }
 
-void Model::render(Camera camera, Shader shader)
+void Model::setShader(Shader *shader)
+{
+	m_shader = shader;
+}
+
+void Model::render(Camera camera)
 {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, arr_vertices);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, arr_colors);
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, arr_normals);
+	glEnableVertexAttribArray(2);
 	
-	glUniformMatrix4fv(glGetUniformLocation(shader.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(camera.getModelview()));
-	glUniformMatrix4fv(glGetUniformLocation(shader.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(camera.getProjection()));
+	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(camera.getModelview()));
+	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(camera.getProjection()));
+	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "normal"), 1, GL_FALSE, value_ptr(normal_matrix));
 	
 	
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	
+	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
 }
