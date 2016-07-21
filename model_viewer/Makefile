@@ -2,7 +2,9 @@ SRC =	main.cpp\
 		Shader.cpp\
 		Camera.cpp\
 		Model.cpp\
-		Scene.cpp
+		Scene.cpp\
+		Texture.cpp\
+		SDLTexture.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 

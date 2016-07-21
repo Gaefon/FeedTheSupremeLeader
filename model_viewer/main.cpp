@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Scene.h"
+#include "SDLTexture.h"
 
 int main(int argc, char **argv)
 {
@@ -49,36 +50,30 @@ int main(int argc, char **argv)
 	
 	Shader shader_color("Shaders/3d_color.vert", "Shaders/3d_color.frag");
 	shader_color.load();
+	Shader shader_tex("Shaders/3d_texture.vert", "Shaders/3d_texture.frag");
+	shader_tex.load();
 	
 	glEnable(GL_DEPTH_TEST);
 	
+	SDLTexture tex(argv[2]);
 	Model model(argv[1]);
-	model.setShader(&shader_color);
+	model.setShader(&shader_tex);
+	model.setTexture(&tex);
+	
 	
 	Model floor;
 	floor.setShader(&shader_color);
 	floor.addVertice(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(6.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
 	
-	floor.addVertice(glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(6.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	floor.addVertice(glm::vec3(6.0f, 6.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
 	floor.createModel();
 	
 	scene.addModel(&floor);
 	scene.addModel(&model);
-	/*float vertices[] =
-	{
-		0.0f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 3.0f, 0.0f, 0.0f,
-		3.0f, 0.0f, 0.0f, 0.0f, 3.0f, 0.0f, 3.0f, 3.0f, 0.0f
-	};
-	
-	float colors[] =
-	{
-		0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f,
-		0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f, 0.023f, 0.456f, 0.014f
-	};*/
 	
 	while(!finished)
 	{
@@ -88,33 +83,16 @@ int main(int argc, char **argv)
 				finished = true;
 		}
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		glUseProgram(shader_color.getProgramID());
-		
+
 		cam_pos.x = cos(angle / 360 * 2 * M_PI) * 3.0f + 1.0f;
 		cam_pos.y = sin(angle / 360 * 2 * M_PI) * 3.0f + 1.0f;
 		camera.setLookAt(cam_pos, cam_target, cam_vert);
-
-		/*glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, colors);
-		glEnableVertexAttribArray(1);
-		
-		
-		glUniformMatrix4fv(glGetUniformLocation(shader_color.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(camera.getModelview()));
-		glUniformMatrix4fv(glGetUniformLocation(shader_color.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(camera.getProjection()));
-		
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(0);*/
 		
 		scene.render();
 		
-		glUseProgram(0);
 		SDL_GL_SwapWindow(window);
 		++angle;
-		SDL_Delay(20);
+		//SDL_Delay(16.6666666f);
 	}
 	SDL_GL_DeleteContext(gl_context);
 	SDL_DestroyWindow(window);
