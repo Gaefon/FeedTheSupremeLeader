@@ -11,3 +11,6 @@ LICENSE.freetype.txt
 LICENSE.zlib.txt
 README.txt
 config.json
+
+model_viewer
+*.blend1
