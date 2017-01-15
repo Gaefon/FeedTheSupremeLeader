@@ -35,31 +35,38 @@ int main(int argc, char **argv)
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
 	
+	
 	window = SDL_CreateWindow("lol", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	gl_context = SDL_GL_CreateContext(window);
-	
-	glewInit();
 	
 	camera.setPerspectice(90.0f, 800.0f / 600.0f, 0.1f, 100.0f);
 	
 	scene.setCamera(&camera);
 	
+	GLenum err = glewInit();
+	
+	if (err != GLEW_OK)
+	{
+		std::cerr << "fail glew init : " << err << std::endl;
+		exit(-1);
+	}
+	
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	
+	glEnable(GL_DEPTH_TEST);
 	
 	Shader shader_color("Shaders/3d_color.vert", "Shaders/3d_color.frag");
 	shader_color.load();
 	Shader shader_tex("Shaders/3d_texture.vert", "Shaders/3d_texture.frag");
 	shader_tex.load();
 	
-	glEnable(GL_DEPTH_TEST);
 	
 	SDLTexture tex(argv[2]);
 	Model model(argv[1]);
 	model.setShader(&shader_tex);
 	model.setTexture(&tex);
-	
 	
 	Model floor;
 	floor.setShader(&shader_color);
