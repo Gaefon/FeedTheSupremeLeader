@@ -70,6 +70,7 @@ bool Shader::load()
 		return false;
 
 	m_program_id = glCreateProgram();
+	
 
 	glAttachShader(m_program_id, m_vertex_id);
 	glAttachShader(m_program_id, m_fragment_id);
@@ -116,7 +117,6 @@ bool Shader::compileShader(GLuint &shader, GLenum type, string const &source_fil
 	}
 	
 	ifstream file(source_file.c_str());
-
 	if(!file)
 	{
 		cerr << "Error : file not found (" << source_file << ")" << endl;
