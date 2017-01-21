@@ -4,11 +4,8 @@
 #include <Constants.hpp>
 #include <GameStrings.h>
 
-#include <OpenGL/gl.h>
-<<<<<<< HEAD
-#include <OpenGL/glu.h>
-=======
->>>>>>> c1168e71c9af3846b6a3072b8aecb843cce75633
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 using namespace std;
 

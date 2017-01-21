@@ -37,7 +37,7 @@ NAME =	feedthesupremleader
 CXX = g++
 CXXFLAGS = -W -Wall -Werror -std=c++11 `sdl2-config --cflags` -Iinclude
 
-LDFLAGS = `sdl2-config --libs` -lSDL2_ttf -lSDL2_mixer -lm -framework OpenGL
+LDFLAGS = `sdl2-config --libs` -lSDL2_ttf -lSDL2_mixer -lm -lGL -lGLEW
 
 RM = rm -rf
 
