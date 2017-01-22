@@ -4,7 +4,8 @@ SRC =	src/main.cpp\
 		src/Model.cpp\
 		src/Scene.cpp\
 		src/Texture.cpp\
-		src/SDLTexture.cpp
+		src/SDLTexture.cpp\
+		src/Light.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 

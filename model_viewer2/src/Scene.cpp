@@ -16,6 +16,11 @@ void Scene::setCamera(Camera *cam)
 	m_cam = cam;
 }
 
+void Scene::addLight(Light *light)
+{
+	m_list_light.push_back(light);
+}
+
 void Scene::addModel(Model *model)
 {
 	m_list_model.push_back(model);

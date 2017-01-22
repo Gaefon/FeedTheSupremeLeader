@@ -1,6 +1,8 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
+#include <glm/glm.hpp>
+
 class Light
 {
 	private:
@@ -9,12 +11,12 @@ class Light
 		glm::vec3 m_position;
 		glm::vec3 m_direction;
 		
-	public;
+	public:
 		Light();
 		~Light();
-		setColor(glm::vec3 col);
-		setPosition(glm::vec3 pos);
-		setDirection(glm::vec3 dir);
+		void setColor(glm::vec3 col);
+		void setPosition(glm::vec3 pos);
+		void setDirection(glm::vec3 dir);
 		
 };
 
