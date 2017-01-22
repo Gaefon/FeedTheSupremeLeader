@@ -75,7 +75,5 @@ void SDLTexture::invertPixels()
 			((char *) m_texture->pixels)[pos_src] = tmp;
 		}
 	}
-
-	SDL_SaveBMP(m_texture, "LOLOLOLOL.bmp");
 }
 
