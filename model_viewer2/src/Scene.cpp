@@ -1,4 +1,5 @@
 #include <Scene.h>
+#include <helper/DebugHelper.h>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ void Scene::addModel(Model *model)
 
 void Scene::render()
 {
+	DebugHelper::drawAxis(1.0f, m_cam);
 	for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); it++)
 		(*it)->render(m_cam);
 }

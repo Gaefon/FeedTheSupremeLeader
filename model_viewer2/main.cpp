@@ -67,6 +67,7 @@ int main(int argc, char **argv)
 	
 	DebugHelper::initShader(&shader_color);
 
+
 	SDLTexture tex(argv[2]);
 	Model model(argv[1]);
 	model.setShader(&shader_tex);

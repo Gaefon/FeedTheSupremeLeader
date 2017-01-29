@@ -1,11 +1,12 @@
-SRC =	src/main.cpp\
+SRC =	main.cpp\
 		src/Shader.cpp\
 		src/Camera.cpp\
 		src/Model.cpp\
 		src/Scene.cpp\
 		src/Texture.cpp\
 		src/SDLTexture.cpp\
-		src/Light.cpp
+		src/Light.cpp\
+		src/helper/DebugHelper.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
