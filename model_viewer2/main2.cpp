@@ -21,9 +21,9 @@ int main(void)
 	window = new Window("lol", 800, 600);
 	
 	Engine engine("test", Version::makeVersion(1, 0, 0));
+	engine.pickPhysicalDevices();
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
-	engine.pickPhysicalDevices();
 	Device dev(phys_dev);
 	
 	//X11Surface surface(&engine, glfwGetX11Display(), glfwGetX11Window(window));
