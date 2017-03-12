@@ -11,6 +11,7 @@ LICENSE.freetype.txt
 LICENSE.zlib.txt
 README.txt
 config.json
-
+*.cbp
 model_viewer
 *.blend1
+*.layout
