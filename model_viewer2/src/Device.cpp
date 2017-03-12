@@ -6,10 +6,10 @@ using namespace std;
 
 namespace GEngine
 {
-	Device::Device(PhysicalDevice phys_dev)
+	Device::Device(Surface surface, PhysicalDevice phys_dev)
 	{
 		device = VK_NULL_HANDLE;
-		if (!init(phys_dev))
+		if (!init(surface, phys_dev))
 			device = VK_NULL_HANDLE;
 	}
 	
@@ -19,13 +19,18 @@ namespace GEngine
 			vkDestroyDevice(device, nullptr);
 	}
 	
-	bool Device::init(PhysicalDevice phys_dev)
+	bool Device::init(Surface surface, PhysicalDevice phys_dev)
 	{
 		priority = 1.0f;
 		
-		queue_create_info = {};
+		/*int present;
+		int graphic;
+		
+		phys_dev.getFirstValidQueueFamily(surface, &present, &graphic);*/
+
+		VkDeviceQueueCreateInfo queue_create_info = {};
 		queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queue_create_info.queueFamilyIndex = phys_dev.getFirstValidQueueFamily();
+		queue_create_info.queueFamilyIndex = ;
 		queue_create_info.queueCount = 1;
 		queue_create_info.pQueuePriorities = &priority;
 	

@@ -2,8 +2,6 @@
 
 #include <string.h>
 
-#include <vector>
-
 using namespace std;
 
 namespace GEngine
@@ -11,6 +9,7 @@ namespace GEngine
 	PhysicalDevice::PhysicalDevice()
 	{
 		physical_device = VK_NULL_HANDLE;
+		present_idx = -1;
 	}
 	
 	PhysicalDevice::PhysicalDevice(VkPhysicalDevice instance)
@@ -26,35 +25,29 @@ namespace GEngine
 	
 	bool PhysicalDevice::isSuitable()
 	{
-		VkPhysicalDeviceProperties dev_properties;
-		VkPhysicalDeviceFeatures dev_features;
-		
-		vkGetPhysicalDeviceProperties(physical_device, &dev_properties);
-		vkGetPhysicalDeviceFeatures(physical_device, &dev_features);
-		
-		return dev_properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && dev_features.geometryShader;
+		return properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && features.geometryShader;
 	}
 	
-	int PhysicalDevice::getFirstValidQueueFamily()
+	void PhysicalDevice::setPresentIndex(int idx)
 	{
-		unsigned int queue_family_count = 0;
-		
-		vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &queue_family_count, nullptr);
-		
-		vector<VkQueueFamilyProperties> queue_families(queue_family_count);
-		vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &queue_family_count, queue_families.data());
-		
-		int i = 0;
-		
-		for (VkQueueFamilyProperties queue: queue_families)
-		{
-			if (queue.queueCount > 0 && queue.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-				break;
-			i++;
-		}
-		
-		return i;
+		present_idx = idx;
 	}
+	
+	void PhysicalDevice::setGraphicIndex(int idx)
+	{
+		graphic_index = idx;
+	}
+	
+	int PhysicalDevice::getPresentIndex()
+	{
+		return present_idx;
+	}
+	
+	int PhysicalDevice::getGraphicIndex()
+	{
+		return graphic_index;
+	}
+	
 	
 	VkPhysicalDevice PhysicalDevice::getVulkanObject()
 	{

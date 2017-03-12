@@ -1,12 +1,21 @@
-SRC =	main.cpp\
-		src/Shader.cpp\
-		src/Camera.cpp\
-		src/Model.cpp\
-		src/Scene.cpp\
-		src/Texture.cpp\
-		src/SDLTexture.cpp\
-		src/Light.cpp\
-		src/helper/DebugHelper.cpp
+#SRC =	main.cpp\
+#		src/Shader.cpp\
+#		src/Camera.cpp\
+#		src/Model.cpp\
+#		src/Scene.cpp\
+#		src/Texture.cpp\
+#		src/SDLTexture.cpp\
+#		src/Light.cpp\
+#		src/helper/DebugHelper.cpp
+
+SRC =	src/GEngine.cpp\
+		src/Const.cpp\
+		src/PhysicalDevice.cpp\
+		src/Version.cpp\
+		src/Surface.cpp\
+		src/Device.cpp\
+		src/Window.cpp\
+		main2.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)
 
@@ -14,9 +23,9 @@ OBJ =	$(SRC:%.cpp=%.o)
 NAME =	modelviewer
 
 CXX = g++
-CXXFLAGS = -W -Wall -std=c++11 `sdl2-config --cflags` -lGL -lGLEW -Iinclude
+CXXFLAGS = -W -Wall -std=c++11 -Iinclude `pkg-config --cflags glfw3`
 
-LDFLAGS = `sdl2-config --libs` -lGL -lGLEW
+LDFLAGS = `pkg-config --libs glfw3` -lvulkan
 
 RM = rm -rf
 

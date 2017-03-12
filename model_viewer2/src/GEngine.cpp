@@ -1,6 +1,8 @@
 #include <GEngine.h>
 #include <Const.h>
 
+#include <GLFW/glfw3.h>
+
 #include <iostream>
 #include <vector>
 
@@ -12,7 +14,6 @@ namespace GEngine
 	Engine::Engine(string app_name, int version)
 	{
 		vulkan_instance = VK_NULL_HANDLE;
-		logical_dev = nullptr;
 		
 		if (!init(app_name, version))
 			vulkan_instance = VK_NULL_HANDLE;
@@ -20,9 +21,6 @@ namespace GEngine
 	
 	Engine::~Engine()
 	{
-		if (logical_dev != nullptr)
-			delete logical_dev;
-		
 		// free all the physical devices !
 		for (PhysicalDevice *dev: physical_devices)
 			delete dev;
@@ -35,7 +33,8 @@ namespace GEngine
 
 	bool Engine::init(string app_name, int version)
 	{
-		unsigned int device_count = 0;
+		const char **extensions;
+		unsigned int nb;
 		
 		app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		app_info.pNext = nullptr;
@@ -50,8 +49,10 @@ namespace GEngine
 		create_info.pNext = nullptr;
 		create_info.pApplicationInfo = &app_info;
 		
-		create_info.enabledExtensionCount = 0;
-		create_info.ppEnabledExtensionNames = nullptr;
+		extensions = glfwGetRequiredInstanceExtensions(&nb);
+		
+		create_info.enabledExtensionCount = nb;
+		create_info.ppEnabledExtensionNames = extensions;
 		create_info.enabledLayerCount = 0;
 		
 		VkResult result = vkCreateInstance(&create_info, nullptr, &vulkan_instance);
@@ -61,6 +62,13 @@ namespace GEngine
 			cerr << "Failed to init vulkan. (res: " << result << ")" << endl;
 			return false;
 		}
+		
+		return true;
+	}
+	
+	bool Engine::pickPhysicalDevices()
+	{
+		unsigned int device_count = 0;
 		
 		if (vkEnumeratePhysicalDevices(vulkan_instance, &device_count, nullptr) != VK_SUCCESS)
 		{
@@ -77,26 +85,17 @@ namespace GEngine
 		
 		for (unsigned int i = 0; i < devices.size(); i++)
 			physical_devices.push_back(new PhysicalDevice(devices.at(i)));
-		
-		for (PhysicalDevice *dev: physical_devices)
-		{
-			if (dev->isSuitable() && dev->getFirstValidQueueFamily() >= 0)
-			{
-				logical_dev = new Device(*dev);
-				break;
-			}
-		}
-		
+			
 		return true;
 	}
 	
-	bool Engine::pickPhysicalDevice()
-	{
-		return true;
-	}
-	
-	const std::list<PhysicalDevice *> Engine::getListPhysicalDevices()
+	const list<PhysicalDevice *> Engine::getListPhysicalDevices()
 	{
 		return physical_devices;
+	}
+	
+	VkInstance Engine::getVulkanObject()
+	{
+		return vulkan_instance;
 	}
 }

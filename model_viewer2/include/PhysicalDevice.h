@@ -12,13 +12,23 @@ namespace GEngine
 			VkPhysicalDeviceProperties properties;
 			VkPhysicalDeviceFeatures features;
 			
+			int present_idx;
+			int graphic_index;
+			
 		public:
 			PhysicalDevice();
 			PhysicalDevice(VkPhysicalDevice instance);
 			~PhysicalDevice();
 			
 			bool isSuitable();
-			int getFirstValidQueueFamily();
+			
+			void setPresentIndex(int idx);
+			void setGraphicIndex(int idx);
+			
+			int getPresentIndex();
+			int getGraphicIndex();
+			
+			//void getFirstValidQueueFamily(int *graphic, int *present);
 			
 			VkPhysicalDevice getVulkanObject();
 			const VkPhysicalDeviceFeatures *getFeatures();
