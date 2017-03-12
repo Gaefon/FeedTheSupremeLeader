@@ -23,7 +23,7 @@ OBJ =	$(SRC:%.cpp=%.o)
 NAME =	modelviewer
 
 CXX = g++
-CXXFLAGS = -W -Wall -std=c++11 -Iinclude `pkg-config --cflags glfw3`
+CXXFLAGS = -W -Wall -std=c++11 -Iinclude `pkg-config --cflags glfw3` -g
 
 LDFLAGS = `pkg-config --libs glfw3` -lvulkan
 

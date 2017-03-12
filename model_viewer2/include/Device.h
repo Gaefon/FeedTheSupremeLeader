@@ -13,16 +13,16 @@ namespace GEngine
 		private:
 			VkDevice device;
 			VkPhysicalDeviceFeatures device_features;
-			VkDeviceCreateInfo device_create_infos;
 			
-			VkQueue device_queue;
+			VkQueue present_device_queue;
+			VkQueue graphic_device_queue;
 			float priority;
 			
 			
-			bool init(Surface surface, PhysicalDevice phys_dev);
+			bool init(PhysicalDevice *phys_dev);
 		
 		public:
-			Device(Surface surface, PhysicalDevice phys_dev);
+			Device(PhysicalDevice *phys_dev);
 			~Device();
 	};
 }
