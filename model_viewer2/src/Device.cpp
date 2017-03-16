@@ -8,10 +8,10 @@ using namespace std;
 
 namespace GEngine
 {
-	Device::Device(PhysicalDevice *phys_dev)
+	Device::Device(PhysicalDevice *phys_dev, list<string> extensions)
 	{
 		device = VK_NULL_HANDLE;
-		if (!init(phys_dev))
+		if (!init(phys_dev, extensions))
 			device = VK_NULL_HANDLE;
 	}
 	
@@ -21,7 +21,7 @@ namespace GEngine
 			vkDestroyDevice(device, nullptr);
 	}
 	
-	bool Device::init(PhysicalDevice *phys_dev)
+	bool Device::init(PhysicalDevice *phys_dev, list<string> extensions)
 	{
 		priority = 1.0f;
 		
@@ -48,25 +48,32 @@ namespace GEngine
 		device_create_infos.queueCreateInfoCount = queue_create_infos.size();
 		device_create_infos.pEnabledFeatures = phys_dev->getFeatures();
 		
+		const char **exts = new const char*[extensions.size()];
+		int i = 0;
+		
+		for (list<string>::iterator it = extensions.begin(); it != extensions.end(); it++)
+		{
+			exts[i] = (*it).c_str();
+			i++;
+		}
+		
+		device_create_infos.enabledExtensionCount = extensions.size();
+		device_create_infos.ppEnabledExtensionNames = exts;
+		
 		//device_create_infos.enabledExtensionCount = 0;
 		//device_create_infos.enabledLayerCount = 0;
 		
-		// C'est la que ca plante
-		// segfault
 		if (vkCreateDevice(phys_dev->getVulkanObject(), &device_create_infos, nullptr, &device) != VK_SUCCESS)
 		{
 		    cerr << "Failed to create logical device." << endl;
+		    delete exts;
 		    return false;
 		}
 		
 		vkGetDeviceQueue(device, phys_dev->getGraphicIndex(), 0, &graphic_device_queue);
 		vkGetDeviceQueue(device, phys_dev->getPresentIndex(), 0, &present_device_queue);
-		/*if (vkGetDeviceQueue(device, phys_dev.getFirstValidQueueFamily(), 0, &device_queue) != VK_SUCCESS)
-		{
-		    cerr << "Failed to create queue." << endl;
-		    return false;
-		}*/
 		
+		delete exts;
 		return true;
 	}
 }

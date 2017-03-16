@@ -40,7 +40,7 @@ namespace GEngine
 		for (PhysicalDevice *dev: instance->getListPhysicalDevices())
 		{
 			getFirstValidQueueFamily(dev, &graphic, &present);
-			if (dev->isSuitable() && present >= 0 && graphic >= 0)
+			if (dev->isSuitable(instance->getExtensions()) && present >= 0 && graphic >= 0)
 				return dev;
 		}
 		return nullptr;

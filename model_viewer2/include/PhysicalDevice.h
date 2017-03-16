@@ -3,6 +3,10 @@
 
 #include <vulkan/vulkan.h>
 
+#include <list>
+#include <vector>
+#include <string>
+
 namespace GEngine
 {
 	class PhysicalDevice
@@ -20,7 +24,10 @@ namespace GEngine
 			PhysicalDevice(VkPhysicalDevice instance);
 			~PhysicalDevice();
 			
-			bool isSuitable();
+			bool isSuitable(std::list<std::string> exts);
+			
+			std::vector<std::string> getSupportedExtension();
+			bool supportExtension(std::string name);
 			
 			void setPresentIndex(int idx);
 			void setGraphicIndex(int idx);

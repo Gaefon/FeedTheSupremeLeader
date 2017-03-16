@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+#include <strings.h>
+
 
 namespace GEngine
 {
@@ -35,6 +37,13 @@ namespace GEngine
 	{
 		const char **extensions;
 		unsigned int nb;
+		vector<const char *> data_ext;
+		
+		VkInstanceCreateInfo create_info = {};
+		VkApplicationInfo app_info = {};
+		
+		//memset(&create_info, 0, sizeof(VkInstanceCreateInfo));
+		//memset(&app_info, 0, sizeof(VkApplicationInfo));
 		
 		app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 		app_info.pNext = nullptr;
@@ -51,19 +60,34 @@ namespace GEngine
 		
 		extensions = glfwGetRequiredInstanceExtensions(&nb);
 		
-		create_info.enabledExtensionCount = nb;
-		create_info.ppEnabledExtensionNames = extensions;
+		for (unsigned int i = 0; i < nb; i++)
+			data_ext.push_back(extensions[i]);
+		
+		create_info.enabledExtensionCount = data_ext.size();
+		create_info.ppEnabledExtensionNames = data_ext.data();
 		create_info.enabledLayerCount = 0;
 		
 		VkResult result = vkCreateInstance(&create_info, nullptr, &vulkan_instance);
 		
 		if (result != VK_SUCCESS)
 		{
-			cerr << "Failed to init vulkan. (res: " << result << ")" << endl;
+			cerr << "Failed to init vulkan. (res: " << result << ")" << VK_ERROR_EXTENSION_NOT_PRESENT << endl;
 			return false;
 		}
 		
+		//delete arr_dat;
+		
 		return true;
+	}
+	
+	void Engine::addExtension(string name)
+	{
+		list_extension.push_back(name);
+	}
+	
+	std::list<std::string> Engine::getExtensions()
+	{
+		return list_extension;
 	}
 	
 	bool Engine::pickPhysicalDevices()

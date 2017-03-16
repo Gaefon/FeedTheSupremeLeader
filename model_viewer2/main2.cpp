@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <list>
+#include <string>
 
 using namespace GEngine;
 using namespace std;
@@ -15,16 +16,19 @@ using namespace std;
 int main(void)
 {
 	Window *window;
+	list<string> extensions;
 	
 	glfwInit();
 	
 	window = new Window("lol", 800, 600);
 	
+	
 	Engine engine("test", Version::makeVersion(1, 0, 0));
+	engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	engine.pickPhysicalDevices();
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
-	Device dev(phys_dev);
+	Device dev(phys_dev, engine.getExtensions());
 	
 	//X11Surface surface(&engine, glfwGetX11Display(), glfwGetX11Window(window));
 	//XcbSurface surface(&engine, nullptr, 42);

@@ -15,16 +15,19 @@ namespace GEngine
 	{
 		private:
 			VkInstance vulkan_instance;
-			VkApplicationInfo app_info;
-			VkInstanceCreateInfo create_info;
 			
 			std::list<PhysicalDevice *> physical_devices;
+			
+			std::list<std::string> list_extension;
 			
 			bool init(std::string app_name, int version);
 	
 		public:
 			Engine(std::string app_name, int version);
 			~Engine();
+			
+			void addExtension(std::string name);
+			std::list<std::string> getExtensions();
 			
 			VkInstance getVulkanObject();
 			bool pickPhysicalDevices();

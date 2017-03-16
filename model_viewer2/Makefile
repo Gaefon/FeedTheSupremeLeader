@@ -15,6 +15,7 @@ SRC =	src/GEngine.cpp\
 		src/Surface.cpp\
 		src/Device.cpp\
 		src/Window.cpp\
+		src/SwapChain.cpp\
 		main2.cpp
 
 OBJ =	$(SRC:%.cpp=%.o)

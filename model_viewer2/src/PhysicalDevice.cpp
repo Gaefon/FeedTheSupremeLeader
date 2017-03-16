@@ -2,6 +2,9 @@
 
 #include <string.h>
 
+#include <vector>
+#include <iostream>
+
 using namespace std;
 
 namespace GEngine
@@ -23,9 +26,41 @@ namespace GEngine
 	{}
 	
 	
-	bool PhysicalDevice::isSuitable()
+	bool PhysicalDevice::isSuitable(std::list<std::string> exts)
 	{
+		for (list<string>::iterator it = exts.begin(); it != exts.end(); it++)
+		{
+			if (!supportExtension(*it))
+				return false;
+		}
+		
 		return properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && features.geometryShader;
+	}
+	
+	vector<string> PhysicalDevice::getSupportedExtension()
+	{
+		unsigned int extension_count = 0;
+		
+		vkEnumerateDeviceExtensionProperties(physical_device, nullptr, &extension_count, nullptr);
+		
+		vector<VkExtensionProperties> extensions(extension_count);
+		vector<string> ext_str(extension_count);
+		vkEnumerateDeviceExtensionProperties(physical_device, nullptr, &extension_count, extensions.data());
+		
+		for (const VkExtensionProperties& extension: extensions)
+			ext_str.push_back(string(extension.extensionName));
+		
+		return ext_str;
+	}
+	
+	bool PhysicalDevice::supportExtension(string name)
+	{
+		for (string ext_name : getSupportedExtension())
+		{
+			if (ext_name.compare(name))
+				return true;
+		}
+		return false;
 	}
 	
 	void PhysicalDevice::setPresentIndex(int idx)
