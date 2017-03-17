@@ -29,6 +29,10 @@ namespace GEngine
 			void getFirstValidQueueFamily(PhysicalDevice *physical_device, int *graphic, int *present);
 			
 			bool isDeviceCompatible(PhysicalDevice *dev);
+			VkSurfaceFormatKHR chooseSwapSurfaceFormat();
+			VkPresentModeKHR chooseSwapPresentMode();
+			VkExtent2D chooseSwapExtent(Window *window);
+
 	};
 }
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -105,6 +106,47 @@ namespace GEngine
 		}
 		
 		return !formats.empty() && !present_modes.empty();
+	}
+	
+	VkSurfaceFormatKHR Surface::chooseSwapSurfaceFormat()
+	{
+		if (formats.size() == 1 && formats[0].format == VK_FORMAT_UNDEFINED)
+			return {VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR};
+
+		for (const auto& format : formats)
+		{
+			if (format.format == VK_FORMAT_B8G8R8A8_UNORM && format.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+				return format;
+		}
+
+		return formats[0];
+	}
+	
+	VkPresentModeKHR Surface::chooseSwapPresentMode()
+	{
+		VkPresentModeKHR best_mode = VK_PRESENT_MODE_FIFO_KHR;
+	
+		for (const auto& mode : present_modes)
+		{
+			if (mode == VK_PRESENT_MODE_MAILBOX_KHR)
+				return mode;
+			else if (mode == VK_PRESENT_MODE_IMMEDIATE_KHR)
+				best_mode = mode;
+		}
+		return best_mode;
+	}
+	
+	VkExtent2D Surface::chooseSwapExtent(Window *window)
+	{
+		if (capabilities.currentExtent.width != numeric_limits<uint32_t>::max())
+			return capabilities.currentExtent;
+		
+		VkExtent2D actual_extent = {window->getWidth(), window->getHeight()};
+
+		actual_extent.width = max(capabilities.minImageExtent.width, min(capabilities.maxImageExtent.width, actual_extent.width));
+		actual_extent.height = max(capabilities.minImageExtent.height, min(capabilities.maxImageExtent.height, actual_extent.height));
+
+		return actual_extent;
 	}
 	
 	VkSurfaceKHR Surface::getVulkanObject()
