@@ -5,6 +5,7 @@
 
 #include <GEngine.h>
 #include <Window.h>
+#include <PhysicalDevice.h>
 
 namespace GEngine
 {
@@ -12,6 +13,10 @@ namespace GEngine
 	{
 		private:
 			VkSurfaceKHR surface;
+			
+			VkSurfaceCapabilitiesKHR capabilities;
+			std::vector<VkSurfaceFormatKHR> formats;
+			std::vector<VkPresentModeKHR> present_modes;
 			
 			bool init(Engine *engine, Window *window);
 		
@@ -22,6 +27,8 @@ namespace GEngine
 			VkSurfaceKHR getVulkanObject();
 			PhysicalDevice *getSuitableDevice(Engine *instance);
 			void getFirstValidQueueFamily(PhysicalDevice *physical_device, int *graphic, int *present);
+			
+			bool isDeviceCompatible(PhysicalDevice *dev);
 	};
 }
 

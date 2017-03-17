@@ -40,7 +40,7 @@ namespace GEngine
 		for (PhysicalDevice *dev: instance->getListPhysicalDevices())
 		{
 			getFirstValidQueueFamily(dev, &graphic, &present);
-			if (dev->isSuitable(instance->getExtensions()) && present >= 0 && graphic >= 0)
+			if (dev->isSuitable(instance->getExtensions()) && present >= 0 && graphic >= 0 && isDeviceCompatible(dev))
 				return dev;
 		}
 		return nullptr;
@@ -80,6 +80,31 @@ namespace GEngine
 			}
 			i++;
 		}
+	}
+	
+	bool Surface::isDeviceCompatible(PhysicalDevice *dev)
+	{
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(dev->getVulkanObject(), surface, &capabilities);
+		
+		unsigned int format_count;
+		vkGetPhysicalDeviceSurfaceFormatsKHR(dev->getVulkanObject(), surface, &format_count, nullptr);
+		
+		if (format_count != 0)
+		{
+			formats.resize(format_count);
+			vkGetPhysicalDeviceSurfaceFormatsKHR(dev->getVulkanObject(), surface, &format_count, formats.data());
+		}
+		
+		unsigned int present_mode_count;
+		vkGetPhysicalDeviceSurfacePresentModesKHR(dev->getVulkanObject(), surface, &present_mode_count, nullptr);
+
+		if (present_mode_count != 0)
+		{
+			present_modes.resize(present_mode_count);
+			vkGetPhysicalDeviceSurfacePresentModesKHR(dev->getVulkanObject(), surface, &present_mode_count, present_modes.data());
+		}
+		
+		return !formats.empty() && !present_modes.empty();
 	}
 	
 	VkSurfaceKHR Surface::getVulkanObject()

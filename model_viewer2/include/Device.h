@@ -5,9 +5,7 @@
 #include <string>
 
 #include <vulkan/vulkan.h>
-
 #include <PhysicalDevice.h>
-#include <Surface.h>
 
 namespace GEngine
 {
