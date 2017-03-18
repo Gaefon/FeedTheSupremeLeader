@@ -8,9 +8,9 @@ namespace GEngine
 {
 	SwapChain::SwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev, Device *dev)
 	{
-		VkSurfaceFormatKHR surface_format = surface->chooseSwapSurfaceFormat();
+		surface_format = surface->chooseSwapSurfaceFormat();
 	    VkPresentModeKHR present_mode = surface->chooseSwapPresentMode();
-	    VkExtent2D extent = surface->chooseSwapExtent(window);
+	    extent = surface->chooseSwapExtent(window);
 	    
 	    logical_device = dev;
 	    
@@ -54,11 +54,22 @@ namespace GEngine
 		create_info.oldSwapchain = VK_NULL_HANDLE;
 		
 		if (vkCreateSwapchainKHR(logical_device->getVulkanObject(), &create_info, nullptr, &swap_chain) != VK_SUCCESS)
-		    cerr << "failed to create swap chain!" << endl;
+			cerr << "failed to create swap chain!" << endl;
 	}
 	
 	SwapChain::~SwapChain()
 	{
 		vkDestroySwapchainKHR(logical_device->getVulkanObject(), swap_chain, nullptr);
+	}
+	
+	vector<VkImage> SwapChain::getImages()
+	{
+		unsigned int image_count;
+		
+		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, nullptr);
+		vector<VkImage> swap_chain_images(image_count);
+		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, swap_chain_images.data());
+		
+		return swap_chain_images;
 	}
 }
