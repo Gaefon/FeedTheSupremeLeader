@@ -25,6 +25,8 @@ namespace GEngine
 		public:
 			Device(PhysicalDevice *phys_dev, std::list<std::string> extensions);
 			~Device();
+			
+			VkDevice getVulkanObject();
 	};
 }
 

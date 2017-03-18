@@ -32,6 +32,7 @@ namespace GEngine
 			VkSurfaceFormatKHR chooseSwapSurfaceFormat();
 			VkPresentModeKHR chooseSwapPresentMode();
 			VkExtent2D chooseSwapExtent(Window *window);
+			VkSurfaceCapabilitiesKHR getCapabilities();
 
 	};
 }

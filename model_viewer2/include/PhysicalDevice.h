@@ -29,11 +29,11 @@ namespace GEngine
 			std::vector<std::string> getSupportedExtension();
 			bool supportExtension(std::string name);
 			
-			void setPresentIndex(int idx);
-			void setGraphicIndex(int idx);
+			void setPresentIndex(unsigned int idx);
+			void setGraphicIndex(unsigned int idx);
 			
-			int getPresentIndex();
-			int getGraphicIndex();
+			unsigned int getPresentIndex();
+			unsigned int getGraphicIndex();
 			
 			//void getFirstValidQueueFamily(int *graphic, int *present);
 			

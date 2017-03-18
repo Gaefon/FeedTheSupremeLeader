@@ -63,22 +63,22 @@ namespace GEngine
 		return false;
 	}
 	
-	void PhysicalDevice::setPresentIndex(int idx)
+	void PhysicalDevice::setPresentIndex(unsigned int idx)
 	{
 		present_idx = idx;
 	}
 	
-	void PhysicalDevice::setGraphicIndex(int idx)
+	void PhysicalDevice::setGraphicIndex(unsigned int idx)
 	{
 		graphic_index = idx;
 	}
 	
-	int PhysicalDevice::getPresentIndex()
+	unsigned int PhysicalDevice::getPresentIndex()
 	{
 		return present_idx;
 	}
 	
-	int PhysicalDevice::getGraphicIndex()
+	unsigned int PhysicalDevice::getGraphicIndex()
 	{
 		return graphic_index;
 	}

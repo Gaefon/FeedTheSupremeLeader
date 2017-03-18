@@ -3,6 +3,7 @@
 #include <Window.h>
 #include <Surface.h>
 #include <Device.h>
+#include <SwapChain.h>
 
 #include <GLFW/glfw3.h>
 
@@ -29,6 +30,7 @@ int main(void)
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
 	Device dev(phys_dev, engine.getExtensions());
+	SwapChain swap_chain(&surface, window, phys_dev, &dev);
 	
 	//X11Surface surface(&engine, glfwGetX11Display(), glfwGetX11Window(window));
 	//XcbSurface surface(&engine, nullptr, 42);

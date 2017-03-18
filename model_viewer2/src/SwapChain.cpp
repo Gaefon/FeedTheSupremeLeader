@@ -1,13 +1,64 @@
 #include <SwapChain.h>
 
+#include <iostream>
+
+using namespace std;
 
 namespace GEngine
 {
-	SwapChain::SwapChain()
+	SwapChain::SwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev, Device *dev)
 	{
+		VkSurfaceFormatKHR surface_format = surface->chooseSwapSurfaceFormat();
+	    VkPresentModeKHR present_mode = surface->chooseSwapPresentMode();
+	    VkExtent2D extent = surface->chooseSwapExtent(window);
+	    
+	    logical_device = dev;
+	    
+		uint32_t image_count = surface->getCapabilities().minImageCount + 1;
+		if (surface->getCapabilities().maxImageCount > 0 && image_count > surface->getCapabilities().maxImageCount)
+		{
+			image_count = surface->getCapabilities().maxImageCount;
+		}
+		
+		VkSwapchainCreateInfoKHR create_info = {};
+		create_info.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+		create_info.surface = surface->getVulkanObject();
+		create_info.minImageCount = image_count;
+		create_info.imageFormat = surface_format.format;
+		create_info.imageColorSpace = surface_format.colorSpace;
+		create_info.imageExtent = extent;
+		create_info.imageArrayLayers = 1;
+		create_info.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+		
+		unsigned int queue_family_indices[] = { phys_dev->getGraphicIndex(), phys_dev->getPresentIndex() };
+
+		if (phys_dev->getGraphicIndex() != phys_dev->getPresentIndex())
+		{
+			create_info.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+			create_info.queueFamilyIndexCount = 2;
+			create_info.pQueueFamilyIndices = queue_family_indices;
+		}
+		else
+		{
+			create_info.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+			create_info.queueFamilyIndexCount = 0;
+			create_info.pQueueFamilyIndices = nullptr;
+		}
+		
+		create_info.preTransform = surface->getCapabilities().currentTransform;
+		create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+		
+		create_info.presentMode = present_mode;
+		create_info.clipped = VK_TRUE;
+		
+		create_info.oldSwapchain = VK_NULL_HANDLE;
+		
+		if (vkCreateSwapchainKHR(logical_device->getVulkanObject(), &create_info, nullptr, &swap_chain) != VK_SUCCESS)
+		    cerr << "failed to create swap chain!" << endl;
 	}
 	
 	SwapChain::~SwapChain()
 	{
+		vkDestroySwapchainKHR(logical_device->getVulkanObject(), swap_chain, nullptr);
 	}
 }

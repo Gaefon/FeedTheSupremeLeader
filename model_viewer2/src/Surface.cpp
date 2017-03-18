@@ -56,7 +56,7 @@ namespace GEngine
 		vector<VkQueueFamilyProperties> queue_families(queue_family_count);
 		vkGetPhysicalDeviceQueueFamilyProperties(physical_device->getVulkanObject(), &queue_family_count, queue_families.data());
 		
-		int i = 0;
+		unsigned int i = 0;
 		*graphic = -1;
 		*present = -1;
 		
@@ -148,6 +148,12 @@ namespace GEngine
 
 		return actual_extent;
 	}
+	
+	VkSurfaceCapabilitiesKHR Surface::getCapabilities()
+	{
+		return capabilities;
+	}
+	
 	
 	VkSurfaceKHR Surface::getVulkanObject()
 	{

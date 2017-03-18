@@ -76,4 +76,9 @@ namespace GEngine
 		delete exts;
 		return true;
 	}
+	
+	VkDevice Device::getVulkanObject()
+	{
+		return device;
+	}
 }
