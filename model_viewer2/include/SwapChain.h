@@ -4,6 +4,7 @@
 #include <Surface.h>
 #include <Window.h>
 #include <Device.h>
+#include <ImageView.h>
 
 #include <vector>
 
@@ -15,15 +16,17 @@ namespace GEngine
 			VkSwapchainKHR swap_chain;
 			VkExtent2D extent;
 			VkSurfaceFormatKHR surface_format;
-			
-			Device *logical_device;
-			
-			
+            Device *logical_device;
+            std::vector<ImageView *> image_views;
+            void initImageViews();
+
+
 		public:
 			SwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev, Device *dev);
 			~SwapChain();
-			
+
 			std::vector<VkImage> getImages();
+			std::vector<ImageView *> getImageViews();
 	};
 }
 
