@@ -11,15 +11,15 @@ namespace GEngine
 		surface_format = surface->chooseSwapSurfaceFormat();
 	    VkPresentModeKHR present_mode = surface->chooseSwapPresentMode();
 	    extent = surface->chooseSwapExtent(window);
-	    
+
 	    logical_device = dev;
-	    
+
 		uint32_t image_count = surface->getCapabilities().minImageCount + 1;
 		if (surface->getCapabilities().maxImageCount > 0 && image_count > surface->getCapabilities().maxImageCount)
 		{
 			image_count = surface->getCapabilities().maxImageCount;
 		}
-		
+
 		VkSwapchainCreateInfoKHR create_info = {};
 		create_info.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		create_info.surface = surface->getVulkanObject();
@@ -29,9 +29,8 @@ namespace GEngine
 		create_info.imageExtent = extent;
 		create_info.imageArrayLayers = 1;
 		create_info.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-		
-		unsigned int queue_family_indices[] = { phys_dev->getGraphicIndex(), phys_dev->getPresentIndex() };
 
+		unsigned int queue_family_indices[] = { phys_dev->getGraphicIndex(), phys_dev->getPresentIndex() };
 		if (phys_dev->getGraphicIndex() != phys_dev->getPresentIndex())
 		{
 			create_info.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
@@ -44,32 +43,53 @@ namespace GEngine
 			create_info.queueFamilyIndexCount = 0;
 			create_info.pQueueFamilyIndices = nullptr;
 		}
-		
+
 		create_info.preTransform = surface->getCapabilities().currentTransform;
 		create_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-		
+
 		create_info.presentMode = present_mode;
 		create_info.clipped = VK_TRUE;
-		
+
 		create_info.oldSwapchain = VK_NULL_HANDLE;
-		
+        vector<VkImage> swap_chain_images(image_count);
 		if (vkCreateSwapchainKHR(logical_device->getVulkanObject(), &create_info, nullptr, &swap_chain) != VK_SUCCESS)
 			cerr << "failed to create swap chain!" << endl;
+        initImageViews();
 	}
-	
+
 	SwapChain::~SwapChain()
 	{
 		vkDestroySwapchainKHR(logical_device->getVulkanObject(), swap_chain, nullptr);
+		for(vector<ImageView *>::iterator it = image_views.begin(); it != image_views.end(); it++)
+        {
+            delete *it;
+        }
+        image_views.clear();
 	}
-	
+
 	vector<VkImage> SwapChain::getImages()
 	{
 		unsigned int image_count;
-		
+
 		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, nullptr);
 		vector<VkImage> swap_chain_images(image_count);
 		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, swap_chain_images.data());
-		
+
 		return swap_chain_images;
+	}
+
+	void SwapChain::initImageViews()
+	{
+        vector<VkImage> sc_images = getImages();
+	    for (VkImage image : sc_images)
+		{
+			ImageView *image_view = new ImageView(&image, &surface_format, logical_device);
+			image_views.push_back(image_view);
+		}
+	}
+
+	vector<ImageView *> SwapChain::getImageViews()
+	{
+		return image_views;
 	}
 }
