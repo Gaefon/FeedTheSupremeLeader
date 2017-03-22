@@ -6,12 +6,12 @@ out gl_PerVertex
 	vec4 gl_position;
 }
 
-vec2 position[3] = 
-{
+vec2 position[3] = vec2[]
+(
 	vec2(0.0f, 0.5f),
 	vec2(0.5f, -0.5),
 	vec2(-0.5f, -0.5f)
-};
+);
 
 void main(void)
 {
