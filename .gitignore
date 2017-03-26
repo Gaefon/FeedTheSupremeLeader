@@ -12,6 +12,7 @@ LICENSE.zlib.txt
 README.txt
 config.json
 *.cbp
-model_viewer
+model_viewer2/modelviewer
 *.blend1
 *.layout
+*.spv

@@ -44,8 +44,6 @@ RM = rm -rf
 all:		$(NAME) shaders
 
 $(NAME):	$(OBJ)
-			@echo $(SPV_VERT)
-			@echo $(SPV_FRAG)
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS)
 
 

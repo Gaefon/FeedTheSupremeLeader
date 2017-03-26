@@ -92,4 +92,9 @@ namespace GEngine
 	{
 		return image_views;
 	}
+	
+	VkSurfaceFormatKHR SwapChain::getSurfaceFormat()
+	{
+		return surface_format;
+	}
 }
