@@ -81,6 +81,7 @@ namespace GEngine
 	void SwapChain::initImageViews()
 	{
         vector<VkImage> sc_images = getImages();
+        image_views.resize(sc_images.size());
 	    for (VkImage image : sc_images)
 		{
 			ImageView *image_view = new ImageView(&image, &surface_format, logical_device);
@@ -96,5 +97,10 @@ namespace GEngine
 	VkSurfaceFormatKHR SwapChain::getSurfaceFormat()
 	{
 		return surface_format;
+	}
+	
+	VkExtent2D SwapChain::getExtent()
+	{
+		return extent;
 	}
 }

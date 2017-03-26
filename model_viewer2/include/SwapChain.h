@@ -28,6 +28,7 @@ namespace GEngine
 			std::vector<VkImage> getImages();
 			std::vector<ImageView *> getImageViews();
 			VkSurfaceFormatKHR getSurfaceFormat();
+			VkExtent2D getExtent();
 	};
 }
 
