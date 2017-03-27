@@ -20,13 +20,13 @@ namespace GEngine
         if(!file.is_open())
         {
             cerr << "File " << filename << " could not be opened!" << endl;
-            file.seekg(0);
-            size_t file_size = (size_t)file.tellg();
-            buffer.resize(file_size, 0);
-            file.read(buffer.data(), file_size);
-            file.close();
             return 0;
         }
+        size_t file_size = (size_t)file.tellg();
+        file.seekg(0);
+        buffer.resize(file_size, 0);
+        file.read(buffer.data(), file_size);
+        file.close();
         return 1;
     }
 

@@ -17,6 +17,7 @@ SRC =	src/GEngine.cpp\
 		src/Window.cpp\
 		src/SwapChain.cpp\
 		src/ImageView.cpp\
+		src/Shader.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
