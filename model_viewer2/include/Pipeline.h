@@ -36,6 +36,8 @@ namespace GEngine
 			VkGraphicsPipelineCreateInfo pipeline_info;
 			
 			VkPipeline pipeline;
+			
+			void cleanup();
 		
 		public:
 			Pipeline();

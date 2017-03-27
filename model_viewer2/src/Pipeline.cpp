@@ -27,15 +27,7 @@ namespace GEngine
 	
 	Pipeline::~Pipeline()
 	{
-		if (pipeline_layout != VK_NULL_HANDLE && logical_device != nullptr)
-		{
-			vkDestroyPipelineLayout(logical_device->getVulkanObject(), pipeline_layout, nullptr);
-		}
-		
-		if (pipeline != VK_NULL_HANDLE && logical_device != nullptr)
-		{
-			vkDestroyPipeline(logical_device->getVulkanObject(), &pipeline, nullptr);
-		}
+		cleanup();
 	}
 	
 	void Pipeline::setVertexInput()
@@ -63,6 +55,8 @@ namespace GEngine
 		pipeline_infos[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
 		pipeline_infos[0].module = vertex_shader->getModule();
 		pipeline_infos[0].pName = "main";
+		
+		cleanup();
 	}
 	
 	void Pipeline::setFragmentShader(Shader *new_shader)
@@ -74,6 +68,8 @@ namespace GEngine
 		pipeline_infos[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 		pipeline_infos[1].module = fragment_shader->getModule();
 		pipeline_infos[1].pName = "main";
+		
+		cleanup();
 	}
 	
 	void Pipeline::setViewPort(float width, float height)
@@ -199,6 +195,19 @@ namespace GEngine
 		{
 			cerr << "error creating pipeline" << endl;
 			pipeline = VK_NULL_HANDLE;
+		}
+	}
+	
+	void Pipiline::cleanup()
+	{
+		if (pipeline_layout != VK_NULL_HANDLE && logical_device != nullptr)
+		{
+			vkDestroyPipelineLayout(logical_device->getVulkanObject(), pipeline_layout, nullptr);
+		}
+		
+		if (pipeline != VK_NULL_HANDLE && logical_device != nullptr)
+		{
+			vkDestroyPipeline(logical_device->getVulkanObject(), &pipeline, nullptr);
 		}
 	}
 }
