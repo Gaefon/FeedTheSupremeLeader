@@ -8,7 +8,7 @@ namespace GEngine
 {
 	Pipeline::Pipeline()
 	{
-		input_assembly = {}
+		input_assembly = {};
 		vertex_input_info = {};
 		viewport = {};
 		scissor = {};
@@ -46,15 +46,15 @@ namespace GEngine
 		input_assembly.primitiveRestartEnable = VK_FALSE;
 	}
 	
-	void Pipeline::setVertexShader(Shader *new_shader);
+	void Pipeline::setVertexShader(Shader *new_shader)
 	{
 		vertex_shader = new_shader;
 		
-		pipeline_infos[0] = {};
-		pipeline_infos[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		pipeline_infos[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		pipeline_infos[0].module = vertex_shader->getModule();
-		pipeline_infos[0].pName = "main";
+		pipeline_stages[0] = {};
+		pipeline_stages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		pipeline_stages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
+		pipeline_stages[0].module = vertex_shader->getVulkanObject();
+		pipeline_stages[0].pName = "main";
 		
 		cleanup();
 	}
@@ -63,11 +63,11 @@ namespace GEngine
 	{
 		fragment_shader = new_shader;
 		
-		pipeline_infos[1] = {};
-		pipeline_infos[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		pipeline_infos[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		pipeline_infos[1].module = fragment_shader->getModule();
-		pipeline_infos[1].pName = "main";
+		pipeline_stages[1] = {};
+		pipeline_stages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		pipeline_stages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+		pipeline_stages[1].module = fragment_shader->getVulkanObject();
+		pipeline_stages[1].pName = "main";
 		
 		cleanup();
 	}
@@ -84,7 +84,7 @@ namespace GEngine
 	
 	void Pipeline::setScissor(VkExtent2D extent)
 	{
-		scissor.offset = {0.0f, 0.0f};
+		scissor.offset = { 0, 0 };
 		scissor.extent = extent;
 	}
 	
@@ -114,13 +114,13 @@ namespace GEngine
 	
 	void Pipeline::setMultisamplingInfos()
 	{
-		multisampling.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
-		multisampling.sampleShadingEnable = VK_FALSE;
-		multisampling.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
-		multisampling.minSampleShading = 1.0f;
-		multisampling.pSampleMask = nullptr;
-		multisampling.alphaToCoverageEnable = VK_FALSE;
-		multisampling.alphaToOneEnable = VK_FALSE;
+		multisampling_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+		multisampling_infos.sampleShadingEnable = VK_FALSE;
+		multisampling_infos.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+		multisampling_infos.minSampleShading = 1.0f;
+		multisampling_infos.pSampleMask = nullptr;
+		multisampling_infos.alphaToCoverageEnable = VK_FALSE;
+		multisampling_infos.alphaToOneEnable = VK_FALSE;
 	}
 	
 	void Pipeline::setColorBlendAttachment()
@@ -147,9 +147,11 @@ namespace GEngine
 	
 	void Pipeline::createDynamicStateInfos()
 	{
-		dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-		dynamicState.dynamicStateCount = 2;
-		dynamicState.pDynamicStates = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_LINE_WIDTH };
+		VkDynamicState dynamicStates[] = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_LINE_WIDTH };
+	
+		dynamic_state_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+		dynamic_state_infos.dynamicStateCount = 2;
+		dynamic_state_infos.pDynamicStates = dynamicStates;
 	}
 	
 	void Pipeline::createPipelineLayout(Device *dev)
@@ -163,7 +165,7 @@ namespace GEngine
 		
 		logical_device = dev;
 		
-		if (vkCreatePipelineLayout(logical_device->getVulkanObject(), &pipeline_layout_infos, nullptr, &pipeline_layout) != VK_SUCCESS)
+		if (vkCreatePipelineLayout(logical_device->getVulkanObject(), &pipeline_layout_info, nullptr, &pipeline_layout) != VK_SUCCESS)
 		{
 			pipeline_layout = VK_NULL_HANDLE;
 			logical_device = nullptr;
@@ -171,11 +173,12 @@ namespace GEngine
 		}
 	}
 	
-	void Pipeline::createPipeline(RenderPass *render_pass);
+	void Pipeline::createPipeline(RenderPass *render_pass)
 	{
 		pipeline_info.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		
 		pipeline_info.stageCount = 2;
-		pipeline_info.pStages = shaderStages;
+		pipeline_info.pStages = pipeline_stages;
 		
 		pipeline_info.pVertexInputState = &vertex_input_info;
 		pipeline_info.pInputAssemblyState = &input_assembly;
@@ -185,20 +188,25 @@ namespace GEngine
 		pipeline_info.pDepthStencilState = nullptr;
 		pipeline_info.pColorBlendState = &color_blend_state;
 		pipeline_info.pDynamicState = nullptr;
+		
 		pipeline_info.layout = pipeline_layout;
+		
 		pipeline_info.renderPass = render_pass->getVulkanObject();
 		pipeline_info.subpass = 0;
+		
 		pipeline_info.basePipelineHandle = VK_NULL_HANDLE;
 		pipeline_info.basePipelineIndex = -1;
 		
-		if (vkCreateGraphicsPipelines(logical_device->getVulkanObject(), VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &pipeline) != VK_SUCCESS)
+		// erreur de segmentation je sais pas pourquoi, trop fatigué
+		/*if (logical_device == nullptr || vkCreateGraphicsPipelines(logical_device->getVulkanObject(), VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &pipeline) != VK_SUCCESS)
 		{
 			cerr << "error creating pipeline" << endl;
 			pipeline = VK_NULL_HANDLE;
-		}
+			logical_device = nullptr;
+		}*/
 	}
 	
-	void Pipiline::cleanup()
+	void Pipeline::cleanup()
 	{
 		if (pipeline_layout != VK_NULL_HANDLE && logical_device != nullptr)
 		{
@@ -207,7 +215,8 @@ namespace GEngine
 		
 		if (pipeline != VK_NULL_HANDLE && logical_device != nullptr)
 		{
-			vkDestroyPipeline(logical_device->getVulkanObject(), &pipeline, nullptr);
+			vkDestroyPipeline(logical_device->getVulkanObject(), pipeline, nullptr);
 		}
 	}
 }
+

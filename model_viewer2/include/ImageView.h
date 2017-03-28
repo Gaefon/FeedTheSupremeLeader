@@ -2,6 +2,7 @@
 #define IMAGEVIEW_H
 
 #include <Device.h>
+
 namespace GEngine
 {
     class ImageView

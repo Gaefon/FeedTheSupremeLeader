@@ -18,6 +18,9 @@ SRC =	src/GEngine.cpp\
 		src/SwapChain.cpp\
 		src/ImageView.cpp\
 		src/Shader.cpp\
+		src/Pipeline.cpp\
+		src/RenderPass.cpp\
+		src/Framebuffers.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
@@ -34,7 +37,7 @@ NAME =	modelviewer
 
 CXX = g++
 GLSLVALIDATOR = glslangValidator
-CXXFLAGS = -W -Wall -std=c++11 -Iinclude `pkg-config --cflags glfw3`
+CXXFLAGS = -W -Wall -std=c++11 -Iinclude `pkg-config --cflags glfw3` -g
 
 LDFLAGS = `pkg-config --libs glfw3` -lvulkan
 

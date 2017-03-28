@@ -17,7 +17,7 @@ namespace GEngine
 			
 			Device *logical_device;
 			
-			VkPipelineShaderStageCreateInfo[2] pipeline_infos;
+			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
 			VkPipelineInputAssemblyStateCreateInfo input_assembly;
 			

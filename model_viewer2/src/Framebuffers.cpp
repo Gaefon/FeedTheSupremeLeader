@@ -9,7 +9,7 @@ namespace GEngine
 		logical_device = nullptr;
 	}
 	
-	Framebuffers::~Framebuffer()
+	Framebuffers::~Framebuffers()
 	{
 		for (vector<VkFramebuffer>::iterator it = framebuffers.begin(); it != framebuffers.end(); it++)
 		{
@@ -20,15 +20,15 @@ namespace GEngine
 		}
 	}
 	
-	void Framebuffers::createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass);
+	void Framebuffers::createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass)
 	{
 		framebuffers.resize(swap_chain->getImageViews().size(), VK_NULL_HANDLE);
 		
-		vector<ImageViews *> list_img_views = swap_chain->getImageViews();
+		vector<ImageView *> list_img_views(swap_chain->getImageViews());
 		
 		for (unsigned int i = 0; i < list_img_views.size(); i++)
 		{
-			VkImageView attachments[] = { swapChainImageViews[i] };
+			VkImageView attachments[] = { list_img_views[i]->getVulkanObject() };
 			
 			VkFramebufferCreateInfo framebuffer_infos = {};
 			framebuffer_infos.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
@@ -39,7 +39,7 @@ namespace GEngine
 			framebuffer_infos.height = swap_chain->getExtent().height;
 			framebuffer_infos.layers = 1;
 			
-			if (vkCreateFramebuffer(device, &framebufferInfo, nullptr, &framebuffers[i]) != VK_SUCCESS)
+			if (vkCreateFramebuffer(dev->getVulkanObject(), &framebuffer_infos, nullptr, &framebuffers[i]) != VK_SUCCESS)
 			{
 				framebuffers[i] = VK_NULL_HANDLE;
 				cerr << "failed to create framebuffer" << endl;

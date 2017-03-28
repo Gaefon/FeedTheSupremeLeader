@@ -81,7 +81,8 @@ namespace GEngine
 	void SwapChain::initImageViews()
 	{
         vector<VkImage> sc_images = getImages();
-        image_views.resize(sc_images.size());
+        //image_views.resize(sc_images.size(), nullptr);
+        image_views.clear();
 	    for (VkImage image : sc_images)
 		{
 			ImageView *image_view = new ImageView(&image, &surface_format, logical_device);

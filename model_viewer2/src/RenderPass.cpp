@@ -52,7 +52,7 @@ namespace GEngine
 		render_pass_info.subpassCount = 1;
 		render_pass_info.pSubpasses = &sub_pass;
 		
-		if (vkCreateRenderPass(logical_device->gtVulkanObject(), &render_pass_info, nullptr, &render_pass) != VK_SUCCESS)
+		if (vkCreateRenderPass(logical_device->getVulkanObject(), &render_pass_info, nullptr, &render_pass) != VK_SUCCESS)
 		{
 			render_pass = VK_NULL_HANDLE;
 			cerr << "Error while creating render pass" << endl;
