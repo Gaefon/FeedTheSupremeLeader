@@ -55,8 +55,6 @@ namespace GEngine
 		pipeline_stages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
 		pipeline_stages[0].module = vertex_shader->getVulkanObject();
 		pipeline_stages[0].pName = "main";
-		
-		cleanup();
 	}
 	
 	void Pipeline::setFragmentShader(Shader *new_shader)
@@ -67,9 +65,7 @@ namespace GEngine
 		pipeline_stages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipeline_stages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 		pipeline_stages[1].module = fragment_shader->getVulkanObject();
-		pipeline_stages[1].pName = "main";
-		
-		cleanup();
+		pipeline_stages[1].pName = "main"; // faire une methode getName dans la class Shader
 	}
 	
 	void Pipeline::setViewPort(float width, float height)
@@ -147,11 +143,12 @@ namespace GEngine
 	
 	void Pipeline::createDynamicStateInfos()
 	{
-		VkDynamicState dynamicStates[] = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_LINE_WIDTH };
+		dynamic_states[0] = VK_DYNAMIC_STATE_VIEWPORT;
+		dynamic_states[1] = VK_DYNAMIC_STATE_LINE_WIDTH;
 	
 		dynamic_state_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		dynamic_state_infos.dynamicStateCount = 2;
-		dynamic_state_infos.pDynamicStates = dynamicStates;
+		dynamic_state_infos.pDynamicStates = dynamic_states;
 	}
 	
 	void Pipeline::createPipelineLayout(Device *dev)
@@ -185,9 +182,9 @@ namespace GEngine
 		pipeline_info.pViewportState = &viewport_state_infos;
 		pipeline_info.pRasterizationState = &rasterizer_infos;
 		pipeline_info.pMultisampleState = &multisampling_infos;
-		pipeline_info.pDepthStencilState = nullptr;
+		//pipeline_info.pDepthStencilState = nullptr;
 		pipeline_info.pColorBlendState = &color_blend_state;
-		pipeline_info.pDynamicState = nullptr;
+		//pipeline_info.pDynamicState = nullptr;
 		
 		pipeline_info.layout = pipeline_layout;
 		
@@ -195,7 +192,7 @@ namespace GEngine
 		pipeline_info.subpass = 0;
 		
 		pipeline_info.basePipelineHandle = VK_NULL_HANDLE;
-		pipeline_info.basePipelineIndex = -1;
+		//pipeline_info.basePipelineIndex = -1;
 		
 		// erreur de segmentation je sais pas pourquoi, trop fatigué
 		/*if (logical_device == nullptr || vkCreateGraphicsPipelines(logical_device->getVulkanObject(), VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &pipeline) != VK_SUCCESS)

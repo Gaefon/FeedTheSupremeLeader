@@ -30,6 +30,8 @@ namespace GEngine
 			VkPipelineMultisampleStateCreateInfo multisampling_infos;
 			VkPipelineColorBlendAttachmentState color_blend_attachment;
 			VkPipelineColorBlendStateCreateInfo color_blend_state;
+			
+			VkDynamicState dynamic_states[2];
 			VkPipelineDynamicStateCreateInfo dynamic_state_infos;
 			
 			VkPipelineLayout pipeline_layout;
