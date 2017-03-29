@@ -2,23 +2,15 @@
 
 #include <iostream>
 
+#include <string.h>
+
 using namespace std;
 
 namespace GEngine
 {
 	Pipeline::Pipeline()
 	{
-		input_assembly = {};
-		vertex_input_info = {};
-		viewport = {};
-		scissor = {};
-		viewport_state_infos = {};
-		rasterizer_infos = {};
-		multisampling_infos = {};
-		color_blend_attachment = {};
-		color_blend_state = {};
-		dynamic_state_infos = {};
-		pipeline_info = {};
+		
 		
 		logical_device = nullptr;
 		pipeline_layout = VK_NULL_HANDLE;
@@ -53,7 +45,8 @@ namespace GEngine
 		pipeline_stages[0] = {};
 		pipeline_stages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipeline_stages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		pipeline_stages[0].module = vertex_shader->getVulkanObject();
+		//pipeline_stages[0].module = vertex_shader->getVulkanObject();
+		memcpy(&(pipeline_stages[0].module), vertex_shader->getVulkanObject(), sizeof(VkShaderModule));
 		pipeline_stages[0].pName = "main";
 	}
 	
@@ -64,7 +57,8 @@ namespace GEngine
 		pipeline_stages[1] = {};
 		pipeline_stages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipeline_stages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		pipeline_stages[1].module = fragment_shader->getVulkanObject();
+		//pipeline_stages[1].module = fragment_shader->getVulkanObject();
+		memcpy(&(pipeline_stages[1].module), fragment_shader->getVulkanObject(), sizeof(VkShaderModule));
 		pipeline_stages[1].pName = "main"; // faire une methode getName dans la class Shader
 	}
 	
@@ -80,8 +74,13 @@ namespace GEngine
 	
 	void Pipeline::setScissor(VkExtent2D extent)
 	{
-		scissor.offset = { 0, 0 };
+		scissor.offset = {0, 0};
 		scissor.extent = extent;
+		
+		/*scissor.offset.x = 0;
+		scissor.offset.y = 0;
+		scissor.extent.width = extent.width;
+		scissor.extent.height  = extent.height;*/
 	}
 	
 	void Pipeline::createViewportStateInfos()
@@ -172,11 +171,10 @@ namespace GEngine
 	
 	void Pipeline::createPipeline(RenderPass *render_pass)
 	{
+		pipeline_info = {};
 		pipeline_info.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-		
 		pipeline_info.stageCount = 2;
 		pipeline_info.pStages = pipeline_stages;
-		
 		pipeline_info.pVertexInputState = &vertex_input_info;
 		pipeline_info.pInputAssemblyState = &input_assembly;
 		pipeline_info.pViewportState = &viewport_state_infos;
@@ -195,12 +193,14 @@ namespace GEngine
 		//pipeline_info.basePipelineIndex = -1;
 		
 		// erreur de segmentation je sais pas pourquoi, trop fatigué
-		/*if (logical_device == nullptr || vkCreateGraphicsPipelines(logical_device->getVulkanObject(), VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &pipeline) != VK_SUCCESS)
+		int ret = vkCreateGraphicsPipelines(logical_device->getVulkanObject(), VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &pipeline);
+		if (logical_device == nullptr || ret != VK_SUCCESS)
 		{
 			cerr << "error creating pipeline" << endl;
+			cerr << "error : " << ret << endl;
 			pipeline = VK_NULL_HANDLE;
 			logical_device = nullptr;
-		}*/
+		}
 	}
 	
 	void Pipeline::cleanup()

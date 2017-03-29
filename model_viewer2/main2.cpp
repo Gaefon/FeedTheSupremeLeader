@@ -46,9 +46,11 @@ int main(void)
 	pipeline.setInputAssembler();
 	pipeline.setVertexShader(&shader_frag);
 	pipeline.setFragmentShader(&shader_vert);
+	
 	pipeline.setViewPort(window->getWidth(), window->getHeight());
 	pipeline.setScissor(swap_chain.getExtent());
 	pipeline.createViewportStateInfos();
+	
 	pipeline.setRasterizerInfos();
 	pipeline.setMultisamplingInfos();
 	pipeline.setColorBlendAttachment();
