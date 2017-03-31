@@ -7,7 +7,6 @@
 #include <Shader.h>
 #include <Framebuffers.h>
 #include <Pipeline.h>
-
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -30,6 +29,7 @@ int main(void)
 	Engine engine("test", Version::makeVersion(1, 0, 0));
 	engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	engine.pickPhysicalDevices();
+	
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
 	Device dev(phys_dev, engine.getExtensions());
@@ -39,6 +39,17 @@ int main(void)
 	Framebuffers framebuffers;
 	RenderPass render_pass;
 	Pipeline pipeline;
+	
+	
+	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
+	for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
+	{
+		cout << (*i)->getDeviceName() << endl;
+		cout << "0x" << hex << (*i)->getVendorId() << endl;
+		cout << "0x" << hex << (*i)->getDeviceId() << endl;
+		cout << Version::versionToString((*i)->getApiVersion()) << endl;
+		cout << Version::versionToString((*i)->getDriverVersion()) << endl;
+	}
 	
 	render_pass.initRenderPass(&swap_chain, &dev);
 	
@@ -60,15 +71,6 @@ int main(void)
 	
 	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
 
-	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
-	for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
-	{
-		cout << (*i)->getDeviceName() << endl;
-		cout << "0x" << hex << (*i)->getVendorId() << endl;
-		cout << "0x" << hex << (*i)->getDeviceId() << endl;
-		cout << Version::versionToString((*i)->getApiVersion()) << endl;
-		cout << Version::versionToString((*i)->getDriverVersion()) << endl;
-	}
 
 	while (!window->shouldClose())
 	{

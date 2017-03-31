@@ -1,17 +1,21 @@
 #ifndef DEBUG_HELPER_H
 #define DEBUG_HELPER_H
 
-#include "../Shader.h"
-#include "../Camera.h"
+#include <vulkan/vulkan.h>
 
-class DebugHelper
+#include <GEngine.h>
+
+namespace GEngine
 {
-	private:
-		static Shader *m_shader;
-		
-	public:
-		static void initShader(Shader *shader);
-		static void drawAxis(float size, Camera *camera);
-};
+	class DebugHelper
+	{
+		private:
+			//static Shader *m_shader;
+	
+		public:
+			//static void initShader(Shader *shader);
+			//static void drawAxis(float size, Camera *camera);
+	};
+}
 
 #endif
