@@ -99,6 +99,7 @@ namespace GEngine
 		}
 		
 		//delete arr_dat;
+		createValidationCallback();
 		
 		return true;
 	}

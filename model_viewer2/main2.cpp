@@ -58,8 +58,8 @@ int main(void)
 	
 	pipeline.setVertexInput();
 	pipeline.setInputAssembler();
-	pipeline.setVertexShader(&shader_frag);
-	pipeline.setFragmentShader(&shader_vert);
+	//pipeline.setVertexShader(&shader_frag);
+	//pipeline.setFragmentShader(&shader_vert);
 	
 	pipeline.setViewPort(window->getWidth(), window->getHeight());
 	pipeline.setScissor(swap_chain.getExtent());
@@ -69,10 +69,10 @@ int main(void)
 	pipeline.setMultisamplingInfos();
 	pipeline.setColorBlendAttachment();
 	pipeline.createDynamicStateInfos();
-	pipeline.createPipelineLayout(&dev);
-	pipeline.createPipeline(&render_pass);
+	//pipeline.createPipelineLayout(&dev);
+	//pipeline.createPipeline(&render_pass);
 	
-	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
+	//framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
 
 
 	while (!window->shouldClose())
