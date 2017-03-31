@@ -19,10 +19,13 @@ namespace GEngine
 			std::list<PhysicalDevice *> physical_devices;
 			std::list<std::string> list_extension;
 			std::vector<const char *> validation_layers;
+			
+			VkDebugReportCallbackEXT debug_callback;
 			bool validation_layers_enabled;
 			
 			
 			bool checkValidationLayerSupport();
+			void createValidationCallback();
 	
 		public:
 			Engine();

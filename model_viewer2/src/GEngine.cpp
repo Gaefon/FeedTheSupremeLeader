@@ -11,10 +11,18 @@
 using namespace std;
 
 namespace GEngine
-{	
+{
+	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType,
+	uint64_t obj, size_t location, int32_t code, const char* layerPrefix, const char* msg, void* userData)
+	{
+		cerr << "validation layer : " << msg << endl;
+		return VK_FALSE;
+	}
+
 	Engine::Engine()
 	{
 		vulkan_instance = VK_NULL_HANDLE;
+		debug_callback = VK_NULL_HANDLE;
 		validation_layers_enabled = false;
 	}
 	
@@ -24,6 +32,13 @@ namespace GEngine
 		for (PhysicalDevice *dev: physical_devices)
 			delete dev;
 		physical_devices.clear();
+		
+		if (debug_callback != VK_NULL_HANDLE)
+		{
+			PFN_vkDestroyDebugReportCallbackEXT function_ptr = (PFN_vkDestroyDebugReportCallbackEXT) vkGetInstanceProcAddr(vulkan_instance, "vkDestroyDebugReportCallbackEXT");
+			if (function_ptr != nullptr)
+				function_ptr(vulkan_instance, debug_callback, nullptr);
+		}
 			
 		if (vulkan_instance != VK_NULL_HANDLE)
 			vkDestroyInstance(vulkan_instance, nullptr);
@@ -59,6 +74,9 @@ namespace GEngine
 		
 		for (unsigned int i = 0; i < nb; i++)
 			data_ext.push_back(extensions[i]);
+		
+		if (validation_layers_enabled)
+			data_ext.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 		
 		create_info.enabledExtensionCount = data_ext.size();
 		create_info.ppEnabledExtensionNames = data_ext.data();
@@ -122,6 +140,26 @@ namespace GEngine
 		{
 			cerr << "Validation layers are not supported :'(. Validation layers deactivated." << endl;
 			validation_layers_enabled = false;
+		}
+	}
+	
+	void Engine::createValidationCallback()
+	{
+		if (validation_layers_enabled)
+		{
+			VkDebugReportCallbackCreateInfoEXT create_info = {};
+			create_info.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
+			create_info.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT;
+			create_info.pfnCallback = debugCallback;
+			
+			PFN_vkCreateDebugReportCallbackEXT function_ptr = (PFN_vkCreateDebugReportCallbackEXT) vkGetInstanceProcAddr(vulkan_instance, "vkCreateDebugReportCallbackEXT");
+			if (function_ptr != nullptr)
+			{
+				if (function_ptr(vulkan_instance, &create_info, nullptr, &debug_callback) != VK_SUCCESS)
+				{
+					cerr << "Failed to create debug callback" << endl;
+				}
+			}
 		}
 	}
 	
