@@ -12,6 +12,14 @@ namespace GEngine
             createShaderModule(device);
         }
     }
+    
+    Shader::~Shader()
+    {
+    	if (shader_module != VK_NULL_HANDLE)
+    	{
+    		vkDestroyShaderModule(dev->getVulkanObject(), shader_module, nullptr);
+    	}
+    }
 
     int Shader::loadAndReadFile(string filename)
     {
@@ -33,6 +41,7 @@ namespace GEngine
     void Shader::createShaderModule(Device *device)
     {
         VkShaderModuleCreateInfo create_info = {};
+        dev = device;
         create_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
         create_info.codeSize = buffer.size();
         vector<uint32_t> buffer_aligned(buffer.size() / sizeof(uint32_t) + 1);
