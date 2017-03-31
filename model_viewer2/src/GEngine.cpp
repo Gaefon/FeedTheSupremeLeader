@@ -8,17 +8,14 @@
 
 #include <strings.h>
 
+using namespace std;
 
 namespace GEngine
-{
-	using namespace std;
-	
-	Engine::Engine(string app_name, int version)
+{	
+	Engine::Engine()
 	{
 		vulkan_instance = VK_NULL_HANDLE;
-		
-		if (!init(app_name, version))
-			vulkan_instance = VK_NULL_HANDLE;
+		validation_layers_enabled = false;
 	}
 	
 	Engine::~Engine()
@@ -65,13 +62,21 @@ namespace GEngine
 		
 		create_info.enabledExtensionCount = data_ext.size();
 		create_info.ppEnabledExtensionNames = data_ext.data();
-		create_info.enabledLayerCount = 0;
+		
+		if (validation_layers_enabled)
+		{
+			create_info.enabledLayerCount = validation_layers.size();
+			create_info.ppEnabledLayerNames = validation_layers.data();
+		}
+		else
+			create_info.enabledLayerCount = 0;
 		
 		VkResult result = vkCreateInstance(&create_info, nullptr, &vulkan_instance);
 		
 		if (result != VK_SUCCESS)
 		{
 			cerr << "Failed to init vulkan. (res: " << result << ")" << VK_ERROR_EXTENSION_NOT_PRESENT << endl;
+			vulkan_instance = VK_NULL_HANDLE;
 			return false;
 		}
 		
@@ -80,12 +85,52 @@ namespace GEngine
 		return true;
 	}
 	
+	bool Engine::checkValidationLayerSupport()
+	{	
+		unsigned int layer_count;
+		vkEnumerateInstanceLayerProperties(&layer_count, nullptr);
+
+		vector<VkLayerProperties> available_layers(layer_count);
+		vkEnumerateInstanceLayerProperties(&layer_count, available_layers.data());
+		
+		for (string layer_name : validation_layers)
+		{
+			bool layer_found = false;
+			for (const VkLayerProperties& layer_properties : available_layers)
+			{
+				if (layer_name.compare(layer_properties.layerName) == 0)
+				{
+					layer_found = true;
+					break;
+				}
+			}
+
+			if (!layer_found)
+				return false;
+		}
+
+		return true;
+	}
+	
+	void Engine::enableValidationLayers()
+	{
+		validation_layers.push_back("VK_LAYER_LUNARG_standard_validation");
+		
+		validation_layers_enabled = true;
+		
+		if (!checkValidationLayerSupport())
+		{
+			cerr << "Validation layers are not supported :'(. Validation layers deactivated." << endl;
+			validation_layers_enabled = false;
+		}
+	}
+	
 	void Engine::addExtension(string name)
 	{
 		list_extension.push_back(name);
 	}
 	
-	std::list<std::string> Engine::getExtensions()
+	list<string> Engine::getExtensions()
 	{
 		return list_extension;
 	}

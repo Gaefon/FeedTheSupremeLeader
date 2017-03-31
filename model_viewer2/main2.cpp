@@ -26,9 +26,12 @@ int main(void)
 	window = new Window("lol", 800, 600);
 
 
-	Engine engine("test", Version::makeVersion(1, 0, 0));
+	Engine engine;
+	engine.enableValidationLayers();
+	engine.init("test", Version::makeVersion(1, 0, 0));
 	engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	engine.pickPhysicalDevices();
+	
 	
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);

@@ -17,14 +17,19 @@ namespace GEngine
 			VkInstance vulkan_instance;
 			
 			std::list<PhysicalDevice *> physical_devices;
-			
 			std::list<std::string> list_extension;
+			std::vector<const char *> validation_layers;
+			bool validation_layers_enabled;
 			
-			bool init(std::string app_name, int version);
+			
+			bool checkValidationLayerSupport();
 	
 		public:
-			Engine(std::string app_name, int version);
+			Engine();
 			~Engine();
+			
+			bool init(std::string app_name, int version);
+			void enableValidationLayers();
 			
 			void addExtension(std::string name);
 			std::list<std::string> getExtensions();
