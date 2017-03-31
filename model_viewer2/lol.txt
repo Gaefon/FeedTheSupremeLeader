@@ -1,0 +1,13 @@
+j'ai rajoute la destruction des Shaders
+
+A FAIRE : Classe Shader
+
+le set des shader ne marche plus avec les validation layers
+J'ai un reponse possible: declarer buffer_aligned en tant qu'attribut 
+(problème de scope)... (le pointeur dispairait a la sortie de la 
+fonction)
+Est-ce que le passage vers un array de uint32 est utile ? (pas urgent)
+
+
+Bon, léchouille de ta rondelle.
+
