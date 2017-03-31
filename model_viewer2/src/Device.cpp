@@ -30,7 +30,10 @@ namespace GEngine
 		
 		phys_dev.getFirstValidQueueFamily(surface, &present, &graphic);*/
 		vector<VkDeviceQueueCreateInfo> queue_create_infos;
-		int tmp[] = {}; // 	{phys_dev->getPresentIndex(), phys_dev->getGraphicIndex()};
+		unsigned int tmp[] = {phys_dev->getPresentIndex(), phys_dev->getGraphicIndex()};
+		
+		cout << "present index " << phys_dev->getPresentIndex() << endl;
+		cout << "graphic index " << phys_dev->getGraphicIndex() << endl;
 		
 		for (int i = 0; i < 2; i++)
 		{
