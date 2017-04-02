@@ -60,6 +60,7 @@ namespace GEngine
 		pipeline_stages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 		pipeline_stages[1].module = fragment_shader->getVulkanObject();
 		//memcpy(&(pipeline_stages[1].module), fragment_shader->getVulkanObject(), sizeof(VkShaderModule));
+		cout << fragment_shader->getName().c_str() << endl;
 		pipeline_stages[1].pName = fragment_shader->getName().c_str(); // faire une methode getName dans la class Shader
 		pipeline_stages[1].pNext = nullptr;
 	}

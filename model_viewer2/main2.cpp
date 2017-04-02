@@ -37,8 +37,8 @@ int main(void)
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
 	Device dev(phys_dev, engine.getExtensions());
 	SwapChain swap_chain(&surface, window, phys_dev, &dev);
-	Shader shader_frag(string("Shaders/2d_dummy.frag.spv"), string("main"), &dev);
-	Shader shader_vert(string("Shaders/2d_dummy.vert.spv"), string("main"), &dev);
+	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), &dev);
+	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), &dev);
 	Framebuffers framebuffers;
 	RenderPass render_pass;
 	Pipeline pipeline;
@@ -58,8 +58,8 @@ int main(void)
 	
 	pipeline.setVertexInput();
 	pipeline.setInputAssembler();
-	pipeline.setVertexShader(&shader_frag);
-	pipeline.setFragmentShader(&shader_vert);
+	pipeline.setVertexShader(&shader_vert);
+	pipeline.setFragmentShader(&shader_frag);
 	
 	pipeline.setViewPort(window->getWidth(), window->getHeight());
 	pipeline.setScissor(swap_chain.getExtent());

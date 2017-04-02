@@ -30,7 +30,7 @@ namespace GEngine
 
     int Shader::loadAndReadFile(string filename)
     {
-        ifstream file(filename, std::ios::ate | std::ios::binary);
+        ifstream file(filename, std::ios::ate);
 
         if(!file.is_open())
         {
