@@ -1,12 +1,14 @@
 #include <Shader.h>
 #include <string.h>
+
 using namespace std;
 
 namespace GEngine
 {
-    Shader::Shader(string filename, Device *device)
+    Shader::Shader(string filename, string name, Device *device)
     {
         shader_module = VK_NULL_HANDLE;
+        shader_name = name;
         if(loadAndReadFile(filename) > 0)
         {
             createShaderModule(device);
@@ -19,6 +21,11 @@ namespace GEngine
     	{
     		vkDestroyShaderModule(dev->getVulkanObject(), shader_module, nullptr);
     	}
+    }
+    
+    string& Shader::getName()
+    {
+    	return shader_name;
     }
 
     int Shader::loadAndReadFile(string filename)
@@ -44,7 +51,7 @@ namespace GEngine
         dev = device;
         create_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
         create_info.codeSize = buffer.size();
-        vector<uint32_t> buffer_aligned(buffer.size() / sizeof(uint32_t) + 1);
+        buffer_aligned.resize(buffer.size() / sizeof(uint32_t) + 1, 0);
         memcpy(buffer_aligned.data(), buffer.data(), buffer.size());
         create_info.pCode = buffer_aligned.data();
 

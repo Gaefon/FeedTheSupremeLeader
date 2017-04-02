@@ -10,8 +10,6 @@ namespace GEngine
 {
 	Pipeline::Pipeline()
 	{
-		
-		
 		logical_device = nullptr;
 		pipeline_layout = VK_NULL_HANDLE;
 		pipeline = VK_NULL_HANDLE;
@@ -24,6 +22,7 @@ namespace GEngine
 	
 	void Pipeline::setVertexInput()
 	{
+		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 0;
 		vertex_input_info.pVertexBindingDescriptions = nullptr;
@@ -33,6 +32,7 @@ namespace GEngine
 	
 	void Pipeline::setInputAssembler()
 	{
+		input_assembly = {};
 		input_assembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		input_assembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		input_assembly.primitiveRestartEnable = VK_FALSE;
@@ -45,9 +45,10 @@ namespace GEngine
 		pipeline_stages[0] = {};
 		pipeline_stages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipeline_stages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-		//pipeline_stages[0].module = vertex_shader->getVulkanObject();
-		memcpy(&(pipeline_stages[0].module), vertex_shader->getVulkanObject(), sizeof(VkShaderModule));
-		pipeline_stages[0].pName = "main";
+		pipeline_stages[0].module = vertex_shader->getVulkanObject();
+		//memcpy(&(pipeline_stages[0].module), vertex_shader->getVulkanObject(), sizeof(VkShaderModule));
+		pipeline_stages[0].pName = vertex_shader->getName().c_str();
+		pipeline_stages[0].pNext = nullptr;
 	}
 	
 	void Pipeline::setFragmentShader(Shader *new_shader)
@@ -57,13 +58,15 @@ namespace GEngine
 		pipeline_stages[1] = {};
 		pipeline_stages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipeline_stages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-		//pipeline_stages[1].module = fragment_shader->getVulkanObject();
-		memcpy(&(pipeline_stages[1].module), fragment_shader->getVulkanObject(), sizeof(VkShaderModule));
-		pipeline_stages[1].pName = "main"; // faire une methode getName dans la class Shader
+		pipeline_stages[1].module = fragment_shader->getVulkanObject();
+		//memcpy(&(pipeline_stages[1].module), fragment_shader->getVulkanObject(), sizeof(VkShaderModule));
+		pipeline_stages[1].pName = fragment_shader->getName().c_str(); // faire une methode getName dans la class Shader
+		pipeline_stages[1].pNext = nullptr;
 	}
 	
 	void Pipeline::setViewPort(float width, float height)
 	{
+		viewport = {};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
 		viewport.width = width;
@@ -74,6 +77,7 @@ namespace GEngine
 	
 	void Pipeline::setScissor(VkExtent2D extent)
 	{
+		scissor = {};
 		scissor.offset = {0, 0};
 		scissor.extent = extent;
 		
@@ -85,6 +89,7 @@ namespace GEngine
 	
 	void Pipeline::createViewportStateInfos()
 	{
+		viewport_state_infos = {};
 		viewport_state_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 		viewport_state_infos.viewportCount = 1;
 		viewport_state_infos.pViewports = &viewport;
@@ -94,6 +99,7 @@ namespace GEngine
 	
 	void Pipeline::setRasterizerInfos()
 	{
+		rasterizer_infos = {};
 		rasterizer_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
 		rasterizer_infos.depthClampEnable = VK_FALSE;
 		rasterizer_infos.rasterizerDiscardEnable = VK_FALSE;
@@ -109,6 +115,7 @@ namespace GEngine
 	
 	void Pipeline::setMultisamplingInfos()
 	{
+		multisampling_infos = {};
 		multisampling_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
 		multisampling_infos.sampleShadingEnable = VK_FALSE;
 		multisampling_infos.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
@@ -120,6 +127,7 @@ namespace GEngine
 	
 	void Pipeline::setColorBlendAttachment()
 	{
+		color_blend_attachment = {};
 		color_blend_attachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
 		color_blend_attachment.blendEnable = VK_FALSE;
 		color_blend_attachment.srcColorBlendFactor = VK_BLEND_FACTOR_ONE;
@@ -129,6 +137,7 @@ namespace GEngine
 		color_blend_attachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
 		color_blend_attachment.alphaBlendOp = VK_BLEND_OP_ADD;
 		
+		color_blend_state = {};
 		color_blend_state.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
 		color_blend_state.logicOpEnable = VK_FALSE;
 		color_blend_state.logicOp = VK_LOGIC_OP_COPY;
@@ -145,6 +154,7 @@ namespace GEngine
 		dynamic_states[0] = VK_DYNAMIC_STATE_VIEWPORT;
 		dynamic_states[1] = VK_DYNAMIC_STATE_LINE_WIDTH;
 	
+		dynamic_state_infos = {};
 		dynamic_state_infos.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
 		dynamic_state_infos.dynamicStateCount = 2;
 		dynamic_state_infos.pDynamicStates = dynamic_states;
