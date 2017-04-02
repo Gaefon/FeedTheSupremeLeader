@@ -16,6 +16,7 @@ namespace GEngine
 			 if (*it != VK_NULL_HANDLE && logical_device != nullptr)
 			 {
 			 	vkDestroyFramebuffer(logical_device->getVulkanObject(), *it, nullptr);
+			 	*it = VK_NULL_HANDLE;
 			 }
 		}
 	}

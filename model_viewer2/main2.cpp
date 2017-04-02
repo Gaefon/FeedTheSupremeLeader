@@ -39,9 +39,9 @@ int main(void)
 	SwapChain swap_chain(&surface, window, phys_dev, &dev);
 	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), &dev);
 	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), &dev);
-	Framebuffers framebuffers;
 	RenderPass render_pass;
 	Pipeline pipeline;
+	Framebuffers framebuffers;
 	
 	
 	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
@@ -72,7 +72,7 @@ int main(void)
 	pipeline.createPipelineLayout(&dev);
 	pipeline.createPipeline(&render_pass);
 	
-	//framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
+	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
 
 
 	while (!window->shouldClose())
