@@ -79,6 +79,7 @@ int main(void)
 	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
 	
 	cmd_buffers.createCommandPool(&dev, phys_dev);
+	cmd_buffers.startRecording(&framebuffers, &swap_chain, &render_pass);
 
 
 	while (!window->shouldClose())

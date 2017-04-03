@@ -25,7 +25,7 @@ namespace GEngine
 			
 			void createCommandPool(Device *dev, PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
-			void startRecording();
+			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass);
 	};
 }
 

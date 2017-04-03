@@ -21,6 +21,8 @@ namespace GEngine
 			void initRenderPass(SwapChain *swap_chain, Device *dev);
 			
 			VkRenderPass getVulkanObject();
+			
+			void startRenderPass();
 	};
 }
 

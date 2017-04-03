@@ -52,5 +52,10 @@ namespace GEngine
 	{
 		return framebuffers.size();
 	}
+	
+	VkFramebuffer Framebuffers::getVulkanObject(int i)
+	{
+		return framebuffers[i];
+	}
 
 }

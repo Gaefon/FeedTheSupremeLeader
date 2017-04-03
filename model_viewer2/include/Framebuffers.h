@@ -24,6 +24,7 @@ namespace GEngine
 			
 			void createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass);
 			unsigned int getSize();
+			VkFramebuffer getVulkanObject(int i);
 	};
 }
 

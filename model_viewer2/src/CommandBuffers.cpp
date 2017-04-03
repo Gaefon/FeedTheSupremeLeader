@@ -56,7 +56,7 @@ namespace GEngine
 		}
 	}
 	
-	void CommandBuffers::startRecording()
+	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass)
 	{
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
@@ -66,6 +66,20 @@ namespace GEngine
 			begin_info.pInheritanceInfo = nullptr;
 			
 			vkBeginCommandBuffer(command_buffers[i], &begin_info);
+			
+			VkRenderPassBeginInfo render_pass_info = {};
+		
+			render_pass_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+			render_pass_info.renderPass = render_pass->getVulkanObject();
+			render_pass_info.framebuffer = framebuffers->getVulkanObject(i);
+			render_pass_info.renderArea.offset = {0, 0};
+			render_pass_info.renderArea.extent = sc->getExtent();
+			
+			VkClearValue clear_color = {0.0f, 0.0f, 0.0f, 0.0f};
+			render_pass_info.clearValueCount = 1;
+			render_pass_info.pClearValues = &clear_color;
+			
+			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
 		}
 	}
 }
