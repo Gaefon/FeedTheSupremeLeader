@@ -47,5 +47,10 @@ namespace GEngine
 			}
 		}
 	}
+	
+	unsigned int Framebuffers::getSize()
+	{
+		return framebuffers.size();
+	}
 
 }

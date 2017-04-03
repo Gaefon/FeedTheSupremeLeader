@@ -7,6 +7,9 @@
 #include <Shader.h>
 #include <Framebuffers.h>
 #include <Pipeline.h>
+#include <CommandBuffers.h>
+
+
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -42,6 +45,7 @@ int main(void)
 	RenderPass render_pass;
 	Pipeline pipeline;
 	Framebuffers framebuffers;
+	CommandBuffers cmd_buffers;
 	
 	
 	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
@@ -73,6 +77,8 @@ int main(void)
 	pipeline.createPipeline(&render_pass);
 	
 	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
+	
+	cmd_buffers.createCommandPool(&dev, phys_dev);
 
 
 	while (!window->shouldClose())

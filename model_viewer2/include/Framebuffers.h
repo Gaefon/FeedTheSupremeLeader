@@ -23,6 +23,7 @@ namespace GEngine
 			~Framebuffers();
 			
 			void createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass);
+			unsigned int getSize();
 	};
 }
 

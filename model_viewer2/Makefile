@@ -21,6 +21,7 @@ SRC =	src/GEngine.cpp\
 		src/Pipeline.cpp\
 		src/RenderPass.cpp\
 		src/Framebuffers.cpp\
+		src/CommandBuffers.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
