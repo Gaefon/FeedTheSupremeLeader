@@ -14,37 +14,37 @@ namespace GEngine
 		private:
 			Shader *vertex_shader;
 			Shader *fragment_shader;
-			
+
 			Device *logical_device;
-			
+
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
 			VkPipelineInputAssemblyStateCreateInfo input_assembly;
-			
+
 			VkViewport viewport;
-			
+
 			VkRect2D scissor;
-			
+
 			VkPipelineViewportStateCreateInfo viewport_state_infos;
 			VkPipelineRasterizationStateCreateInfo rasterizer_infos;
 			VkPipelineMultisampleStateCreateInfo multisampling_infos;
 			VkPipelineColorBlendAttachmentState color_blend_attachment;
 			VkPipelineColorBlendStateCreateInfo color_blend_state;
-			
+
 			VkDynamicState dynamic_states[2];
 			VkPipelineDynamicStateCreateInfo dynamic_state_infos;
-			
+
 			VkPipelineLayout pipeline_layout;
 			VkGraphicsPipelineCreateInfo pipeline_info;
-			
+
 			VkPipeline pipeline;
-			
+
 			void cleanup();
-		
+
 		public:
 			Pipeline();
 			~Pipeline();
-			
+
 			void setVertexInput();
 			void setInputAssembler();
 			void setVertexShader(Shader *new_shader);
@@ -58,6 +58,7 @@ namespace GEngine
 			void createDynamicStateInfos();
 			void createPipelineLayout(Device *dev);
 			void createPipeline(RenderPass *render_pass);
+			VkPipeline getVulkanObject();
 	};
 }
 

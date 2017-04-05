@@ -8,6 +8,7 @@
 #include <Device.h>
 #include <PhysicalDevice.h>
 #include <Framebuffers.h>
+#include <Pipeline.h>
 
 namespace GEngine
 {
@@ -16,16 +17,16 @@ namespace GEngine
 		private:
 			VkCommandPool command_pool;
 			std::vector<VkCommandBuffer> command_buffers;
-			
+
 			Device *device;
-		
+
 		public:
 			CommandBuffers();
 			~CommandBuffers();
-			
+
 			void createCommandPool(Device *dev, PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
-			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass);
+			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass,  Pipeline *pipeline);
 	};
 }
 

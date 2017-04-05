@@ -26,7 +26,7 @@ int main(void)
 
 	glfwInit();
 
-	window = new Window("lol", 800, 600);
+	window = new Window("no step on snek", 800, 600);
 
 
 	Engine engine;
@@ -34,8 +34,8 @@ int main(void)
 	engine.init("test", Version::makeVersion(1, 0, 0));
 	engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	engine.pickPhysicalDevices();
-	
-	
+
+
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
 	Device dev(phys_dev, engine.getExtensions());
@@ -46,8 +46,8 @@ int main(void)
 	Pipeline pipeline;
 	Framebuffers framebuffers;
 	CommandBuffers cmd_buffers;
-	
-	
+
+
 	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
 	for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
 	{
@@ -57,30 +57,29 @@ int main(void)
 		cout << Version::versionToString((*i)->getApiVersion()) << endl;
 		cout << Version::versionToString((*i)->getDriverVersion()) << endl;
 	}
-	
+
 	render_pass.initRenderPass(&swap_chain, &dev);
-	
+
 	pipeline.setVertexInput();
 	pipeline.setInputAssembler();
 	pipeline.setVertexShader(&shader_vert);
 	pipeline.setFragmentShader(&shader_frag);
-	
+
 	pipeline.setViewPort(window->getWidth(), window->getHeight());
 	pipeline.setScissor(swap_chain.getExtent());
 	pipeline.createViewportStateInfos();
-	
+
 	pipeline.setRasterizerInfos();
 	pipeline.setMultisamplingInfos();
 	pipeline.setColorBlendAttachment();
 	pipeline.createDynamicStateInfos();
 	pipeline.createPipelineLayout(&dev);
 	pipeline.createPipeline(&render_pass);
-	
-	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
-	
-	cmd_buffers.createCommandPool(&dev, phys_dev);
-	cmd_buffers.startRecording(&framebuffers, &swap_chain, &render_pass);
 
+	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
+
+	cmd_buffers.createCommandPool(&dev, phys_dev);
+	cmd_buffers.startRecording(&framebuffers, &swap_chain, &render_pass, &pipeline);
 
 	while (!window->shouldClose())
 	{
