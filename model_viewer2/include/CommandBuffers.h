@@ -10,6 +10,8 @@
 #include <Framebuffers.h>
 #include <Pipeline.h>
 
+#include <Semaphore.h>
+
 namespace GEngine
 {
 	class CommandBuffers
@@ -27,6 +29,7 @@ namespace GEngine
 			void createCommandPool(Device *dev, PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
 			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass,  Pipeline *pipeline);
+			void draw(SwapChain *sc, Semaphore *img, Semaphore *render);
 	};
 }
 

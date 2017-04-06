@@ -67,6 +67,7 @@ namespace GEngine
         image_views.clear();
 	}
 
+	// TODO stocker les vkImages dans les objets Image associés
 	vector<VkImage> SwapChain::getImages()
 	{
 		unsigned int image_count;
@@ -103,5 +104,10 @@ namespace GEngine
 	VkExtent2D SwapChain::getExtent()
 	{
 		return extent;
+	}
+	
+	VkSwapchainKHR SwapChain::getVulkanObject()
+	{
+		return swap_chain;
 	}
 }

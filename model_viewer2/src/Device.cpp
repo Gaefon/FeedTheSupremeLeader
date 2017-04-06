@@ -84,4 +84,14 @@ namespace GEngine
 	{
 		return device;
 	}
+	
+	VkQueue Device::getGraphicQueue()
+	{
+		return graphic_device_queue;
+	}
+	
+	VkQueue Device::getPresentQueue()
+	{
+		return present_device_queue;
+	}
 }

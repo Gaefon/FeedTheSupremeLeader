@@ -27,6 +27,9 @@ namespace GEngine
 			~Device();
 			
 			VkDevice getVulkanObject();
+			
+			VkQueue getGraphicQueue();
+			VkQueue getPresentQueue();
 	};
 }
 

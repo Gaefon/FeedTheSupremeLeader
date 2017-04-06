@@ -29,6 +29,7 @@ namespace GEngine
 			std::vector<ImageView *> getImageViews();
 			VkSurfaceFormatKHR getSurfaceFormat();
 			VkExtent2D getExtent();
+			VkSwapchainKHR getVulkanObject();
 	};
 }
 

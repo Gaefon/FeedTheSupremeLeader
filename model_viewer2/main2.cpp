@@ -8,6 +8,7 @@
 #include <Framebuffers.h>
 #include <Pipeline.h>
 #include <CommandBuffers.h>
+#include <Semaphore.h>
 
 
 #include <GLFW/glfw3.h>
@@ -26,7 +27,7 @@ int main(void)
 
 	glfwInit();
 
-	window = new Window("no step on snek", 800, 600);
+	window = new Window("kek", 800, 600);
 
 
 	Engine engine;
@@ -46,6 +47,8 @@ int main(void)
 	Pipeline pipeline;
 	Framebuffers framebuffers;
 	CommandBuffers cmd_buffers;
+	Semaphore image_available;
+	Semaphore render_finished;
 
 
 	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
@@ -79,11 +82,16 @@ int main(void)
 	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
 
 	cmd_buffers.createCommandPool(&dev, phys_dev);
+	cmd_buffers.createCommandBuffers(&framebuffers);
 	cmd_buffers.startRecording(&framebuffers, &swap_chain, &render_pass, &pipeline);
+	
+	image_available.createSemaphore(&dev);
+	render_finished.createSemaphore(&dev);
 
 	while (!window->shouldClose())
 	{
 		glfwPollEvents();
+		cmd_buffers.draw(&swap_chain, &image_available, &render_finished);
 	}
 
 	delete window;

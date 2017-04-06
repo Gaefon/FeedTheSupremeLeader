@@ -1,6 +1,7 @@
 #include <CommandBuffers.h>
 
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
@@ -84,5 +85,48 @@ namespace GEngine
 			vkCmdDraw(command_buffers[i], 3, 1, 0, 0);
 			vkCmdEndRenderPass(command_buffers[i]);
 		}
+	}
+	
+	
+	
+	void CommandBuffers::draw(SwapChain *sc, Semaphore *img, Semaphore *render)
+	{
+		unsigned int img_index;
+		
+		vkAcquireNextImageKHR(device->getVulkanObject(), sc->getVulkanObject(), numeric_limits<uint64_t>::max(), img->getVulkanObject(), VK_NULL_HANDLE, &img_index);
+		
+		VkSubmitInfo submit_info = {};
+		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+		VkSemaphore wait_semaphores[] = { img->getVulkanObject() };
+		VkPipelineStageFlags wait_stages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+		submit_info.waitSemaphoreCount = 1;
+		submit_info.pWaitSemaphores = wait_semaphores;
+		submit_info.pWaitDstStageMask = wait_stages;
+
+		submit_info.commandBufferCount = 1;
+		submit_info.pCommandBuffers = &(command_buffers.at(img_index));
+
+		VkSemaphore signal_semaphores[] = { render->getVulkanObject() };
+		submit_info.signalSemaphoreCount = 1;
+		submit_info.pSignalSemaphores = signal_semaphores;
+		
+		if (vkQueueSubmit(device->getGraphicQueue(), 1, &submit_info, VK_NULL_HANDLE) != VK_SUCCESS)
+			cerr << "failed to submit draw command buffer!" << endl;
+		
+		VkPresentInfoKHR present_info = {};
+        present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+        present_info.waitSemaphoreCount = 1;
+        present_info.pWaitSemaphores = signal_semaphores;
+
+        VkSwapchainKHR swap_chains[] = { sc->getVulkanObject() };
+        present_info.swapchainCount = 1;
+        present_info.pSwapchains = swap_chains;
+
+        present_info.pImageIndices = &img_index;
+
+        vkQueuePresentKHR(device->getPresentQueue(), &present_info);
+		
 	}
 }

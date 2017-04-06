@@ -22,6 +22,7 @@ SRC =	src/GEngine.cpp\
 		src/RenderPass.cpp\
 		src/Framebuffers.cpp\
 		src/CommandBuffers.cpp\
+		src/Semaphore.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
