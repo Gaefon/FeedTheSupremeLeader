@@ -94,4 +94,9 @@ namespace GEngine
 	{
 		return present_device_queue;
 	}
+	
+	void Device::waitIdle()
+	{
+		vkDeviceWaitIdle(device);
+	}
 }

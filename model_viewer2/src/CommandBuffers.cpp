@@ -84,6 +84,9 @@ namespace GEngine
 			vkCmdBindPipeline(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->getVulkanObject());
 			vkCmdDraw(command_buffers[i], 3, 1, 0, 0);
 			vkCmdEndRenderPass(command_buffers[i]);
+			
+			if (vkEndCommandBuffer(command_buffers[i]) != VK_SUCCESS)
+				cerr << "failed to record command buffer" << endl;
 		}
 	}
 	

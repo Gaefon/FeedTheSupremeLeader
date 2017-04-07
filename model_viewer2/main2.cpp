@@ -93,6 +93,8 @@ int main(void)
 		glfwPollEvents();
 		cmd_buffers.draw(&swap_chain, &image_available, &render_finished);
 	}
+	
+	dev.waitIdle();
 
 	delete window;
 	glfwTerminate();

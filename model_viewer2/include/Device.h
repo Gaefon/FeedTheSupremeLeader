@@ -30,6 +30,8 @@ namespace GEngine
 			
 			VkQueue getGraphicQueue();
 			VkQueue getPresentQueue();
+			
+			void waitIdle();
 	};
 }
 
