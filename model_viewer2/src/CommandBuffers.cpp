@@ -59,6 +59,9 @@ namespace GEngine
 
 	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline)
 	{
+		img.createSemaphore(device);
+		render.createSemaphore(device);
+		
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			VkCommandBufferBeginInfo begin_info = {};
@@ -92,16 +95,16 @@ namespace GEngine
 	
 	
 	
-	void CommandBuffers::draw(SwapChain *sc, Semaphore *img, Semaphore *render)
+	void CommandBuffers::draw(SwapChain *sc)
 	{
 		unsigned int img_index;
 		
-		vkAcquireNextImageKHR(device->getVulkanObject(), sc->getVulkanObject(), numeric_limits<uint64_t>::max(), img->getVulkanObject(), VK_NULL_HANDLE, &img_index);
+		vkAcquireNextImageKHR(device->getVulkanObject(), sc->getVulkanObject(), numeric_limits<uint64_t>::max(), img.getVulkanObject(), VK_NULL_HANDLE, &img_index);
 		
 		VkSubmitInfo submit_info = {};
 		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-		VkSemaphore wait_semaphores[] = { img->getVulkanObject() };
+		VkSemaphore wait_semaphores[] = { img.getVulkanObject() };
 		VkPipelineStageFlags wait_stages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
 		submit_info.waitSemaphoreCount = 1;
 		submit_info.pWaitSemaphores = wait_semaphores;
@@ -110,7 +113,7 @@ namespace GEngine
 		submit_info.commandBufferCount = 1;
 		submit_info.pCommandBuffers = &(command_buffers.at(img_index));
 
-		VkSemaphore signal_semaphores[] = { render->getVulkanObject() };
+		VkSemaphore signal_semaphores[] = { render.getVulkanObject() };
 		submit_info.signalSemaphoreCount = 1;
 		submit_info.pSignalSemaphores = signal_semaphores;
 		

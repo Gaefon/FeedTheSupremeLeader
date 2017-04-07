@@ -19,6 +19,9 @@ namespace GEngine
 		private:
 			VkCommandPool command_pool;
 			std::vector<VkCommandBuffer> command_buffers;
+			
+			Semaphore img;
+			Semaphore render;
 
 			Device *device;
 
@@ -29,7 +32,7 @@ namespace GEngine
 			void createCommandPool(Device *dev, PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
 			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass,  Pipeline *pipeline);
-			void draw(SwapChain *sc, Semaphore *img, Semaphore *render);
+			void draw(SwapChain *sc);
 	};
 }
 
