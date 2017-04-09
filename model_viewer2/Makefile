@@ -24,6 +24,8 @@ SRC =	src/GEngine.cpp\
 		src/CommandBuffers.cpp\
 		src/Semaphore.cpp\
 		src/bitmaps/Bitmap.cpp\
+		src/pool/PipelinePool.cpp\
+		src/GEngineWrapper.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
