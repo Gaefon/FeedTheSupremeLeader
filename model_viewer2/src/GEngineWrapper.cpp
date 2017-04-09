@@ -12,17 +12,16 @@ namespace GEngine
 
     GEngineWrapper::~GEngineWrapper()
     {
-        delete g_engine;
-        delete g_window;
-        delete g_device;
-        delete g_surface;
-        delete g_physical_device;
-        delete g_swapchain;
-        delete g_pipeline;
         delete g_command_buffers;
+        delete g_pipeline;
         delete g_render_pass;
         delete g_shader_vert;
         delete g_shader_frag;
+        delete g_swapchain;
+        delete g_physical_device;
+        delete g_device;
+        delete g_engine;
+        delete g_surface;
     }
 
     void GEngineWrapper::init()
@@ -33,20 +32,9 @@ namespace GEngine
         initRenderPass();
         initPipeline();
         initCmdBuffers();
-
-        list<PhysicalDevice *> devs = g_engine->getListPhysicalDevices();
-        for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
-        {
-            cout << (*i)->getDeviceName() << endl;
-            cout << "0x" << hex << (*i)->getVendorId() << endl;
-            cout << "0x" << hex << (*i)->getDeviceId() << endl;
-            cout << Version::versionToString((*i)->getApiVersion()) << endl;
-            cout << Version::versionToString((*i)->getDriverVersion()) << endl;
-        }
-
+        initGetAndDisplayDevices();
         createPipeline();
         startRecording();
-
     }
 
     void GEngineWrapper::initEngine(string engine_name)
@@ -58,44 +46,52 @@ namespace GEngine
         g_engine->pickPhysicalDevices();
     }
 
+    void GEngineWrapper::initGetAndDisplayDevices()
+    {
+        list<PhysicalDevice *> devs = g_engine->getListPhysicalDevices();
+        for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
+        {
+            cout << (*i)->getDeviceName() << endl;
+            cout << "0x" << hex << (*i)->getVendorId() << endl;
+            cout << "0x" << hex << (*i)->getDeviceId() << endl;
+            cout << Version::versionToString((*i)->getApiVersion()) << endl;
+            cout << Version::versionToString((*i)->getDriverVersion()) << endl;
+        }
+
+    }
+
     void GEngineWrapper::initDevices()
     {
-        Surface surface(g_engine, g_window);
-        PhysicalDevice *phys_dev = surface.getSuitableDevice(g_engine);
-        g_engine->createLogicalDevice(phys_dev);
+        g_surface = new Surface(g_engine, g_window);
+        g_physical_device = g_surface->getSuitableDevice(g_engine);
+        g_engine->createLogicalDevice(g_physical_device);
         g_device = g_engine->getLogicalDevice();
-        g_physical_device = phys_dev;
-        g_surface = &surface;
     }
 
     void GEngineWrapper::initSwapChain()
     {
-        SwapChain swap_chain(g_device);
-        swap_chain.createSwapChain(g_surface, g_window, g_physical_device);
-        swap_chain.initImageViews();
+        g_swapchain = new SwapChain(g_device);
+        g_swapchain->createSwapChain(g_surface, g_window, g_physical_device);
+        g_swapchain->initImageViews();
     }
 
     void GEngineWrapper::initRenderPass()
     {
-        RenderPass render_pass(g_device);
-        Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), g_device);
-        Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), g_device);
-        g_shader_frag = &shader_frag;
-        g_shader_vert = &shader_vert;
-        render_pass.initRenderPass(g_swapchain);
-        g_render_pass = &render_pass;
+        g_render_pass = new RenderPass(g_device);
+        g_shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_device);
+        g_shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_device);
+        g_render_pass->initRenderPass(g_swapchain);
+
     }
 
     void GEngineWrapper::initPipeline()
     {
-        Pipeline pipeline(g_device);
-        g_pipeline = &pipeline;
+        g_pipeline = new Pipeline(g_device);
     }
 
     void GEngineWrapper::initCmdBuffers()
     {
-        CommandBuffers cmd_buffers(g_device);
-        g_command_buffers = &cmd_buffers;
+        g_command_buffers = new CommandBuffers(g_device);
     }
 
     void GEngineWrapper::createPipeline()

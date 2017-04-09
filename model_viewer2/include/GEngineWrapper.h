@@ -47,6 +47,7 @@ namespace GEngine
         void initCmdBuffers();
         void createPipeline();
         void startRecording();
+        void initGetAndDisplayDevices();
     };
 }
 #endif // GENGINEWRAPPER_H_INCLUDED
