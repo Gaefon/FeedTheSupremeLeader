@@ -33,9 +33,12 @@ int main(void)
 	engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 	engine.pickPhysicalDevices();
 
+	// mettre la creation de surface et device vituelle dans la classe Engine (?)
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
 	Device dev(phys_dev, engine.getExtensions());
+	
+	
 	SwapChain swap_chain(&surface, window, phys_dev, &dev);
 	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), &dev);
 	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), &dev);
