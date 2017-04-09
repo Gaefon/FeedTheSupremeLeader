@@ -36,6 +36,8 @@ namespace GEngine
 	
 	Engine::~Engine()
 	{
+		delete device;
+	
 		// free all the physical devices !
 		for (PhysicalDevice *dev: physical_devices)
 			delete dev;
@@ -208,6 +210,16 @@ namespace GEngine
 	const list<PhysicalDevice *> Engine::getListPhysicalDevices()
 	{
 		return physical_devices;
+	}
+	
+	void Engine::createLogicalDevice(PhysicalDevice *dev)
+	{
+		device = new Device(dev, getExtensions());
+	}
+	
+	Device *Engine::getLogicalDevice()
+	{
+		return device;
 	}
 	
 	VkInstance Engine::getVulkanObject()

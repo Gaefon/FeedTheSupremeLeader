@@ -7,7 +7,7 @@
 #include <vulkan/vulkan.h>
 
 #include <PhysicalDevice.h>
-
+#include <Device.h>
 
 namespace GEngine
 {
@@ -17,6 +17,7 @@ namespace GEngine
 			VkInstance vulkan_instance;
 			
 			std::list<PhysicalDevice *> physical_devices;
+			Device *device;
 			std::list<std::string> list_extension;
 			std::vector<const char *> validation_layers;
 			
@@ -40,6 +41,9 @@ namespace GEngine
 			VkInstance getVulkanObject();
 			bool pickPhysicalDevices();
 			const std::list<PhysicalDevice *> getListPhysicalDevices();
+			
+			void createLogicalDevice(PhysicalDevice *dev);
+			Device *getLogicalDevice();
 		
 	};
 }

@@ -2,7 +2,6 @@
 #include <Version.h>
 #include <Window.h>
 #include <Surface.h>
-#include <Device.h>
 #include <SwapChain.h>
 #include <Shader.h>
 #include <Framebuffers.h>
@@ -36,12 +35,13 @@ int main(void)
 	// mettre la creation de surface et device vituelle dans la classe Engine (?)
 	Surface surface(&engine, window);
 	PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
-	Device dev(phys_dev, engine.getExtensions());
+	engine.createLogicalDevice(phys_dev);
+	Device *dev = engine.getLogicalDevice();
 	
-	
-	SwapChain swap_chain(&surface, window, phys_dev, &dev);
-	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), &dev);
-	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), &dev);
+
+	SwapChain swap_chain(&surface, window, phys_dev, dev);
+	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), dev);
+	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), dev);
 	RenderPass render_pass;
 	Pipeline pipeline;
 	Framebuffers framebuffers;
@@ -57,7 +57,7 @@ int main(void)
 		cout << Version::versionToString((*i)->getDriverVersion()) << endl;
 	}
 
-	render_pass.initRenderPass(&swap_chain, &dev);
+	render_pass.initRenderPass(&swap_chain, dev);
 
 	pipeline.setVertexInput();
 	pipeline.setInputAssembler();
@@ -72,12 +72,12 @@ int main(void)
 	pipeline.setMultisamplingInfos();
 	pipeline.setColorBlendAttachment();
 	pipeline.createDynamicStateInfos();
-	pipeline.createPipelineLayout(&dev);
+	pipeline.createPipelineLayout(dev);
 	pipeline.createPipeline(&render_pass);
 
-	framebuffers.createFramebuffer(&dev, &swap_chain, &render_pass);
+	framebuffers.createFramebuffer(dev, &swap_chain, &render_pass);
 
-	cmd_buffers.createCommandPool(&dev, phys_dev);
+	cmd_buffers.createCommandPool(dev, phys_dev);
 	cmd_buffers.createCommandBuffers(&framebuffers);
 	cmd_buffers.startRecording(&framebuffers, &swap_chain, &render_pass, &pipeline);
 
@@ -87,7 +87,7 @@ int main(void)
 		cmd_buffers.draw(&swap_chain);
 	}
 	
-	dev.waitIdle();
+	dev->waitIdle();
 
 	delete window;
 	glfwTerminate();
