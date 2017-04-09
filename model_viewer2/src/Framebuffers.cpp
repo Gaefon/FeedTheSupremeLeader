@@ -4,9 +4,9 @@ using namespace std;
 
 namespace GEngine
 {
-	Framebuffers::Framebuffers()
+	Framebuffers::Framebuffers(Device *dev)
 	{
-		logical_device = nullptr;
+		logical_device = dev;
 	}
 	
 	Framebuffers::~Framebuffers()
@@ -19,11 +19,10 @@ namespace GEngine
 			 	*it = VK_NULL_HANDLE;
 			 }
 		}
-		cout << "frame buffers destroyed" << endl;
 		framebuffers.clear();
 	}
 	
-	bool Framebuffers::createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass)
+	bool Framebuffers::createFramebuffer(SwapChain *swap_chain, RenderPass *render_pass)
 	{
 		framebuffers.resize(swap_chain->getImageViews().size(), VK_NULL_HANDLE);
 		
@@ -42,7 +41,7 @@ namespace GEngine
 			framebuffer_infos.height = swap_chain->getExtent().height;
 			framebuffer_infos.layers = 1;
 			
-			if (vkCreateFramebuffer(dev->getVulkanObject(), &framebuffer_infos, nullptr, &framebuffers[i]) != VK_SUCCESS)
+			if (vkCreateFramebuffer(logical_device->getVulkanObject(), &framebuffer_infos, nullptr, &framebuffers[i]) != VK_SUCCESS)
 			{
 				framebuffers[i] = VK_NULL_HANDLE;
 				cerr << "failed to create framebuffer" << endl;

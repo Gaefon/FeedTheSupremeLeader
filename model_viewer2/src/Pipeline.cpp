@@ -211,14 +211,13 @@ namespace GEngine
 			cerr << "error creating pipeline" << endl;
 			cerr << "error : " << ret << endl;
 			pipeline = VK_NULL_HANDLE;
-			logical_device = nullptr;
 		}
 	}
 	
 	bool Pipeline::initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass)
 	{
-		framebuffers = new Framebuffers();
-		return framebuffers->createFramebuffer(logical_device, swap_chain, render_pass);
+		framebuffers = new Framebuffers(logical_device);
+		return framebuffers->createFramebuffer(swap_chain, render_pass);
 	}
 	
 	Framebuffers *Pipeline::getFramebuffers()

@@ -19,10 +19,10 @@ namespace GEngine
 			Device *logical_device;
 			
 		public:
-			Framebuffers();
+			Framebuffers(Device *dev);
 			~Framebuffers();
 			
-			bool createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass);
+			bool createFramebuffer(SwapChain *swap_chain, RenderPass *render_pass);
 			unsigned int getSize();
 			VkFramebuffer getVulkanObject(int i);
 	};
