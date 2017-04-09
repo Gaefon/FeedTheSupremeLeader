@@ -19,9 +19,34 @@ namespace GEngine
     {
 
         public:
-        GEngineWrapper();
+        GEngineWrapper(Window *window);
         ~GEngineWrapper();
-        Draw(std::string window_name, unsigned int width, unsigned int height);
+        Device getDevice();
+        //CommandBuffers getCmdBuffers();
+        void startDrawing();
+
+        private:
+        Engine *g_engine;
+        Window *g_window;
+        Device *g_device;
+        Surface *g_surface;
+        PhysicalDevice *g_physical_device;
+        SwapChain *g_swapchain;
+        Pipeline *g_pipeline;
+        CommandBuffers *g_command_buffers;
+        RenderPass *g_render_pass;
+        Shader *g_shader_vert;
+        Shader *g_shader_frag;
+
+        void init();
+        void initEngine(std::string engineName);
+        void initDevices();
+        void initSwapChain();
+        void initRenderPass();
+        void initPipeline();
+        void initCmdBuffers();
+        void createPipeline();
+        void startRecording();
     };
 }
 #endif // GENGINEWRAPPER_H_INCLUDED

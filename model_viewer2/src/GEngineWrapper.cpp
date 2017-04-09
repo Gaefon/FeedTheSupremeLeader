@@ -4,43 +4,37 @@ using namespace std;
 
 namespace GEngine
 {
-    GEngineWrapper::GEngineWrapper(){}
-    GEngineWrapper::~GEngineWrapper(){}
-
-    GEngineWrapper::Draw(string win_name, unsigned int win_width, unsigned int win_height)
+    GEngineWrapper::GEngineWrapper(Window *window)
     {
-        Window *window;
-        list<string> extensions;
+        g_window = window;
+        init();
+    }
 
-        glfwInit();
+    GEngineWrapper::~GEngineWrapper()
+    {
+        delete g_engine;
+        delete g_window;
+        delete g_device;
+        delete g_surface;
+        delete g_physical_device;
+        delete g_swapchain;
+        delete g_pipeline;
+        delete g_command_buffers;
+        delete g_render_pass;
+        delete g_shader_vert;
+        delete g_shader_frag;
+    }
 
-        window = new Window(win_name, win_width, win_height);
+    void GEngineWrapper::init()
+    {
+        initEngine("test");
+        initDevices();
+        initSwapChain();
+        initRenderPass();
+        initPipeline();
+        initCmdBuffers();
 
-        Engine engine;
-        engine.enableValidationLayers();
-        engine.init("test", Version::makeVersion(1, 0, 0));
-        engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-        engine.pickPhysicalDevices();
-
-        // mettre la creation de surface et device vituelle dans la classe Engine (?)
-        Surface surface(&engine, window);
-        PhysicalDevice *phys_dev = surface.getSuitableDevice(&engine);
-        engine.createLogicalDevice(phys_dev);
-        Device *dev = engine.getLogicalDevice();
-
-
-        SwapChain swap_chain(dev);
-
-        swap_chain.createSwapChain(&surface, window, phys_dev);
-        swap_chain.initImageViews();
-
-        Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), dev);
-        Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), dev);
-        RenderPass render_pass(dev);
-        Pipeline pipeline(dev);
-        CommandBuffers cmd_buffers(dev);
-
-        list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
+        list<PhysicalDevice *> devs = g_engine->getListPhysicalDevices();
         for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
         {
             cout << (*i)->getDeviceName() << endl;
@@ -50,39 +44,101 @@ namespace GEngine
             cout << Version::versionToString((*i)->getDriverVersion()) << endl;
         }
 
-        render_pass.initRenderPass(&swap_chain);
+        createPipeline();
+        startRecording();
 
-        pipeline.setVertexInput();
-        pipeline.setInputAssembler();
-        pipeline.setVertexShader(&shader_vert);
-        pipeline.setFragmentShader(&shader_frag);
+    }
 
-        pipeline.setViewPort(window->getWidth(), window->getHeight());
-        pipeline.setScissor(swap_chain.getExtent());
-        pipeline.createViewportStateInfos();
+    void GEngineWrapper::initEngine(string engine_name)
+    {
+        Engine engine;
+        engine.enableValidationLayers();
+        engine.init(engine_name, Version::makeVersion(1, 0, 0));
+        engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+        engine.pickPhysicalDevices();
+        g_engine = &engine;
+    }
 
-        pipeline.setRasterizerInfos();
-        pipeline.setMultisamplingInfos();
-        pipeline.setColorBlendAttachment();
-        pipeline.createDynamicStateInfos();
-        pipeline.createPipelineLayout();
-        pipeline.createPipeline(&render_pass);
+    void GEngineWrapper::initDevices()
+    {
+        Surface surface(g_engine, g_window);
+        PhysicalDevice *phys_dev = surface.getSuitableDevice(g_engine);
+        g_engine->createLogicalDevice(phys_dev);
+        g_device = g_engine->getLogicalDevice();
+        g_physical_device = phys_dev;
+        g_surface = &surface;
+    }
 
-        pipeline.initFramebuffers(&swap_chain, &render_pass);
+    void GEngineWrapper::initSwapChain()
+    {
+        SwapChain swap_chain(g_device);
+        swap_chain.createSwapChain(g_surface, g_window, g_physical_device);
+        swap_chain.initImageViews();
+    }
 
-        cmd_buffers.createCommandPool(phys_dev);
-        cmd_buffers.createCommandBuffers(pipeline.getFramebuffers());
-        cmd_buffers.startRecording(pipeline.getFramebuffers(), &swap_chain, &render_pass, &pipeline);
+    void GEngineWrapper::initRenderPass()
+    {
+        RenderPass render_pass(g_device);
+        Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), g_device);
+        Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), g_device);
+        g_shader_frag = &shader_frag;
+        g_shader_vert = &shader_vert;
+        render_pass.initRenderPass(g_swapchain);
+        g_render_pass = &render_pass;
+    }
 
-        while (!window->shouldClose())
-        {
-            glfwPollEvents();
-            cmd_buffers.draw(&swap_chain);
-        }
+    void GEngineWrapper::initPipeline()
+    {
+        Pipeline pipeline(g_device);
+        g_pipeline = &pipeline;
+    }
 
-        dev->waitIdle();
+    void GEngineWrapper::initCmdBuffers()
+    {
+        CommandBuffers cmd_buffers(g_device);
+        g_command_buffers = &cmd_buffers;
+    }
 
-        delete window;
-        glfwTerminate();
+    void GEngineWrapper::createPipeline()
+    {
+       g_pipeline->setVertexInput();
+       g_pipeline->setInputAssembler();
+       g_pipeline->setVertexShader(g_shader_vert);
+       g_pipeline->setFragmentShader(g_shader_frag);
+
+       g_pipeline->setViewPort(g_window->getWidth(), g_window->getHeight());
+       g_pipeline->setScissor(g_swapchain->getExtent());
+       g_pipeline->createViewportStateInfos();
+
+       g_pipeline->setRasterizerInfos();
+       g_pipeline->setMultisamplingInfos();
+       g_pipeline->setColorBlendAttachment();
+       g_pipeline->createDynamicStateInfos();
+       g_pipeline->createPipelineLayout();
+       g_pipeline->createPipeline(g_render_pass);
+
+       g_pipeline->initFramebuffers(g_swapchain, g_render_pass);
+    }
+
+    void GEngineWrapper::startRecording()
+    {
+        g_command_buffers->createCommandPool(g_physical_device);
+        g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
+        g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline);
+    }
+
+    Device GEngineWrapper::getDevice()
+    {
+        return *g_device;
+    }
+
+    /*CommandBuffers GEngineWrapper::getCmdBuffers()
+    {
+        return *g_command_buffers;
+    }*/
+
+    void GEngineWrapper::startDrawing()
+    {
+        g_command_buffers->draw(g_swapchain);
     }
 }
