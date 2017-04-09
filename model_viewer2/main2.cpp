@@ -7,24 +7,25 @@ using namespace std;
 
 int main(void)
 {
-    Window *window;
-    list<string> extensions;
+	Window *window;
+	list<string> extensions;
 
-    glfwInit();
+	glfwInit();
 
-    window = new Window("卐 HEIL MEI! 卐", 800, 600);
+	window = new Window("卐 HEIL MEI! 卐", 800, 600);
 
 	GEngineWrapper g_engine_wrapper(window);
 
-    while (!window->shouldClose())
-    {
-     glfwPollEvents();
-     g_engine_wrapper.startDrawing();
-    }
-    g_engine_wrapper.getDevice().waitIdle();
+	while (!window->shouldClose())
+	{
+		glfwPollEvents();
+		g_engine_wrapper.startDrawing();
+	}
+	
+	g_engine_wrapper.getEngine()->getLogicalDevice()->waitIdle();
 
-    delete window;
-    glfwTerminate();
+	delete window;
+	glfwTerminate();
 
 	return 0;
 }

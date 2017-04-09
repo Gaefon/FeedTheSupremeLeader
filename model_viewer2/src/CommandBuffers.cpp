@@ -19,8 +19,6 @@ namespace GEngine
 		{
 			vkDestroyCommandPool(device->getVulkanObject(), command_pool, nullptr);
 		}
-
-
 	}
 
 	void CommandBuffers::createCommandPool(PhysicalDevice *phys_dev)

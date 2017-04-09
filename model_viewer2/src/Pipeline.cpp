@@ -22,7 +22,7 @@ namespace GEngine
 			delete framebuffers;
 		cleanup();
 	}
-VkPipeline getVulkanObject();
+	
 	void Pipeline::setVertexInput()
 	{
 		vertex_input_info = {};

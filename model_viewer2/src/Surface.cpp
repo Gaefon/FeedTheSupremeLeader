@@ -9,13 +9,16 @@ using namespace std;
 
 namespace GEngine
 {
-	Surface::Surface(Engine *instance, Window *window)
+	Surface::Surface(Engine *eng, Window *window)
 	{
-		init(instance, window);
+		engine = eng;
+		surface = VK_NULL_HANDLE;
+		init(engine, window);
 	}
 	
 	Surface::~Surface()
 	{
+		vkDestroySurfaceKHR(engine->getVulkanObject(), surface, nullptr);
 	}
 	
 	bool Surface::init(Engine *instance, Window *window)

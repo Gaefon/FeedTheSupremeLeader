@@ -21,14 +21,13 @@ namespace GEngine
         public:
         GEngineWrapper(Window *window);
         ~GEngineWrapper();
-        Device getDevice();
-        //CommandBuffers getCmdBuffers();
+        
         void startDrawing();
+        Engine *getEngine();
 
         private:
         Engine *g_engine;
         Window *g_window;
-        Device *g_device;
         Surface *g_surface;
         PhysicalDevice *g_physical_device;
         SwapChain *g_swapchain;

@@ -14,14 +14,12 @@ namespace GEngine
     {
         delete g_command_buffers;
         delete g_pipeline;
-        delete g_render_pass;
         delete g_shader_vert;
         delete g_shader_frag;
+        delete g_render_pass;
         delete g_swapchain;
-        delete g_physical_device;
-        delete g_device;
-        delete g_engine;
         delete g_surface;
+        delete g_engine;
     }
 
     void GEngineWrapper::init()
@@ -65,33 +63,32 @@ namespace GEngine
         g_surface = new Surface(g_engine, g_window);
         g_physical_device = g_surface->getSuitableDevice(g_engine);
         g_engine->createLogicalDevice(g_physical_device);
-        g_device = g_engine->getLogicalDevice();
     }
 
     void GEngineWrapper::initSwapChain()
     {
-        g_swapchain = new SwapChain(g_device);
+        g_swapchain = new SwapChain(g_engine->getLogicalDevice());
         g_swapchain->createSwapChain(g_surface, g_window, g_physical_device);
         g_swapchain->initImageViews();
     }
 
     void GEngineWrapper::initRenderPass()
     {
-        g_render_pass = new RenderPass(g_device);
-        g_shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_device);
-        g_shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_device);
+        g_render_pass = new RenderPass(g_engine->getLogicalDevice());
+        g_shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine->getLogicalDevice());
+        g_shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine->getLogicalDevice());
         g_render_pass->initRenderPass(g_swapchain);
 
     }
 
     void GEngineWrapper::initPipeline()
     {
-        g_pipeline = new Pipeline(g_device);
+        g_pipeline = new Pipeline(g_engine->getLogicalDevice());
     }
 
     void GEngineWrapper::initCmdBuffers()
     {
-        g_command_buffers = new CommandBuffers(g_device);
+        g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
 
     void GEngineWrapper::createPipeline()
@@ -122,15 +119,10 @@ namespace GEngine
         g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline);
     }
 
-    Device GEngineWrapper::getDevice()
+    Engine *GEngineWrapper::getEngine()
     {
-        return *g_device;
+        return g_engine;
     }
-
-    /*CommandBuffers GEngineWrapper::getCmdBuffers()
-    {
-        return *g_command_buffers;
-    }*/
 
     void GEngineWrapper::startDrawing()
     {

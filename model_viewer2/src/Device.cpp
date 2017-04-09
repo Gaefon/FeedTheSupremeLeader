@@ -15,6 +15,7 @@ namespace GEngine
 	
 	Device::~Device()
 	{
+		cout << "device destroyed" << endl;
 		if (device != VK_NULL_HANDLE)
 			vkDestroyDevice(device, nullptr);
 	}

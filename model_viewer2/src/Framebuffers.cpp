@@ -19,6 +19,8 @@ namespace GEngine
 			 	*it = VK_NULL_HANDLE;
 			 }
 		}
+		cout << "frame buffers destroyed" << endl;
+		framebuffers.clear();
 	}
 	
 	bool Framebuffers::createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass)

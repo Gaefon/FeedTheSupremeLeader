@@ -18,10 +18,12 @@ namespace GEngine
 			std::vector<VkSurfaceFormatKHR> formats;
 			std::vector<VkPresentModeKHR> present_modes;
 			
+			Engine *engine;
+			
 			bool init(Engine *engine, Window *window);
 		
 		public:
-			Surface(Engine *instance, Window *window);
+			Surface(Engine *eng, Window *window);
 			~Surface();
 			
 			VkSurfaceKHR getVulkanObject();
