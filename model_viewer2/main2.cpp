@@ -4,7 +4,6 @@
 #include <Surface.h>
 #include <SwapChain.h>
 #include <Shader.h>
-#include <Framebuffers.h>
 #include <Pipeline.h>
 #include <CommandBuffers.h>
 
@@ -43,8 +42,7 @@ int main(void)
 	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), dev);
 	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), dev);
 	RenderPass render_pass;
-	Pipeline pipeline;
-	Framebuffers framebuffers;
+	Pipeline pipeline(dev);
 	CommandBuffers cmd_buffers;
 
 	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
@@ -72,14 +70,14 @@ int main(void)
 	pipeline.setMultisamplingInfos();
 	pipeline.setColorBlendAttachment();
 	pipeline.createDynamicStateInfos();
-	pipeline.createPipelineLayout(dev);
+	pipeline.createPipelineLayout();
 	pipeline.createPipeline(&render_pass);
 
-	framebuffers.createFramebuffer(dev, &swap_chain, &render_pass);
+	pipeline.initFramebuffers(&swap_chain, &render_pass);
 
 	cmd_buffers.createCommandPool(dev, phys_dev);
-	cmd_buffers.createCommandBuffers(&framebuffers);
-	cmd_buffers.startRecording(&framebuffers, &swap_chain, &render_pass, &pipeline);
+	cmd_buffers.createCommandBuffers(pipeline.getFramebuffers());
+	cmd_buffers.startRecording(pipeline.getFramebuffers(), &swap_chain, &render_pass, &pipeline);
 
 	while (!window->shouldClose())
 	{

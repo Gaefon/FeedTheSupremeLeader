@@ -8,15 +8,18 @@ using namespace std;
 
 namespace GEngine
 {
-	Pipeline::Pipeline()
+	Pipeline::Pipeline(Device *dev)
 	{
-		logical_device = nullptr;
+		logical_device = dev;
+		framebuffers = nullptr;
 		pipeline_layout = VK_NULL_HANDLE;
 		pipeline = VK_NULL_HANDLE;
 	}
 
 	Pipeline::~Pipeline()
 	{
+		if (framebuffers != nullptr)
+			delete framebuffers;
 		cleanup();
 	}
 VkPipeline getVulkanObject();
@@ -161,7 +164,7 @@ VkPipeline getVulkanObject();
 		dynamic_state_infos.pDynamicStates = dynamic_states;
 	}
 
-	void Pipeline::createPipelineLayout(Device *dev)
+	void Pipeline::createPipelineLayout()
 	{
 		VkPipelineLayoutCreateInfo pipeline_layout_info = {};
 		pipeline_layout_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -169,8 +172,6 @@ VkPipeline getVulkanObject();
 		pipeline_layout_info.pSetLayouts = nullptr;
 		pipeline_layout_info.pushConstantRangeCount = 0;
 		pipeline_layout_info.pPushConstantRanges = 0;
-
-		logical_device = dev;
 
 		if (vkCreatePipelineLayout(logical_device->getVulkanObject(), &pipeline_layout_info, nullptr, &pipeline_layout) != VK_SUCCESS)
 		{
@@ -212,6 +213,17 @@ VkPipeline getVulkanObject();
 			pipeline = VK_NULL_HANDLE;
 			logical_device = nullptr;
 		}
+	}
+	
+	bool Pipeline::initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass)
+	{
+		framebuffers = new Framebuffers();
+		return framebuffers->createFramebuffer(logical_device, swap_chain, render_pass);
+	}
+	
+	Framebuffers *Pipeline::getFramebuffers()
+	{
+		return framebuffers;
 	}
 
     VkPipeline Pipeline::getVulkanObject()

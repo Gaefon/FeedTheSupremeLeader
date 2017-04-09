@@ -21,7 +21,7 @@ namespace GEngine
 		}
 	}
 	
-	void Framebuffers::createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass)
+	bool Framebuffers::createFramebuffer(Device *dev, SwapChain *swap_chain, RenderPass *render_pass)
 	{
 		framebuffers.resize(swap_chain->getImageViews().size(), VK_NULL_HANDLE);
 		
@@ -44,8 +44,11 @@ namespace GEngine
 			{
 				framebuffers[i] = VK_NULL_HANDLE;
 				cerr << "failed to create framebuffer" << endl;
+				return false;
 			}
 		}
+		
+		return false;
 	}
 	
 	unsigned int Framebuffers::getSize()

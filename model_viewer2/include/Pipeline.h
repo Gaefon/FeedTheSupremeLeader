@@ -6,6 +6,8 @@
 #include <Shader.h>
 #include <Device.h>
 #include <RenderPass.h>
+#include <SwapChain.h>
+#include <Framebuffers.h>
 
 namespace GEngine
 {
@@ -16,6 +18,8 @@ namespace GEngine
 			Shader *fragment_shader;
 
 			Device *logical_device;
+			
+			Framebuffers *framebuffers;
 
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
@@ -42,7 +46,7 @@ namespace GEngine
 			void cleanup();
 
 		public:
-			Pipeline();
+			Pipeline(Device *dev);
 			~Pipeline();
 
 			void setVertexInput();
@@ -56,8 +60,12 @@ namespace GEngine
 			void setMultisamplingInfos();
 			void setColorBlendAttachment();
 			void createDynamicStateInfos();
-			void createPipelineLayout(Device *dev);
+			void createPipelineLayout();
 			void createPipeline(RenderPass *render_pass);
+			
+			bool initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass);
+			Framebuffers *getFramebuffers();
+			
 			VkPipeline getVulkanObject();
 	};
 }
