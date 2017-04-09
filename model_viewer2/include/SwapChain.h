@@ -18,12 +18,14 @@ namespace GEngine
 			VkSurfaceFormatKHR surface_format;
             Device *logical_device;
             std::vector<ImageView *> image_views;
-            void initImageViews();
 
 
 		public:
-			SwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev, Device *dev);
+			SwapChain(Device *dev);
 			~SwapChain();
+			
+			bool createSwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev);
+            void initImageViews();
 
 			std::vector<VkImage> getImages();
 			std::vector<ImageView *> getImageViews();

@@ -6,13 +6,39 @@ using namespace std;
 
 namespace GEngine
 {
-	SwapChain::SwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev, Device *dev)
+	SwapChain::SwapChain(Device *dev)
+	{
+	    logical_device = dev;
+	    swap_chain = VK_NULL_HANDLE;
+	}
+
+	SwapChain::~SwapChain()
+	{
+		vkDestroySwapchainKHR(logical_device->getVulkanObject(), swap_chain, nullptr);
+		for(vector<ImageView *>::iterator it = image_views.begin(); it != image_views.end(); it++)
+        {
+            delete *it;
+        }
+        image_views.clear();
+	}
+
+	// TODO stocker les vkImages dans les objets Image associés
+	vector<VkImage> SwapChain::getImages()
+	{
+		unsigned int image_count;
+
+		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, nullptr);
+		vector<VkImage> swap_chain_images(image_count);
+		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, swap_chain_images.data());
+
+		return swap_chain_images;
+	}
+	
+	bool SwapChain::createSwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev)
 	{
 		surface_format = surface->chooseSwapSurfaceFormat();
-	    VkPresentModeKHR present_mode = surface->chooseSwapPresentMode();
-	    extent = surface->chooseSwapExtent(window);
-
-	    logical_device = dev;
+		VkPresentModeKHR present_mode = surface->chooseSwapPresentMode();
+		extent = surface->chooseSwapExtent(window);
 
 		uint32_t image_count = surface->getCapabilities().minImageCount + 1;
 		if (surface->getCapabilities().maxImageCount > 0 && image_count > surface->getCapabilities().maxImageCount)
@@ -51,32 +77,14 @@ namespace GEngine
 		create_info.clipped = VK_TRUE;
 
 		create_info.oldSwapchain = VK_NULL_HANDLE;
-        vector<VkImage> swap_chain_images(image_count);
-		if (vkCreateSwapchainKHR(logical_device->getVulkanObject(), &create_info, nullptr, &swap_chain) != VK_SUCCESS)
-			cerr << "failed to create swap chain!" << endl;
-        initImageViews();
-	}
-
-	SwapChain::~SwapChain()
-	{
-		vkDestroySwapchainKHR(logical_device->getVulkanObject(), swap_chain, nullptr);
-		for(vector<ImageView *>::iterator it = image_views.begin(); it != image_views.end(); it++)
-        {
-            delete *it;
-        }
-        image_views.clear();
-	}
-
-	// TODO stocker les vkImages dans les objets Image associés
-	vector<VkImage> SwapChain::getImages()
-	{
-		unsigned int image_count;
-
-		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, nullptr);
 		vector<VkImage> swap_chain_images(image_count);
-		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, swap_chain_images.data());
-
-		return swap_chain_images;
+		if (vkCreateSwapchainKHR(logical_device->getVulkanObject(), &create_info, nullptr, &swap_chain) != VK_SUCCESS)
+		{
+			swap_chain = VK_NULL_HANDLE;
+			cerr << "failed to create swap chain!" << endl;
+			return false;
+		}
+		return true;
 	}
 
 	void SwapChain::initImageViews()

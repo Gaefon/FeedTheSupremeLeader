@@ -38,12 +38,16 @@ int main(void)
 	Device *dev = engine.getLogicalDevice();
 	
 
-	SwapChain swap_chain(&surface, window, phys_dev, dev);
+	SwapChain swap_chain(dev);
+	
+	swap_chain.createSwapChain(&surface, window, phys_dev);
+	swap_chain.initImageViews();
+	
 	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), dev);
 	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), dev);
 	RenderPass render_pass(dev);
 	Pipeline pipeline(dev);
-	CommandBuffers cmd_buffers;
+	CommandBuffers cmd_buffers(dev);
 
 	list<PhysicalDevice *> devs = engine.getListPhysicalDevices();
 	for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
@@ -75,7 +79,7 @@ int main(void)
 
 	pipeline.initFramebuffers(&swap_chain, &render_pass);
 
-	cmd_buffers.createCommandPool(dev, phys_dev);
+	cmd_buffers.createCommandPool(phys_dev);
 	cmd_buffers.createCommandBuffers(pipeline.getFramebuffers());
 	cmd_buffers.startRecording(pipeline.getFramebuffers(), &swap_chain, &render_pass, &pipeline);
 
