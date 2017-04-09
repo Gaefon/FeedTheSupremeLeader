@@ -212,9 +212,10 @@ namespace GEngine
 		return physical_devices;
 	}
 	
-	void Engine::createLogicalDevice(PhysicalDevice *dev)
+	bool Engine::createLogicalDevice(PhysicalDevice *dev)
 	{
-		device = new Device(dev, getExtensions());
+		device = new Device();
+		return device->init(dev, getExtensions());
 	}
 	
 	Device *Engine::getLogicalDevice()

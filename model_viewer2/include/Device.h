@@ -20,11 +20,12 @@ namespace GEngine
 			float priority;
 			
 			
-			bool init(PhysicalDevice *phys_dev, std::list<std::string> extensions);
 		
 		public:
-			Device(PhysicalDevice *phys_dev, std::list<std::string> extensions);
+			Device();
 			~Device();
+			
+			bool init(PhysicalDevice *phys_dev, std::list<std::string> extensions);
 			
 			VkDevice getVulkanObject();
 			

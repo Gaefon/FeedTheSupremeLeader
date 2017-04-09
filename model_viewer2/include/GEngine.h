@@ -42,7 +42,7 @@ namespace GEngine
 			bool pickPhysicalDevices();
 			const std::list<PhysicalDevice *> getListPhysicalDevices();
 			
-			void createLogicalDevice(PhysicalDevice *dev);
+			bool createLogicalDevice(PhysicalDevice *dev);
 			Device *getLogicalDevice();
 		
 	};

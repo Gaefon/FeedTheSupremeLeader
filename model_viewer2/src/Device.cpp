@@ -8,11 +8,9 @@ using namespace std;
 
 namespace GEngine
 {
-	Device::Device(PhysicalDevice *phys_dev, list<string> extensions)
+	Device::Device()
 	{
 		device = VK_NULL_HANDLE;
-		if (!init(phys_dev, extensions))
-			device = VK_NULL_HANDLE;
 	}
 	
 	Device::~Device()
