@@ -15,10 +15,10 @@ namespace GEngine
 			
 			Device *logical_device;
 		public:
-			RenderPass();
+			RenderPass(Device *dev);
 			~RenderPass();
 			
-			void initRenderPass(SwapChain *swap_chain, Device *dev);
+			bool initRenderPass(SwapChain *swap_chain);
 			
 			VkRenderPass getVulkanObject();
 			

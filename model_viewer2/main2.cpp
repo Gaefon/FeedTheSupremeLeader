@@ -41,7 +41,7 @@ int main(void)
 	SwapChain swap_chain(&surface, window, phys_dev, dev);
 	Shader shader_frag(string("Shaders/2d_dummy.frag"), string("main"), dev);
 	Shader shader_vert(string("Shaders/2d_dummy.vert"), string("main"), dev);
-	RenderPass render_pass;
+	RenderPass render_pass(dev);
 	Pipeline pipeline(dev);
 	CommandBuffers cmd_buffers;
 
@@ -55,7 +55,7 @@ int main(void)
 		cout << Version::versionToString((*i)->getDriverVersion()) << endl;
 	}
 
-	render_pass.initRenderPass(&swap_chain, dev);
+	render_pass.initRenderPass(&swap_chain);
 
 	pipeline.setVertexInput();
 	pipeline.setInputAssembler();

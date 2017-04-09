@@ -6,10 +6,10 @@ using namespace std;
 
 namespace GEngine
 {
-	RenderPass::RenderPass()
+	RenderPass::RenderPass(Device *dev)
 	{
 		render_pass = VK_NULL_HANDLE;
-		logical_device = nullptr;
+		logical_device = dev;
 	}
 	
 	RenderPass::~RenderPass()
@@ -20,10 +20,8 @@ namespace GEngine
 		}
 	}
 	
-	void RenderPass::initRenderPass(SwapChain *swap_chain, Device *dev)
+	bool RenderPass::initRenderPass(SwapChain *swap_chain)
 	{
-		logical_device = dev;
-	
 		VkAttachmentDescription color_attachment;
 		color_attachment = {};
 		color_attachment.format = swap_chain->getSurfaceFormat().format;
@@ -66,7 +64,10 @@ namespace GEngine
 		{
 			render_pass = VK_NULL_HANDLE;
 			cerr << "Error while creating render pass" << endl;
+			return false;
 		}
+		
+		return true;
 	}
 	
 	VkRenderPass RenderPass::getVulkanObject()
