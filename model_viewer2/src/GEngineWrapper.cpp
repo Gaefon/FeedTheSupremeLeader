@@ -51,12 +51,11 @@ namespace GEngine
 
     void GEngineWrapper::initEngine(string engine_name)
     {
-        Engine engine;
-        engine.enableValidationLayers();
-        engine.init(engine_name, Version::makeVersion(1, 0, 0));
-        engine.addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-        engine.pickPhysicalDevices();
-        g_engine = &engine;
+        g_engine = new Engine();
+        g_engine->enableValidationLayers();
+        g_engine->init(engine_name, Version::makeVersion(1, 0, 0));
+        g_engine->addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+        g_engine->pickPhysicalDevices();
     }
 
     void GEngineWrapper::initDevices()
