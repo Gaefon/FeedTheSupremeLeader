@@ -26,12 +26,12 @@ namespace GEngine
 			Device *device;
 
 		public:
-			CommandBuffers();
+			CommandBuffers(Device *dev);
 			~CommandBuffers();
 
-			void createCommandPool(Device *dev, PhysicalDevice *phys_dev);
+			void createCommandPool(PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
-			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass,  Pipeline *pipeline);
+			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline);
 			void draw(SwapChain *sc);
 	};
 }

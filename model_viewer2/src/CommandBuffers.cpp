@@ -7,10 +7,10 @@ using namespace std;
 
 namespace GEngine
 {
-	CommandBuffers::CommandBuffers()
+	CommandBuffers::CommandBuffers(Device *dev)
 	{
 		command_pool = VK_NULL_HANDLE;
-		device = nullptr;
+		device = dev;
 	}
 
 	CommandBuffers::~CommandBuffers()
@@ -23,14 +23,12 @@ namespace GEngine
 
 	}
 
-	void CommandBuffers::createCommandPool(Device *dev, PhysicalDevice *phys_dev)
+	void CommandBuffers::createCommandPool(PhysicalDevice *phys_dev)
 	{
 		VkCommandPoolCreateInfo pool_create_infos = {};
 		pool_create_infos.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
 		pool_create_infos.queueFamilyIndex = phys_dev->getGraphicIndex();
 		pool_create_infos.flags = 0;
-
-		device = dev;
 
 		if (vkCreateCommandPool(device->getVulkanObject(), &pool_create_infos, nullptr, &command_pool) != VK_SUCCESS)
 		{
