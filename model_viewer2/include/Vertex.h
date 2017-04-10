@@ -13,7 +13,7 @@ namespace GEngine
             Vertex(glm::vec2 position, glm::vec3 color);
             ~Vertex();
             VkVertexInputBindingDescription *getBindingDescription();
-            std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions();
+            std::array<VkVertexInputAttributeDescription, 2> &getAttributeDescriptions();
 
         private:
             glm::vec2 v_position;

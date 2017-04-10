@@ -12,7 +12,7 @@ int main(void)
 
 	glfwInit();
 
-	window = new Window("卐 HEIL MEI! 卐", 800, 600);
+	window = new Window("Heroes never die !", 800, 600);
 
 	GEngineWrapper g_engine_wrapper(window);
 

@@ -29,7 +29,6 @@ namespace GEngine
         initRenderPass();
         initPipeline();
         initCmdBuffers();
-        initGetAndDisplayDevices();
         Vertex *vertex = new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
         createPipeline(vertex);
         startRecording();
@@ -42,20 +41,6 @@ namespace GEngine
         g_engine->init(engine_name, Version::makeVersion(1, 0, 0));
         g_engine->addExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
         g_engine->pickPhysicalDevices();
-    }
-
-    void GEngineWrapper::initGetAndDisplayDevices()
-    {
-        list<PhysicalDevice *> devs = g_engine->getListPhysicalDevices();
-        for (list<PhysicalDevice *>::iterator i = devs.begin(); i != devs.end(); i++)
-        {
-            cout << (*i)->getDeviceName() << endl;
-            cout << "0x" << hex << (*i)->getVendorId() << endl;
-            cout << "0x" << hex << (*i)->getDeviceId() << endl;
-            cout << Version::versionToString((*i)->getApiVersion()) << endl;
-            cout << Version::versionToString((*i)->getDriverVersion()) << endl;
-        }
-
     }
 
     void GEngineWrapper::initDevices()
