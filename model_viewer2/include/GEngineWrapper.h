@@ -7,6 +7,7 @@
 #include <SwapChain.h>
 #include <Shader.h>
 #include <Pipeline.h>
+#include <Vertex.h>
 #include <CommandBuffers.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -21,7 +22,7 @@ namespace GEngine
         public:
         GEngineWrapper(Window *window);
         ~GEngineWrapper();
-        
+
         void startDrawing();
         Engine *getEngine();
 
@@ -44,7 +45,7 @@ namespace GEngine
         void initRenderPass();
         void initPipeline();
         void initCmdBuffers();
-        void createPipeline();
+        void createPipeline(Vertex *vertex);
         void startRecording();
         void initGetAndDisplayDevices();
     };

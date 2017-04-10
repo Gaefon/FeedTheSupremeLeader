@@ -1,5 +1,4 @@
 #include <GEngineWrapper.h>
-
 using namespace std;
 
 namespace GEngine
@@ -31,7 +30,8 @@ namespace GEngine
         initPipeline();
         initCmdBuffers();
         initGetAndDisplayDevices();
-        createPipeline();
+        Vertex *vertex = new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
+        createPipeline(vertex);
         startRecording();
     }
 
@@ -91,9 +91,9 @@ namespace GEngine
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
 
-    void GEngineWrapper::createPipeline()
+    void GEngineWrapper::createPipeline(Vertex *vertex)
     {
-       g_pipeline->setVertexInput();
+       g_pipeline->setVertexInput(vertex);
        g_pipeline->setInputAssembler();
        g_pipeline->setVertexShader(g_shader_vert);
        g_pipeline->setFragmentShader(g_shader_frag);
