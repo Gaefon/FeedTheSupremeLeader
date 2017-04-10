@@ -1,7 +1,6 @@
 #include <Pipeline.h>
 
 #include <iostream>
-
 #include <string.h>
 
 using namespace std;
@@ -22,15 +21,15 @@ namespace GEngine
 			delete framebuffers;
 		cleanup();
 	}
-	
-	void Pipeline::setVertexInput()
+
+	void Pipeline::setVertexInput(Vertex *vertex)
 	{
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertex_input_info.vertexBindingDescriptionCount = 0;
-		vertex_input_info.pVertexBindingDescriptions = nullptr;
-		vertex_input_info.vertexAttributeDescriptionCount = 0;
-		vertex_input_info.pVertexAttributeDescriptions = nullptr;
+		vertex_input_info.vertexBindingDescriptionCount = 1;
+		vertex_input_info.vertexAttributeDescriptionCount = vertex->getAttributeDescriptions().size();
+		vertex_input_info.pVertexBindingDescriptions = vertex->getBindingDescription();
+		vertex_input_info.pVertexAttributeDescriptions = vertex->getAttributeDescriptions().data();
 	}
 
 	void Pipeline::setInputAssembler()
@@ -213,13 +212,13 @@ namespace GEngine
 			pipeline = VK_NULL_HANDLE;
 		}
 	}
-	
+
 	bool Pipeline::initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass)
 	{
 		framebuffers = new Framebuffers(logical_device);
 		return framebuffers->createFramebuffer(swap_chain, render_pass);
 	}
-	
+
 	Framebuffers *Pipeline::getFramebuffers()
 	{
 		return framebuffers;

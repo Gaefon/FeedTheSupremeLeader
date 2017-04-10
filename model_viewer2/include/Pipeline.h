@@ -2,7 +2,7 @@
 #define PIPELINE_H
 
 #include <vulkan/vulkan.h>
-
+#include <Vertex.h>
 #include <Shader.h>
 #include <Device.h>
 #include <RenderPass.h>
@@ -18,7 +18,7 @@ namespace GEngine
 			Shader *fragment_shader;
 
 			Device *logical_device;
-			
+
 			Framebuffers *framebuffers;
 
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
@@ -49,7 +49,7 @@ namespace GEngine
 			Pipeline(Device *dev);
 			~Pipeline();
 
-			void setVertexInput();
+			void setVertexInput(Vertex *vertex);
 			void setInputAssembler();
 			void setVertexShader(Shader *new_shader);
 			void setFragmentShader(Shader *new_shader);
@@ -62,10 +62,10 @@ namespace GEngine
 			void createDynamicStateInfos();
 			void createPipelineLayout();
 			void createPipeline(RenderPass *render_pass);
-			
+
 			bool initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass);
 			Framebuffers *getFramebuffers();
-			
+
 			VkPipeline getVulkanObject();
 	};
 }
