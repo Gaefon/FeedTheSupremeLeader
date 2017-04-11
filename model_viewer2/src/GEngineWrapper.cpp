@@ -28,9 +28,9 @@ namespace GEngine
         initSwapChain();
         initRenderPass();
         initPipeline();
-        initCmdBuffers();
         Vertex *vertex = new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
         createPipeline(vertex);
+        initCmdBuffers();
         startRecording();
     }
 
@@ -60,14 +60,14 @@ namespace GEngine
     void GEngineWrapper::initRenderPass()
     {
         g_render_pass = new RenderPass(g_engine->getLogicalDevice());
-        g_shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine->getLogicalDevice());
-        g_shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine->getLogicalDevice());
         g_render_pass->initRenderPass(g_swapchain);
 
     }
 
     void GEngineWrapper::initPipeline()
     {
+        g_shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine->getLogicalDevice());
+        g_shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine->getLogicalDevice());
         g_pipeline = new Pipeline(g_engine->getLogicalDevice());
     }
 
