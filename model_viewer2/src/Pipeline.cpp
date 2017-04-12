@@ -27,9 +27,9 @@ namespace GEngine
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 1;
-		vertex_input_info.vertexAttributeDescriptionCount = vertex->getAttributeDescriptions().size();
 		vertex_input_info.pVertexBindingDescriptions = vertex->getBindingDescription();
-		vertex_input_info.pVertexAttributeDescriptions = vertex->getAttributeDescriptions().data();
+		vertex_input_info.vertexAttributeDescriptionCount = vertex->getAttributeDescriptions()->size();
+		vertex_input_info.pVertexAttributeDescriptions = vertex->getAttributeDescriptions()->data();
 	}
 
 	void Pipeline::setInputAssembler()
