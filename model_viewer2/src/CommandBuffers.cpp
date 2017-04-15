@@ -86,8 +86,7 @@ namespace GEngine
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(command_buffers[i], 0, 1, vertex_buffers, offsets);
 			
-			cout << vertex_buffer->getNbVertices() << endl;
-			vkCmdDraw(command_buffers[i], vertex_buffer->getNbVertices(), 4, 0, 0);
+			vkCmdDraw(command_buffers[i], vertex_buffer->getNbVertices(), 1, 0, 0);
 			vkCmdEndRenderPass(command_buffers[i]);
 			
 			if (vkEndCommandBuffer(command_buffers[i]) != VK_SUCCESS)
