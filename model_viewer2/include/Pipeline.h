@@ -49,7 +49,7 @@ namespace GEngine
 			Pipeline(Device *dev);
 			~Pipeline();
 
-			void setVertexInput(Vertex *vertex);
+			void setVertexInput();
 			void setInputAssembler();
 			void setVertexShader(Shader *new_shader);
 			void setFragmentShader(Shader *new_shader);

@@ -1,4 +1,5 @@
 #include <GEngineWrapper.h>
+
 using namespace std;
 
 namespace GEngine
@@ -12,6 +13,7 @@ namespace GEngine
     GEngineWrapper::~GEngineWrapper()
     {
         delete g_command_buffers;
+        delete g_vertex_buffer;
         delete g_pipeline;
         delete g_shader_vert;
         delete g_shader_frag;
@@ -28,8 +30,30 @@ namespace GEngine
         initSwapChain();
         initRenderPass();
         initPipeline();
-        Vertex *vertex = new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
-        createPipeline(vertex);
+        vertices =
+        {
+			/*{{0.0f, -0.5f}, {1.0f, 1.0f, 0.0f}},
+			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+			{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},*/
+			
+			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+
+			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+
+			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+
+			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+			{{-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}}
+		};
+		
+        createPipeline();
         initCmdBuffers();
         startRecording();
     }
@@ -76,9 +100,9 @@ namespace GEngine
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
 
-    void GEngineWrapper::createPipeline(Vertex *vertex)
+    void GEngineWrapper::createPipeline()
     {
-       g_pipeline->setVertexInput(vertex);
+       g_pipeline->setVertexInput();
        g_pipeline->setInputAssembler();
        g_pipeline->setVertexShader(g_shader_vert);
        g_pipeline->setFragmentShader(g_shader_frag);
@@ -100,8 +124,16 @@ namespace GEngine
     void GEngineWrapper::startRecording()
     {
         g_command_buffers->createCommandPool(g_physical_device);
+        
+        //creation vertex buffers
+		g_vertex_buffer = new VertexBuffer(g_engine->getLogicalDevice());
+		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size());
+		g_vertex_buffer->allocBuffer();
+		g_vertex_buffer->bindToDevice();
+		g_vertex_buffer->addVertexData(&vertices);
+        
         g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
-        g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline);
+        g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline, g_vertex_buffer);
     }
 
     Engine *GEngineWrapper::getEngine()

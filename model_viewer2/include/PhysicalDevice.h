@@ -40,6 +40,8 @@ namespace GEngine
 			VkPhysicalDevice getVulkanObject();
 			const VkPhysicalDeviceFeatures *getFeatures();
 			
+			void getMemoryProperties(VkPhysicalDeviceMemoryProperties *properties);
+			
 			int getApiVersion();
 			int getDriverVersion();
 			int getVendorId();

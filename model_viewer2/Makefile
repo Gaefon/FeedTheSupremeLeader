@@ -27,6 +27,7 @@ SRC =	src/GEngine.cpp\
 		src/pool/PipelinePool.cpp\
 		src/GEngineWrapper.cpp\
 		src/Vertex.cpp\
+		src/VertexBuffer.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert

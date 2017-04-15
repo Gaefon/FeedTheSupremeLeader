@@ -9,8 +9,8 @@
 #include <PhysicalDevice.h>
 #include <Framebuffers.h>
 #include <Pipeline.h>
-
 #include <Semaphore.h>
+#include <VertexBuffer.h>
 
 namespace GEngine
 {
@@ -31,7 +31,7 @@ namespace GEngine
 
 			void createCommandPool(PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
-			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline);
+			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer);
 			void draw(SwapChain *sc);
 	};
 }

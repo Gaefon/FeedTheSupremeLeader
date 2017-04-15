@@ -7,17 +7,13 @@
 
 namespace GEngine
 {
-    class Vertex
+    struct Vertex
     {
-        public:
-            Vertex(glm::vec2 position, glm::vec3 color);
-            ~Vertex();
-            VkVertexInputBindingDescription *getBindingDescription();
-            std::array<VkVertexInputAttributeDescription, 2> *getAttributeDescriptions();
-
-        private:
-            glm::vec2 v_position;
-            glm::vec3 v_color;
+	    glm::vec2 v_position;
+	    glm::vec3 v_color;
+	    
+		static VkVertexInputBindingDescription *getBindingDescription();
+		static std::array<VkVertexInputAttributeDescription, 2> *getAttributeDescriptions();
 
     };
 }

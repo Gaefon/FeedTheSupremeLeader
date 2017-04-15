@@ -15,6 +15,8 @@ namespace GEngine
 			VkDevice device;
 			VkPhysicalDeviceFeatures device_features;
 			
+			PhysicalDevice *physical_device;
+			
 			VkQueue present_device_queue;
 			VkQueue graphic_device_queue;
 			float priority;
@@ -22,10 +24,12 @@ namespace GEngine
 			
 		
 		public:
-			Device();
+			Device(PhysicalDevice *phys_dev);
 			~Device();
 			
-			bool init(PhysicalDevice *phys_dev, std::list<std::string> extensions);
+			bool init(std::list<std::string> extensions);
+			
+			PhysicalDevice *getPhysicalDevice();
 			
 			VkDevice getVulkanObject();
 			

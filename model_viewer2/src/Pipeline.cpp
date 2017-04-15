@@ -22,14 +22,15 @@ namespace GEngine
 		cleanup();
 	}
 
-	void Pipeline::setVertexInput(Vertex *vertex)
+	void Pipeline::setVertexInput()
 	{
+		array<VkVertexInputAttributeDescription, 2> *attrs_desc = Vertex::getAttributeDescriptions();
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 1;
-		vertex_input_info.pVertexBindingDescriptions = vertex->getBindingDescription();
-		vertex_input_info.vertexAttributeDescriptionCount = vertex->getAttributeDescriptions()->size();
-		vertex_input_info.pVertexAttributeDescriptions = vertex->getAttributeDescriptions()->data();
+		vertex_input_info.pVertexBindingDescriptions = Vertex::getBindingDescription();
+		vertex_input_info.vertexAttributeDescriptionCount = attrs_desc->size();
+		vertex_input_info.pVertexAttributeDescriptions = attrs_desc->data();
 	}
 
 	void Pipeline::setInputAssembler()

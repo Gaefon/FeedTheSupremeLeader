@@ -94,6 +94,11 @@ namespace GEngine
 		return &features;
 	}
 	
+	void PhysicalDevice::getMemoryProperties(VkPhysicalDeviceMemoryProperties *properties)
+	{
+		vkGetPhysicalDeviceMemoryProperties(physical_device, properties);
+	}
+	
 	int PhysicalDevice::getApiVersion()
 	{
 		return properties.apiVersion;

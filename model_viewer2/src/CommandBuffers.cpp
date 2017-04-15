@@ -53,7 +53,7 @@ namespace GEngine
 		}
 	}
 
-	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline)
+	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer)
 	{
 		img.createSemaphore(device);
 		render.createSemaphore(device);
@@ -81,7 +81,13 @@ namespace GEngine
 
 			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
 			vkCmdBindPipeline(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->getVulkanObject());
-			vkCmdDraw(command_buffers[i], 3, 1, 0, 0);
+			
+			VkBuffer vertex_buffers[] = {vertex_buffer->getVulkanBuffer()};
+			VkDeviceSize offsets[] = {0};
+			vkCmdBindVertexBuffers(command_buffers[i], 0, 1, vertex_buffers, offsets);
+			
+			cout << vertex_buffer->getNbVertices() << endl;
+			vkCmdDraw(command_buffers[i], vertex_buffer->getNbVertices(), 4, 0, 0);
 			vkCmdEndRenderPass(command_buffers[i]);
 			
 			if (vkEndCommandBuffer(command_buffers[i]) != VK_SUCCESS)

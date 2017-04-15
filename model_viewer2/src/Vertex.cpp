@@ -3,14 +3,6 @@ using namespace std;
 
 namespace GEngine
 {
-    Vertex::Vertex(glm::vec2 position, glm::vec3 color)
-    {
-        v_position = position;
-        v_color = color;
-    }
-
-    Vertex::~Vertex(){}
-
     VkVertexInputBindingDescription *Vertex::getBindingDescription()
     {
         VkVertexInputBindingDescription *binding_description = new VkVertexInputBindingDescription{0, sizeof(Vertex), VK_VERTEX_INPUT_RATE_VERTEX};

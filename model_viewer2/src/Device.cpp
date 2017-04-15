@@ -8,8 +8,9 @@ using namespace std;
 
 namespace GEngine
 {
-	Device::Device()
+	Device::Device(PhysicalDevice *phys_dev)
 	{
+		physical_device = phys_dev;
 		device = VK_NULL_HANDLE;
 	}
 	
@@ -19,7 +20,7 @@ namespace GEngine
 			vkDestroyDevice(device, nullptr);
 	}
 	
-	bool Device::init(PhysicalDevice *phys_dev, list<string> extensions)
+	bool Device::init(list<string> extensions)
 	{
 		priority = 1.0f;
 		
@@ -28,10 +29,10 @@ namespace GEngine
 		
 		phys_dev.getFirstValidQueueFamily(surface, &present, &graphic);*/
 		vector<VkDeviceQueueCreateInfo> queue_create_infos;
-		unsigned int tmp[] = {phys_dev->getPresentIndex(), phys_dev->getGraphicIndex()};
+		unsigned int tmp[] = {physical_device->getPresentIndex(), physical_device->getGraphicIndex()};
 		
-		cout << "present index " << phys_dev->getPresentIndex() << endl;
-		cout << "graphic index " << phys_dev->getGraphicIndex() << endl;
+		cout << "present index " << physical_device->getPresentIndex() << endl;
+		cout << "graphic index " << physical_device->getGraphicIndex() << endl;
 		
 		for (int i = 0; i < 2; i++)
 		{
@@ -47,7 +48,7 @@ namespace GEngine
 		device_create_infos.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		device_create_infos.pQueueCreateInfos = queue_create_infos.data();
 		device_create_infos.queueCreateInfoCount = queue_create_infos.size();
-		device_create_infos.pEnabledFeatures = phys_dev->getFeatures();
+		device_create_infos.pEnabledFeatures = physical_device->getFeatures();
 		
 		const char **exts = new const char*[extensions.size()];
 		int i = 0;
@@ -64,15 +65,15 @@ namespace GEngine
 		//device_create_infos.enabledExtensionCount = 0;
 		//device_create_infos.enabledLayerCount = 0;
 		
-		if (vkCreateDevice(phys_dev->getVulkanObject(), &device_create_infos, nullptr, &device) != VK_SUCCESS)
+		if (vkCreateDevice(physical_device->getVulkanObject(), &device_create_infos, nullptr, &device) != VK_SUCCESS)
 		{
 		    cerr << "Failed to create logical device." << endl;
 		    delete exts;
 		    return false;
 		}
 		
-		vkGetDeviceQueue(device, phys_dev->getGraphicIndex(), 0, &graphic_device_queue);
-		vkGetDeviceQueue(device, phys_dev->getPresentIndex(), 0, &present_device_queue);
+		vkGetDeviceQueue(device, physical_device->getGraphicIndex(), 0, &graphic_device_queue);
+		vkGetDeviceQueue(device, physical_device->getPresentIndex(), 0, &present_device_queue);
 		
 		delete exts;
 		return true;
@@ -96,5 +97,10 @@ namespace GEngine
 	void Device::waitIdle()
 	{
 		vkDeviceWaitIdle(device);
+	}
+	
+	PhysicalDevice *Device::getPhysicalDevice()
+	{
+		return physical_device;
 	}
 }
