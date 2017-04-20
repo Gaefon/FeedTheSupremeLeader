@@ -28,6 +28,9 @@ SRC =	src/GEngine.cpp\
 		src/GEngineWrapper.cpp\
 		src/Vertex.cpp\
 		src/VertexBuffer.cpp\
+		src/events/KeyboardEvent.cpp\
+		src/events/KeyEvent.cpp\
+		src/helper/EventHelper.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert

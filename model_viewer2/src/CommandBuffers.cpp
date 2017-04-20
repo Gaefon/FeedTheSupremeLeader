@@ -78,15 +78,29 @@ namespace GEngine
 			VkClearValue clear_color = {0.0f, 0.0f, 0.0f, 0.0f};
 			render_pass_info.clearValueCount = 1;
 			render_pass_info.pClearValues = &clear_color;
-
-			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
-			vkCmdBindPipeline(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->getVulkanObject());
 			
+			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
+		}
+		
+		for (unsigned int i = 0; i < command_buffers.size(); i++)
+		{
+			// nouvelle fonction (bindPipeline(Pipeline *pipeline))
+			vkCmdBindPipeline(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->getVulkanObject());
+		}
+			
+		for (unsigned int i = 0; i < command_buffers.size(); i++)
+		{	
+			
+			// nouvelle fonction (sendVertexBuffers(VertexBuffer *buffer))
 			VkBuffer vertex_buffers[] = {vertex_buffer->getVulkanBuffer()};
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(command_buffers[i], 0, 1, vertex_buffers, offsets);
-			
 			vkCmdDraw(command_buffers[i], vertex_buffer->getNbVertices(), 1, 0, 0);
+		}
+		
+		for (unsigned int i = 0; i < command_buffers.size(); i++)
+		{	
+			//nouvelle fonction (stopRecording())
 			vkCmdEndRenderPass(command_buffers[i]);
 			
 			if (vkEndCommandBuffer(command_buffers[i]) != VK_SUCCESS)
