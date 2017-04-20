@@ -18,6 +18,20 @@ namespace GEngine
 			
 			void clearEvents();
 			
+			class KeyEventPool
+			{
+				private:
+					static KeyEventPool *m_instance;
+					std::vector<KeyEvent *> available_commands;
+				public:
+					KeyEventPool();
+					~KeyEventPool();
+					
+					static KeyEventPool *getInstance();
+					KeyEvent *getAvailableEvent();
+					void releaseEvent(KeyEvent *event);
+			};
+			
 		
 		public:
 			KeyboardEvent(Window *win);

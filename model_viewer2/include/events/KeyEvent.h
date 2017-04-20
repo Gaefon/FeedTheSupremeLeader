@@ -160,6 +160,7 @@ namespace GEngine
 			KeyEvent(Key val, bool press, int mod);
 			~KeyEvent();
 			
+			void setKey(Key val, bool press, int mod);
 			Key getKey();
 			bool isPressed();
 			bool isMod(Mod mod);

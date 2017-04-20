@@ -34,7 +34,7 @@ namespace GEngine
 	void KeyboardEvent::clearEvents()
 	{
 		for (KeyEvent *evt: current_events)
-			delete evt;
+			KeyboardEvent::KeyEventPool::getInstance()->releaseEvent(evt);
 		current_events.clear();
 	}
 	
@@ -76,6 +76,50 @@ namespace GEngine
 		key_val = EventHelper::keyFromInt(key);
 		mod = EventHelper::modFromInt(mods);
 		
-		current_events.push_back(new KeyEvent(key_val, pressed, mod));
+		KeyEvent *evt = KeyboardEvent::KeyEventPool::getInstance()->getAvailableEvent();
+		evt->setKey(key_val, pressed, mod);
+		current_events.push_back(evt);
+	}
+	
+	
+	
+	
+	
+	
+	KeyboardEvent::KeyEventPool *KeyboardEvent::KeyEventPool::m_instance = nullptr;
+	
+	KeyboardEvent::KeyEventPool::KeyEventPool()
+	{
+	}
+	
+	KeyboardEvent::KeyEventPool::~KeyEventPool()
+	{
+		for (KeyEvent *event: available_commands)
+			delete event;
+		available_commands.clear();
+	}
+
+	KeyboardEvent::KeyEventPool *KeyboardEvent::KeyEventPool::getInstance()
+	{
+		if (m_instance == nullptr)
+			m_instance = new KeyEventPool();
+		return m_instance;
+	}
+	
+	KeyEvent *KeyboardEvent::KeyEventPool::getAvailableEvent()
+	{
+		if (!available_commands.empty())
+		{
+			KeyEvent *event = available_commands.at(available_commands.size() - 1);
+			available_commands.pop_back();
+			return event;
+		}
+		
+		return new KeyEvent(KeyEvent::Key::unknown, false, 0);
+	}
+	
+	void KeyboardEvent::KeyEventPool::releaseEvent(KeyEvent *event)
+	{
+		available_commands.push_back(event);
 	}
 }

@@ -4,13 +4,18 @@ namespace GEngine
 {
 	KeyEvent::KeyEvent(KeyEvent::Key val, bool press, int mod)
 	{
-		value = val;
-		pressed = press;
-		modif = mod;
+		setKey(val, press, mod);
 	}
 	
 	KeyEvent::~KeyEvent()
 	{}
+	
+	void KeyEvent::setKey(Key val, bool press, int mod)
+	{
+		value = val;
+		pressed = press;
+		modif = mod;
+	}
 	
 	KeyEvent::Key KeyEvent::getKey()
 	{
