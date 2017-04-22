@@ -30,6 +30,7 @@ SRC =	src/GEngine.cpp\
 		src/VertexBuffer.cpp\
 		src/events/KeyboardEvent.cpp\
 		src/events/KeyEvent.cpp\
+		src/events/MouseEvent.cpp\
 		src/helper/EventHelper.cpp\
 		main2.cpp
 
