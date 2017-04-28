@@ -1,4 +1,4 @@
-#include <events/KeyboardEvent.h>
+#include <events/KeyboardPoller.h>
 
 #include <helper/EventHelper.h>
 
@@ -8,60 +8,60 @@ using namespace std;
 
 namespace GEngine
 {
-	static map<GLFWwindow *, KeyboardEvent *> map_evt;
+	static map<GLFWwindow *, KeyboardPoller *> map_evt;
 	
 	static void cKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
-		map<GLFWwindow *, KeyboardEvent *>::iterator found = map_evt.find(window);
+		map<GLFWwindow *, KeyboardPoller *>::iterator found = map_evt.find(window);
 		
 		if (found != map_evt.end())
 			found->second->keyCallback(window, key, scancode, action, mods);
 	}
 	
 	
-	KeyboardEvent::KeyboardEvent(Window *win)
+	KeyboardPoller::KeyboardPoller(Window *win)
 	{
 		window = win;
 		map_evt[win->getGLFWObject()] = this;
 		glfwSetKeyCallback(window->getGLFWObject(), cKeyCallback);
 	}
 	
-	KeyboardEvent::~KeyboardEvent()
+	KeyboardPoller::~KeyboardPoller()
 	{
 		clearEvents();
 	}
 	
-	void KeyboardEvent::clearEvents()
+	void KeyboardPoller::clearEvents()
 	{
 		for (KeyEvent *evt: current_events)
-			KeyboardEvent::KeyEventPool::getInstance()->releaseEvent(evt);
+			KeyboardPoller::KeyEventPool::getInstance()->releaseEvent(evt);
 		current_events.clear();
 	}
 	
-	void KeyboardEvent::poll()
+	void KeyboardPoller::poll()
 	{
 		clearEvents();
 		glfwPollEvents();
 	}
 	
-	void KeyboardEvent::wait()
+	void KeyboardPoller::wait()
 	{
 		clearEvents();
 		glfwWaitEvents();
 	}
 	
-	void KeyboardEvent::wait(float timeout)
+	void KeyboardPoller::wait(float timeout)
 	{
 		clearEvents();
 		glfwWaitEventsTimeout(timeout);
 	}
 	
-	vector<KeyEvent *> KeyboardEvent::getEvents()
+	vector<KeyEvent *> KeyboardPoller::getEvents()
 	{
 		return current_events;
 	}
 	
-	void KeyboardEvent::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+	void KeyboardPoller::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 	{
 		(void) window;
 		(void) scancode;
@@ -76,7 +76,7 @@ namespace GEngine
 		key_val = EventHelper::keyFromInt(key);
 		mod = EventHelper::modFromInt(mods);
 		
-		KeyEvent *evt = KeyboardEvent::KeyEventPool::getInstance()->getAvailableEvent();
+		KeyEvent *evt = KeyboardPoller::KeyEventPool::getInstance()->getAvailableEvent();
 		evt->setKey(key_val, pressed, mod);
 		current_events.push_back(evt);
 	}
@@ -86,27 +86,27 @@ namespace GEngine
 	
 	
 	
-	KeyboardEvent::KeyEventPool *KeyboardEvent::KeyEventPool::m_instance = nullptr;
+	KeyboardPoller::KeyEventPool *KeyboardPoller::KeyEventPool::m_instance = nullptr;
 	
-	KeyboardEvent::KeyEventPool::KeyEventPool()
+	KeyboardPoller::KeyEventPool::KeyEventPool()
 	{
 	}
 	
-	KeyboardEvent::KeyEventPool::~KeyEventPool()
+	KeyboardPoller::KeyEventPool::~KeyEventPool()
 	{
 		for (KeyEvent *event: available_commands)
 			delete event;
 		available_commands.clear();
 	}
 
-	KeyboardEvent::KeyEventPool *KeyboardEvent::KeyEventPool::getInstance()
+	KeyboardPoller::KeyEventPool *KeyboardPoller::KeyEventPool::getInstance()
 	{
 		if (m_instance == nullptr)
 			m_instance = new KeyEventPool();
 		return m_instance;
 	}
 	
-	KeyEvent *KeyboardEvent::KeyEventPool::getAvailableEvent()
+	KeyEvent *KeyboardPoller::KeyEventPool::getAvailableEvent()
 	{
 		if (!available_commands.empty())
 		{
@@ -118,7 +118,7 @@ namespace GEngine
 		return new KeyEvent(KeyEvent::Key::unknown, false, 0);
 	}
 	
-	void KeyboardEvent::KeyEventPool::releaseEvent(KeyEvent *event)
+	void KeyboardPoller::KeyEventPool::releaseEvent(KeyEvent *event)
 	{
 		available_commands.push_back(event);
 	}

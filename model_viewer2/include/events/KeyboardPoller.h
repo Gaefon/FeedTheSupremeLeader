@@ -1,5 +1,5 @@
-#ifndef KEYBOARD_EVENT_H
-#define KEYBOARD_EVENT_H
+#ifndef KEYBOARD_POLLER_H
+#define KEYBOARD_POLLER_H
 
 #include <GLFW/glfw3.h>
 #include <Window.h>
@@ -9,7 +9,7 @@
 
 namespace GEngine
 {
-	class KeyboardEvent
+	class KeyboardPoller
 	{
 		private:
 			Window *window;
@@ -34,8 +34,8 @@ namespace GEngine
 			
 		
 		public:
-			KeyboardEvent(Window *win);
-			~KeyboardEvent();
+			KeyboardPoller(Window *win);
+			~KeyboardPoller();
 			
 			void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 			void poll();

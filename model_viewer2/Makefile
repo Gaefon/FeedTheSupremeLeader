@@ -28,7 +28,7 @@ SRC =	src/GEngine.cpp\
 		src/GEngineWrapper.cpp\
 		src/Vertex.cpp\
 		src/VertexBuffer.cpp\
-		src/events/KeyboardEvent.cpp\
+		src/events/KeyboardPoller.cpp\
 		src/events/KeyEvent.cpp\
 		src/events/MousePoller.cpp\
 		src/helper/EventHelper.cpp\

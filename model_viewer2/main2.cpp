@@ -1,6 +1,6 @@
 #include <GEngineWrapper.h>
 #include <Window.h>
-#include <events/KeyboardEvent.h>
+#include <events/KeyboardPoller.h>
 
 #include <string>
 using namespace GEngine;
@@ -9,13 +9,13 @@ using namespace std;
 int main(void)
 {
 	Window *window;
-	KeyboardEvent *key_event;
+	KeyboardPoller *key_event;
 	list<string> extensions;
 
 	glfwInit();
 
 	window = new Window("Heroes never die !", 800, 600);
-	key_event = new KeyboardEvent(window);
+	key_event = new KeyboardPoller(window);
 
 	GEngineWrapper g_engine_wrapper(window);
 
