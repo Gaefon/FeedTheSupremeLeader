@@ -1,29 +1,32 @@
 #include <Camera.h>
 #include <glm/gtx/transform.hpp>
 
-Camera::Camera()
-{}
-
-Camera::~Camera()
-{}
-
-void Camera::setPerspectice(float fovy, float ratio, float near, float far)
+namespace GEngine
 {
-	projection = glm::perspective(fovy, ratio, near, far);
-}
+	Camera::Camera()
+	{}
 
-void Camera::setLookAt(glm::vec3 pos, glm::vec3 target, glm::vec3 vert)
-{
-	//modelview = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(2.0f, 2.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	modelview = glm::lookAt(pos, target, vert);
-}
+	Camera::~Camera()
+	{}
 
-glm::mat4 Camera::getModelview()
-{
-	return modelview;
-}
+	void Camera::setPerspectice(float fovy, float ratio, float near, float far)
+	{
+		projection = glm::perspective(fovy, ratio, near, far);
+	}
 
-glm::mat4 Camera::getProjection()
-{
-	return projection;
+	void Camera::setLookAt(glm::vec3 pos, glm::vec3 target, glm::vec3 vert)
+	{
+		//modelview = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(2.0f, 2.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelview = glm::lookAt(pos, target, vert);
+	}
+
+	glm::mat4 Camera::getModelview()
+	{
+		return modelview;
+	}
+
+	glm::mat4 Camera::getProjection()
+	{
+		return projection;
+	}
 }
