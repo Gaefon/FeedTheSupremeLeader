@@ -31,7 +31,9 @@ SRC =	src/GEngine.cpp\
 		src/events/KeyboardPoller.cpp\
 		src/events/KeyEvent.cpp\
 		src/events/MousePoller.cpp\
+		src/events/MouseEvent.cpp\
 		src/helper/EventHelper.cpp\
+		src/Camera.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
