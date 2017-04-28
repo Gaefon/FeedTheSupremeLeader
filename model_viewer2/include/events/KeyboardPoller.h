@@ -31,7 +31,6 @@ namespace GEngine
 					KeyEvent *getAvailableEvent();
 					void releaseEvent(KeyEvent *event);
 			};
-			
 		
 		public:
 			KeyboardPoller(Window *win);

@@ -17,8 +17,11 @@ namespace GEngine
 			double y_pos;
 			Type event_type;
 		public:
-			MouseEvent();
+			MouseEvent(Type type);
 			~MouseEvent();
+			
+			void setType(Type type);
+			void setPos(double x, double y);
 			
 			Type getType();
 			double getPosX();

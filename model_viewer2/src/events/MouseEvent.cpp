@@ -2,15 +2,26 @@
 
 namespace GEngine
 {
-	MouseEvent::MouseEvent()
+	MouseEvent::MouseEvent(MouseEvent::Type type)
 	{
-		event_type = MouseEvent::Type::unknown;
+		event_type = type;
 		x_pos = -1.0f;
 		y_pos = -1.0f;
 	}
 	
 	MouseEvent::~MouseEvent()
 	{
+	}
+	
+	void MouseEvent::setType(MouseEvent::Type type)
+	{
+		event_type = type;
+	}
+	
+	void MouseEvent::setPos(double x, double y)
+	{
+		x_pos = x;
+		y_pos = y;
 	}
 	
 	MouseEvent::Type MouseEvent::getType()

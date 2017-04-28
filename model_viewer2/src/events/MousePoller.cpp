@@ -18,9 +18,6 @@ namespace GEngine
 
 	MousePoller::MousePoller(Window *win)
 	{
-		pos_x = -1;
-		pos_y = -1;
-		
 		window = win;
 		map_evt[win->getGLFWObject()] = this;
 		glfwSetCursorPosCallback(window->getGLFWObject(), cPositionCallback);
@@ -28,31 +25,70 @@ namespace GEngine
 	
 	MousePoller::~MousePoller()
 	{
+		clearEvents();
+	}
+	
+	void MousePoller::clearEvents()
+	{
+		for (MouseEvent *evt: current_events)
+			MousePoller::MouseEventPool::getInstance()->releaseEvent(evt);
+		current_events.clear();
 	}
 	
 	void MousePoller::poll()
 	{
+		clearEvents();
 	}
 	
-	void MousePoller::getCurrentCursorPos(double *x, double *y)
+	vector<MouseEvent *> MousePoller::getEvents()
 	{
-		glfwGetCursorPos(window->getGLFWObject(), x, y);
-	}
-	
-	double MousePoller::getX()
-	{
-		return pos_x;
-	}
-	
-	double MousePoller::getY()
-	{
-		return pos_y;
+		return current_events;
 	}
 	
 	void MousePoller::callbackPosition(GLFWwindow *win, double xpos, double ypos)
 	{
 		(void) win;
-		pos_x = xpos;
-		pos_y = ypos;
+		MouseEvent *event = MousePoller::MouseEventPool::getInstance()->getAvailableEvent();
+		event->setType(MouseEvent::Type::position);
+		event->setPos(xpos, ypos);
+		current_events.push_back(event);
+	}
+	
+	
+	MousePoller::MouseEventPool *MousePoller::MouseEventPool::m_instance = nullptr;
+	
+	MousePoller::MouseEventPool::MouseEventPool()
+	{
+	}
+	
+	MousePoller::MouseEventPool::~MouseEventPool()
+	{
+		for (MouseEvent *event: available_commands)
+			delete event;
+		available_commands.clear();
+	}
+
+	MousePoller::MouseEventPool *MousePoller::MouseEventPool::getInstance()
+	{
+		if (m_instance == nullptr)
+			m_instance = new MouseEventPool();
+		return m_instance;
+	}
+	
+	MouseEvent *MousePoller::MouseEventPool::getAvailableEvent()
+	{
+		if (!available_commands.empty())
+		{
+			MouseEvent *event = available_commands.at(available_commands.size() - 1);
+			available_commands.pop_back();
+			return event;
+		}
+		
+		return new MouseEvent(MouseEvent::Type::unknown);
+	}
+	
+	void MousePoller::MouseEventPool::releaseEvent(MouseEvent *event)
+	{
+		available_commands.push_back(event);
 	}
 }
