@@ -1,4 +1,4 @@
-#include <events/MouseEvent.h>
+#include <events/MousePoller.h>
 
 #include <map>
 
@@ -6,17 +6,17 @@ using namespace std;
 
 namespace GEngine
 {
-	static map<GLFWwindow *, MouseEvent *> map_evt;
+	static map<GLFWwindow *, MousePoller *> map_evt;
 	
 	static void cPositionCallback(GLFWwindow *window, double xpos, double ypos)
 	{
-		map<GLFWwindow *, MouseEvent *>::iterator found = map_evt.find(window);
+		map<GLFWwindow *, MousePoller *>::iterator found = map_evt.find(window);
 		
 		if (found != map_evt.end())
 			found->second->callbackPosition(window, xpos, ypos);
 	}
 
-	MouseEvent::MouseEvent(Window *win)
+	MousePoller::MousePoller(Window *win)
 	{
 		pos_x = -1;
 		pos_y = -1;
@@ -26,30 +26,30 @@ namespace GEngine
 		glfwSetCursorPosCallback(window->getGLFWObject(), cPositionCallback);
 	}
 	
-	MouseEvent::~MouseEvent()
+	MousePoller::~MousePoller()
 	{
 	}
 	
-	void MouseEvent::poll()
+	void MousePoller::poll()
 	{
 	}
 	
-	void MouseEvent::getCurrentCursorPos(double *x, double *y)
+	void MousePoller::getCurrentCursorPos(double *x, double *y)
 	{
 		glfwGetCursorPos(window->getGLFWObject(), x, y);
 	}
 	
-	double MouseEvent::getX()
+	double MousePoller::getX()
 	{
 		return pos_x;
 	}
 	
-	double MouseEvent::getY()
+	double MousePoller::getY()
 	{
 		return pos_y;
 	}
 	
-	void MouseEvent::callbackPosition(GLFWwindow *win, double xpos, double ypos)
+	void MousePoller::callbackPosition(GLFWwindow *win, double xpos, double ypos)
 	{
 		(void) win;
 		pos_x = xpos;

@@ -5,7 +5,7 @@
 
 namespace GEngine
 {
-	class MouseEvent
+	class MousePoller
 	{
 		private:
 			double pos_x;
@@ -14,8 +14,8 @@ namespace GEngine
 			Window *window;
 			
 		public:
-			MouseEvent(Window *win);
-			~MouseEvent();
+			MousePoller(Window *win);
+			~MousePoller();
 			
 			void poll();
 			
