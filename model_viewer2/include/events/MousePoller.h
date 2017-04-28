@@ -1,5 +1,5 @@
-#ifndef MOUSE_EVENT_H
-#define MOUSE_EVENT_H
+#ifndef MOUSE_POLLER_H
+#define MOUSE_POLLER_H
 
 #include <Window.h>
 
