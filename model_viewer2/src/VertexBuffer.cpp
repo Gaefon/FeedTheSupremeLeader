@@ -31,7 +31,7 @@ namespace GEngine
 		buffer_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		buffer_info.size = buffer_size;
         buffer_info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-		if(VkBufferUsageFlags != VK_NULL_HANDLE)
+		if(usage_flags != VK_NULL_HANDLE)
         {
             buffer_info.usage = usage_flags;
         }

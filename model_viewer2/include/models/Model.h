@@ -26,10 +26,10 @@ class Model
 		float *arr_normals;
 		float *arr_colors;
 		float *arr_uvs;
-		
+
 		Shader *m_shader;
 		Texture *m_texture;
-		
+
 		std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
 		void loadFile(std::string file_name);
 	public:

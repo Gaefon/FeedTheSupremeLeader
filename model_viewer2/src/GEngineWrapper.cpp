@@ -126,8 +126,8 @@ namespace GEngine
         g_command_buffers->createCommandPool(g_physical_device);
 
         g_staging_buffer = new VertexBuffer(g_engine->getLogicalDevice());
-        g_staging_buffer->createbuffer(sizeof(Vertex) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT);
-        g_staging_buffer->allocBuffer(VK_NULL_HANDLE);
+        g_staging_buffer->createBuffer(sizeof(Vertex) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT);
+        g_staging_buffer->allocBuffer(VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
         g_staging_buffer->bindToDevice();
         g_staging_buffer->addVertexData(&vertices);
 
@@ -137,7 +137,6 @@ namespace GEngine
 		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
 		g_vertex_buffer->allocBuffer(VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
         g_vertex_buffer->bindToDevice();
-		//g_vertex_buffer->addVertexData(&vertices);
 
         g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
         g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());

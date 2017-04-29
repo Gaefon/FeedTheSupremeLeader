@@ -55,23 +55,30 @@ namespace GEngine
 
 	void CommandBuffers::copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size)
 	{
+	    VkCommandBufferAllocateInfo alloc_info = {};
+        alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+        alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        alloc_info.commandPool = command_pool;
+        alloc_info.commandBufferCount = 1;
+        VkCommandBuffer command_buffer;
+        vkAllocateCommandBuffers(device->getVulkanObject(), &alloc_info, &command_buffer);
 	    VkCommandBufferBeginInfo begin_info = {};
 		begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		begin_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-		vkBeginCommandBuffer(command_buffers.data(), &begin_info);
+		vkBeginCommandBuffer(command_buffer, &begin_info);
 		VkBufferCopy copy_region = {};
         copy_region.srcOffset = 0; // Optional
         copy_region.dstOffset = 0; // Optional
-        copy_region.size = size();
-        vkCmdCopyBuffer(command_buffers.data(), src_buffer, dst_buffer, 1, &copy_region);
-        vkEndCommandBuffer(command_buffers.data());
+        copy_region.size = size;
+        vkCmdCopyBuffer(command_buffer, src_buffer, dst_buffer, 1, &copy_region);
+        vkEndCommandBuffer(command_buffer);
         VkSubmitInfo submit_info = {};
         submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
         submit_info.commandBufferCount = 1;
-        submit_info.pCommandBuffers = &(command_buffers.data());
+        submit_info.pCommandBuffers = &(command_buffer);
         vkQueueSubmit(device->getGraphicQueue(), 1, &submit_info, VK_NULL_HANDLE);
         vkQueueWaitIdle(device->getGraphicQueue());
-        vkFreeCommandBuffers(device, command_pool, 1, &command_buffers.data());
+        vkFreeCommandBuffers(device->getVulkanObject(), command_pool, 1, &command_buffer);
     }
 
 	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer)
