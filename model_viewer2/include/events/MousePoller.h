@@ -39,6 +39,7 @@ namespace GEngine
 			void poll();
 			std::vector<MouseEvent *> getEvents();
 			void callbackPosition(GLFWwindow *win, double xpos, double ypos);
+			void callbackMouseButton(GLFWwindow *win, int button, int action, int mods);
 	};
 }
 

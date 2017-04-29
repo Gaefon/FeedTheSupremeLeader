@@ -31,7 +31,12 @@ int main(void)
 			cout << (int) evt->getKey() << " " << evt->isPressed() << endl;
 			
 		for (MouseEvent *evt : mouse_event->getEvents())
-			cout << "X = " << evt->getPosX() << " // Y = " << evt->getPosY() << endl;
+		{
+			if (evt->getType() == MouseEvent::Type::position)
+				cout << "X = " << evt->getPosX() << " // Y = " << evt->getPosY() << endl;
+			else
+				cout << "Button = " << (int) evt->getType() << " // pressed = " << evt->isPressed() << endl;
+		}
 		mouse_event->poll();
 		
 		g_engine_wrapper.startDrawing();

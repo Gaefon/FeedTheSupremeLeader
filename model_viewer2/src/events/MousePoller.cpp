@@ -15,12 +15,21 @@ namespace GEngine
 		if (found != map_evt.end())
 			found->second->callbackPosition(window, xpos, ypos);
 	}
+	
+	static void cMouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+	{
+		map<GLFWwindow *, MousePoller *>::iterator found = map_evt.find(window);
+		
+		if (found != map_evt.end())
+			found->second->callbackMouseButton(window, button, action, mods);
+	}
 
 	MousePoller::MousePoller(Window *win)
 	{
 		window = win;
 		map_evt[win->getGLFWObject()] = this;
 		glfwSetCursorPosCallback(window->getGLFWObject(), cPositionCallback);
+		glfwSetMouseButtonCallback(window->getGLFWObject(), cMouseButtonCallback);
 	}
 	
 	MousePoller::~MousePoller()
@@ -53,6 +62,29 @@ namespace GEngine
 		event->setPos(xpos, ypos);
 		current_events.push_back(event);
 	}
+	
+	void MousePoller::callbackMouseButton(GLFWwindow *win, int button, int action, int mods)
+	{
+		(void) win;
+		MouseEvent *event = MousePoller::MouseEventPool::getInstance()->getAvailableEvent();
+		
+		if (button == GLFW_MOUSE_BUTTON_LEFT)
+			event->setType(MouseEvent::Type::leftButton);
+		else if (button == GLFW_MOUSE_BUTTON_RIGHT)
+			event->setType(MouseEvent::Type::rightButton);
+		else if (button == GLFW_MOUSE_BUTTON_MIDDLE)
+			event->setType(MouseEvent::Type::middleButton);
+		
+		if (action == GLFW_RELEASE)
+			event->setPressed(false);
+		else
+			event->setPressed(true);
+		
+		current_events.push_back(event);
+	}
+	
+	
+	
 	
 	
 	MousePoller::MouseEventPool *MousePoller::MouseEventPool::m_instance = nullptr;

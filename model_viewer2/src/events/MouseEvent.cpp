@@ -24,6 +24,11 @@ namespace GEngine
 		y_pos = y;
 	}
 	
+	void MouseEvent::setPressed(bool new_val)
+	{
+		is_pressed = new_val;
+	}
+	
 	MouseEvent::Type MouseEvent::getType()
 	{
 		return event_type;
@@ -37,5 +42,10 @@ namespace GEngine
 	double MouseEvent::getPosY()
 	{
 		return y_pos;
+	}
+	
+	bool MouseEvent::isPressed()
+	{
+		return is_pressed;
 	}
 }
