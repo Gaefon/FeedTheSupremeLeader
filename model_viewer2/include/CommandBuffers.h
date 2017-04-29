@@ -19,7 +19,7 @@ namespace GEngine
 		private:
 			VkCommandPool command_pool;
 			std::vector<VkCommandBuffer> command_buffers;
-			
+
 			Semaphore img;
 			Semaphore render;
 
@@ -28,7 +28,7 @@ namespace GEngine
 		public:
 			CommandBuffers(Device *dev);
 			~CommandBuffers();
-
+            void copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size);
 			void createCommandPool(PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
 			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer);

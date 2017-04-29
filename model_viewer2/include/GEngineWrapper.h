@@ -40,6 +40,7 @@ namespace GEngine
 		RenderPass *g_render_pass;
 		Shader *g_shader_vert;
 		Shader *g_shader_frag;
+		VertexBuffer *g_staging_buffer;
 		VertexBuffer *g_vertex_buffer;
 		std::vector<Vertex> vertices;
 
