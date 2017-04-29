@@ -13,7 +13,7 @@ namespace GEngine
 		map<GLFWwindow *, MousePoller *>::iterator found = map_evt.find(window);
 		
 		if (found != map_evt.end())
-			found->second->callbackPosition(window, xpos, ypos);
+			found->second->callbackPosition(xpos, ypos);
 	}
 	
 	static void cMouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
@@ -21,7 +21,16 @@ namespace GEngine
 		map<GLFWwindow *, MousePoller *>::iterator found = map_evt.find(window);
 		
 		if (found != map_evt.end())
-			found->second->callbackMouseButton(window, button, action, mods);
+			found->second->callbackMouseButton(button, action, mods);
+	}
+	
+	
+	static void cMouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+	{
+		map<GLFWwindow *, MousePoller *>::iterator found = map_evt.find(window);
+		
+		if (found != map_evt.end())
+			found->second->callbackMouseButton(xoffset, yoffset);
 	}
 
 	MousePoller::MousePoller(Window *win)
@@ -30,6 +39,7 @@ namespace GEngine
 		map_evt[win->getGLFWObject()] = this;
 		glfwSetCursorPosCallback(window->getGLFWObject(), cPositionCallback);
 		glfwSetMouseButtonCallback(window->getGLFWObject(), cMouseButtonCallback);
+		glfwSetScrollCallback(window->getGLFWObject(), cMouseScrollCallback);
 	}
 	
 	MousePoller::~MousePoller()
@@ -54,19 +64,18 @@ namespace GEngine
 		return current_events;
 	}
 	
-	void MousePoller::callbackPosition(GLFWwindow *win, double xpos, double ypos)
+	void MousePoller::callbackPosition(double xpos, double ypos)
 	{
-		(void) win;
 		MouseEvent *event = MousePoller::MouseEventPool::getInstance()->getAvailableEvent();
 		event->setType(MouseEvent::Type::position);
 		event->setPos(xpos, ypos);
 		current_events.push_back(event);
 	}
 	
-	void MousePoller::callbackMouseButton(GLFWwindow *win, int button, int action, int mods)
+	void MousePoller::callbackMouseButton(int button, int action, int mods)
 	{
-		(void) win;
 		MouseEvent *event = MousePoller::MouseEventPool::getInstance()->getAvailableEvent();
+		(void) mods;
 		
 		if (button == GLFW_MOUSE_BUTTON_LEFT)
 			event->setType(MouseEvent::Type::leftButton);
@@ -80,6 +89,14 @@ namespace GEngine
 		else
 			event->setPressed(true);
 		
+		current_events.push_back(event);
+	}
+	
+	void MousePoller::callbackMouseButton(double xoffset, double yoffset)
+	{
+		MouseEvent *event = MousePoller::MouseEventPool::getInstance()->getAvailableEvent();
+		event->setType(MouseEvent::Type::scroll);
+		event->setOffset(xoffset, yoffset);
 		current_events.push_back(event);
 	}
 	

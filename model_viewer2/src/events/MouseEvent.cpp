@@ -24,6 +24,12 @@ namespace GEngine
 		y_pos = y;
 	}
 	
+	void MouseEvent::setOffset(double x, double y)
+	{
+		x_offset = x;
+		y_offset = y;
+	}
+	
 	void MouseEvent::setPressed(bool new_val)
 	{
 		is_pressed = new_val;
@@ -42,6 +48,16 @@ namespace GEngine
 	double MouseEvent::getPosY()
 	{
 		return y_pos;
+	}
+	
+	double MouseEvent::getOffsetX()
+	{
+		return x_offset;
+	}
+	
+	double MouseEvent::getOffsetY()
+	{
+		return y_offset;
 	}
 	
 	bool MouseEvent::isPressed()

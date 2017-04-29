@@ -34,6 +34,8 @@ int main(void)
 		{
 			if (evt->getType() == MouseEvent::Type::position)
 				cout << "X = " << evt->getPosX() << " // Y = " << evt->getPosY() << endl;
+			else if (evt->getType() == MouseEvent::Type::scroll)
+				cout << "SCROLL :: X = " << evt->getOffsetX() << " // Y = " << evt->getOffsetY() << endl;
 			else
 				cout << "Button = " << (int) evt->getType() << " // pressed = " << evt->isPressed() << endl;
 		}
