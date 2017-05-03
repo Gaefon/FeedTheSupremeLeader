@@ -140,6 +140,7 @@ namespace GEngine
 
         g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
         g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
+        g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
         g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline, g_vertex_buffer);
     }
 

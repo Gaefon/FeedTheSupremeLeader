@@ -27,6 +27,7 @@ namespace GEngine
 			bool allocBuffer(VkMemoryPropertyFlags memory_flags);
 			void bindToDevice();
 			void addVertexData(std::vector<Vertex> *vertices);
+			void setNbVertices(unsigned int nb);
 
 			VkBuffer getVulkanBuffer();
 			unsigned int getNbVertices();

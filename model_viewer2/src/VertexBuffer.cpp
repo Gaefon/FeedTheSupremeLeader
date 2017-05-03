@@ -113,4 +113,9 @@ namespace GEngine
 		return nb_vertices;
 	}
 
+    void VertexBuffer::setNbVertices(unsigned int nb)
+	{
+		nb_vertices = nb;
+	}
+
 }
