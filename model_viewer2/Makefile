@@ -35,6 +35,7 @@ SRC =	src/GEngine.cpp\
 		src/helper/EventHelper.cpp\
 		src/Camera.cpp\
 		src/models/Vertex.cpp\
+		src/models/Model.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert

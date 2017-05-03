@@ -14,15 +14,11 @@ namespace GEngine
 			glm::vec3 v_color;
 	
 		public:
-			Vertex::Vertex(glm::vec3 pos, glm::vec3 color);
-			Vertex::~Vertex();
+			Vertex(glm::vec3 pos, glm::vec3 color);
+			~Vertex();
 			
 			glm::vec3 getPosition();
 			glm::vec3 getColor();
-	    
-		static VkVertexInputBindingDescription *getBindingDescription();
-		static std::array<VkVertexInputAttributeDescription, 2> *getAttributeDescriptions();
-
     };
 }
 #endif
