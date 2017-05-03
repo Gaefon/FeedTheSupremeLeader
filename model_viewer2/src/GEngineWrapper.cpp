@@ -14,6 +14,7 @@ namespace GEngine
     {
         delete g_command_buffers;
         delete g_vertex_buffer;
+        delete g_staging_buffer;
         delete g_pipeline;
         delete g_shader_vert;
         delete g_shader_frag;
@@ -130,7 +131,6 @@ namespace GEngine
         g_staging_buffer->allocBuffer(VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
         g_staging_buffer->bindToDevice();
         g_staging_buffer->addVertexData(&vertices);
-
 
         //creation vertex buffers
 		g_vertex_buffer = new VertexBuffer(g_engine->getLogicalDevice());
