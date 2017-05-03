@@ -15,7 +15,7 @@ namespace GEngine
 		device = dev;
 		nb_vertices = 0;
 	}
-	
+
 	VertexBuffer::~VertexBuffer()
 	{
 		if (vertex_buffer != VK_NULL_HANDLE)
@@ -23,26 +23,30 @@ namespace GEngine
 		if (dev_memory != VK_NULL_HANDLE)
 			vkFreeMemory(device->getVulkanObject(), dev_memory, nullptr);
 	}
-	
-	
-	bool VertexBuffer::createBuffer(unsigned long buffer_size)
+
+
+	bool VertexBuffer::createBuffer(unsigned long buffer_size, VkBufferUsageFlags usage_flags)
 	{
 		VkBufferCreateInfo buffer_info = {};
 		buffer_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		buffer_info.size = buffer_size;
-		buffer_info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+        buffer_info.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+		if(usage_flags != VK_NULL_HANDLE)
+        {
+            buffer_info.usage = usage_flags;
+        }
 		buffer_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		size = buffer_size;
-		
+
 		if (vkCreateBuffer(device->getVulkanObject(), &buffer_info, nullptr, &vertex_buffer) != VK_SUCCESS)
 		{
 			cerr << "failed to create vertex buffer" << endl;
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	unsigned int VertexBuffer::findSuitableMemory(unsigned int filter, VkMemoryPropertyFlags flags, VkPhysicalDeviceMemoryProperties *mem_properties)
 	{
 		for (unsigned int i = 0; i < mem_properties->memoryTypeCount; i++)
@@ -55,20 +59,27 @@ namespace GEngine
 
 		return -1;
 	}
-	
-	bool VertexBuffer::allocBuffer()
+
+	bool VertexBuffer::allocBuffer(VkMemoryPropertyFlags memory_flags)
 	{
 		VkMemoryRequirements mem_requirements;
 		VkPhysicalDeviceMemoryProperties mem_properties;
-		
+
 		vkGetBufferMemoryRequirements(device->getVulkanObject(), vertex_buffer, &mem_requirements);
 		vkGetPhysicalDeviceMemoryProperties(device->getPhysicalDevice()->getVulkanObject(), &mem_properties);
-		
+
 		VkMemoryAllocateInfo alloc_infos = {};
 		alloc_infos.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		alloc_infos.allocationSize = mem_requirements.size;
-		alloc_infos.memoryTypeIndex = findSuitableMemory(mem_requirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &mem_properties);
-		
+        if(memory_flags != VK_NULL_HANDLE)
+        {
+            alloc_infos.memoryTypeIndex = findSuitableMemory(mem_requirements.memoryTypeBits, memory_flags, &mem_properties);
+        }
+        else
+        {
+            alloc_infos.memoryTypeIndex = findSuitableMemory(mem_requirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, &mem_properties);
+        }
+
 		if (vkAllocateMemory(device->getVulkanObject(), &alloc_infos, nullptr, &dev_memory) != VK_SUCCESS)
 		{
 			cerr << "failed to allocate memory" << endl;
@@ -76,12 +87,12 @@ namespace GEngine
 		}
 		return true;
 	}
-	
+
 	void VertexBuffer::bindToDevice()
 	{
 		vkBindBufferMemory(device->getVulkanObject(), vertex_buffer, dev_memory, 0);
 	}
-	
+
 	void VertexBuffer::addVertexData(vector<Vertex> *vertices)
 	{
 		void *data;
@@ -90,15 +101,21 @@ namespace GEngine
 		vkUnmapMemory(device->getVulkanObject(), dev_memory);
 		nb_vertices = vertices->size();
 	}
-	
+
+
 	VkBuffer VertexBuffer::getVulkanBuffer()
 	{
 		return vertex_buffer;
 	}
-	
+
 	unsigned int VertexBuffer::getNbVertices()
 	{
 		return nb_vertices;
 	}
-	
+
+    void VertexBuffer::setNbVertices(unsigned int nb)
+	{
+		nb_vertices = nb;
+	}
+
 }

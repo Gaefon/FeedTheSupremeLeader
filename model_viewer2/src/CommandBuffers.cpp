@@ -53,11 +53,39 @@ namespace GEngine
 		}
 	}
 
+	void CommandBuffers::copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size)
+	{
+	    VkCommandBufferAllocateInfo alloc_info = {};
+        alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+        alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        alloc_info.commandPool = command_pool;
+        alloc_info.commandBufferCount = 1;
+        VkCommandBuffer command_buffer;
+        vkAllocateCommandBuffers(device->getVulkanObject(), &alloc_info, &command_buffer);
+	    VkCommandBufferBeginInfo begin_info = {};
+		begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		begin_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+		vkBeginCommandBuffer(command_buffer, &begin_info);
+		VkBufferCopy copy_region = {};
+        copy_region.srcOffset = 0; // Optional
+        copy_region.dstOffset = 0; // Optional
+        copy_region.size = size;
+        vkCmdCopyBuffer(command_buffer, src_buffer, dst_buffer, 1, &copy_region);
+        vkEndCommandBuffer(command_buffer);
+        VkSubmitInfo submit_info = {};
+        submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+        submit_info.commandBufferCount = 1;
+        submit_info.pCommandBuffers = &(command_buffer);
+        vkQueueSubmit(device->getGraphicQueue(), 1, &submit_info, VK_NULL_HANDLE);
+        vkQueueWaitIdle(device->getGraphicQueue());
+        vkFreeCommandBuffers(device->getVulkanObject(), command_pool, 1, &command_buffer);
+    }
+
 	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer)
 	{
 		img.createSemaphore(device);
 		render.createSemaphore(device);
-		
+
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			VkCommandBufferBeginInfo begin_info = {};
@@ -78,44 +106,44 @@ namespace GEngine
 			VkClearValue clear_color = {0.0f, 0.0f, 0.0f, 0.0f};
 			render_pass_info.clearValueCount = 1;
 			render_pass_info.pClearValues = &clear_color;
-			
+
 			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
 		}
-		
+
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			// nouvelle fonction (bindPipeline(Pipeline *pipeline))
 			vkCmdBindPipeline(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->getVulkanObject());
 		}
-			
+
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
-		{	
-			
+		{
+
 			// nouvelle fonction (sendVertexBuffers(VertexBuffer *buffer))
 			VkBuffer vertex_buffers[] = {vertex_buffer->getVulkanBuffer()};
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(command_buffers[i], 0, 1, vertex_buffers, offsets);
 			vkCmdDraw(command_buffers[i], vertex_buffer->getNbVertices(), 1, 0, 0);
 		}
-		
+
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
-		{	
+		{
 			//nouvelle fonction (stopRecording())
 			vkCmdEndRenderPass(command_buffers[i]);
-			
+
 			if (vkEndCommandBuffer(command_buffers[i]) != VK_SUCCESS)
 				cerr << "failed to record command buffer" << endl;
 		}
 	}
-	
-	
-	
+
+
+
 	void CommandBuffers::draw(SwapChain *sc)
 	{
 		unsigned int img_index;
-		
+
 		vkAcquireNextImageKHR(device->getVulkanObject(), sc->getVulkanObject(), numeric_limits<uint64_t>::max(), img.getVulkanObject(), VK_NULL_HANDLE, &img_index);
-		
+
 		VkSubmitInfo submit_info = {};
 		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
@@ -131,10 +159,10 @@ namespace GEngine
 		VkSemaphore signal_semaphores[] = { render.getVulkanObject() };
 		submit_info.signalSemaphoreCount = 1;
 		submit_info.pSignalSemaphores = signal_semaphores;
-		
+
 		if (vkQueueSubmit(device->getGraphicQueue(), 1, &submit_info, VK_NULL_HANDLE) != VK_SUCCESS)
 			cerr << "failed to submit draw command buffer!" << endl;
-		
+
 		VkPresentInfoKHR present_info = {};
         present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 
@@ -148,6 +176,6 @@ namespace GEngine
         present_info.pImageIndices = &img_index;
 
         vkQueuePresentKHR(device->getPresentQueue(), &present_info);
-		
+
 	}
 }
