@@ -30,6 +30,8 @@ namespace GEngine
 			std::string& getName();
 
 			void addArgumentType(int position, ArgumentType type);
+			
+			std::map<int, ArgumentType> *getArgumentPosition();
 
 
 		private:

@@ -1,5 +1,8 @@
 #include <models/Model.h>
 
+#include <models/Vertex.h>
+
+#include <string.h>
 
 using namespace std;
 
@@ -27,6 +30,38 @@ namespace GEngine
 	void Model::addVertice(Vertex *new_vertex)
 	{
 		arr_vertices.push_back(new_vertex);
+	}
+	
+	vector<glm::vec3> Model::getVertexBufferData (Shader *shader)
+	{
+		vector<glm::vec3> data;
+		map<int, Shader::ArgumentType> *args = shader->getArgumentPosition();
+		
+		/*for (map<int, Shader::ArgumentType>::iterator it = args->begin(); it != args->end(); ++it)
+		{
+			if (it->second == Shader::ArgumentType::Vertex)
+				size += arr_vertices.size() * Vertex::getPositionSize();
+			else if (it->second == Shader::ArgumentType::Color)
+				size += arr_vertices.size() * Vertex::getColorSize();
+		}*/
+		
+		/*data = new float[size];
+		int current_index = 0;*/
+		
+		for (vector<Vertex *>::iterator v_it = arr_vertices.begin(); v_it != arr_vertices.end(); ++v_it)
+		{
+			Vertex *vert = *v_it;
+			
+			for (map<int, Shader::ArgumentType>::iterator it = args->begin(); it != args->end(); ++it)
+			{
+				if (it->second == Shader::ArgumentType::Vertex)
+					data.push_back(vert->getPosition());
+				else if (it->second == Shader::ArgumentType::Color)
+					data.push_back(vert->getColor());
+			}
+		}
+		
+		return data;
 	}
 
 	/*vector<string> Model::splitStr(string data, string delimiter)

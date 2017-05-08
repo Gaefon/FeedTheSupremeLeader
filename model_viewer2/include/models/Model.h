@@ -6,8 +6,10 @@
 
 #include <models/Vertex.h>
 
-/*#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>*/
+#include <Shader.h>
+
+#include <glm/glm.hpp>
+/*#include <glm/gtc/type_ptr.hpp>*/
 
 
 /*#include "Camera.h"
@@ -42,6 +44,8 @@ namespace GEngine
 			//Model(std::string file_name);
 			~Model();
 			void addVertice(Vertex *new_vertex);
+			
+			std::vector<glm::vec3> getVertexBufferData(Shader *shader);
 	};
 }
 
