@@ -1,5 +1,5 @@
-#ifndef VERTEX_H
-#define VERTEX_H
+#ifndef VERTEX_CLASS_H
+#define VERTEX_CLASS_H
 
 #include <vulkan/vulkan.h>
 #include <glm/glm.hpp>
