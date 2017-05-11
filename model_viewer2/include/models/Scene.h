@@ -5,6 +5,8 @@
 
 #include <models/Model.h>
 
+#include <GEngineWrapper.h>
+
 namespace GEngine
 {
 	class Scene
@@ -20,7 +22,7 @@ namespace GEngine
 			//void setCamera(Camera *cam);
 			void addModel(Model *model);
 			//void addLight(Light *light);
-			void render();
+			void render(GEngineWrapper *wrapper);
 	};
 }
 

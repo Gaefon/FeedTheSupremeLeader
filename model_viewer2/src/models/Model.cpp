@@ -32,7 +32,12 @@ namespace GEngine
 		arr_vertices.push_back(new_vertex);
 	}
 	
-	vector<glm::vec3> Model::getVertexBufferData (Shader *shader)
+	int Model::getNbVertices()
+	{
+		return arr_vertices.size();
+	}
+	
+	vector<glm::vec3> Model::getVertexBufferData(Shader *shader)
 	{
 		vector<glm::vec3> data;
 		map<int, Shader::ArgumentType> *args = shader->getArgumentPosition();

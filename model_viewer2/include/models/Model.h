@@ -44,7 +44,7 @@ namespace GEngine
 			//Model(std::string file_name);
 			~Model();
 			void addVertice(Vertex *new_vertex);
-			
+			int getNbVertices();
 			std::vector<glm::vec3> getVertexBufferData(Shader *shader);
 	};
 }
