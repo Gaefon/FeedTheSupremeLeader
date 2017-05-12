@@ -94,7 +94,7 @@ namespace GEngine
         vkFreeCommandBuffers(device->getVulkanObject(), command_pool, 1, &command_buffer);
     }
 
-	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer)
+	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer, IndexBuffer *index_buffer)
 	{
 		img.createSemaphore(device);
 		render.createSemaphore(device);
@@ -123,6 +123,7 @@ namespace GEngine
 			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
 		}
 
+
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			// nouvelle fonction (bindPipeline(Pipeline *pipeline))
@@ -134,9 +135,11 @@ namespace GEngine
 
 			// nouvelle fonction (sendVertexBuffers(VertexBuffer *buffer))
 			VkBuffer vertex_buffers[] = {vertex_buffer->getVulkanBuffer()};
+			VkBuffer vk_index_buffer = index_buffer->getVulkanBuffer();
 			VkDeviceSize offsets[] = {0};
 			vkCmdBindVertexBuffers(command_buffers[i], 0, 1, vertex_buffers, offsets);
-			vkCmdDraw(command_buffers[i], vertex_buffer->getNbVertices(), 1, 0, 0);
+			vkCmdBindIndexBuffer(command_buffers[i], vk_index_buffer, 0, VK_INDEX_TYPE_UINT16);
+			vkCmdDrawIndexed(command_buffers[i], index_buffer->getNbVertices(), 1, 0, 0,0);
 		}
 
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
@@ -148,8 +151,6 @@ namespace GEngine
 				cerr << "failed to record command buffer" << endl;
 		}
 	}
-
-
 
 	void CommandBuffers::draw(SwapChain *sc)
 	{

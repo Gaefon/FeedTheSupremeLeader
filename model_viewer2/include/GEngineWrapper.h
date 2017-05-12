@@ -11,6 +11,8 @@
 #include <Vertex.h>
 #include <CommandBuffers.h>
 #include <VertexBuffer.h>
+#include <StagingBuffer.h>
+#include <IndexBuffer.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <list>
@@ -40,9 +42,12 @@ namespace GEngine
 		RenderPass *g_render_pass;
 		Shader *g_shader_vert;
 		Shader *g_shader_frag;
-		VertexBuffer *g_staging_buffer;
+		StagingBuffer *g_staging_buffer;
+		StagingBuffer *g_staging_buffer2;
 		VertexBuffer *g_vertex_buffer;
+		IndexBuffer *g_index_buffer;
 		std::vector<Vertex> vertices;
+		std::vector<uint16_t> indexes;
 
 		void init();
 		void initEngine(std::string engineName);
