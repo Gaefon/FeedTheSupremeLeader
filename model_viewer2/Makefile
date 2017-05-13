@@ -23,20 +23,20 @@ SRC =	src/GEngine.cpp\
 		src/Framebuffers.cpp\
 		src/CommandBuffers.cpp\
 		src/Semaphore.cpp\
+		src/Buffer.cpp\
+		src/StagingBuffer.cpp\
+		src/VertexBuffer.cpp\
+		src/IndexBuffer.cpp\
 		src/bitmaps/Bitmap.cpp\
 		src/pool/PipelinePool.cpp\
 		src/GEngineWrapper.cpp\
 		src/Vertex.cpp\
-		src/VertexBuffer.cpp\
 		src/events/KeyboardPoller.cpp\
 		src/events/KeyEvent.cpp\
 		src/events/MousePoller.cpp\
 		src/events/MouseEvent.cpp\
 		src/helper/EventHelper.cpp\
 		src/Camera.cpp\
-		src/models/Vertex.cpp\
-		src/models/Model.cpp\
-		src/models/Scene.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert

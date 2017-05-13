@@ -3,6 +3,9 @@
 #include <events/KeyboardPoller.h>
 #include <events/MousePoller.h>
 
+//#include <model/Scene.h>
+//#include <model/Model.h>
+
 #include <string>
 
 using namespace GEngine;
@@ -14,6 +17,7 @@ int main(void)
 	KeyboardPoller *key_event;
 	MousePoller *mouse_event;
 	list<string> extensions;
+	
 
 	glfwInit();
 
@@ -22,6 +26,32 @@ int main(void)
 	mouse_event = new MousePoller(window);
 
 	GEngineWrapper g_engine_wrapper(window);
+	/*Scene scene;
+	Model model1;
+	Model model2;
+	
+	model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
+	model1.addVertice(new Vertex({-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
+	model1.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
+
+	model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
+	model1.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
+	model1.addVertice(new Vertex({0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
+	
+	
+	
+	model2.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
+	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
+	model2.addVertice(new Vertex({0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
+	
+	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
+	model2.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
+	model2.addVertice(new Vertex({-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
+	
+	scene.addModel(&model1);
+	scene.addModel(&model2);
+	
+	scene.render(&g_engine_wrapper);*/
 
 	while (!window->shouldClose())
 	{
