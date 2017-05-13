@@ -11,7 +11,7 @@
 #include <Pipeline.h>
 #include <Semaphore.h>
 #include <VertexBuffer.h>
-
+#include <IndexBuffer.h>
 namespace GEngine
 {
 	class CommandBuffers
@@ -31,7 +31,7 @@ namespace GEngine
             void copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size);
 			void createCommandPool(PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
-			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer);
+			void startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer, IndexBuffer *index_buffer);
 			void draw(SwapChain *sc);
 	};
 }

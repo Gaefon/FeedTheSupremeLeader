@@ -31,32 +31,23 @@ namespace GEngine
         initSwapChain();
         initRenderPass();
         initPipeline();
+
         vertices =
         {
-			/*{{0.0f, -0.5f}, {1.0f, 1.0f, 0.0f}},
-			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},*/
-
 			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
 			{{-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
 			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-
-			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
 			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
 			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-
-			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
 			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
 			{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-
-			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
 			{{-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}}
 		};
+       indexes = {0,1,2,3,4,0,3,5,6,5,2,7};
 
-        createPipeline();
-        initCmdBuffers();
-        startRecording();
+       createPipeline();
+       initCmdBuffers();
+       startRecording();
     }
 
     void GEngineWrapper::initEngine(string engine_name)
@@ -125,23 +116,38 @@ namespace GEngine
     void GEngineWrapper::startRecording()
     {
         g_command_buffers->createCommandPool(g_physical_device);
+        g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
 
-        g_staging_buffer = new VertexBuffer(g_engine->getLogicalDevice());
-        g_staging_buffer->createBuffer(sizeof(Vertex) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_SRC_BIT);
-        g_staging_buffer->allocBuffer(VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+        g_staging_buffer->createBuffer(sizeof(Vertex) * vertices.size());
+        g_staging_buffer->allocBuffer();
         g_staging_buffer->bindToDevice();
         g_staging_buffer->addVertexData(&vertices);
 
+
         //creation vertex buffers
 		g_vertex_buffer = new VertexBuffer(g_engine->getLogicalDevice());
-		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size(), VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
-		g_vertex_buffer->allocBuffer(VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size());
+		g_vertex_buffer->allocBuffer();
         g_vertex_buffer->bindToDevice();
 
+
+        g_staging_buffer2 = new StagingBuffer(g_engine->getLogicalDevice());
+        g_staging_buffer2->createBuffer(sizeof(indexes[0]) * indexes.size());
+        g_staging_buffer2->allocBuffer();
+        g_staging_buffer2->bindToDevice();
+        g_staging_buffer2->addVertexData(&indexes);
+        g_index_buffer->createBuffer(sizeof(indexes[0]) * indexes.size());
+        g_index_buffer->allocBuffer();
+        g_index_buffer->bindToDevice();
+        g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
         g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
         g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
+        g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(indexes[0]) * indexes.size());
         g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
-        g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline, g_vertex_buffer);
+        g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline, g_vertex_buffer, g_index_buffer);
+
+
     }
 
     Engine *GEngineWrapper::getEngine()

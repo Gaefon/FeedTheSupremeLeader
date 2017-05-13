@@ -1,21 +1,20 @@
-#ifndef VERTEX_BUFFER_H
-#define VERTEX_BUFFER_H
-
+#ifndef INDEXBUFFER_H_INCLUDED
+#define INDEXBUFFER_H_INCLUDED
 #include <vulkan/vulkan.h>
 #include <Buffer.h>
 #include <Device.h>
 #include <Vertex.h>
-
 namespace GEngine
 {
-	class VertexBuffer : public Buffer
+	class IndexBuffer : public Buffer
 	{
         public:
-            VertexBuffer(Device *dev);
-            ~VertexBuffer();
+            IndexBuffer(Device *dev);
+            ~IndexBuffer();
             bool createBuffer(unsigned long buffer_size);
             bool allocBuffer();
 	};
 }
 
-#endif
+
+#endif // INDEXBUFFER_H_INCLUDED
