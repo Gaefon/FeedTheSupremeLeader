@@ -32,15 +32,20 @@ namespace GEngine
 		arr_vertices.push_back(new_vertex);
 	}
 	
+	void setMateriel(Material *mat)
+	{
+		material = mat;
+	}
+	
 	int Model::getNbVertices()
 	{
 		return arr_vertices.size();
 	}
 	
-	vector<glm::vec3> Model::getVertexBufferData(Shader *shader)
+	vector<glm::vec3> Model::getVertexBufferData()
 	{
 		vector<glm::vec3> data;
-		map<int, Shader::ArgumentType> *args = shader->getArgumentPosition();
+		map<int, Shader::ArgumentType> *args = material->getPipeline()->getVertexShader()->getArgumentPosition();
 		
 		/*for (map<int, Shader::ArgumentType>::iterator it = args->begin(); it != args->end(); ++it)
 		{

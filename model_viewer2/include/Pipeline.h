@@ -52,6 +52,7 @@ namespace GEngine
 			void setVertexInput();
 			void setInputAssembler();
 			void setVertexShader(Shader *new_shader);
+			Shader *getVertexShader();
 			void setFragmentShader(Shader *new_shader);
 			void setViewPort(float width, float height);
 			void setScissor(VkExtent2D extent);

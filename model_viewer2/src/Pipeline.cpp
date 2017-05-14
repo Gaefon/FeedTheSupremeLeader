@@ -53,6 +53,11 @@ namespace GEngine
 		pipeline_stages[0].pName = vertex_shader->getName().c_str();
 		pipeline_stages[0].pNext = nullptr;
 	}
+	
+	Shader *Pipeline::getVertexShader()
+	{
+		return vertex_shader;
+	}
 
 	void Pipeline::setFragmentShader(Shader *new_shader)
 	{
