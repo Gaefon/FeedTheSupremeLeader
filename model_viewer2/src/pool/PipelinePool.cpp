@@ -21,6 +21,34 @@ namespace GEngine
 		return m_instance;
 	}
 	
+	Pipeline *PipelinePool::createPipeline(int key, Shader *fragment, Shader *vertex, GEngineWrapper *wrapper)
+	{
+		
+		Pipeline *pipeline = new Pipeline(wrapper->getEngine()->getLogicalDevice());
+		
+		pipeline->setVertexInput();
+		pipeline->setInputAssembler();
+		pipeline->setVertexShader(vertex);
+		pipeline->setFragmentShader(fragment);
+
+		pipeline->setViewPort(wrapper->getWindow()->getWidth(), wrapper->getWindow()->getHeight());
+		pipeline->setScissor(wrapper->getSwapchain()->getExtent());
+		pipeline->createViewportStateInfos();
+
+		pipeline->setRasterizerInfos();
+		pipeline->setMultisamplingInfos();
+		pipeline->setColorBlendAttachment();
+		pipeline->createDynamicStateInfos();
+		pipeline->createPipelineLayout();
+		pipeline->createPipeline(wrapper->getRenderPass());
+
+		pipeline->initFramebuffers(wrapper->getSwapchain(), wrapper->getRenderPass());
+		
+		pipeline_map[key] = pipeline;
+		
+		return pipeline;
+	}
+	
 	Pipeline *PipelinePool::getPipeline(int key)
 	{
 		map<int, Pipeline*>::iterator it = pipeline_map.find(key);

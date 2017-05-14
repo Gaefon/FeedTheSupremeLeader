@@ -36,6 +36,7 @@ SRC =	src/GEngine.cpp\
 		src/events/MousePoller.cpp\
 		src/events/MouseEvent.cpp\
 		src/helper/EventHelper.cpp\
+		src/models/Material.cpp\
 		src/Camera.cpp\
 		main2.cpp
 

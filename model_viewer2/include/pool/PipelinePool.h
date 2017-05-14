@@ -4,6 +4,8 @@
 #include <map>
 
 #include <Pipeline.h>
+#include <Shader.h>
+#include <GEngineWrapper.h>
 
 namespace GEngine
 {
@@ -19,6 +21,7 @@ namespace GEngine
 		
 		public:
 			static PipelinePool *getInstance();
+			Pipeline *createPipeline(int key, Shader *fragment, Shader *vertex, GEngineWrapper *wrapper);
 			Pipeline *getPipeline(int key);
 			void addPipeline(int key, Pipeline *pipeline);
 	};
