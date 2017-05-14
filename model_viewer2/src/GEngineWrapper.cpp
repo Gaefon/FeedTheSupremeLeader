@@ -157,6 +157,21 @@ namespace GEngine
     {
         return g_engine;
     }
+    
+    Window *GEngineWrapper::getWindow()
+    {
+    	return g_window;
+    }
+    
+    SwapChain *GEngineWrapper::getSwapchain()
+    {
+    	return g_swapchain;
+    }
+    
+    RenderPass *GEngineWrapper::getRenderPass()
+    {
+    	return g_render_pass;
+    }
 
     void GEngineWrapper::startDrawing()
     {

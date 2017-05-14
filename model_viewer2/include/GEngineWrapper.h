@@ -25,39 +25,42 @@ namespace GEngine
 	{
 
 		public:
-		GEngineWrapper(Window *window);
-		~GEngineWrapper();
+			GEngineWrapper(Window *window);
+			~GEngineWrapper();
 
-		void startDrawing();
-		Engine *getEngine();
+			void startDrawing();
+			Engine *getEngine();
+			Window *getWindow();
+			SwapChain *getSwapchain();
+			RenderPass *getRenderPass();
 
 		private:
-		Engine *g_engine;
-		Window *g_window;
-		Surface *g_surface;
-		PhysicalDevice *g_physical_device;
-		SwapChain *g_swapchain;
-		Pipeline *g_pipeline;
-		CommandBuffers *g_command_buffers;
-		RenderPass *g_render_pass;
-		Shader *g_shader_vert;
-		Shader *g_shader_frag;
-		StagingBuffer *g_staging_buffer;
-		StagingBuffer *g_staging_buffer2;
-		VertexBuffer *g_vertex_buffer;
-		IndexBuffer *g_index_buffer;
-		std::vector<Vertex> vertices;
-		std::vector<uint16_t> indexes;
+			Engine *g_engine;
+			Window *g_window;
+			Surface *g_surface;
+			PhysicalDevice *g_physical_device;
+			SwapChain *g_swapchain;
+			Pipeline *g_pipeline;
+			CommandBuffers *g_command_buffers;
+			RenderPass *g_render_pass;
+			Shader *g_shader_vert;
+			Shader *g_shader_frag;
+			StagingBuffer *g_staging_buffer;
+			StagingBuffer *g_staging_buffer2;
+			VertexBuffer *g_vertex_buffer;
+			IndexBuffer *g_index_buffer;
+			std::vector<Vertex> vertices;
+			std::vector<uint16_t> indexes;
 
-		void init();
-		void initEngine(std::string engineName);
-		void initDevices();
-		void initSwapChain();
-		void initRenderPass();
-		void initPipeline();
-		void initCmdBuffers();
-		void createPipeline();
-		void startRecording();
+			void init();
+			void initEngine(std::string engineName);
+			void initDevices();
+			void initSwapChain();
+			void initRenderPass();
+			void initPipeline();
+			void initCmdBuffers();
+			void createPipeline();
+			void startRecording();
 	};
 }
 #endif // GENGINEWRAPPER_H_INCLUDED
