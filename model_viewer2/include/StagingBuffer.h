@@ -12,7 +12,7 @@ namespace GEngine
         public:
             using Buffer::addVertexData;
             StagingBuffer(Device *dev);
-            ~StagingBuffer();
+            virtual ~StagingBuffer();
             bool createBuffer(unsigned long buffer_size);
             bool allocBuffer();
             void addVertexData(std::vector<uint16_t> *indexes);

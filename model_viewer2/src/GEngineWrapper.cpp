@@ -13,6 +13,8 @@ namespace GEngine
     GEngineWrapper::~GEngineWrapper()
     {
         delete g_command_buffers;
+        delete g_index_buffer;
+        delete g_staging_buffer2;
         delete g_vertex_buffer;
         delete g_staging_buffer;
         delete g_pipeline;
@@ -137,13 +139,13 @@ namespace GEngine
         g_staging_buffer2->allocBuffer();
         g_staging_buffer2->bindToDevice();
         g_staging_buffer2->addVertexData(&indexes);
-        
+
         g_index_buffer = new IndexBuffer(g_engine->getLogicalDevice());
         g_index_buffer->createBuffer(sizeof(uint16_t) * indexes.size());
         g_index_buffer->allocBuffer();
         g_index_buffer->bindToDevice();
         g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
-        
+
         g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
         g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
         g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
@@ -157,17 +159,17 @@ namespace GEngine
     {
         return g_engine;
     }
-    
+
     Window *GEngineWrapper::getWindow()
     {
     	return g_window;
     }
-    
+
     SwapChain *GEngineWrapper::getSwapchain()
     {
     	return g_swapchain;
     }
-    
+
     RenderPass *GEngineWrapper::getRenderPass()
     {
     	return g_render_pass;

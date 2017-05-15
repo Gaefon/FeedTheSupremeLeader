@@ -10,7 +10,7 @@ namespace GEngine
 	{
         public:
             IndexBuffer(Device *dev);
-            ~IndexBuffer();
+            virtual ~IndexBuffer();
             bool createBuffer(unsigned long buffer_size);
             bool allocBuffer();
 	};

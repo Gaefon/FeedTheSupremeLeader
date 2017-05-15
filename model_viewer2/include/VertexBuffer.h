@@ -12,7 +12,7 @@ namespace GEngine
 	{
         public:
             VertexBuffer(Device *dev);
-            ~VertexBuffer();
+            virtual ~VertexBuffer();
             bool createBuffer(unsigned long buffer_size);
             bool allocBuffer();
 	};
