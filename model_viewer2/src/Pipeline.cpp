@@ -246,6 +246,9 @@ namespace GEngine
 		{
 			vkDestroyPipeline(logical_device->getVulkanObject(), pipeline, nullptr);
 		}
+		
+		delete vertex_shader;
+		delete fragment_shader;
 	}
 }
 

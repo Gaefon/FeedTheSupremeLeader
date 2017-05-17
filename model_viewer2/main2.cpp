@@ -2,6 +2,8 @@
 #include <Window.h>
 #include <events/KeyboardPoller.h>
 #include <events/MousePoller.h>
+#include <Shader.h>
+#include <pool/PipelinePool.h>
 
 //#include <model/Scene.h>
 //#include <model/Model.h>
@@ -26,6 +28,13 @@ int main(void)
 	mouse_event = new MousePoller(window);
 
 	GEngineWrapper g_engine_wrapper(window);
+	
+	// create the pipeline
+	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
+	
+	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0));
 	/*Scene scene;
 	Model model1;
 	Model model2;

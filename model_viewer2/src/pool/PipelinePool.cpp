@@ -21,7 +21,7 @@ namespace GEngine
 		return m_instance;
 	}
 	
-	Pipeline *PipelinePool::createPipeline(int key, Shader *fragment, Shader *vertex, GEngineWrapper *wrapper)
+	Pipeline *PipelinePool::createPipeline(int key, Shader *vertex, Shader *fragment, GEngineWrapper *wrapper)
 	{
 		
 		Pipeline *pipeline = new Pipeline(wrapper->getEngine()->getLogicalDevice());
@@ -61,4 +61,13 @@ namespace GEngine
 	{
 		pipeline_map[key] = pipeline;
 	}
+	
+	void PipelinePool::destroyAllThePipelines()
+	{
+		for (map<int, Pipeline*>::iterator it = pipeline_map.begin(); it != pipeline_map.end(); it++)
+		{
+			delete it->second;
+		}
+	}
+	
 }

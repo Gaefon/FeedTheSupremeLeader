@@ -1,5 +1,7 @@
 #include <GEngineWrapper.h>
 
+#include <pool/PipelinePool.h>
+
 using namespace std;
 
 namespace GEngine
@@ -17,9 +19,7 @@ namespace GEngine
         delete g_staging_buffer2;
         delete g_vertex_buffer;
         delete g_staging_buffer;
-        delete g_pipeline;
-        delete g_shader_vert;
-        delete g_shader_frag;
+        PipelinePool::getInstance()->destroyAllThePipelines();
         delete g_render_pass;
         delete g_swapchain;
         delete g_surface;
@@ -32,7 +32,6 @@ namespace GEngine
         initDevices();
         initSwapChain();
         initRenderPass();
-        initPipeline();
 
         vertices =
         {
@@ -47,9 +46,7 @@ namespace GEngine
 		};
        indexes = {0,1,2,3,4,0,3,5,6,5,2,7};
 
-       createPipeline();
        initCmdBuffers();
-       startRecording();
     }
 
     void GEngineWrapper::initEngine(string engine_name)
@@ -82,77 +79,47 @@ namespace GEngine
 
     }
 
-    void GEngineWrapper::initPipeline()
-    {
-        g_shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine->getLogicalDevice());
-        g_shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine->getLogicalDevice());
-        g_pipeline = new Pipeline(g_engine->getLogicalDevice());
-    }
-
     void GEngineWrapper::initCmdBuffers()
     {
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
-
-    void GEngineWrapper::createPipeline()
+    
+	void GEngineWrapper::startRecording(Pipeline *pipeline)
     {
-       g_pipeline->setVertexInput();
-       g_pipeline->setInputAssembler();
-       g_pipeline->setVertexShader(g_shader_vert);
-       g_pipeline->setFragmentShader(g_shader_frag);
-
-       g_pipeline->setViewPort(g_window->getWidth(), g_window->getHeight());
-       g_pipeline->setScissor(g_swapchain->getExtent());
-       g_pipeline->createViewportStateInfos();
-
-       g_pipeline->setRasterizerInfos();
-       g_pipeline->setMultisamplingInfos();
-       g_pipeline->setColorBlendAttachment();
-       g_pipeline->createDynamicStateInfos();
-       g_pipeline->createPipelineLayout();
-       g_pipeline->createPipeline(g_render_pass);
-
-       g_pipeline->initFramebuffers(g_swapchain, g_render_pass);
-    }
-
-    void GEngineWrapper::startRecording()
-    {
-        g_command_buffers->createCommandPool(g_physical_device);
-        g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
+		g_command_buffers->createCommandPool(g_physical_device);
+		g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
 
 
-        g_staging_buffer->createBuffer(sizeof(Vertex) * vertices.size());
-        g_staging_buffer->allocBuffer();
-        g_staging_buffer->bindToDevice();
-        g_staging_buffer->addVertexData(&vertices);
+		g_staging_buffer->createBuffer(sizeof(Vertex) * vertices.size());
+		g_staging_buffer->allocBuffer();
+		g_staging_buffer->bindToDevice();
+		g_staging_buffer->addVertexData(&vertices);
 
 
-        //creation vertex buffers
+		//creation vertex buffers
 		g_vertex_buffer = new VertexBuffer(g_engine->getLogicalDevice());
 		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size());
 		g_vertex_buffer->allocBuffer();
-        g_vertex_buffer->bindToDevice();
+		g_vertex_buffer->bindToDevice();
 
 
-        g_staging_buffer2 = new StagingBuffer(g_engine->getLogicalDevice());
-        g_staging_buffer2->createBuffer(sizeof(uint16_t) * indexes.size());
-        g_staging_buffer2->allocBuffer();
-        g_staging_buffer2->bindToDevice();
-        g_staging_buffer2->addVertexData(&indexes);
+		g_staging_buffer2 = new StagingBuffer(g_engine->getLogicalDevice());
+		g_staging_buffer2->createBuffer(sizeof(uint16_t) * indexes.size());
+		g_staging_buffer2->allocBuffer();
+		g_staging_buffer2->bindToDevice();
+		g_staging_buffer2->addVertexData(&indexes);
 
-        g_index_buffer = new IndexBuffer(g_engine->getLogicalDevice());
-        g_index_buffer->createBuffer(sizeof(uint16_t) * indexes.size());
-        g_index_buffer->allocBuffer();
-        g_index_buffer->bindToDevice();
-        g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
+		g_index_buffer = new IndexBuffer(g_engine->getLogicalDevice());
+		g_index_buffer->createBuffer(sizeof(uint16_t) * indexes.size());
+		g_index_buffer->allocBuffer();
+		g_index_buffer->bindToDevice();
+		g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
 
-        g_command_buffers->createCommandBuffers(g_pipeline->getFramebuffers());
-        g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
-        g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
-        g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
-        g_command_buffers->startRecording(g_pipeline->getFramebuffers(), g_swapchain, g_render_pass, g_pipeline, g_vertex_buffer, g_index_buffer);
-
-
+		g_command_buffers->createCommandBuffers(pipeline->getFramebuffers());
+		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
+		g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
+		g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
+		g_command_buffers->startRecording(pipeline->getFramebuffers(), g_swapchain, g_render_pass, pipeline, g_vertex_buffer, g_index_buffer);
     }
 
     Engine *GEngineWrapper::getEngine()

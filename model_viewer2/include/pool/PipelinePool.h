@@ -21,9 +21,10 @@ namespace GEngine
 		
 		public:
 			static PipelinePool *getInstance();
-			Pipeline *createPipeline(int key, Shader *fragment, Shader *vertex, GEngineWrapper *wrapper);
+			Pipeline *createPipeline(int key, Shader *vertex, Shader *fragment, GEngineWrapper *wrapper);
 			Pipeline *getPipeline(int key);
 			void addPipeline(int key, Pipeline *pipeline);
+			void destroyAllThePipelines();
 	};
 }
 

@@ -28,6 +28,7 @@ namespace GEngine
 			GEngineWrapper(Window *window);
 			~GEngineWrapper();
 
+			void startRecording(Pipeline *pipeline);
 			void startDrawing();
 			Engine *getEngine();
 			Window *getWindow();
@@ -40,11 +41,8 @@ namespace GEngine
 			Surface *g_surface;
 			PhysicalDevice *g_physical_device;
 			SwapChain *g_swapchain;
-			Pipeline *g_pipeline;
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
-			Shader *g_shader_vert;
-			Shader *g_shader_frag;
 			StagingBuffer *g_staging_buffer;
 			StagingBuffer *g_staging_buffer2;
 			VertexBuffer *g_vertex_buffer;
@@ -57,10 +55,7 @@ namespace GEngine
 			void initDevices();
 			void initSwapChain();
 			void initRenderPass();
-			void initPipeline();
 			void initCmdBuffers();
-			void createPipeline();
-			void startRecording();
 	};
 }
 #endif // GENGINEWRAPPER_H_INCLUDED
