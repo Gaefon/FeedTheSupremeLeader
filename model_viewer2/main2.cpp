@@ -4,6 +4,7 @@
 #include <events/MousePoller.h>
 #include <Shader.h>
 #include <pool/PipelinePool.h>
+#include <Camera.h>
 
 //#include <model/Scene.h>
 //#include <model/Model.h>
@@ -34,7 +35,15 @@ int main(void)
 	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
 	
+	glm::vec3 cam_pos(2.0f, 2.0f, 2.0f);
+	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
+	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
+	Camera camera;
+	camera.setPerspectice(90.0f, (float) window->getWidth() / (float) window->getHeight(), 0.1f, 100.0f);
+	camera.setLookAt(cam_pos, cam_target, cam_vert);
+	
 	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0));
+	
 	/*Scene scene;
 	Model model1;
 	Model model2;
