@@ -21,6 +21,9 @@ int main(void)
 	MousePoller *mouse_event;
 	list<string> extensions;
 	
+	std::vector<Vertex> vertices;
+	std::vector<uint16_t> indexes;
+	
 
 	glfwInit();
 
@@ -42,9 +45,23 @@ int main(void)
 	camera.setPerspectice(90.0f, (float) window->getWidth() / (float) window->getHeight(), 0.1f, 100.0f);
 	camera.setLookAt(cam_pos, cam_target, cam_vert);
 	
-	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0));
+	vertices =
+        {
+			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+			{{-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}}
+		};
+   indexes = {0,1,2,3,4,0,3,5,6,5,2,7};
+	
+	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
 	
 	/*Scene scene;
+	Material mat(PipelinePool::getInstance()->getPipeline(0));
 	Model model1;
 	Model model2;
 	

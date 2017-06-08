@@ -33,19 +33,6 @@ namespace GEngine
         initSwapChain();
         initRenderPass();
 
-        vertices =
-        {
-			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
-			{{-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-			{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}}
-		};
-       indexes = {0,1,2,3,4,0,3,5,6,5,2,7};
-
        initCmdBuffers();
     }
 
@@ -84,7 +71,8 @@ namespace GEngine
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
     
-	void GEngineWrapper::startRecording(Pipeline *pipeline)
+    // passer les vertices et les index en arguments depuis l'objet Scene
+	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<Vertex> vertices, vector<uint16_t> indexes)
     {
 		g_command_buffers->createCommandPool(g_physical_device);
 		g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
@@ -101,6 +89,7 @@ namespace GEngine
 		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size());
 		g_vertex_buffer->allocBuffer();
 		g_vertex_buffer->bindToDevice();
+		g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
 
 
 		g_staging_buffer2 = new StagingBuffer(g_engine->getLogicalDevice());
@@ -118,7 +107,7 @@ namespace GEngine
 		g_command_buffers->createCommandBuffers(pipeline->getFramebuffers());
 		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
 		g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
-		g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
+		
 		g_command_buffers->startRecording(pipeline->getFramebuffers(), g_swapchain, g_render_pass, pipeline, g_vertex_buffer, g_index_buffer);
     }
 

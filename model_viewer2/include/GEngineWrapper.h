@@ -28,7 +28,7 @@ namespace GEngine
 			GEngineWrapper(Window *window);
 			~GEngineWrapper();
 
-			void startRecording(Pipeline *pipeline);
+			void startRecording(Pipeline *pipeline, std::vector<Vertex> vertices, std::vector<uint16_t> indexes);
 			void startDrawing();
 			Engine *getEngine();
 			Window *getWindow();
@@ -47,8 +47,6 @@ namespace GEngine
 			StagingBuffer *g_staging_buffer2;
 			VertexBuffer *g_vertex_buffer;
 			IndexBuffer *g_index_buffer;
-			std::vector<Vertex> vertices;
-			std::vector<uint16_t> indexes;
 
 			void init();
 			void initEngine(std::string engineName);
