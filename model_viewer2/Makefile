@@ -30,13 +30,16 @@ SRC =	src/GEngine.cpp\
 		src/bitmaps/Bitmap.cpp\
 		src/pool/PipelinePool.cpp\
 		src/GEngineWrapper.cpp\
-		src/Vertex.cpp\
+		src/VertexBufferData.cpp\
 		src/events/KeyboardPoller.cpp\
 		src/events/KeyEvent.cpp\
 		src/events/MousePoller.cpp\
 		src/events/MouseEvent.cpp\
 		src/helper/EventHelper.cpp\
 		src/models/Material.cpp\
+		src/models/Model.cpp\
+		src/models/Scene.cpp\
+		src/models/Vertex.cpp\
 		src/Camera.cpp\
 		main2.cpp
 
@@ -62,7 +65,7 @@ RM = rm -rf
 
 
 
-all:		$(NAME) shaders
+all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS)

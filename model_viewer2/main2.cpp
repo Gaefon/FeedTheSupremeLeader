@@ -21,7 +21,7 @@ int main(void)
 	MousePoller *mouse_event;
 	list<string> extensions;
 	
-	std::vector<Vertex> vertices;
+	std::vector<VertexBufferData> vertices;
 	std::vector<uint16_t> indexes;
 	
 
@@ -56,7 +56,7 @@ int main(void)
 			{{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
 			{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}}
 		};
-   indexes = {0,1,2,3,4,0,3,5,6,5,2,7};
+   indexes = {0, 1, 2, 3, 4, 0, 3, 5, 6, 5, 2, 7};
 	
 	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
 	

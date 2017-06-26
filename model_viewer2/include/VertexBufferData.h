@@ -7,7 +7,7 @@
 
 namespace GEngine
 {
-    struct Vertex
+    struct VertexBufferData
     {
 	    glm::vec3 v_position;
 	    glm::vec3 v_color;

@@ -2,7 +2,6 @@
 #define PIPELINE_H
 
 #include <vulkan/vulkan.h>
-#include <Vertex.h>
 #include <Shader.h>
 #include <Device.h>
 #include <RenderPass.h>

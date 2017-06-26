@@ -1,4 +1,5 @@
 #include <Pipeline.h>
+#include <VertexBufferData.h>
 
 #include <iostream>
 #include <string.h>
@@ -24,11 +25,11 @@ namespace GEngine
 
 	void Pipeline::setVertexInput()
 	{
-		array<VkVertexInputAttributeDescription, 2> *attrs_desc = Vertex::getAttributeDescriptions();
+		array<VkVertexInputAttributeDescription, 2> *attrs_desc = VertexBufferData::getAttributeDescriptions();
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 1;
-		vertex_input_info.pVertexBindingDescriptions = Vertex::getBindingDescription();
+		vertex_input_info.pVertexBindingDescriptions = VertexBufferData::getBindingDescription();
 		vertex_input_info.vertexAttributeDescriptionCount = attrs_desc->size();
 		vertex_input_info.pVertexAttributeDescriptions = attrs_desc->data();
 	}

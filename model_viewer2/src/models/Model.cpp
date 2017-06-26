@@ -32,9 +32,14 @@ namespace GEngine
 		arr_vertices.push_back(new_vertex);
 	}
 	
-	void setMateriel(Material *mat)
+	void Model::setMaterial(Material *mat)
 	{
 		material = mat;
+	}
+	
+	Material *Model::getMaterial()
+	{
+		return material;
 	}
 	
 	int Model::getNbVertices()

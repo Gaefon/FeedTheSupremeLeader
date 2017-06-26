@@ -3,7 +3,6 @@
 #include <vulkan/vulkan.h>
 #include <Buffer.h>
 #include <Device.h>
-#include <Vertex.h>
 
 namespace GEngine
 {

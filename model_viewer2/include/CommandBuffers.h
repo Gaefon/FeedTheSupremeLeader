@@ -12,6 +12,7 @@
 #include <Semaphore.h>
 #include <VertexBuffer.h>
 #include <IndexBuffer.h>
+
 namespace GEngine
 {
 	class CommandBuffers

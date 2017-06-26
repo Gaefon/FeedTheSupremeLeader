@@ -22,7 +22,8 @@ namespace GEngine
 			//void setCamera(Camera *cam);
 			void addModel(Model *model);
 			//void addLight(Light *light);
-			void render(GEngineWrapper *wrapper);
+			// le parametre pipeline est temporaire
+			void render(GEngineWrapper *wrapper, Pipeline *pipeline);
 	};
 }
 

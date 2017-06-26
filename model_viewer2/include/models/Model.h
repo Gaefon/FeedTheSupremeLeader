@@ -6,7 +6,7 @@
 
 #include <models/Vertex.h>
 
-#include <Material.h>
+#include <models/Material.h>
 
 #include <glm/glm.hpp>
 /*#include <glm/gtc/type_ptr.hpp>*/
@@ -46,7 +46,8 @@ namespace GEngine
 			//Model(std::string file_name);
 			~Model();
 			void addVertice(Vertex *new_vertex);
-			void setMateriel(Material *mat);
+			void setMaterial(Material *mat);
+			Material *getMaterial();
 			int getNbVertices();
 			std::vector<glm::vec3> getVertexBufferData();
 	};

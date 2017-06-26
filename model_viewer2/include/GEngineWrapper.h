@@ -8,7 +8,7 @@
 #include <SwapChain.h>
 #include <Shader.h>
 #include <Pipeline.h>
-#include <Vertex.h>
+#include <VertexBufferData.h>
 #include <CommandBuffers.h>
 #include <VertexBuffer.h>
 #include <StagingBuffer.h>
@@ -28,7 +28,7 @@ namespace GEngine
 			GEngineWrapper(Window *window);
 			~GEngineWrapper();
 
-			void startRecording(Pipeline *pipeline, std::vector<Vertex> vertices, std::vector<uint16_t> indexes);
+			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
 			void startDrawing();
 			Engine *getEngine();
 			Window *getWindow();
