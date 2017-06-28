@@ -10,7 +10,7 @@
 
 #include <Shader.h>
 #include <Camera.h>
-#include <Model.h>
+#include <models/Model.h>
 #include <Scene.h>
 #include <SDLTexture.h>
 #include <helper/DebugHelper.h>
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	shader_color.load();
 	Shader shader_tex("Shaders/3d_texture.vert", "Shaders/3d_texture.frag");
 	shader_tex.load();
-	
+
 	DebugHelper::initShader(&shader_color);
 
 	SDLTexture tex(argv[2]);

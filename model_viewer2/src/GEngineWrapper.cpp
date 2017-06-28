@@ -83,7 +83,7 @@ namespace GEngine
     {
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
-    
+
 	void GEngineWrapper::startRecording(Pipeline *pipeline)
     {
 		g_command_buffers->createCommandPool(g_physical_device);
@@ -114,6 +114,12 @@ namespace GEngine
 		g_index_buffer->allocBuffer();
 		g_index_buffer->bindToDevice();
 		g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
+
+		g_uniform_buffer = new UniformBuffer(g_engine->getLogicalDevice())
+		g_uniform_buffer->createBuffer(sizeof(UniformBuffer));
+		g_uniform_buffer->allocBuffer();
+		g_uniform_buffer->bindToDevice();
+
 
 		g_command_buffers->createCommandBuffers(pipeline->getFramebuffers());
 		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());

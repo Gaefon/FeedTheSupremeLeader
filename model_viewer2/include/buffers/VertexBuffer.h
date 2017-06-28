@@ -2,7 +2,7 @@
 #define VERTEX_BUFFER_H
 
 #include <vulkan/vulkan.h>
-#include <Buffer.h>
+#include <buffers/Buffer.h>
 #include <Device.h>
 #include <Vertex.h>
 

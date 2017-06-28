@@ -7,7 +7,7 @@
 #include <Device.h>
 #include <RenderPass.h>
 #include <SwapChain.h>
-#include <Framebuffers.h>
+#include <buffers/Framebuffers.h>
 
 namespace GEngine
 {
@@ -47,6 +47,7 @@ namespace GEngine
 
 		public:
 			Pipeline(Device *dev);
+			Pipeline(Device *dev, VkDescriptorSetLayout descriptorSet)
 			~Pipeline();
 
 			void setVertexInput();

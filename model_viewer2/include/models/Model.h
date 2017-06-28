@@ -6,7 +6,7 @@
 
 #include <models/Vertex.h>
 
-#include <Material.h>
+#include <models/Material.h>
 
 #include <glm/glm.hpp>
 /*#include <glm/gtc/type_ptr.hpp>*/
@@ -22,10 +22,10 @@ namespace GEngine
 	{
 		private:
 			std::vector<Vertex *> arr_vertices;
-			
+
 			Material *material;
-	
-	
+
+
 			/*std::vector<glm::vec3> vertices;
 			std::vector<glm::vec3> normals;
 			std::vector<glm::vec3> colors;
@@ -35,10 +35,10 @@ namespace GEngine
 			float *arr_normals;
 			float *arr_colors;
 			float *arr_uvs;*/
-		
+
 			/*Shader *m_shader;
 			Texture *m_texture;
-		
+
 			std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
 			void loadFile(std::string file_name);*/
 		public:

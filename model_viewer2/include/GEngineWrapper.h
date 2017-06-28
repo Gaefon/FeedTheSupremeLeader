@@ -9,10 +9,11 @@
 #include <Shader.h>
 #include <Pipeline.h>
 #include <Vertex.h>
-#include <CommandBuffers.h>
-#include <VertexBuffer.h>
-#include <StagingBuffer.h>
-#include <IndexBuffer.h>
+#include <buffers/CommandBuffers.h>
+#include <buffers/VertexBuffer.h>
+#include <buffers/StagingBuffer.h>
+#include <buffers/IndexBuffer.h>
+#include <buffers/UniformBuffer.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <list>
@@ -47,6 +48,7 @@ namespace GEngine
 			StagingBuffer *g_staging_buffer2;
 			VertexBuffer *g_vertex_buffer;
 			IndexBuffer *g_index_buffer;
+			UniformBuffer *g_uniform_buffer;
 			std::vector<Vertex> vertices;
 			std::vector<uint16_t> indexes;
 

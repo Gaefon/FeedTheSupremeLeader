@@ -1,4 +1,4 @@
-#include <VertexBuffer.h>
+#include <buffers/VertexBuffer.h>
 
 #include <iostream>
 

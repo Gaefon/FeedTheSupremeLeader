@@ -7,11 +7,11 @@
 
 #include <Device.h>
 #include <PhysicalDevice.h>
-#include <Framebuffers.h>
+#include <buffers/Framebuffers.h>
 #include <Pipeline.h>
 #include <Semaphore.h>
-#include <VertexBuffer.h>
-#include <IndexBuffer.h>
+#include <buffers/VertexBuffer.h>
+#include <buffers/IndexBuffer.h>
 namespace GEngine
 {
 	class CommandBuffers

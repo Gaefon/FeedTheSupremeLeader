@@ -1,7 +1,7 @@
 #ifndef INDEXBUFFER_H_INCLUDED
 #define INDEXBUFFER_H_INCLUDED
 #include <vulkan/vulkan.h>
-#include <Buffer.h>
+#include <buffers/Buffer.h>
 #include <Device.h>
 #include <Vertex.h>
 namespace GEngine
