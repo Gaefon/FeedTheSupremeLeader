@@ -6,8 +6,8 @@
 #include <pool/PipelinePool.h>
 #include <Camera.h>
 
-//#include <model/Scene.h>
-//#include <model/Model.h>
+#include <models/Scene.h>
+#include <models/Model.h>
 
 #include <string>
 
@@ -58,14 +58,39 @@ int main(void)
 		};
    indexes = {0, 1, 2, 3, 4, 0, 3, 5, 6, 5, 2, 7};
 	
-	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
+	//g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
 	
-	/*Scene scene;
+	Scene scene;
 	Material mat(PipelinePool::getInstance()->getPipeline(0));
 	Model model1;
 	Model model2;
 	
-	model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
+	
+	model1.addVertice(new Vertex({0.0f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model1.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({-0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({0.0f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model1.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	
+	model1.addIndex(0);
+	model1.addIndex(1);
+	model1.addIndex(2);
+	model1.addIndex(3);
+	model1.addIndex(4);
+	model1.addIndex(0);
+	model1.addIndex(3);
+	model1.addIndex(5);
+	model1.addIndex(6);
+	model1.addIndex(5);
+	model1.addIndex(2);
+	model1.addIndex(7);
+	
+	model1.setMaterial(&mat);
+	
+	/*model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
 	model1.addVertice(new Vertex({-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
 	model1.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 
@@ -73,20 +98,18 @@ int main(void)
 	model1.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 	model1.addVertice(new Vertex({0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
 	
-	
-	
 	model2.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
 	model2.addVertice(new Vertex({0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
 	
 	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
 	model2.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
-	model2.addVertice(new Vertex({-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
+	model2.addVertice(new Vertex({-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});*/
 	
 	scene.addModel(&model1);
-	scene.addModel(&model2);
+	//scene.addModel(&model2);
 	
-	scene.render(&g_engine_wrapper);*/
+	scene.render(&g_engine_wrapper);
 
 	while (!window->shouldClose())
 	{

@@ -13,6 +13,13 @@ namespace GEngine
 	class Pipeline
 	{
 		private:
+			enum class ArgumentType : int
+			{
+				None = -1,
+				Vertex = 0,
+				Color = 1
+			};
+		
 			Shader *vertex_shader;
 			Shader *fragment_shader;
 
@@ -41,6 +48,8 @@ namespace GEngine
 			VkGraphicsPipelineCreateInfo pipeline_info;
 
 			VkPipeline pipeline;
+			
+			std::map<int, ArgumentType> argument_position;
 
 			void cleanup();
 
@@ -67,6 +76,10 @@ namespace GEngine
 			Framebuffers *getFramebuffers();
 
 			VkPipeline getVulkanObject();
+			
+			void addArgumentType(int position, ArgumentType type);
+			
+			std::map<int, ArgumentType> *getArgumentPosition();
 	};
 }
 

@@ -23,7 +23,7 @@ namespace GEngine
 			void addModel(Model *model);
 			//void addLight(Light *light);
 			// le parametre pipeline est temporaire
-			void render(GEngineWrapper *wrapper, Pipeline *pipeline);
+			void render(GEngineWrapper *wrapper);
 	};
 }
 

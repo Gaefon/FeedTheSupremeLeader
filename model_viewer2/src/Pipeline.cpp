@@ -251,5 +251,15 @@ namespace GEngine
 		delete vertex_shader;
 		delete fragment_shader;
 	}
+
+	void Pipeline::addArgumentType(int position, ArgumentType type)
+	{
+		argument_position[position] = type;
+	}
+
+	map<int, Pipeline::ArgumentType> *Pipeline::getArgumentPosition()
+	{
+		return &argument_position;
+	}
 }
 
