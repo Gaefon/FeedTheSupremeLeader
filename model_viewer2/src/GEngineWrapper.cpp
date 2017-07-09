@@ -71,18 +71,22 @@ namespace GEngine
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
     
+    void GEngineWrapper::beginCommandBufferAndRenderPass(Framebuffers *framebuffers)
+    {
+		g_command_buffers->createCommandPool(g_physical_device);
+		g_command_buffers->createCommandBuffers(framebuffers);
+		g_command_buffers->beginCommandBufferAndRenderPass(g_render_pass, framebuffers, g_swapchain);
+    }
+    
     // passer les vertices et les index en arguments depuis l'objet Scene
 	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes)
     {
-		g_command_buffers->createCommandPool(g_physical_device);
 		g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
-
 
 		g_staging_buffer->createBuffer(sizeof(VertexBufferData) * vertices.size());
 		g_staging_buffer->allocBuffer();
 		g_staging_buffer->bindToDevice();
 		g_staging_buffer->addVertexData(&vertices);
-
 
 		//creation vertex buffers
 		g_vertex_buffer = new VertexBuffer(g_engine->getLogicalDevice());
@@ -90,7 +94,6 @@ namespace GEngine
 		g_vertex_buffer->allocBuffer();
 		g_vertex_buffer->bindToDevice();
 		g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
-
 
 		g_staging_buffer2 = new StagingBuffer(g_engine->getLogicalDevice());
 		g_staging_buffer2->createBuffer(sizeof(uint16_t) * indexes.size());
@@ -104,11 +107,15 @@ namespace GEngine
 		g_index_buffer->bindToDevice();
 		g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
 
-		g_command_buffers->createCommandBuffers(pipeline->getFramebuffers());
 		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(VertexBufferData) * vertices.size());
 		g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
 		
-		g_command_buffers->startRecording(pipeline->getFramebuffers(), g_swapchain, g_render_pass, pipeline, g_vertex_buffer, g_index_buffer);
+		g_command_buffers->startRecording(pipeline, g_vertex_buffer, g_index_buffer);
+    }
+    
+    void GEngineWrapper::endCommandBufferAndRenderPass()
+    {
+		g_command_buffers->endCommandBufferAndRenderPass();
     }
 
     Engine *GEngineWrapper::getEngine()

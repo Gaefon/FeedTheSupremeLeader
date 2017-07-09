@@ -28,7 +28,9 @@ namespace GEngine
 			GEngineWrapper(Window *window);
 			~GEngineWrapper();
 
+			void beginCommandBufferAndRenderPass(Framebuffers *framebuffers);
 			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
+			void endCommandBufferAndRenderPass();
 			void startDrawing();
 			Engine *getEngine();
 			Window *getWindow();

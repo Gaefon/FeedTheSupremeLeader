@@ -2,6 +2,8 @@
 #include <helper/DebugHelper.h>
 #include <VertexBufferData.h>
 
+#include <pool/PipelinePool.h>
+
 using namespace std;
 
 namespace GEngine
@@ -31,9 +33,12 @@ namespace GEngine
 	}
 
 	void Scene::render(GEngineWrapper *wrapper)
-	{		
+	{
+		// move frame buffer from pipeline to wrapper
+		// the next method should not have arguments.
+		wrapper->beginCommandBufferAndRenderPass(PipelinePool::getInstance()->getPipeline(0)->getFramebuffers());
 		// voir methode startRecording dans le wrapper
-		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); it++)
+		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); ++it)
 		{
 			int position = 0;
 			vector<VertexBufferData> all_vertices((*it)->getVertices().size());
@@ -48,5 +53,6 @@ namespace GEngine
 			
 			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes());
 		}
+		wrapper->endCommandBufferAndRenderPass();
 	}
 }

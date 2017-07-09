@@ -39,7 +39,6 @@ namespace GEngine
 	{
 		command_buffers.resize(frame_buffers->getSize(), VK_NULL_HANDLE);
 
-
 		VkCommandBufferAllocateInfo command_buffer_alloc_infos = {};
 		command_buffer_alloc_infos.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		command_buffer_alloc_infos.commandPool = command_pool;
@@ -93,12 +92,9 @@ namespace GEngine
         vkQueueWaitIdle(device->getGraphicQueue());
         vkFreeCommandBuffers(device->getVulkanObject(), command_pool, 1, &command_buffer);
     }
-
-	void CommandBuffers::startRecording(Framebuffers *framebuffers, SwapChain *sc, RenderPass *render_pass, Pipeline *pipeline, VertexBuffer *vertex_buffer, IndexBuffer *index_buffer)
-	{
-		img.createSemaphore(device);
-		render.createSemaphore(device);
-
+    
+    void CommandBuffers::beginCommandBufferAndRenderPass(RenderPass *render_pass, Framebuffers *framebuffers, SwapChain *sc)
+    {
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			VkCommandBufferBeginInfo begin_info = {};
@@ -122,6 +118,13 @@ namespace GEngine
 
 			vkCmdBeginRenderPass(command_buffers[i], &render_pass_info, VK_SUBPASS_CONTENTS_INLINE);
 		}
+    }
+
+	void CommandBuffers::startRecording(Pipeline *pipeline, VertexBuffer *vertex_buffer, IndexBuffer *index_buffer)
+	{
+		img.createSemaphore(device);
+		render.createSemaphore(device);
+
 
 
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
@@ -142,6 +145,10 @@ namespace GEngine
 			vkCmdDrawIndexed(command_buffers[i], index_buffer->getNbVertices(), 1, 0, 0,0);
 		}
 
+	}
+	
+	void CommandBuffers::endCommandBufferAndRenderPass()
+	{
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			//nouvelle fonction (stopRecording())
