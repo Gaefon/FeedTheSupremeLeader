@@ -13,6 +13,7 @@
 #include <VertexBuffer.h>
 #include <StagingBuffer.h>
 #include <IndexBuffer.h>
+#include <Framebuffers.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <list>
@@ -28,7 +29,7 @@ namespace GEngine
 			GEngineWrapper(Window *window);
 			~GEngineWrapper();
 
-			void beginCommandBufferAndRenderPass(Framebuffers *framebuffers);
+			void beginCommandBufferAndRenderPass();
 			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
 			void endCommandBufferAndRenderPass();
 			void startDrawing();
@@ -45,6 +46,7 @@ namespace GEngine
 			SwapChain *g_swapchain;
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
+			Framebuffers *g_framebuffers;
 			StagingBuffer *g_staging_buffer;
 			StagingBuffer *g_staging_buffer2;
 			VertexBuffer *g_vertex_buffer;
@@ -56,6 +58,7 @@ namespace GEngine
 			void initSwapChain();
 			void initRenderPass();
 			void initCmdBuffers();
+			void initFrameBuffers();
 	};
 }
 #endif // GENGINEWRAPPER_H_INCLUDED

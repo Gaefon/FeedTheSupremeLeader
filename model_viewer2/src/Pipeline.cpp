@@ -11,15 +11,12 @@ namespace GEngine
 	Pipeline::Pipeline(Device *dev)
 	{
 		logical_device = dev;
-		framebuffers = nullptr;
 		pipeline_layout = VK_NULL_HANDLE;
 		pipeline = VK_NULL_HANDLE;
 	}
 
 	Pipeline::~Pipeline()
 	{
-		if (framebuffers != nullptr)
-			delete framebuffers;
 		cleanup();
 	}
 
@@ -218,17 +215,6 @@ namespace GEngine
 			cerr << "error : " << ret << endl;
 			pipeline = VK_NULL_HANDLE;
 		}
-	}
-
-	bool Pipeline::initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass)
-	{
-		framebuffers = new Framebuffers(logical_device);
-		return framebuffers->createFramebuffer(swap_chain, render_pass);
-	}
-
-	Framebuffers *Pipeline::getFramebuffers()
-	{
-		return framebuffers;
 	}
 
     VkPipeline Pipeline::getVulkanObject()

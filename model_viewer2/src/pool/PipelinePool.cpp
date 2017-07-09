@@ -41,8 +41,6 @@ namespace GEngine
 		pipeline->createDynamicStateInfos();
 		pipeline->createPipelineLayout();
 		pipeline->createPipeline(wrapper->getRenderPass());
-
-		pipeline->initFramebuffers(wrapper->getSwapchain(), wrapper->getRenderPass());
 		
 		pipeline_map[key] = pipeline;
 		

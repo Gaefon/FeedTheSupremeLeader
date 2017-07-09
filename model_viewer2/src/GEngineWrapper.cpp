@@ -15,25 +15,27 @@ namespace GEngine
     GEngineWrapper::~GEngineWrapper()
     {
         delete g_command_buffers;
-        delete g_index_buffer;
+        /*delete g_index_buffer;
         delete g_staging_buffer2;
         delete g_vertex_buffer;
         delete g_staging_buffer;
         PipelinePool::getInstance()->destroyAllThePipelines();
+        delete g_framebuffers;
         delete g_render_pass;
         delete g_swapchain;
         delete g_surface;
-        delete g_engine;
+        delete g_engine;*/
     }
 
     void GEngineWrapper::init()
     {
-        initEngine("test");
-        initDevices();
-        initSwapChain();
-        initRenderPass();
+		initEngine("test");
+		initDevices();
+		initSwapChain();
+		initRenderPass();
+		initFrameBuffers();
+		initCmdBuffers();
 
-       initCmdBuffers();
     }
 
     void GEngineWrapper::initEngine(string engine_name)
@@ -71,11 +73,17 @@ namespace GEngine
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
     
-    void GEngineWrapper::beginCommandBufferAndRenderPass(Framebuffers *framebuffers)
+    void GEngineWrapper::initFrameBuffers()
+    {
+    	g_framebuffers = new Framebuffers(g_engine->getLogicalDevice());
+		g_framebuffers->createFramebuffer(g_swapchain, g_render_pass);
+    }
+    
+    void GEngineWrapper::beginCommandBufferAndRenderPass()
     {
 		g_command_buffers->createCommandPool(g_physical_device);
-		g_command_buffers->createCommandBuffers(framebuffers);
-		g_command_buffers->beginCommandBufferAndRenderPass(g_render_pass, framebuffers, g_swapchain);
+		g_command_buffers->createCommandBuffers(g_framebuffers);
+		g_command_buffers->beginCommandBufferAndRenderPass(g_render_pass, g_framebuffers, g_swapchain);
     }
     
     // passer les vertices et les index en arguments depuis l'objet Scene

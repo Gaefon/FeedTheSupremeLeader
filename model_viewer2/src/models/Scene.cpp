@@ -34,10 +34,8 @@ namespace GEngine
 
 	void Scene::render(GEngineWrapper *wrapper)
 	{
-		// move frame buffer from pipeline to wrapper
-		// the next method should not have arguments.
-		wrapper->beginCommandBufferAndRenderPass(PipelinePool::getInstance()->getPipeline(0)->getFramebuffers());
-		// voir methode startRecording dans le wrapper
+		wrapper->beginCommandBufferAndRenderPass();
+		
 		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); ++it)
 		{
 			int position = 0;

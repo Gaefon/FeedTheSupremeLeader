@@ -95,6 +95,9 @@ namespace GEngine
     
     void CommandBuffers::beginCommandBufferAndRenderPass(RenderPass *render_pass, Framebuffers *framebuffers, SwapChain *sc)
     {
+		img.createSemaphore(device);
+		render.createSemaphore(device);
+		
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			VkCommandBufferBeginInfo begin_info = {};
@@ -122,11 +125,6 @@ namespace GEngine
 
 	void CommandBuffers::startRecording(Pipeline *pipeline, VertexBuffer *vertex_buffer, IndexBuffer *index_buffer)
 	{
-		img.createSemaphore(device);
-		render.createSemaphore(device);
-
-
-
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			// nouvelle fonction (bindPipeline(Pipeline *pipeline))
