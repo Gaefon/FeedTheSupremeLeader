@@ -15,38 +15,27 @@ namespace GEngine
     GEngineWrapper::~GEngineWrapper()
     {
         delete g_command_buffers;
-        delete g_index_buffer;
+        /*delete g_index_buffer;
         delete g_staging_buffer2;
         delete g_vertex_buffer;
         delete g_staging_buffer;
         PipelinePool::getInstance()->destroyAllThePipelines();
+        delete g_framebuffers;
         delete g_render_pass;
         delete g_swapchain;
         delete g_surface;
-        delete g_engine;
+        delete g_engine;*/
     }
 
     void GEngineWrapper::init()
     {
-        initEngine("test");
-        initDevices();
-        initSwapChain();
-        initRenderPass();
+		initEngine("test");
+		initDevices();
+		initSwapChain();
+		initRenderPass();
+		initFrameBuffers();
+		initCmdBuffers();
 
-        vertices =
-        {
-			{{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},
-			{{-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-			{{0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-			{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-			{{-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}}
-		};
-       indexes = {0,1,2,3,4,0,3,5,6,5,2,7};
-
-       initCmdBuffers();
     }
 
     void GEngineWrapper::initEngine(string engine_name)
@@ -84,24 +73,35 @@ namespace GEngine
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
     }
 
-	void GEngineWrapper::startRecording(Pipeline *pipeline)
+    void GEngineWrapper::initFrameBuffers()
+    {
+    	g_framebuffers = new Framebuffers(g_engine->getLogicalDevice());
+		g_framebuffers->createFramebuffer(g_swapchain, g_render_pass);
+    }
+
+    void GEngineWrapper::beginCommandBufferAndRenderPass()
     {
 		g_command_buffers->createCommandPool(g_physical_device);
+		g_command_buffers->createCommandBuffers(g_framebuffers);
+		g_command_buffers->beginCommandBufferAndRenderPass(g_render_pass, g_framebuffers, g_swapchain);
+    }
+
+    // passer les vertices et les index en arguments depuis l'objet Scene
+	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes)
+    {
 		g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
 
-
-		g_staging_buffer->createBuffer(sizeof(Vertex) * vertices.size());
+		g_staging_buffer->createBuffer(sizeof(VertexBufferData) * vertices.size());
 		g_staging_buffer->allocBuffer();
 		g_staging_buffer->bindToDevice();
 		g_staging_buffer->addVertexData(&vertices);
 
-
 		//creation vertex buffers
 		g_vertex_buffer = new VertexBuffer(g_engine->getLogicalDevice());
-		g_vertex_buffer->createBuffer(sizeof(Vertex) * vertices.size());
+		g_vertex_buffer->createBuffer(sizeof(VertexBufferData) * vertices.size());
 		g_vertex_buffer->allocBuffer();
 		g_vertex_buffer->bindToDevice();
-
+		g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
 
 		g_staging_buffer2 = new StagingBuffer(g_engine->getLogicalDevice());
 		g_staging_buffer2->createBuffer(sizeof(uint16_t) * indexes.size());
@@ -122,10 +122,14 @@ namespace GEngine
 
 
 		g_command_buffers->createCommandBuffers(pipeline->getFramebuffers());
-		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(Vertex) * vertices.size());
-		g_command_buffers->copyBufferCommand(g_staging_buffer2->getVulkanBuffer(), g_index_buffer->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
-		g_vertex_buffer->setNbVertices(g_staging_buffer->getNbVertices());
-		g_command_buffers->startRecording(pipeline->getFramebuffers(), g_swapchain, g_render_pass, pipeline, g_vertex_buffer, g_index_buffer);
+
+		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(VertexBufferData) * vertices.size());
+		g_command_buffers->startRecording(pipeline, g_vertex_buffer, g_index_buffer);
+    }
+
+    void GEngineWrapper::endCommandBufferAndRenderPass()
+    {
+		g_command_buffers->endCommandBufferAndRenderPass();
     }
 
     Engine *GEngineWrapper::getEngine()

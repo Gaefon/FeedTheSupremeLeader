@@ -8,6 +8,7 @@
 #include <SwapChain.h>
 #include <Shader.h>
 #include <Pipeline.h>
+<<<<<<< HEAD
 #include <Vertex.h>
 #include <buffers/CommandBuffers.h>
 #include <buffers/VertexBuffer.h>
@@ -29,7 +30,9 @@ namespace GEngine
 			GEngineWrapper(Window *window);
 			~GEngineWrapper();
 
-			void startRecording(Pipeline *pipeline);
+			void beginCommandBufferAndRenderPass();
+			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
+			void endCommandBufferAndRenderPass();
 			void startDrawing();
 			Engine *getEngine();
 			Window *getWindow();
@@ -44,6 +47,7 @@ namespace GEngine
 			SwapChain *g_swapchain;
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
+			Framebuffers *g_framebuffers;
 			StagingBuffer *g_staging_buffer;
 			StagingBuffer *g_staging_buffer2;
 			VertexBuffer *g_vertex_buffer;
@@ -58,6 +62,7 @@ namespace GEngine
 			void initSwapChain();
 			void initRenderPass();
 			void initCmdBuffers();
+			void initFrameBuffers();
 	};
 }
 #endif // GENGINEWRAPPER_H_INCLUDED

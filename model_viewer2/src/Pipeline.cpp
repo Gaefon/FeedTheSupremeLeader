@@ -1,4 +1,5 @@
 #include <Pipeline.h>
+#include <VertexBufferData.h>
 
 #include <iostream>
 #include <string.h>
@@ -10,25 +11,22 @@ namespace GEngine
 	Pipeline::Pipeline(Device *dev)
 	{
 		logical_device = dev;
-		framebuffers = nullptr;
 		pipeline_layout = VK_NULL_HANDLE;
 		pipeline = VK_NULL_HANDLE;
 	}
 
 	Pipeline::~Pipeline()
 	{
-		if (framebuffers != nullptr)
-			delete framebuffers;
 		cleanup();
 	}
 
 	void Pipeline::setVertexInput()
 	{
-		array<VkVertexInputAttributeDescription, 2> *attrs_desc = Vertex::getAttributeDescriptions();
+		array<VkVertexInputAttributeDescription, 2> *attrs_desc = VertexBufferData::getAttributeDescriptions();
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 1;
-		vertex_input_info.pVertexBindingDescriptions = Vertex::getBindingDescription();
+		vertex_input_info.pVertexBindingDescriptions = VertexBufferData::getBindingDescription();
 		vertex_input_info.vertexAttributeDescriptionCount = attrs_desc->size();
 		vertex_input_info.pVertexAttributeDescriptions = attrs_desc->data();
 	}
@@ -219,17 +217,6 @@ namespace GEngine
 		}
 	}
 
-	bool Pipeline::initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass)
-	{
-		framebuffers = new Framebuffers(logical_device);
-		return framebuffers->createFramebuffer(swap_chain, render_pass);
-	}
-
-	Framebuffers *Pipeline::getFramebuffers()
-	{
-		return framebuffers;
-	}
-
     VkPipeline Pipeline::getVulkanObject()
     {
         return pipeline;
@@ -249,6 +236,16 @@ namespace GEngine
 		
 		delete vertex_shader;
 		delete fragment_shader;
+	}
+
+	void Pipeline::addArgumentType(int position, ArgumentType type)
+	{
+		argument_position[position] = type;
+	}
+
+	map<int, Pipeline::ArgumentType> *Pipeline::getArgumentPosition()
+	{
+		return &argument_position;
 	}
 }
 

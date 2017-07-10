@@ -93,7 +93,7 @@ namespace GEngine
 		vkBindBufferMemory(device->getVulkanObject(), buffer, dev_memory, 0);
 	}
 
-	void Buffer::addVertexData(vector<Vertex> *vertices)
+	void Buffer::addVertexData(vector<VertexBufferData> *vertices)
 	{
 		void *data;
 		vkMapMemory(device->getVulkanObject(), dev_memory, 0, size, 0, &data);

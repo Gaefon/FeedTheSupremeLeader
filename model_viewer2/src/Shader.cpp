@@ -66,15 +66,5 @@ namespace GEngine
 	{
 		return shader_module;
 	}
-
-	void Shader::addArgumentType(int position, ArgumentType type)
-	{
-		argument_position[position] = type;
-	}
-
-	map<int, Shader::ArgumentType> *Shader::getArgumentPosition()
-	{
-		return &argument_position;
-	}
 }
 

@@ -4,7 +4,7 @@
 #include <vulkan/vulkan.h>
 
 #include <Device.h>
-#include <Vertex.h>
+#include <VertexBufferData.h>
 
 namespace GEngine
 {
@@ -25,7 +25,7 @@ namespace GEngine
 			virtual bool createBuffer(unsigned long buffer_size, VkBufferUsageFlags usage_flags);
             virtual bool allocBuffer(VkMemoryPropertyFlags memory_flags);
 			virtual void bindToDevice();
-			void addVertexData(std::vector<Vertex> *vertices);
+			void addVertexData(std::vector<VertexBufferData> *vertices);
 			virtual void setNbVertices(unsigned int nb);
 
 			virtual VkBuffer getVulkanBuffer();

@@ -6,8 +6,8 @@
 #include <pool/PipelinePool.h>
 #include <Camera.h>
 
-//#include <model/Scene.h>
-//#include <model/Model.h>
+#include <models/Scene.h>
+#include <models/Model.h>
 
 #include <string>
 
@@ -21,6 +21,9 @@ int main(void)
 	MousePoller *mouse_event;
 	list<string> extensions;
 	
+	// std::vector<VertexBufferData> vertices;
+	// std::vector<uint16_t> indexes;
+	
 
 	glfwInit();
 
@@ -33,7 +36,10 @@ int main(void)
 	// create the pipeline
 	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *stupid_frag = new Shader(string("Shaders/2d_stupid.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *stupid_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
+	PipelinePool::getInstance()->createPipeline(1, stupid_vert, stupid_frag, &g_engine_wrapper);
 	
 	glm::vec3 cam_pos(2.0f, 2.0f, 2.0f);
 	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
@@ -42,13 +48,50 @@ int main(void)
 	camera.setPerspectice(90.0f, (float) window->getWidth() / (float) window->getHeight(), 0.1f, 100.0f);
 	camera.setLookAt(cam_pos, cam_target, cam_vert);
 	
-	g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0));
+	//g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
 	
-	/*Scene scene;
+	Scene scene;
+	Material mat1(PipelinePool::getInstance()->getPipeline(0));
+	Material mat2(PipelinePool::getInstance()->getPipeline(1));
 	Model model1;
 	Model model2;
+
+	model1.addVertice(new Vertex({0.0f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model1.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({-0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
 	
-	model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
+	model1.addIndex(0);
+	model1.addIndex(1);
+	model1.addIndex(2);
+	model1.addIndex(0);
+	model1.addIndex(3);
+	model1.addIndex(4);
+	
+	model1.setMaterial(&mat1);
+	
+	model2.addVertice(new Vertex({0.0f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model2.addVertice(new Vertex({-0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model2.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model2.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model2.addVertice(new Vertex({0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	
+	model2.addIndex(0);
+	model2.addIndex(1);
+	model2.addIndex(2);
+	model2.addIndex(0);
+	model2.addIndex(3);
+	model2.addIndex(4);
+	
+	model2.setMaterial(&mat2);
+	
+	//model1.addVertice(new Vertex({0.0f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	//model1.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	//model1.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	
+	
+	/*model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
 	model1.addVertice(new Vertex({-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
 	model1.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 
@@ -56,20 +99,18 @@ int main(void)
 	model1.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 	model1.addVertice(new Vertex({0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
 	
-	
-	
 	model2.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
 	model2.addVertice(new Vertex({0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
 	
 	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
 	model2.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
-	model2.addVertice(new Vertex({-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
+	model2.addVertice(new Vertex({-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});*/
 	
 	scene.addModel(&model1);
 	scene.addModel(&model2);
 	
-	scene.render(&g_engine_wrapper);*/
+	scene.render(&g_engine_wrapper);
 
 	while (!window->shouldClose())
 	{
@@ -93,6 +134,11 @@ int main(void)
 	}
 	
 	g_engine_wrapper.getEngine()->getLogicalDevice()->waitIdle();
+
+	delete shader_frag;
+	delete shader_vert;
+	delete stupid_frag;
+	delete stupid_vert;
 
 	delete key_event;
 	delete window;

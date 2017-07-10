@@ -32,46 +32,34 @@ namespace GEngine
 		arr_vertices.push_back(new_vertex);
 	}
 	
-	void setMateriel(Material *mat)
+	void Model::addIndex(uint16_t new_index)
+	{
+		arr_indexes.push_back(new_index);
+	}
+	
+	vector<Vertex *> Model::getVertices()
+	{
+		return arr_vertices;
+	}
+	
+	std::vector<uint16_t> Model::getIndexes()
+	{
+		return arr_indexes;
+	}
+	
+	void Model::setMaterial(Material *mat)
 	{
 		material = mat;
+	}
+	
+	Material *Model::getMaterial()
+	{
+		return material;
 	}
 	
 	int Model::getNbVertices()
 	{
 		return arr_vertices.size();
-	}
-	
-	vector<glm::vec3> Model::getVertexBufferData()
-	{
-		vector<glm::vec3> data;
-		map<int, Shader::ArgumentType> *args = material->getPipeline()->getVertexShader()->getArgumentPosition();
-		
-		/*for (map<int, Shader::ArgumentType>::iterator it = args->begin(); it != args->end(); ++it)
-		{
-			if (it->second == Shader::ArgumentType::Vertex)
-				size += arr_vertices.size() * Vertex::getPositionSize();
-			else if (it->second == Shader::ArgumentType::Color)
-				size += arr_vertices.size() * Vertex::getColorSize();
-		}*/
-		
-		/*data = new float[size];
-		int current_index = 0;*/
-		
-		for (vector<Vertex *>::iterator v_it = arr_vertices.begin(); v_it != arr_vertices.end(); ++v_it)
-		{
-			Vertex *vert = *v_it;
-			
-			for (map<int, Shader::ArgumentType>::iterator it = args->begin(); it != args->end(); ++it)
-			{
-				if (it->second == Shader::ArgumentType::Vertex)
-					data.push_back(vert->getPosition());
-				else if (it->second == Shader::ArgumentType::Color)
-					data.push_back(vert->getColor());
-			}
-		}
-		
-		return data;
 	}
 
 	/*vector<string> Model::splitStr(string data, string delimiter)

@@ -2,7 +2,6 @@
 #define PIPELINE_H
 
 #include <vulkan/vulkan.h>
-#include <Vertex.h>
 #include <Shader.h>
 #include <Device.h>
 #include <RenderPass.h>
@@ -14,12 +13,17 @@ namespace GEngine
 	class Pipeline
 	{
 		private:
+			enum class ArgumentType : int
+			{
+				None = -1,
+				Vertex = 0,
+				Color = 1
+			};
+
 			Shader *vertex_shader;
 			Shader *fragment_shader;
 
 			Device *logical_device;
-
-			Framebuffers *framebuffers;
 
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
@@ -43,6 +47,8 @@ namespace GEngine
 
 			VkPipeline pipeline;
 
+			std::map<int, ArgumentType> argument_position;
+
 			void cleanup();
 
 		public:
@@ -65,10 +71,11 @@ namespace GEngine
 			void createPipelineLayout();
 			void createPipeline(RenderPass *render_pass);
 
-			bool initFramebuffers(SwapChain *swap_chain, RenderPass *render_pass);
-			Framebuffers *getFramebuffers();
-
 			VkPipeline getVulkanObject();
+
+			void addArgumentType(int position, ArgumentType type);
+
+			std::map<int, ArgumentType> *getArgumentPosition();
 	};
 }
 

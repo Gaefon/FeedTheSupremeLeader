@@ -3,7 +3,7 @@
 #include <vulkan/vulkan.h>
 #include <buffers/Buffer.h>
 #include <Device.h>
-#include <Vertex.h>
+
 namespace GEngine
 {
 	class IndexBuffer : public Buffer

@@ -1,5 +1,8 @@
 #include <models/Scene.h>
 #include <helper/DebugHelper.h>
+#include <VertexBufferData.h>
+
+#include <pool/PipelinePool.h>
 
 using namespace std;
 
@@ -31,17 +34,23 @@ namespace GEngine
 
 	void Scene::render(GEngineWrapper *wrapper)
 	{
-		unsigned int total_vertices = 0;
-		vector<glm::vec3> all_vertices;
-		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); it++)
+		wrapper->beginCommandBufferAndRenderPass();
+		
+		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); ++it)
 		{
-			total_vertices += (*it)->getNbVertices();
-			(*it)->getVertexBufferData(); //ajouter le shader en argument
-			// mettre un getter temporaire dans le  wrapper
+			int position = 0;
+			vector<VertexBufferData> all_vertices((*it)->getVertices().size());
+			
+			vector<Vertex *> vertices = (*it)->getVertices();
+			for (vector<Vertex *>::iterator itr = vertices.begin(); itr != vertices.end(); itr++)
+			{
+				all_vertices.at(position).v_position = (*itr)->getPosition();
+				all_vertices.at(position).v_color = (*itr)->getColor();
+				position++;
+			}
+			
+			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes());
 		}
-	
-		/*DebugHelper::drawAxis(1.0f, m_cam);
-		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); it++)
-			(*it)->render(m_cam);*/
+		wrapper->endCommandBufferAndRenderPass();
 	}
 }

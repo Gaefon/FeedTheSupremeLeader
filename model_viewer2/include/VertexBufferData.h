@@ -7,9 +7,9 @@
 
 namespace GEngine
 {
-    struct Vertex
+    struct VertexBufferData
     {
-	    glm::vec2 v_position;
+	    glm::vec3 v_position;
 	    glm::vec3 v_color;
 	    
 		static VkVertexInputBindingDescription *getBindingDescription();

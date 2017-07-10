@@ -22,7 +22,7 @@ namespace GEngine
 	{
 		private:
 			std::vector<Vertex *> arr_vertices;
-
+			std::vector<uint16_t> arr_indexes;
 			Material *material;
 
 
@@ -46,9 +46,12 @@ namespace GEngine
 			//Model(std::string file_name);
 			~Model();
 			void addVertice(Vertex *new_vertex);
-			void setMateriel(Material *mat);
+			void addIndex(uint16_t new_index);
+			std::vector<Vertex *> getVertices();
+			std::vector<uint16_t> getIndexes();
+			void setMaterial(Material *mat);
+			Material *getMaterial();
 			int getNbVertices();
-			std::vector<glm::vec3> getVertexBufferData();
 	};
 }
 

@@ -13,12 +13,6 @@ namespace GEngine
 	class Shader
 	{
 		public:
-			enum class ArgumentType : int
-			{
-				None = -1,
-				Vertex = 0,
-				Color = 1
-			};
 			
 			
 			Shader(std::string filename, std::string name, Device *device);
@@ -29,18 +23,12 @@ namespace GEngine
 			VkShaderModule getVulkanObject();
 			std::string& getName();
 
-			void addArgumentType(int position, ArgumentType type);
-			
-			std::map<int, ArgumentType> *getArgumentPosition();
-
 
 		private:
 		    std::vector<char> buffer;
 		    std::string shader_name;
 		    VkShaderModule shader_module;
 		    Device *dev;
-		    
-		    std::map<int, ArgumentType> argument_position;
 		    
 		    std::vector<uint32_t> buffer_aligned;
 
