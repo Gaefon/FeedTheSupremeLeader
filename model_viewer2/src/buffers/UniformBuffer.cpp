@@ -48,7 +48,7 @@ namespace GEngine
 
 		if (vkCreateBuffer(device->getVulkanObject(), &buffer_info, nullptr, &buffer) != VK_SUCCESS)
 		{
-			cerr << "failed to create vertex buffer" << endl;
+			cerr << "failed to create uniform buffer" << endl;
 			return false;
 		}
         return true;
