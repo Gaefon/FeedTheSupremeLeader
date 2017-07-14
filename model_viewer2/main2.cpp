@@ -35,9 +35,10 @@ int main(void)
 	
 	// create the pipeline
 	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
-	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *shader_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *stupid_frag = new Shader(string("Shaders/2d_stupid.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *stupid_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	
 	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
 	PipelinePool::getInstance()->createPipeline(1, stupid_vert, stupid_frag, &g_engine_wrapper);
 	
@@ -85,30 +86,12 @@ int main(void)
 	model2.addIndex(4);
 	
 	model2.setMaterial(&mat2);
-	
-	//model1.addVertice(new Vertex({0.0f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
-	//model1.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
-	//model1.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
-	
-	
-	/*model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
-	model1.addVertice(new Vertex({-0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
-	model1.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
 
-	model1.addVertice(new Vertex({0.0f, 0.5f}, {1.0f, 0.0f, 0.0f});
-	model1.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
-	model1.addVertice(new Vertex({0.5f, 0.5f}, {0.0f, 1.0f, 0.0f});
-	
-	model2.addVertice(new Vertex({0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
-	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
-	model2.addVertice(new Vertex({0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});
-	
-	model2.addVertice(new Vertex({0.0f, -0.5f}, {1.0f, 0.0f, 0.0f});
-	model2.addVertice(new Vertex({-0.5f, 0.0f}, {0.0f, 0.0f, 1.0f});
-	model2.addVertice(new Vertex({-0.5f, -0.5f}, {0.0f, 1.0f, 0.0f});*/
 	
 	scene.addModel(&model1);
 	scene.addModel(&model2);
+	
+	Model cube("../ressources/models/cube.obj");
 	
 	scene.render(&g_engine_wrapper);
 
@@ -121,12 +104,12 @@ int main(void)
 			
 		for (MouseEvent *evt : mouse_event->getEvents())
 		{
-			if (evt->getType() == MouseEvent::Type::position)
+			/*if (evt->getType() == MouseEvent::Type::position)
 				cout << "X = " << evt->getPosX() << " // Y = " << evt->getPosY() << endl;
 			else if (evt->getType() == MouseEvent::Type::scroll)
 				cout << "SCROLL :: X = " << evt->getOffsetX() << " // Y = " << evt->getOffsetY() << endl;
 			else
-				cout << "Button = " << (int) evt->getType() << " // pressed = " << evt->isPressed() << endl;
+				cout << "Button = " << (int) evt->getType() << " // pressed = " << evt->isPressed() << endl;*/
 		}
 		mouse_event->poll();
 		

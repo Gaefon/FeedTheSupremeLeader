@@ -8,6 +8,7 @@ namespace GEngine
 		private:
 			unsigned int width;
 			unsigned int height;
+			int  **data;
 		public:
 			Bitmap();
 			~Bitmap();
