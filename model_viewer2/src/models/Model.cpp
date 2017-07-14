@@ -155,7 +155,7 @@ namespace GEngine
 			
 			// clear all the found indices
 			for (vector<int *>::iterator it = arr_faces.begin(); it != arr_faces.end(); it++)
-				delete (*it);
+				delete[] (*it);
 		}
 	}
 	
