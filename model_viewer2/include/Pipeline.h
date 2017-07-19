@@ -53,7 +53,7 @@ namespace GEngine
 
 		public:
 			Pipeline(Device *dev);
-			Pipeline(Device *dev, VkDescriptorSetLayout descriptorSet)
+			Pipeline(Device *dev, VkDescriptorSetLayout descriptorSet);
 			~Pipeline();
 
 			void setVertexInput();

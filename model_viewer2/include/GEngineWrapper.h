@@ -8,8 +8,7 @@
 #include <SwapChain.h>
 #include <Shader.h>
 #include <Pipeline.h>
-<<<<<<< HEAD
-#include <Vertex.h>
+#include <VertexBufferData.h>
 #include <buffers/CommandBuffers.h>
 #include <buffers/VertexBuffer.h>
 #include <buffers/StagingBuffer.h>
@@ -53,7 +52,7 @@ namespace GEngine
 			VertexBuffer *g_vertex_buffer;
 			IndexBuffer *g_index_buffer;
 			UniformBuffer *g_uniform_buffer;
-			std::vector<Vertex> vertices;
+			std::vector<VertexBufferData> vertices;
 			std::vector<uint16_t> indexes;
 
 			void init();

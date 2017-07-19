@@ -1,4 +1,4 @@
-#include <buffers/Buffer.h>
+#include <buffers/UniformBuffer.h>
 #include <iostream>
 #include <string.h>
 
@@ -6,7 +6,9 @@ using namespace std;
 
 namespace GEngine
 {
-    UniformBuffer::createDescriptorSetLayout()
+    UniformBuffer::UniformBuffer(Device *dev) : Buffer(dev){}
+	UniformBuffer::~UniformBuffer() {}
+    void UniformBuffer::createDescriptorSetLayout()
     {
         VkDescriptorSetLayoutBinding ubo_layout_binding = {};
         ubo_layout_binding.binding = 0;
@@ -27,9 +29,8 @@ namespace GEngine
 		if (vkCreateDescriptorSetLayout(device->getVulkanObject(), &layout_info, nullptr, &descriptor_set_layout) != VK_SUCCESS)
 		{
 			cerr << "failed to create descriptor set" << endl;
-			return false;
+			return;
 		}
-
 		VkPipelineLayoutCreateInfo pipeline_layout_info = {};
 		pipeline_layout_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipeline_layout_info.setLayoutCount = 1;
@@ -37,7 +38,7 @@ namespace GEngine
 
     }
 
-    bool UniformBuffer::createBuffer(unsigned int buffer_size)
+    bool UniformBuffer::createBuffer(unsigned long int buffer_size)
     {
         VkBufferCreateInfo buffer_info = {};
 		buffer_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;

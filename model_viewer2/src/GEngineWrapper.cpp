@@ -115,13 +115,13 @@ namespace GEngine
 		g_index_buffer->bindToDevice();
 		g_index_buffer->setNbVertices(g_staging_buffer2->getNbVertices());
 
-		g_uniform_buffer = new UniformBuffer(g_engine->getLogicalDevice())
+		g_uniform_buffer = new UniformBuffer(g_engine->getLogicalDevice());
 		g_uniform_buffer->createBuffer(sizeof(UniformBuffer));
 		g_uniform_buffer->allocBuffer();
 		g_uniform_buffer->bindToDevice();
 
 
-		g_command_buffers->createCommandBuffers(pipeline->getFramebuffers());
+		g_command_buffers->createCommandBuffers(g_framebuffers);
 
 		g_command_buffers->copyBufferCommand(g_staging_buffer->getVulkanBuffer(), g_vertex_buffer->getVulkanBuffer(), sizeof(VertexBufferData) * vertices.size());
 		g_command_buffers->startRecording(pipeline, g_vertex_buffer, g_index_buffer);
