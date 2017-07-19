@@ -8,7 +8,8 @@
 			private:
 				unsigned int width;
 				unsigned int height;
-				unsigned int  **data;
+				
+				unsigned int **data; // all the colors ar coded in R8G8B8A8
 			
 				void deallocateData();
 			public:
