@@ -20,13 +20,14 @@ SRC =	src/GEngine.cpp\
 		src/Shader.cpp\
 		src/Pipeline.cpp\
 		src/RenderPass.cpp\
-		src/Framebuffers.cpp\
-		src/CommandBuffers.cpp\
+		src/buffers/Framebuffers.cpp\
+		src/buffers/CommandBuffers.cpp\
 		src/Semaphore.cpp\
-		src/Buffer.cpp\
-		src/StagingBuffer.cpp\
-		src/VertexBuffer.cpp\
-		src/IndexBuffer.cpp\
+		src/buffers/Buffer.cpp\
+		src/buffers/StagingBuffer.cpp\
+		src/buffers/VertexBuffer.cpp\
+		src/buffers/IndexBuffer.cpp\
+		src/buffers/UniformBuffer.cpp\
 		src/bitmaps/Bitmap.cpp\
 		src/pool/PipelinePool.cpp\
 		src/GEngineWrapper.cpp\
