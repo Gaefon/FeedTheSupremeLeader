@@ -25,25 +25,12 @@ namespace GEngine
 			std::vector<uint16_t> arr_indexes;
 			Material *material;
 
-
-			/*std::vector<glm::vec3> vertices;
-			std::vector<glm::vec3> normals;
-			std::vector<glm::vec3> colors;
-			std::vector<glm::vec2> uvs;
-			glm::mat4 normal_matrix;
-			float *arr_vertices;
-			float *arr_normals;
-			float *arr_colors;
-			float *arr_uvs;*/
-
-			/*Shader *m_shader;
-			Texture *m_texture;
-
 			std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
-			void loadFile(std::string file_name);*/
+			void loadFile(std::string file_name);
+			int findVertexIndex(std::vector<int *> *vertex_indexes, int *vert);
 		public:
 			Model();
-			//Model(std::string file_name);
+			Model(std::string file_name);
 			~Model();
 			void addVertice(Vertex *new_vertex);
 			void addIndex(uint16_t new_index);

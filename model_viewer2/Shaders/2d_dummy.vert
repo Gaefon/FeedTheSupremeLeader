@@ -21,3 +21,6 @@ void main()
 	gl_Position = ubo.model * ubo.viewproj * vec4(position, 0.0f, 1.0f);
 	vert_color = color;
 }
+
+
+
