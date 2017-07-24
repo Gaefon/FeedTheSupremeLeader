@@ -54,6 +54,7 @@ int main(void)
 	//g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
 	
 	BMPImage plop("../ressources/test.bmp");
+	//BMPImage plop("../ressources/fuckdatshit_bad_number_bytes_per_lines.bmp");
 	Scene scene;
 	Material mat1(PipelinePool::getInstance()->getPipeline(0));
 	Material mat2(PipelinePool::getInstance()->getPipeline(1));

@@ -41,24 +41,24 @@ namespace GEngine
 	bool BMPImage::readFileHeader(ifstream *fd)
 	{
 		uint16_t signature;
-		uint32_t size;
 		uint32_t reserved;
-		uint32_t offset;
 		
 		fd->read((char*) &signature, sizeof(signature));
-		fd->read((char*) &size, sizeof(size));
+		fd->read((char*) &m_size, sizeof(m_size));
 		fd->read((char*) &reserved, sizeof(reserved));
-		fd->read((char*) &offset, sizeof(offset));
+		fd->read((char*) &m_offset, sizeof(m_offset));
 		
 		cout  << "====== HEADER ======" << endl;
 		cout << "signature : " << hex << signature << endl;
-		cout << "size : " << dec << size << endl;
+		cout << "size : " << dec << m_size << endl;
 		cout << "reserved : " << hex << reserved << endl;
-		cout << "offset : " << hex << offset << endl;
+		cout << "offset : " << dec << m_offset << endl;
 		
 		if (signature != BITMAP_SIGNATURE)
+		{
+			cerr << "BMP Image : bad signature" << endl;
 			return false;
-		
+		}
 		return true;
 	}
 	
@@ -107,8 +107,8 @@ namespace GEngine
 		cout << "size_image : " << hex << size_image << endl;
 		cout << "pix_per_meter_x : " << hex << pix_per_meter_x << endl;
 		cout << "pix_per_meter_y : " << hex << pix_per_meter_y << endl;
-		cout << "m_nb_color_palette : " << hex << m_nb_color_palette << endl;
-		cout << "nb_important_color : " << hex << nb_important_color << endl;
+		cout << "m_nb_color_palette : " << dec << m_nb_color_palette << endl;
+		cout << "nb_important_color : " << dec << nb_important_color << endl;
 		
 		
 		fd->seekg(BITMAP_HEADER_SIZE + header_size, std::ios::beg);
@@ -122,6 +122,8 @@ namespace GEngine
 	{
 		uint32_t rgba;
 		
+		m_color_palette.clear();
+		
 		// read all the colors.
 		for (uint32_t i = 0; i < m_nb_color_palette; i++)
 		{
@@ -134,14 +136,128 @@ namespace GEngine
 	
 	bool BMPImage::readImageData(ifstream *fd)
 	{
+		bool read_success = false;
+		fd->seekg(m_offset, std::ios::beg);
+		m_image_data.clear(); // clear all the data
+		
 		if (m_compression == 0)
-			return readUnCompressedData();
+			read_success = readUnCompressedData(fd);
+		else if (m_compression == BITMAP_RLE_8_BITS)
+			read_success = readRle8BitsData(fd);
+		else if (m_compression == BITMAP_RLE_4_BITS)
+			read_success = readRle4BitsData(fd);
+		else if (m_compression == BITMAP_BITMASK)
+			read_success = readBitmaskData(fd);
+			
+		if (read_success)
+		{
+			if (m_bit_count == 24)
+				return decode24BitsData();
+			else if (m_bit_count == 16)
+				return decode16BitsData();
+			return false;
+		}
 		return false;
 	}
 	
 	
-	bool BMPImage::readUnCompressedData()
+	bool BMPImage::readUnCompressedData(ifstream *fd)
 	{
+		// 4 * 4 * 24bits = 48 octets
+		// size - offset = 48 octets
+		// WARNING : if line size is not a multiple of 4 then adds bytes to make a multiple of 4
+		int data_size = m_size - m_offset;
+		uint8_t byte;
+		int bytes_to_jump = 0;
+		
+		if (getWidth() % 4 != 0)
+			bytes_to_jump = 4 - ((getWidth() * m_bit_count / 8) % 4);
+			
+		int real_size_to_read = data_size - (getHeight() * bytes_to_jump);
+		
+		for (int i = 0; i < real_size_to_read; i++)
+		{
+			if (i != 0 && i % (getWidth() * m_bit_count / 8) == 0)
+				fd->seekg(bytes_to_jump, ios::cur);
+			
+			fd->read((char *) &byte, sizeof(uint8_t));
+			m_image_data.push_back(byte);
+		}
+		
+		return true;
+	}
+	
+	bool BMPImage::readRle8BitsData(ifstream *fd)
+	{
+		cerr << "RLE 8 bits compression is not supported :(" << endl;
+		return false;
+	}
+	
+	bool BMPImage::readRle4BitsData(ifstream *fd)
+	{
+		cerr << "RLE 4 bits compression is not supported :(" << endl;
+		return false;
+	}
+	
+	bool BMPImage::readBitmaskData(ifstream *fd)
+	{
+		cerr << "bitmask compression is not supported :(" << endl;
+		return false;
+	}
+	
+	bool BMPImage::decode24BitsData()
+	{
+		int nb_pix = getWidth() * getHeight();
+		int nb_pix_read = m_image_data.size() / (24 / 8);
+		int pix_color;
+		int r, g, b;
+		
+		if (nb_pix == nb_pix_read)
+		{
+			for (int i = 0; i < nb_pix; i++)
+			{
+				pix_color = 0xff000000;
+				// little endian
+				b = m_image_data.at(3 * i);
+				g = m_image_data.at(3 * i + 1);
+				r = m_image_data.at(3 * i + 2);
+				
+				pix_color |= (r << 16) | (g << 8) | b;
+				cout << hex << pix_color << endl;
+				
+				// start from the bottom
+				setPixel(i % getWidth(), i / getHeight(), pix_color);
+			}
+			
+			cout << getWidth() << " " << getHeight() << endl;
+			for (int i = 0; i < getHeight(); i++)
+			{
+				for (int j = 0; j < getWidth(); j++)
+				{
+					if (getPixels()[j][i] == 0xffff0000)
+						cout << "r";
+					else if (getPixels()[j][i] == 0xff00ff00)
+						cout << "g";
+					else if (getPixels()[j][i] == 0xff0000ff)
+						cout << "b";
+					else if (getPixels()[j][i] == 0xffffff00)
+						cout << "j";
+				}
+				
+				cout << endl;
+			}
+			
+			return true;
+		}
+		else
+			cerr << "BMP image : wrong number of pixel read" << endl;
+		
+		return false;
+	}
+	
+	bool BMPImage::decode16BitsData()
+	{
+		int nb_pix = getWidth() * getHeight();
 		return false;
 	}
 	

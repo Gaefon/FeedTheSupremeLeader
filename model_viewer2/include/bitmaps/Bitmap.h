@@ -18,6 +18,11 @@
 				void setSize(unsigned int w, unsigned int h);
 				void setPixel(unsigned int x, unsigned int y, unsigned int value);
 				unsigned int **getPixels();
+				
+				unsigned int getWidth();
+				unsigned int getHeight();
+				
+				
 		};
 	}
 
