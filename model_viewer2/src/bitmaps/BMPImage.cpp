@@ -105,8 +105,8 @@ namespace GEngine
 		
 		
 		cout << "size_image : " << hex << size_image << endl;
-		cout << "pix_per_meter_x : " << hex << pix_per_meter_x << endl;
-		cout << "pix_per_meter_y : " << hex << pix_per_meter_y << endl;
+		cout << "pix_per_meter_x : " << dec << pix_per_meter_x << endl;
+		cout << "pix_per_meter_y : " << dec << pix_per_meter_y << endl;
 		cout << "m_nb_color_palette : " << dec << m_nb_color_palette << endl;
 		cout << "nb_important_color : " << dec << nb_important_color << endl;
 		
@@ -223,13 +223,13 @@ namespace GEngine
 				r = m_image_data.at(3 * i + 2);
 				
 				pix_color |= (r << 16) | (g << 8) | b;
-				cout << hex << pix_color << endl;
+				//cout << hex << pix_color << endl;
 				
 				// start from the bottom
-				setPixel(i % getWidth(), i / getHeight(), pix_color);
+				setPixel(i % getWidth(), getHeight() - i / getHeight() - 1, pix_color);
 			}
 			
-			cout << getWidth() << " " << getHeight() << endl;
+			/*cout << getWidth() << " " << getHeight() << endl;
 			for (int i = 0; i < getHeight(); i++)
 			{
 				for (int j = 0; j < getWidth(); j++)
@@ -243,9 +243,8 @@ namespace GEngine
 					else if (getPixels()[j][i] == 0xffffff00)
 						cout << "j";
 				}
-				
 				cout << endl;
-			}
+			}*/
 			
 			return true;
 		}
@@ -258,6 +257,15 @@ namespace GEngine
 	bool BMPImage::decode16BitsData()
 	{
 		int nb_pix = getWidth() * getHeight();
+		int nb_pix_read = m_image_data.size() / (16 / 8);
+		int pix_color;
+		int r, g, b;
+		
+		if (nb_pix == nb_pix_read)
+		{}
+		else
+			cerr << "BMP image : wrong number of pixel read" << endl;
+		
 		return false;
 	}
 	
