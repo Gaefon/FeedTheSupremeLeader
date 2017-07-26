@@ -14,6 +14,7 @@
 #include <buffers/StagingBuffer.h>
 #include <buffers/IndexBuffer.h>
 #include <buffers/UniformBuffer.h>
+#include <Camera.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <list>
@@ -30,7 +31,7 @@ namespace GEngine
 			~GEngineWrapper();
 
 			void beginCommandBufferAndRenderPass();
-			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
+			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes, Camera *camera);
 			void endCommandBufferAndRenderPass();
 			void startDrawing();
 			Engine *getEngine();

@@ -87,7 +87,7 @@ namespace GEngine
     }
 
     // passer les vertices et les index en arguments depuis l'objet Scene
-	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes)
+	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes, Camera *camera)
     {
 		g_staging_buffer = new StagingBuffer(g_engine->getLogicalDevice());
 

@@ -32,9 +32,8 @@ namespace GEngine
 		m_list_model.push_back(model);
 	}
 
-	void Scene::render(GEngineWrapper *wrapper)
+	void Scene::render(GEngineWrapper *wrapper, Camera *camera)
 	{
-
         wrapper->beginCommandBufferAndRenderPass();
 		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); ++it)
 		{
@@ -49,7 +48,7 @@ namespace GEngine
 				all_vertices.at(position).v_color = (*itr)->getColor();
 				position++;
 			}
-			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes());
+			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes(), camera);
 		}
 		wrapper->endCommandBufferAndRenderPass();
 

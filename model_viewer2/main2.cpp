@@ -93,7 +93,7 @@ int main(void)
 	
 	Model cube("../ressources/models/cube.obj");
 	
-	scene.render(&g_engine_wrapper);
+	scene.render(&g_engine_wrapper, &camera);
 
 	while (!window->shouldClose())
 	{

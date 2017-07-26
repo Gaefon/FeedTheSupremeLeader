@@ -4,8 +4,8 @@
 #include <vector>
 
 #include <models/Model.h>
-
 #include <GEngineWrapper.h>
+#include <Camera.h>
 
 namespace GEngine
 {
@@ -23,7 +23,7 @@ namespace GEngine
 			void addModel(Model *model);
 			//void addLight(Light *light);
 			// le parametre pipeline est temporaire
-			void render(GEngineWrapper *wrapper);
+			void render(GEngineWrapper *wrapper, Camera *camera);
 	};
 }
 
