@@ -19,6 +19,13 @@ namespace GEngine
         private:
             glm::mat4 model;
             glm::mat4 viewproj;
+            
+            
+			typedef struct s_uniformBufferObject
+			{
+				glm::mat4 modelview;
+				glm::mat4 projection;
+			} UniformBufferObject;
     };
 }
 

@@ -9,18 +9,23 @@ namespace GEngine
 	Camera::~Camera()
 	{}
 
-	void Camera::setPerspectice(float fovy, float ratio, float near, float far)
+	void Camera::setPerspective(float fovy, float ratio, float near, float far)
 	{
-		camera_shader.projection = glm::perspective(fovy, ratio, near, far);
+		projection = glm::perspective(fovy, ratio, near, far);
 	}
 
 	void Camera::setLookAt(glm::vec3 pos, glm::vec3 target, glm::vec3 vert)
 	{
-		camera_shader.modelview = glm::lookAt(pos, target, vert);
+		modelview = glm::lookAt(pos, target, vert);
 	}
 	
-	Camera::CameraShaderObject *Camera::getShaderObject()
+	glm::mat4 Camera::getModelView()
 	{
-		return &camera_shader;
+		return modelview;
+	}
+	
+	glm::mat4 Camera::getProjection()
+	{
+		return projection;
 	}
 }

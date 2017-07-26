@@ -46,7 +46,7 @@ int main(void)
 	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
 	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
 	Camera camera;
-	camera.setPerspectice(90.0f, (float) window->getWidth() / (float) window->getHeight(), 0.1f, 100.0f);
+	camera.setPerspective(90.0f, (float) window->getWidth() / (float) window->getHeight(), 0.1f, 100.0f);
 	camera.setLookAt(cam_pos, cam_target, cam_vert);
 	
 	//g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
