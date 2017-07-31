@@ -15,17 +15,15 @@ namespace GEngine
             bool allocBuffer();
             bool createBuffer(unsigned long buffer_size);
             void createDescriptorSetLayout();
-            void update();
+            void setMatrix(glm::mat4 mv, glm::mat4 proj);
         private:
-            glm::mat4 model;
-            glm::mat4 viewproj;
-            
-            
 			typedef struct s_uniformBufferObject
 			{
 				glm::mat4 modelview;
 				glm::mat4 projection;
 			} UniformBufferObject;
+			
+			UniformBufferObject buffer_data;
     };
 }
 

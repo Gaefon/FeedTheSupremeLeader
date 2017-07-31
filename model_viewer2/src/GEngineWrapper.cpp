@@ -119,6 +119,7 @@ namespace GEngine
 		g_uniform_buffer->createBuffer(sizeof(UniformBuffer));
 		g_uniform_buffer->allocBuffer();
 		g_uniform_buffer->bindToDevice();
+		g_uniform_buffer->setMatrix(camera->getModelView(), camera->getProjection());
 
 		//g_command_buffers->createCommandBuffers(g_framebuffers);
 

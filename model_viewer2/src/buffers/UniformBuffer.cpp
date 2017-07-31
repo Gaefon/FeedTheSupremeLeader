@@ -75,5 +75,11 @@ namespace GEngine
 		}
 		return true;
 	}
+	
+	void UniformBuffer::setMatrix(glm::mat4 mv, glm::mat4 proj)
+	{
+		buffer_data.modelview = mv;
+		buffer_data.projection = proj;
+	}
 
 }
