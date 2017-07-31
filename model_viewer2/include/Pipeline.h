@@ -42,6 +42,7 @@ namespace GEngine
 			VkDynamicState dynamic_states[2];
 			VkPipelineDynamicStateCreateInfo dynamic_state_infos;
 
+			VkDescriptorSetLayout descriptor_set_layout;
 			VkPipelineLayout pipeline_layout;
 			VkGraphicsPipelineCreateInfo pipeline_info;
 
@@ -68,6 +69,7 @@ namespace GEngine
 			void setMultisamplingInfos();
 			void setColorBlendAttachment();
 			void createDynamicStateInfos();
+			void createDescriptorSetLayout();
 			void createPipelineLayout();
 			void createPipeline(RenderPass *render_pass);
 

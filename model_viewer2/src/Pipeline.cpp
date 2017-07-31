@@ -166,13 +166,26 @@ namespace GEngine
 		dynamic_state_infos.dynamicStateCount = 2;
 		dynamic_state_infos.pDynamicStates = dynamic_states;
 	}
+	
+	void Pipeline::createDescriptorSetLayout() // ceci doit être appelé avant createPipelineLayout
+	{
+		VkDescriptorSetLayoutCreateInfo layout_info = {};
+		layout_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+		layout_info.bindingCount = 1;
+		//layoutInfo.pBindings = &ubo_layout_binding;
+
+		if (vkCreateDescriptorSetLayout(logical_device->getVulkanObject(), &layout_info, nullptr, &descriptor_set_layout) != VK_SUCCESS)
+			cerr << "failed to create descriptor set layout!" << endl;
+	}
 
 	void Pipeline::createPipelineLayout()
 	{
 		VkPipelineLayoutCreateInfo pipeline_layout_info = {};
 		pipeline_layout_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipeline_layout_info.setLayoutCount = 0;
-		pipeline_layout_info.pSetLayouts = nullptr;
+		
+		pipeline_layout_info.setLayoutCount = 0; // 1; ajouter un layout pour le uniform buffer
+		pipeline_layout_info.pSetLayouts = nullptr; // &descriptorSetLayout;
+		
 		pipeline_layout_info.pushConstantRangeCount = 0;
 		pipeline_layout_info.pPushConstantRanges = 0;
 
