@@ -10,6 +10,7 @@
 #include <buffers/VertexBuffer.h>
 #include <buffers/StagingBuffer.h>
 #include <buffers/IndexBuffer.h>
+#include <buffers/UniformBuffer.h>
 
 namespace GEngine
 {
@@ -32,6 +33,7 @@ namespace GEngine
 			StagingBuffer g_staging_buffer2;
 			VertexBuffer g_vertex_buffer;
 			IndexBuffer g_index_buffer;
+			UniformBuffer g_uniform_buffer;
 
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
@@ -78,7 +80,7 @@ namespace GEngine
 			void setMultisamplingInfos();
 			void setColorBlendAttachment();
 			void createDynamicStateInfos();
-			void createDescriptorSetLayout();
+			void createUniformBuffer();
 			void createPipelineLayout();
 			void createPipeline(RenderPass *render_pass);
 
@@ -94,7 +96,7 @@ namespace GEngine
 			IndexBuffer *getIndexBuffer();
 			StagingBuffer *getVertexStagingBuffer();
 			StagingBuffer *getIndexStagingBuffer();
-
+			UniformBuffer *getUniformBuffer();
 	};
 }
 

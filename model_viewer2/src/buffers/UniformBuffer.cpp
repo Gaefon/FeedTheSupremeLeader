@@ -7,7 +7,9 @@ using namespace std;
 namespace GEngine
 {
     UniformBuffer::UniformBuffer(Device *dev) : Buffer(dev){}
+    
 	UniformBuffer::~UniformBuffer() {}
+	
     void UniformBuffer::createDescriptorSetLayout()
     {
         VkDescriptorSetLayoutBinding ubo_layout_binding = {};
@@ -17,9 +19,7 @@ namespace GEngine
         ubo_layout_binding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
         ubo_layout_binding.pImmutableSamplers = nullptr;
 
-        VkDescriptorSetLayout descriptor_set_layout;
-        VkPipelineLayout pipeline_layout;
-
+        
         VkDescriptorSetLayoutCreateInfo layout_info = {};
         layout_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
         layout_info.bindingCount = 1;
@@ -29,13 +29,7 @@ namespace GEngine
 		if (vkCreateDescriptorSetLayout(device->getVulkanObject(), &layout_info, nullptr, &descriptor_set_layout) != VK_SUCCESS)
 		{
 			cerr << "failed to create descriptor set" << endl;
-			return;
 		}
-		
-		VkPipelineLayoutCreateInfo pipeline_layout_info = {};
-		pipeline_layout_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipeline_layout_info.setLayoutCount = 1;
-		pipeline_layout_info.pSetLayouts = &descriptor_set_layout;
 
     }
 
@@ -81,6 +75,11 @@ namespace GEngine
 	{
 		buffer_data.modelview = mv;
 		buffer_data.projection = proj;
+	}
+	
+	VkDescriptorSetLayout *UniformBuffer::getDescriptorSetLayout()
+	{
+		return &descriptor_set_layout;
 	}
 
 }

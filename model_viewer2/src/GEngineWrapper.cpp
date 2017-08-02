@@ -97,8 +97,8 @@ namespace GEngine
 		/*g_uniform_buffer = new UniformBuffer(g_engine->getLogicalDevice());
 		g_uniform_buffer->createBuffer(sizeof(UniformBuffer));
 		g_uniform_buffer->allocBuffer();
-		g_uniform_buffer->bindToDevice();
-		g_uniform_buffer->setMatrix(camera->getModelView(), camera->getProjection());*/
+		g_uniform_buffer->bindToDevice();*/
+		pipeline->getUniformBuffer()->setMatrix(camera->getModelView(), camera->getProjection());
 
 		//g_command_buffers->createCommandBuffers(g_framebuffers);
 		

@@ -11,7 +11,8 @@ namespace GEngine
 	Pipeline::Pipeline(Device *dev): g_staging_buffer(dev),
 									g_staging_buffer2(dev),
 									g_vertex_buffer(dev),
-									g_index_buffer(dev)
+									g_index_buffer(dev),
+									g_uniform_buffer(dev)
 	{
 		logical_device = dev;
 		pipeline_layout = VK_NULL_HANDLE;
@@ -170,15 +171,12 @@ namespace GEngine
 		dynamic_state_infos.pDynamicStates = dynamic_states;
 	}
 	
-	void Pipeline::createDescriptorSetLayout() // ceci doit être appelé avant createPipelineLayout
+	void Pipeline::createUniformBuffer()
 	{
-		VkDescriptorSetLayoutCreateInfo layout_info = {};
-		layout_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-		layout_info.bindingCount = 1;
-		//layoutInfo.pBindings = &ubo_layout_binding;
-
-		if (vkCreateDescriptorSetLayout(logical_device->getVulkanObject(), &layout_info, nullptr, &descriptor_set_layout) != VK_SUCCESS)
-			cerr << "failed to create descriptor set layout!" << endl;
+		g_uniform_buffer.createBuffer(sizeof(UniformBuffer));
+		g_uniform_buffer.allocBuffer();
+		g_uniform_buffer.bindToDevice();
+		g_uniform_buffer.createDescriptorSetLayout();
 	}
 
 	void Pipeline::createPipelineLayout()
@@ -186,8 +184,8 @@ namespace GEngine
 		VkPipelineLayoutCreateInfo pipeline_layout_info = {};
 		pipeline_layout_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		
-		pipeline_layout_info.setLayoutCount = 0; // 1; ajouter un layout pour le uniform buffer
-		pipeline_layout_info.pSetLayouts = nullptr; // &descriptorSetLayout;
+		pipeline_layout_info.setLayoutCount = 1; //ajouter un layout pour le uniform buffer
+		pipeline_layout_info.pSetLayouts = g_uniform_buffer.getDescriptorSetLayout(); // &descriptorSetLayout;
 		
 		pipeline_layout_info.pushConstantRangeCount = 0;
 		pipeline_layout_info.pPushConstantRanges = 0;
@@ -307,6 +305,11 @@ namespace GEngine
 	StagingBuffer *Pipeline::getIndexStagingBuffer()
 	{
 		return &g_staging_buffer2;
+	}
+	
+	UniformBuffer *Pipeline::getUniformBuffer()
+	{
+		return &g_uniform_buffer;
 	}
 }
 

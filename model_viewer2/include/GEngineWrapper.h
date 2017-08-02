@@ -45,7 +45,6 @@ namespace GEngine
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
 			Framebuffers *g_framebuffers;
-			UniformBuffer *g_uniform_buffer;
 			std::vector<VertexBufferData> vertices;
 			std::vector<uint16_t> indexes;
 

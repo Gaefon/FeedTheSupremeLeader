@@ -39,6 +39,8 @@ namespace GEngine
 		pipeline->setMultisamplingInfos();
 		pipeline->setColorBlendAttachment();
 		pipeline->createDynamicStateInfos();
+		
+		pipeline->createUniformBuffer();
 		pipeline->createPipelineLayout();
 		pipeline->createPipeline(wrapper->getRenderPass());
 		

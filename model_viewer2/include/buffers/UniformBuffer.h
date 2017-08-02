@@ -16,6 +16,7 @@ namespace GEngine
             bool createBuffer(unsigned long buffer_size);
             void createDescriptorSetLayout();
             void setMatrix(glm::mat4 mv, glm::mat4 proj);
+            VkDescriptorSetLayout *getDescriptorSetLayout();
         private:
 			typedef struct s_uniformBufferObject
 			{
@@ -24,6 +25,7 @@ namespace GEngine
 			} UniformBufferObject;
 			
 			UniformBufferObject buffer_data;
+			VkDescriptorSetLayout descriptor_set_layout;
     };
 }
 
