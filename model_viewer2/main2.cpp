@@ -118,10 +118,10 @@ int main(void)
 	
 	g_engine_wrapper.getEngine()->getLogicalDevice()->waitIdle();
 
-	delete shader_frag;
-	delete shader_vert;
-	delete stupid_frag;
-	delete stupid_vert;
+	//delete shader_frag;
+	//delete shader_vert;
+	//delete stupid_frag;
+	//delete stupid_vert;
 
 	delete key_event;
 	delete window;

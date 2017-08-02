@@ -10,9 +10,6 @@
 #include <Pipeline.h>
 #include <VertexBufferData.h>
 #include <buffers/CommandBuffers.h>
-#include <buffers/VertexBuffer.h>
-#include <buffers/StagingBuffer.h>
-#include <buffers/IndexBuffer.h>
 #include <buffers/UniformBuffer.h>
 #include <Camera.h>
 #include <GLFW/glfw3.h>
@@ -48,10 +45,6 @@ namespace GEngine
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
 			Framebuffers *g_framebuffers;
-			StagingBuffer *g_staging_buffer;
-			StagingBuffer *g_staging_buffer2;
-			VertexBuffer *g_vertex_buffer;
-			IndexBuffer *g_index_buffer;
 			UniformBuffer *g_uniform_buffer;
 			std::vector<VertexBufferData> vertices;
 			std::vector<uint16_t> indexes;

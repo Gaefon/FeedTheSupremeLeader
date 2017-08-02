@@ -8,7 +8,10 @@ using namespace std;
 
 namespace GEngine
 {
-	Pipeline::Pipeline(Device *dev)
+	Pipeline::Pipeline(Device *dev): g_staging_buffer(dev),
+									g_staging_buffer2(dev),
+									g_vertex_buffer(dev),
+									g_index_buffer(dev)
 	{
 		logical_device = dev;
 		pipeline_layout = VK_NULL_HANDLE;
@@ -259,6 +262,51 @@ namespace GEngine
 	map<int, Pipeline::ArgumentType> *Pipeline::getArgumentPosition()
 	{
 		return &argument_position;
+	}
+	
+	
+	void Pipeline::setVerticesAndIndexes(vector<VertexBufferData> vertices, vector<uint16_t> indexes)
+	{
+		g_staging_buffer.createBuffer(sizeof(VertexBufferData) * vertices.size());
+		g_staging_buffer.allocBuffer();
+		g_staging_buffer.bindToDevice();
+		g_staging_buffer.addVertexData(&vertices);
+
+		//creation vertex buffers
+		g_vertex_buffer.createBuffer(sizeof(VertexBufferData) * vertices.size());
+		g_vertex_buffer.allocBuffer();
+		g_vertex_buffer.bindToDevice();
+		g_vertex_buffer.setNbVertices(g_staging_buffer.getNbVertices());
+
+		g_staging_buffer2.createBuffer(sizeof(uint16_t) * indexes.size());
+		g_staging_buffer2.allocBuffer();
+		g_staging_buffer2.bindToDevice();
+		g_staging_buffer2.addVertexData(&indexes);
+
+		g_index_buffer.createBuffer(sizeof(uint16_t) * indexes.size());
+		g_index_buffer.allocBuffer();
+		g_index_buffer.bindToDevice();
+		g_index_buffer.setNbVertices(g_staging_buffer2.getNbVertices());
+	}
+	
+	VertexBuffer *Pipeline::getVertexBuffer()
+	{
+		return &g_vertex_buffer;
+	}
+	
+	IndexBuffer *Pipeline::getIndexBuffer()
+	{
+		return &g_index_buffer;
+	}
+	
+	StagingBuffer *Pipeline::getVertexStagingBuffer()
+	{
+		return &g_staging_buffer;
+	}
+	
+	StagingBuffer *Pipeline::getIndexStagingBuffer()
+	{
+		return &g_staging_buffer2;
 	}
 }
 

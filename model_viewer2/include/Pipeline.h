@@ -7,6 +7,9 @@
 #include <RenderPass.h>
 #include <SwapChain.h>
 #include <buffers/Framebuffers.h>
+#include <buffers/VertexBuffer.h>
+#include <buffers/StagingBuffer.h>
+#include <buffers/IndexBuffer.h>
 
 namespace GEngine
 {
@@ -24,6 +27,11 @@ namespace GEngine
 			Shader *fragment_shader;
 
 			Device *logical_device;
+			
+			StagingBuffer g_staging_buffer;
+			StagingBuffer g_staging_buffer2;
+			VertexBuffer g_vertex_buffer;
+			IndexBuffer g_index_buffer;
 
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
@@ -57,6 +65,7 @@ namespace GEngine
 			Pipeline(Device *dev, VkDescriptorSetLayout descriptorSet);
 			~Pipeline();
 
+			void createBuffers();
 			void setVertexInput();
 			void setInputAssembler();
 			void setVertexShader(Shader *new_shader);
@@ -76,8 +85,16 @@ namespace GEngine
 			VkPipeline getVulkanObject();
 
 			void addArgumentType(int position, ArgumentType type);
-
+			
 			std::map<int, ArgumentType> *getArgumentPosition();
+			
+			void setVerticesAndIndexes(std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
+			
+			VertexBuffer *getVertexBuffer();
+			IndexBuffer *getIndexBuffer();
+			StagingBuffer *getVertexStagingBuffer();
+			StagingBuffer *getIndexStagingBuffer();
+
 	};
 }
 

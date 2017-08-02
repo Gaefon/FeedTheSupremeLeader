@@ -31,6 +31,7 @@ namespace GEngine
 			cerr << "failed to create descriptor set" << endl;
 			return;
 		}
+		
 		VkPipelineLayoutCreateInfo pipeline_layout_info = {};
 		pipeline_layout_info.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 		pipeline_layout_info.setLayoutCount = 1;
