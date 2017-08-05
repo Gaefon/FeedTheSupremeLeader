@@ -23,7 +23,6 @@ namespace GEngine
 	
 	Pipeline *PipelinePool::createPipeline(int key, Shader *vertex, Shader *fragment, GEngineWrapper *wrapper)
 	{
-		
 		Pipeline *pipeline = new Pipeline(wrapper->getEngine()->getLogicalDevice());
 		
 		pipeline->setVertexInput();

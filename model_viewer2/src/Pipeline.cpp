@@ -117,7 +117,7 @@ namespace GEngine
 		rasterizer_infos.polygonMode = VK_POLYGON_MODE_FILL;
 		rasterizer_infos.lineWidth = 1.0f;
 		rasterizer_infos.cullMode = VK_CULL_MODE_BACK_BIT;
-		rasterizer_infos.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		rasterizer_infos.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		rasterizer_infos.depthBiasEnable = VK_FALSE;
 		rasterizer_infos.depthBiasConstantFactor = 0.0f;
 		rasterizer_infos.depthBiasClamp = 0.0f;
@@ -173,10 +173,13 @@ namespace GEngine
 	
 	void Pipeline::createUniformBuffer()
 	{
-		g_uniform_buffer.createBuffer(sizeof(UniformBuffer));
+		g_uniform_buffer.createBuffer(sizeof(UniformBuffer::UniformBufferObject));
 		g_uniform_buffer.allocBuffer();
 		g_uniform_buffer.bindToDevice();
 		g_uniform_buffer.createDescriptorSetLayout();
+		
+		m_descriptor_pool.createDescriptorPool(logical_device);
+		m_descriptor_set.createDescriptorSet(logical_device, &m_descriptor_pool, g_uniform_buffer.getDescriptorSetLayout());
 	}
 
 	void Pipeline::createPipelineLayout()
@@ -285,6 +288,12 @@ namespace GEngine
 		g_index_buffer.allocBuffer();
 		g_index_buffer.bindToDevice();
 		g_index_buffer.setNbVertices(g_staging_buffer2.getNbVertices());
+		
+	}
+	
+	void Pipeline::updateDescriptorSet()
+	{
+		m_descriptor_set.updateDescriptorSet(&g_uniform_buffer, sizeof(UniformBuffer::UniformBufferObject));
 	}
 	
 	VertexBuffer *Pipeline::getVertexBuffer()
@@ -310,6 +319,16 @@ namespace GEngine
 	UniformBuffer *Pipeline::getUniformBuffer()
 	{
 		return &g_uniform_buffer;
+	}
+	
+	DescriptorSet *Pipeline::getDescriptorSet()
+	{
+		return &m_descriptor_set;
+	}
+	
+	VkPipelineLayout *Pipeline::getPipelineLayout()
+	{
+		return &pipeline_layout;
 	}
 }
 

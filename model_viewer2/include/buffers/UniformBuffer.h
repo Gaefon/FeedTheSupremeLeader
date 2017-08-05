@@ -10,6 +10,16 @@ namespace GEngine
     class UniformBuffer : public Buffer
     {
         public:
+			typedef struct s_uniformBufferObject
+			{
+				glm::mat4 modelview;
+				glm::mat4 proj;
+			} UniformBufferObject;
+        private:
+			UniformBufferObject buffer_data;
+			VkDescriptorSetLayout descriptor_set_layout;
+			
+		public:			
             UniformBuffer(Device *dev);
             ~UniformBuffer();
             bool allocBuffer();
@@ -17,15 +27,6 @@ namespace GEngine
             void createDescriptorSetLayout();
             void setMatrix(glm::mat4 mv, glm::mat4 proj);
             VkDescriptorSetLayout *getDescriptorSetLayout();
-        private:
-			typedef struct s_uniformBufferObject
-			{
-				glm::mat4 modelview;
-				glm::mat4 projection;
-			} UniformBufferObject;
-			
-			UniformBufferObject buffer_data;
-			VkDescriptorSetLayout descriptor_set_layout;
     };
 }
 

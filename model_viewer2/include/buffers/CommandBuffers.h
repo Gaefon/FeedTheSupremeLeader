@@ -10,6 +10,7 @@
 #include <Semaphore.h>
 #include <buffers/VertexBuffer.h>
 #include <buffers/IndexBuffer.h>
+#include <DescriptorSet.h>
 
 namespace GEngine
 {

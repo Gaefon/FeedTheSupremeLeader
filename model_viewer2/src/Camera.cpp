@@ -12,6 +12,7 @@ namespace GEngine
 	void Camera::setPerspective(float fovy, float ratio, float near, float far)
 	{
 		projection = glm::perspective(fovy, ratio, near, far);
+		projection[1][1] *= -1;
 	}
 
 	void Camera::setLookAt(glm::vec3 pos, glm::vec3 target, glm::vec3 vert)

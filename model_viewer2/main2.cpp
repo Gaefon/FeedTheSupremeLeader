@@ -35,14 +35,14 @@ int main(void)
 	
 	// create the pipeline
 	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
-	Shader *shader_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *stupid_frag = new Shader(string("Shaders/2d_stupid.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *stupid_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	
 	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
 	PipelinePool::getInstance()->createPipeline(1, stupid_vert, stupid_frag, &g_engine_wrapper);
 	
-	glm::vec3 cam_pos(2.0f, 2.0f, 2.0f);
+	glm::vec3 cam_pos(1.5f, 1.5f, 1.5f);
 	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
 	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
 	Camera camera;
@@ -57,11 +57,11 @@ int main(void)
 	Model model1;
 	Model model2;
 
-	model1.addVertice(new Vertex({0.0f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
-	model1.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
-	model1.addVertice(new Vertex({-0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
-	model1.addVertice(new Vertex({0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
-	model1.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model1.addVertice(new Vertex({-1.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({1.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
 	
 	model1.addIndex(0);
 	model1.addIndex(1);
@@ -72,11 +72,11 @@ int main(void)
 	
 	model1.setMaterial(&mat1);
 	
-	model2.addVertice(new Vertex({0.0f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
-	model2.addVertice(new Vertex({-0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
-	model2.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
-	model2.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}));
-	model2.addVertice(new Vertex({0.5f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model2.addVertice(new Vertex({0.0f, -1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model2.addVertice(new Vertex({-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model2.addVertice(new Vertex({-1.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model2.addVertice(new Vertex({1.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model2.addVertice(new Vertex({1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
 	
 	model2.addIndex(0);
 	model2.addIndex(1);

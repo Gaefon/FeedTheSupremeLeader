@@ -133,14 +133,17 @@ namespace GEngine
 
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
-
 			// nouvelle fonction (sendVertexBuffers(VertexBuffer *buffer))
 			VkBuffer vertex_buffers[] = {vertex_buffer->getVulkanBuffer()};
 			VkBuffer vk_index_buffer = index_buffer->getVulkanBuffer();
 			VkDeviceSize offsets[] = {0};
+			
 			vkCmdBindVertexBuffers(command_buffers[i], 0, 1, vertex_buffers, offsets);
 			vkCmdBindIndexBuffer(command_buffers[i], vk_index_buffer, 0, VK_INDEX_TYPE_UINT16);
-			vkCmdDrawIndexed(command_buffers[i], index_buffer->getNbVertices(), 1, 0, 0,0);
+			
+			vkCmdBindDescriptorSets(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, *(pipeline->getPipelineLayout()), 0, 1, pipeline->getDescriptorSet()->getVulkanObject(), 0, nullptr);
+			
+			vkCmdDrawIndexed(command_buffers[i], index_buffer->getNbVertices(), 1, 0, 0, 0);
 		}
 
 	}

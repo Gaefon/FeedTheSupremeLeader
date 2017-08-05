@@ -90,16 +90,12 @@ namespace GEngine
 	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes, Camera *camera)
     {
 		pipeline->setVerticesAndIndexes(vertices, indexes);
+		pipeline->getUniformBuffer()->setMatrix(camera->getModelView(), camera->getProjection());
+		
+		pipeline->updateDescriptorSet();
 		
 		g_command_buffers->copyBufferCommand(pipeline->getVertexStagingBuffer()->getVulkanBuffer(), pipeline->getVertexBuffer()->getVulkanBuffer(), sizeof(VertexBufferData) * vertices.size());
 		g_command_buffers->copyBufferCommand(pipeline->getIndexStagingBuffer()->getVulkanBuffer(), pipeline->getIndexBuffer()->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
-
-		/*g_uniform_buffer = new UniformBuffer(g_engine->getLogicalDevice());
-		g_uniform_buffer->createBuffer(sizeof(UniformBuffer));
-		g_uniform_buffer->allocBuffer();
-		g_uniform_buffer->bindToDevice();*/
-		pipeline->getUniformBuffer()->setMatrix(camera->getModelView(), camera->getProjection());
-
 		//g_command_buffers->createCommandBuffers(g_framebuffers);
 		
 		g_command_buffers->startRecording(pipeline, pipeline->getVertexBuffer(), pipeline->getIndexBuffer());

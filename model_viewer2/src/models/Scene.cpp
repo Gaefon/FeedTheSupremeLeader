@@ -34,10 +34,10 @@ namespace GEngine
 
 	void Scene::render(GEngineWrapper *wrapper, Camera *camera)
 	{
-        wrapper->beginCommandBufferAndRenderPass();
+	    wrapper->beginCommandBufferAndRenderPass();
+	    
 		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); ++it)
 		{
-
 			int position = 0;
 			vector<VertexBufferData> all_vertices((*it)->getVertices().size());
 
@@ -50,6 +50,7 @@ namespace GEngine
 			}
 			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes(), camera);
 		}
+		
 		wrapper->endCommandBufferAndRenderPass();
 
 	}

@@ -19,6 +19,8 @@ SRC =	src/GEngine.cpp\
 		src/ImageView.cpp\
 		src/Shader.cpp\
 		src/Pipeline.cpp\
+		src/DescriptorPool.cpp\
+		src/DescriptorSet.cpp\
 		src/RenderPass.cpp\
 		src/buffers/Framebuffers.cpp\
 		src/buffers/CommandBuffers.cpp\

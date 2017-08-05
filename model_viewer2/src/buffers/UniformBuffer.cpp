@@ -18,13 +18,11 @@ namespace GEngine
         ubo_layout_binding.descriptorCount = 1;
         ubo_layout_binding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
         ubo_layout_binding.pImmutableSamplers = nullptr;
-
-        
+                
         VkDescriptorSetLayoutCreateInfo layout_info = {};
         layout_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
         layout_info.bindingCount = 1;
         layout_info.pBindings = &ubo_layout_binding;
-
 
 		if (vkCreateDescriptorSetLayout(device->getVulkanObject(), &layout_info, nullptr, &descriptor_set_layout) != VK_SUCCESS)
 		{
@@ -74,7 +72,12 @@ namespace GEngine
 	void UniformBuffer::setMatrix(glm::mat4 mv, glm::mat4 proj)
 	{
 		buffer_data.modelview = mv;
-		buffer_data.projection = proj;
+		buffer_data.proj = proj;
+		
+		void* data;
+		vkMapMemory(device->getVulkanObject(), dev_memory, 0, sizeof(UniformBufferObject), 0, &data);
+		memcpy(data, &buffer_data, sizeof(UniformBufferObject));
+		vkUnmapMemory(device->getVulkanObject(), dev_memory);
 	}
 	
 	VkDescriptorSetLayout *UniformBuffer::getDescriptorSetLayout()

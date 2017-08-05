@@ -11,6 +11,8 @@
 #include <buffers/StagingBuffer.h>
 #include <buffers/IndexBuffer.h>
 #include <buffers/UniformBuffer.h>
+#include <DescriptorPool.h>
+#include <DescriptorSet.h>
 
 namespace GEngine
 {
@@ -34,6 +36,9 @@ namespace GEngine
 			VertexBuffer g_vertex_buffer;
 			IndexBuffer g_index_buffer;
 			UniformBuffer g_uniform_buffer;
+			
+			DescriptorPool m_descriptor_pool;
+			DescriptorSet m_descriptor_set;
 
 			VkPipelineShaderStageCreateInfo pipeline_stages[2];
 			VkPipelineVertexInputStateCreateInfo vertex_input_info;
@@ -91,12 +96,15 @@ namespace GEngine
 			std::map<int, ArgumentType> *getArgumentPosition();
 			
 			void setVerticesAndIndexes(std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
+			void updateDescriptorSet();
 			
 			VertexBuffer *getVertexBuffer();
 			IndexBuffer *getIndexBuffer();
 			StagingBuffer *getVertexStagingBuffer();
 			StagingBuffer *getIndexStagingBuffer();
 			UniformBuffer *getUniformBuffer();
+			DescriptorSet *getDescriptorSet();
+			VkPipelineLayout *getPipelineLayout();
 	};
 }
 
