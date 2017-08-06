@@ -28,7 +28,7 @@ namespace GEngine
 		VkFormat depth_format = findDepthFormat();
 		
 		// create the image
-		VkImageCreateInfo image_info = {};
+		/*VkImageCreateInfo image_info = {};
 		image_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		image_info.imageType = VK_IMAGE_TYPE_2D;
 		image_info.extent.width = width;
@@ -48,9 +48,9 @@ namespace GEngine
         {
 			cerr << "failed to create image!" << endl;
 			return false;
-		}
+		}*/
 		
-		VkMemoryRequirements mem_requirements;
+		/*VkMemoryRequirements mem_requirements;
 		vkGetImageMemoryRequirements(device->getVulkanObject(), depth_image, &mem_requirements);
 
 		VkMemoryAllocateInfo alloc_info = {};
@@ -66,7 +66,7 @@ namespace GEngine
 
         vkBindImageMemory(device->getVulkanObject(), depth_image, depth_image_memory, 0);
 		
-		depth_image_view = new ImageView(device, &depth_image, depth_format, VK_IMAGE_ASPECT_DEPTH_BIT);
+		depth_image_view = new ImageView(device, &depth_image, depth_format, VK_IMAGE_ASPECT_DEPTH_BIT);*/
 		
 		return true;
 	}

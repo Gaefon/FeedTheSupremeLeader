@@ -4,6 +4,7 @@
 #include <Surface.h>
 #include <Window.h>
 #include <Device.h>
+#include <Image.h>
 #include <ImageView.h>
 
 #include <vector>
@@ -17,6 +18,8 @@ namespace GEngine
 			VkExtent2D extent;
 			VkSurfaceFormatKHR surface_format;
             Device *logical_device;
+            
+            std::vector<Image *> m_images;
             std::vector<ImageView *> image_views;
 
 		public:
@@ -26,7 +29,7 @@ namespace GEngine
 			bool createSwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev);
             void initImageViews();
 
-			std::vector<VkImage> getImages();
+			void getImages();
 			std::vector<ImageView *> getImageViews();
 			VkSurfaceFormatKHR getSurfaceFormat();
 			VkExtent2D getExtent();

@@ -116,8 +116,7 @@ int main(void)
 	
 	scene.addModel(&model1);
 	scene.addModel(&model2);
-	//scene.addModel(&cube);
-	
+	scene.addModel(&cube);
 	
 
 	while (!window->shouldClose())

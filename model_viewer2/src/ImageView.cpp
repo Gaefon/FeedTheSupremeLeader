@@ -4,13 +4,13 @@ using namespace std;
 
 namespace GEngine
 {
-    ImageView::ImageView(Device *device, VkImage *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat)
+    ImageView::ImageView(Device *device, Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat)
     {
 	    image_view = VK_NULL_HANDLE;
         createImageViewKHR(device, vkImage, vkSurfaceFormat);
     }
     
-	ImageView::ImageView(Device *device, VkImage *vkImage, VkFormat format, VkImageAspectFlags aspect_flags)
+	ImageView::ImageView(Device *device, Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags)
 	{
 		image_view = VK_NULL_HANDLE;
 		createImageView(device, vkImage, format, aspect_flags);
@@ -24,13 +24,15 @@ namespace GEngine
         }
     }
     
-    void ImageView::createImageViewKHR(Device *device, VkImage *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat)
+    // TODO : Deprecate this method.
+    // replace with createImageView(Device *, Image *, VkFormat, VkImageAspectFlags)
+    void ImageView::createImageViewKHR(Device *device, Image *image, VkSurfaceFormatKHR *vkSurfaceFormat)
     {
 		image_view = VK_NULL_HANDLE;
 		VkImageViewCreateInfo createInfo = {};
 		this->device = device;
 		createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		createInfo.image = *vkImage;
+		createInfo.image = *image->getVulkanObject();
 		createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 		createInfo.format = vkSurfaceFormat->format;
 		createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
@@ -51,11 +53,11 @@ namespace GEngine
 		}
     }
     
-    void ImageView::createImageView(Device *device, VkImage *image, VkFormat format, VkImageAspectFlags aspect_flags)
+    void ImageView::createImageView(Device *device, Image *image, VkFormat format, VkImageAspectFlags aspect_flags)
     {
 		VkImageViewCreateInfo view_info = {};
 		view_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-		view_info.image = *image;
+		view_info.image = *image->getVulkanObject();
 		view_info.viewType = VK_IMAGE_VIEW_TYPE_2D;
 		view_info.format = format;
 		view_info.subresourceRange.aspectMask = aspect_flags;

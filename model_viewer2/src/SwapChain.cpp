@@ -16,22 +16,31 @@ namespace GEngine
 	{
 		vkDestroySwapchainKHR(logical_device->getVulkanObject(), swap_chain, nullptr);
 		for(vector<ImageView *>::iterator it = image_views.begin(); it != image_views.end(); it++)
-        {
-            delete *it;
-        }
-        image_views.clear();
+		{
+			delete *it;
+		}
+		image_views.clear();
+        
+        // Free ALL the images
+		for(vector<Image *>::iterator it = m_images.begin(); it != m_images.end(); it++)
+			delete *it;
+		m_images.clear();
 	}
 
 	// TODO stocker les vkImages dans les objets Image associés
-	vector<VkImage> SwapChain::getImages()
+	void SwapChain::getImages()
 	{
 		unsigned int image_count;
 
 		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, nullptr);
-		vector<VkImage> swap_chain_images(image_count);
-		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, swap_chain_images.data());
-
-		return swap_chain_images;
+		vector<VkImage> list_images_pointers(image_count);
+		vkGetSwapchainImagesKHR(logical_device->getVulkanObject(), swap_chain, &image_count, list_images_pointers.data());
+		
+		for (unsigned int i = 0; i < image_count; ++i)
+		{
+			Image *img = new Image(logical_device, list_images_pointers.at(i));
+			m_images.push_back(img);
+		}
 	}
 	
 	bool SwapChain::createSwapChain(Surface *surface, Window *window, PhysicalDevice *phys_dev)
@@ -89,12 +98,12 @@ namespace GEngine
 
 	void SwapChain::initImageViews()
 	{
-        vector<VkImage> sc_images = getImages();
+        getImages();
         //image_views.resize(sc_images.size(), nullptr);
         image_views.clear();
-	    for (VkImage image : sc_images)
+	    for (Image *image : m_images)
 		{
-			ImageView *image_view = new ImageView(logical_device, &image, &surface_format);
+			ImageView *image_view = new ImageView(logical_device, image, &surface_format);
 			image_views.push_back(image_view);
 		}
 	}

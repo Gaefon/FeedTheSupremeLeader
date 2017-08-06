@@ -16,6 +16,7 @@ SRC =	src/GEngine.cpp\
 		src/Device.cpp\
 		src/Window.cpp\
 		src/SwapChain.cpp\
+		src/Image.cpp\
 		src/ImageView.cpp\
 		src/Shader.cpp\
 		src/Pipeline.cpp\

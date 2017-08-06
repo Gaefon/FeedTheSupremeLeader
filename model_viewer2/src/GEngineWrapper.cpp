@@ -136,6 +136,6 @@ namespace GEngine
 
     void GEngineWrapper::startDrawing()
     {
-        g_command_buffers->draw(g_swapchain);
+		g_command_buffers->draw(g_swapchain);
     }
 }
