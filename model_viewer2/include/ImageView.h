@@ -10,8 +10,12 @@ namespace GEngine
         private:
             VkImageView image_view;
             Device *device;
+            
+            void createImageViewKHR(Device *device, VkImage *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat);
+            void createImageView(Device *device, VkImage *vkImage, VkFormat format, VkImageAspectFlags aspect_flags);
         public:
-            ImageView(VkImage *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat, Device *device);
+            ImageView(Device *device, VkImage *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat);
+            ImageView(Device *device, VkImage *vkImage, VkFormat format, VkImageAspectFlags aspect_flags);
             ~ImageView();
             VkImageView getVulkanObject();
     };

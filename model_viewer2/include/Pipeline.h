@@ -4,9 +4,6 @@
 #include <vulkan/vulkan.h>
 #include <Shader.h>
 #include <Device.h>
-#include <RenderPass.h>
-#include <SwapChain.h>
-#include <buffers/Framebuffers.h>
 #include <buffers/VertexBuffer.h>
 #include <buffers/StagingBuffer.h>
 #include <buffers/IndexBuffer.h>

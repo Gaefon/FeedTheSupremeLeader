@@ -14,16 +14,21 @@ namespace GEngine
 		dev_memory = VK_NULL_HANDLE;
 		device = dev;
 		nb_vertices = 0;
+		size = 0;
 	}
 
 	Buffer::~Buffer()
+	{
+		cleanup();
+	}
+	
+	void Buffer::cleanup()
 	{
 		if (buffer != VK_NULL_HANDLE)
 			vkDestroyBuffer(device->getVulkanObject(), buffer, nullptr);
 		if (dev_memory != VK_NULL_HANDLE)
 			vkFreeMemory(device->getVulkanObject(), dev_memory, nullptr);
 	}
-
 
 	bool Buffer::createBuffer(unsigned long buffer_size, VkBufferUsageFlags usage_flags)
 	{
@@ -116,6 +121,11 @@ namespace GEngine
     void Buffer::setNbVertices(unsigned int nb)
 	{
 		nb_vertices = nb;
+	}
+	
+	size_t Buffer::getBufferSize()
+	{
+		return size;
 	}
 
 }

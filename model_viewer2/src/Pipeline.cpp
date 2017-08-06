@@ -268,25 +268,44 @@ namespace GEngine
 	
 	void Pipeline::setVerticesAndIndexes(vector<VertexBufferData> vertices, vector<uint16_t> indexes)
 	{
-		g_staging_buffer.createBuffer(sizeof(VertexBufferData) * vertices.size());
-		g_staging_buffer.allocBuffer();
-		g_staging_buffer.bindToDevice();
+		size_t vert_buffer_size = sizeof(VertexBufferData) * vertices.size();
+		size_t index_buffer_size = sizeof(uint16_t) * indexes.size();
+	
+		if (g_staging_buffer.getBufferSize() < vert_buffer_size)
+		{
+			g_staging_buffer.cleanup();
+			g_staging_buffer.createBuffer(vert_buffer_size);
+			g_staging_buffer.allocBuffer();
+			g_staging_buffer.bindToDevice();
+		}
 		g_staging_buffer.addVertexData(&vertices);
 
 		//creation vertex buffers
-		g_vertex_buffer.createBuffer(sizeof(VertexBufferData) * vertices.size());
-		g_vertex_buffer.allocBuffer();
-		g_vertex_buffer.bindToDevice();
+		if (g_vertex_buffer.getBufferSize() < vert_buffer_size)
+		{
+			g_vertex_buffer.cleanup();
+			g_vertex_buffer.createBuffer(vert_buffer_size);
+			g_vertex_buffer.allocBuffer();
+			g_vertex_buffer.bindToDevice();
+		}
 		g_vertex_buffer.setNbVertices(g_staging_buffer.getNbVertices());
 
-		g_staging_buffer2.createBuffer(sizeof(uint16_t) * indexes.size());
-		g_staging_buffer2.allocBuffer();
-		g_staging_buffer2.bindToDevice();
+		if (g_staging_buffer2.getBufferSize() < index_buffer_size)
+		{
+			g_staging_buffer2.cleanup();
+			g_staging_buffer2.createBuffer(index_buffer_size);
+			g_staging_buffer2.allocBuffer();
+			g_staging_buffer2.bindToDevice();
+		}
 		g_staging_buffer2.addVertexData(&indexes);
 
-		g_index_buffer.createBuffer(sizeof(uint16_t) * indexes.size());
-		g_index_buffer.allocBuffer();
-		g_index_buffer.bindToDevice();
+		if (g_index_buffer.getBufferSize() < index_buffer_size)
+		{
+			g_index_buffer.cleanup();
+			g_index_buffer.createBuffer(index_buffer_size);
+			g_index_buffer.allocBuffer();
+			g_index_buffer.bindToDevice();
+		}
 		g_index_buffer.setNbVertices(g_staging_buffer2.getNbVertices());
 		
 	}

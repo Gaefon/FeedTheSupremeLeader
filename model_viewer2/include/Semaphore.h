@@ -20,6 +20,7 @@ namespace GEngine
 			VkSemaphore getVulkanObject();
 			
 			void createSemaphore(Device *dev);
+			void destroySemaphore();
 	};
 }
 

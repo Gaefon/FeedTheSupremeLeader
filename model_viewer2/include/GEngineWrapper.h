@@ -11,6 +11,7 @@
 #include <VertexBufferData.h>
 #include <buffers/CommandBuffers.h>
 #include <buffers/UniformBuffer.h>
+#include <DepthTest.h>
 #include <Camera.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -42,6 +43,7 @@ namespace GEngine
 			Surface *g_surface;
 			PhysicalDevice *g_physical_device;
 			SwapChain *g_swapchain;
+			//DepthTest *g_depth_test;
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
 			Framebuffers *g_framebuffers;
@@ -52,6 +54,7 @@ namespace GEngine
 			void initEngine(std::string engineName);
 			void initDevices();
 			void initSwapChain();
+			//void initDepthTest();
 			void initRenderPass();
 			void initCmdBuffers();
 			void initFrameBuffers();

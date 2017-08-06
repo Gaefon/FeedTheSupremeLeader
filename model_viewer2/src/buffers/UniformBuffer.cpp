@@ -6,9 +6,15 @@ using namespace std;
 
 namespace GEngine
 {
-    UniformBuffer::UniformBuffer(Device *dev) : Buffer(dev){}
+    UniformBuffer::UniformBuffer(Device *dev) : Buffer(dev)
+    {
+    	descriptor_set_layout = VK_NULL_HANDLE;
+    }
     
-	UniformBuffer::~UniformBuffer() {}
+	UniformBuffer::~UniformBuffer()
+	{
+		vkDestroyDescriptorSetLayout(device->getVulkanObject(), descriptor_set_layout, nullptr);
+	}
 	
     void UniformBuffer::createDescriptorSetLayout()
     {

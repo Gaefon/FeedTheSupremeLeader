@@ -33,6 +33,9 @@ namespace GEngine
 			command_pool = VK_NULL_HANDLE;
 			cerr << "Failed to create command pool" << endl;
 		}
+		
+		img.createSemaphore(device);
+		render.createSemaphore(device);
 	}
 
 	void CommandBuffers::createCommandBuffers(Framebuffers *frame_buffers)
@@ -50,6 +53,7 @@ namespace GEngine
 		{
 			cerr << "Error allocating command buffers" << endl;
 		}
+		
 	}
 
 	void CommandBuffers::copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size)
@@ -95,8 +99,6 @@ namespace GEngine
     
     void CommandBuffers::beginCommandBufferAndRenderPass(RenderPass *render_pass, Framebuffers *framebuffers, SwapChain *sc)
     {
-		img.createSemaphore(device);
-		render.createSemaphore(device);
 		
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
@@ -127,12 +129,7 @@ namespace GEngine
 	{
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
-			// nouvelle fonction (bindPipeline(Pipeline *pipeline))
 			vkCmdBindPipeline(command_buffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->getVulkanObject());
-		}
-
-		for (unsigned int i = 0; i < command_buffers.size(); i++)
-		{
 			// nouvelle fonction (sendVertexBuffers(VertexBuffer *buffer))
 			VkBuffer vertex_buffers[] = {vertex_buffer->getVulkanBuffer()};
 			VkBuffer vk_index_buffer = index_buffer->getVulkanBuffer();

@@ -22,6 +22,7 @@ namespace GEngine
         PipelinePool::getInstance()->destroyAllThePipelines();
         delete g_framebuffers;
         delete g_render_pass;
+		//delete g_depth_test;
         delete g_swapchain;
         delete g_surface;
         delete g_engine;
@@ -32,6 +33,7 @@ namespace GEngine
 		initEngine("test");
 		initDevices();
 		initSwapChain();
+		//initDepthTest();
 		initRenderPass();
 		initFrameBuffers();
 		initCmdBuffers();
@@ -60,6 +62,12 @@ namespace GEngine
         g_swapchain->createSwapChain(g_surface, g_window, g_physical_device);
         g_swapchain->initImageViews();
     }
+    
+	/*void GEngineWrapper::initDepthTest()
+	{
+		g_depth_test = new DepthTest(g_engine->getLogicalDevice());
+		g_depth_test->createDepthTest(g_swapchain);
+	}*/
 
     void GEngineWrapper::initRenderPass()
     {
@@ -68,20 +76,20 @@ namespace GEngine
 
     }
 
-    void GEngineWrapper::initCmdBuffers()
-    {
-        g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
-    }
-
     void GEngineWrapper::initFrameBuffers()
     {
     	g_framebuffers = new Framebuffers(g_engine->getLogicalDevice());
 		g_framebuffers->createFramebuffer(g_swapchain, g_render_pass);
     }
+    
+    void GEngineWrapper::initCmdBuffers()
+    {
+        g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
+		g_command_buffers->createCommandPool(g_physical_device);
+    }
 
     void GEngineWrapper::beginCommandBufferAndRenderPass()
     {
-		g_command_buffers->createCommandPool(g_physical_device);
 		g_command_buffers->createCommandBuffers(g_framebuffers);
 		g_command_buffers->beginCommandBufferAndRenderPass(g_render_pass, g_framebuffers, g_swapchain);
     }

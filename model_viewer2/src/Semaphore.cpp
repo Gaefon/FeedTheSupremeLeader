@@ -14,10 +14,7 @@ namespace GEngine
 	
 	Semaphore::~Semaphore()
 	{
-		if (device != nullptr && semaphore != VK_NULL_HANDLE)
-		{
-			vkDestroySemaphore(device->getVulkanObject(), semaphore, nullptr);
-		}
+		destroySemaphore();
 	}
 	
 	VkSemaphore Semaphore::getVulkanObject()
@@ -35,6 +32,15 @@ namespace GEngine
 		{
 			semaphore = VK_NULL_HANDLE;
 			cerr << "Failed to create semaphore" << endl;
+		}
+	}
+	
+	void Semaphore::destroySemaphore()
+	{
+		if (device != nullptr && semaphore != VK_NULL_HANDLE)
+		{
+			vkDestroySemaphore(device->getVulkanObject(), semaphore, nullptr);
+			semaphore = VK_NULL_HANDLE;
 		}
 	}
 }

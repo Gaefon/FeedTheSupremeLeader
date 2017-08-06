@@ -94,7 +94,7 @@ namespace GEngine
         image_views.clear();
 	    for (VkImage image : sc_images)
 		{
-			ImageView *image_view = new ImageView(&image, &surface_format, logical_device);
+			ImageView *image_view = new ImageView(logical_device, &image, &surface_format);
 			image_views.push_back(image_view);
 		}
 	}

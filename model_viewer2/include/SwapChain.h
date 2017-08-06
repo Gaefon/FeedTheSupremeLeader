@@ -19,7 +19,6 @@ namespace GEngine
             Device *logical_device;
             std::vector<ImageView *> image_views;
 
-
 		public:
 			SwapChain(Device *dev);
 			~SwapChain();

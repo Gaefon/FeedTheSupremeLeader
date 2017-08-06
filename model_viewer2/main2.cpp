@@ -42,7 +42,7 @@ int main(void)
 	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
 	PipelinePool::getInstance()->createPipeline(1, stupid_vert, stupid_frag, &g_engine_wrapper);
 	
-	glm::vec3 cam_pos(1.5f, 1.5f, 1.5f);
+	glm::vec3 cam_pos(1.5f, 1.5f, 3.0f);
 	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
 	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
 	Camera camera;
@@ -86,14 +86,39 @@ int main(void)
 	model2.addIndex(4);
 	
 	model2.setMaterial(&mat2);
-
+	
+	Model cube;
+	cube.addVertice(new Vertex({0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
+	cube.addVertice(new Vertex({0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
+	cube.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	cube.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	
+	
+	cube.addIndex(0);
+	cube.addIndex(2);
+	cube.addIndex(1);	
+	cube.addIndex(3);
+	cube.addIndex(2);
+	cube.addIndex(0);
+	
+	cube.addIndex(4);
+	cube.addIndex(6);
+	cube.addIndex(5);	
+	cube.addIndex(7);
+	cube.addIndex(6);
+	cube.addIndex(4);
+	
+	cube.setMaterial(&mat1);
 	
 	scene.addModel(&model1);
 	scene.addModel(&model2);
+	//scene.addModel(&cube);
 	
-	Model cube("../ressources/models/cube.obj");
 	
-	scene.render(&g_engine_wrapper, &camera);
 
 	while (!window->shouldClose())
 	{
@@ -113,6 +138,7 @@ int main(void)
 		}
 		mouse_event->poll();
 		
+		scene.render(&g_engine_wrapper, &camera);
 		g_engine_wrapper.startDrawing();
 	}
 	

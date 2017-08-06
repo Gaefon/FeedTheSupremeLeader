@@ -22,14 +22,16 @@ namespace GEngine
 			Buffer(Device *dev);
 			~Buffer();
 
-			virtual bool createBuffer(unsigned long buffer_size, VkBufferUsageFlags usage_flags);
-            virtual bool allocBuffer(VkMemoryPropertyFlags memory_flags);
-			virtual void bindToDevice();
+			void cleanup();
+			bool createBuffer(unsigned long buffer_size, VkBufferUsageFlags usage_flags);
+            bool allocBuffer(VkMemoryPropertyFlags memory_flags);
+			void bindToDevice();
 			void addVertexData(std::vector<VertexBufferData> *vertices);
 			virtual void setNbVertices(unsigned int nb);
 
-			virtual VkBuffer getVulkanBuffer();
-			virtual unsigned int getNbVertices();
+			VkBuffer getVulkanBuffer();
+			unsigned int getNbVertices();
+			size_t getBufferSize();
 	};
 }
 

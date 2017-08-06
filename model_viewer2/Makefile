@@ -22,6 +22,7 @@ SRC =	src/GEngine.cpp\
 		src/DescriptorPool.cpp\
 		src/DescriptorSet.cpp\
 		src/RenderPass.cpp\
+		src/DepthTest.cpp\
 		src/buffers/Framebuffers.cpp\
 		src/buffers/CommandBuffers.cpp\
 		src/Semaphore.cpp\
