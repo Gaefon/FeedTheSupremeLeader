@@ -5,7 +5,7 @@ using namespace std;
 
 namespace GEngine
 {
-	DepthTest::DepthTest(Device *dev)
+	DepthTest::DepthTest(Device *dev) : depth_image(dev)
 	{
 		device = dev;
 		depth_image_view = nullptr;
@@ -16,8 +16,7 @@ namespace GEngine
 		if (depth_image_view != nullptr)
 		{
 			//delete depth_image_view;
-			vkDestroyImage(device->getVulkanObject(), depth_image, nullptr);
-			vkFreeMemory(device->getVulkanObject(), depth_image_memory, nullptr);
+			//vkFreeMemory(device->getVulkanObject(), depth_image_memory, nullptr);
 		}
 	}
 	
@@ -27,31 +26,10 @@ namespace GEngine
 		unsigned int height = sw->getExtent().height;
 		VkFormat depth_format = findDepthFormat();
 		
-		// create the image
-		/*VkImageCreateInfo image_info = {};
-		image_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
-		image_info.imageType = VK_IMAGE_TYPE_2D;
-		image_info.extent.width = width;
-		image_info.extent.height = height;
-		image_info.extent.depth = 1;
-		image_info.mipLevels = 1;
-		image_info.arrayLayers = 1;
-		image_info.format = depth_format;
-		image_info.tiling = VK_IMAGE_TILING_OPTIMAL;
-		image_info.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
-		image_info.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-		image_info.samples = VK_SAMPLE_COUNT_1_BIT;
-		image_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-        
-        
-        if (vkCreateImage(device->getVulkanObject(), &image_info, nullptr, &depth_image) != VK_SUCCESS)
-        {
-			cerr << "failed to create image!" << endl;
-			return false;
-		}*/
+		depth_image.createImage(width, height, depth_format);
 		
-		/*VkMemoryRequirements mem_requirements;
-		vkGetImageMemoryRequirements(device->getVulkanObject(), depth_image, &mem_requirements);
+		VkMemoryRequirements mem_requirements;
+		vkGetImageMemoryRequirements(device->getVulkanObject(), *(depth_image.getVulkanObject()), &mem_requirements);
 
 		VkMemoryAllocateInfo alloc_info = {};
 		alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
@@ -64,9 +42,9 @@ namespace GEngine
 			return false;
 		}
 
-        vkBindImageMemory(device->getVulkanObject(), depth_image, depth_image_memory, 0);
+        vkBindImageMemory(device->getVulkanObject(), *(depth_image.getVulkanObject()), depth_image_memory, 0);
 		
-		depth_image_view = new ImageView(device, &depth_image, depth_format, VK_IMAGE_ASPECT_DEPTH_BIT);*/
+		depth_image_view = new ImageView(device, &depth_image, depth_format, VK_IMAGE_ASPECT_DEPTH_BIT);
 		
 		return true;
 	}

@@ -18,7 +18,7 @@
 				Image(Device *dev, VkImage image);
 				~Image();
 				
-				bool createImage();
+				bool createImage(uint32_t width, uint32_t height, VkFormat format);
 				
 				VkImage *getVulkanObject();
 		};

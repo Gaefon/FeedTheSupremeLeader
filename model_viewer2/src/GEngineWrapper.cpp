@@ -22,7 +22,7 @@ namespace GEngine
         PipelinePool::getInstance()->destroyAllThePipelines();
         delete g_framebuffers;
         delete g_render_pass;
-		//delete g_depth_test;
+		delete g_depth_test;
         delete g_swapchain;
         delete g_surface;
         delete g_engine;
@@ -33,7 +33,7 @@ namespace GEngine
 		initEngine("test");
 		initDevices();
 		initSwapChain();
-		//initDepthTest();
+		initDepthTest();
 		initRenderPass();
 		initFrameBuffers();
 		initCmdBuffers();
@@ -63,11 +63,11 @@ namespace GEngine
         g_swapchain->initImageViews();
     }
     
-	/*void GEngineWrapper::initDepthTest()
+	void GEngineWrapper::initDepthTest()
 	{
 		g_depth_test = new DepthTest(g_engine->getLogicalDevice());
 		g_depth_test->createDepthTest(g_swapchain);
-	}*/
+	}
 
     void GEngineWrapper::initRenderPass()
     {

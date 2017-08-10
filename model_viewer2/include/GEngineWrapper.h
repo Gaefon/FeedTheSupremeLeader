@@ -43,7 +43,7 @@ namespace GEngine
 			Surface *g_surface;
 			PhysicalDevice *g_physical_device;
 			SwapChain *g_swapchain;
-			//DepthTest *g_depth_test;
+			DepthTest *g_depth_test;
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
 			Framebuffers *g_framebuffers;
@@ -54,7 +54,7 @@ namespace GEngine
 			void initEngine(std::string engineName);
 			void initDevices();
 			void initSwapChain();
-			//void initDepthTest();
+			void initDepthTest();
 			void initRenderPass();
 			void initCmdBuffers();
 			void initFrameBuffers();

@@ -114,11 +114,12 @@ int main(void)
 	
 	cube.setMaterial(&mat1);
 	
-	scene.addModel(&model1);
-	scene.addModel(&model2);
+	//scene.addModel(&model1);
+	//scene.addModel(&model2);
 	scene.addModel(&cube);
 	
 
+	scene.render(&g_engine_wrapper, &camera);
 	while (!window->shouldClose())
 	{
 		key_event->poll();
@@ -137,7 +138,6 @@ int main(void)
 		}
 		mouse_event->poll();
 		
-		scene.render(&g_engine_wrapper, &camera);
 		g_engine_wrapper.startDrawing();
 	}
 	

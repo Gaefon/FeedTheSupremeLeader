@@ -5,6 +5,7 @@
 	#include <vulkan/vulkan.h>
 	#include <Device.h>
 	#include <SwapChain.h>
+	#include <Image.h>
 	#include <ImageView.h>
 	
 	namespace GEngine
@@ -15,7 +16,7 @@
 				Device *device;
 				
 				VkDeviceMemory depth_image_memory;
-				VkImage depth_image;
+				Image depth_image;
 				ImageView *depth_image_view;
 				
 				VkFormat findSupportedFormat(VkImageTiling tiling, VkFormatFeatureFlags features);

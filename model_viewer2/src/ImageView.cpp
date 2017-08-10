@@ -16,13 +16,11 @@ namespace GEngine
 		createImageView(device, vkImage, format, aspect_flags);
 	}
 
-    ImageView::~ImageView()
-    {
-        if(image_view != VK_NULL_HANDLE)
-        {
+	ImageView::~ImageView()
+	{
+		if(image_view != VK_NULL_HANDLE)
 			vkDestroyImageView(device->getVulkanObject(), image_view, nullptr);
-        }
-    }
+	}
     
     // TODO : Deprecate this method.
     // replace with createImageView(Device *, Image *, VkFormat, VkImageAspectFlags)
