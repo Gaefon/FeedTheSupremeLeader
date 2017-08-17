@@ -29,6 +29,11 @@ namespace GEngine
 	
 	bool Image::createImage(uint32_t width, uint32_t height, VkFormat format)
 	{
+		return createImage(width, height, format, VK_IMAGE_LAYOUT_PREINITIALIZED, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT);
+	}
+	
+	bool Image::createImage(uint32_t width, uint32_t height, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage)
+	{
 		// create the image
 		VkImageCreateInfo image_info = {};
 		image_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
@@ -40,8 +45,10 @@ namespace GEngine
 		image_info.arrayLayers = 1;
 		image_info.format = format;
 		image_info.tiling = VK_IMAGE_TILING_OPTIMAL;
-		image_info.initialLayout = VK_IMAGE_LAYOUT_PREINITIALIZED;
-		image_info.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+		
+		image_info.initialLayout = layout; //VK_IMAGE_LAYOUT_PREINITIALIZED; // 
+		image_info.usage = usage; //VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+		
 		image_info.samples = VK_SAMPLE_COUNT_1_BIT;
 		image_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
