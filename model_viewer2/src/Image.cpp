@@ -21,10 +21,6 @@ namespace GEngine
 	
 	Image::~Image()
 	{
-		/*if (m_image != VK_NULL_HANDLE)
-		{
-			vkDestroyImage(device->getVulkanObject(), m_image, nullptr);
-		}*/
 	}
 	
 	bool Image::createImage(uint32_t width, uint32_t height, VkFormat format)
@@ -59,6 +55,14 @@ namespace GEngine
 		}
 	
 		return true;
+	}
+	
+	void Image::destroyImage()
+	{
+		if (m_image != VK_NULL_HANDLE)
+		{
+			vkDestroyImage(device->getVulkanObject(), m_image, nullptr);
+		}
 	}
 	
 	VkImage *Image::getVulkanObject()

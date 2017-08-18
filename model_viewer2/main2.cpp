@@ -8,6 +8,7 @@
 
 #include <models/Scene.h>
 #include <models/Model.h>
+#include <models/Texture.h>
 
 #include <bitmaps/BMPImage.h>
 
@@ -55,9 +56,13 @@ int main(void)
 	
 	BMPImage plop("../ressources/test.bmp");
 	//BMPImage plop("../ressources/fuckdatshit_bad_number_bytes_per_lines.bmp");
+	
+	
 	Scene scene;
 	Material mat1(PipelinePool::getInstance()->getPipeline(0));
 	Material mat2(PipelinePool::getInstance()->getPipeline(1));
+	Texture tex(g_engine_wrapper.getEngine()->getLogicalDevice(), &plop);
+	
 	Model model1;
 	Model model2;
 

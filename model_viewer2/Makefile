@@ -43,6 +43,7 @@ SRC =	src/GEngine.cpp\
 		src/events/MouseEvent.cpp\
 		src/helper/EventHelper.cpp\
 		src/models/Material.cpp\
+		src/models/Texture.cpp\
 		src/models/Model.cpp\
 		src/models/Scene.cpp\
 		src/models/Vertex.cpp\

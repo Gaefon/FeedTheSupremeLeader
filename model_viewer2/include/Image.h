@@ -20,6 +20,7 @@
 				
 				bool createImage(uint32_t width, uint32_t height, VkFormat format);
 				bool createImage(uint32_t width, uint32_t height, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage);
+				void destroyImage();
 				
 				VkImage *getVulkanObject();
 		};

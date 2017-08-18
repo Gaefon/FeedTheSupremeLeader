@@ -216,35 +216,18 @@ namespace GEngine
 		{
 			for (int i = 0; i < nb_pix; i++)
 			{
-				pix_color = 0xff000000;
+				pix_color = 0x000000ff;
 				// little endian
 				b = m_image_data.at(3 * i);
 				g = m_image_data.at(3 * i + 1);
 				r = m_image_data.at(3 * i + 2);
 				
-				pix_color |= (r << 16) | (g << 8) | b;
+				pix_color |= (r << 24) | (g << 16) | (b << 8);
 				//cout << hex << pix_color << endl;
 				
 				// start from the bottom
 				setPixel(i % getWidth(), getHeight() - i / getHeight() - 1, pix_color);
 			}
-			
-			/*cout << getWidth() << " " << getHeight() << endl;
-			for (int i = 0; i < getHeight(); i++)
-			{
-				for (int j = 0; j < getWidth(); j++)
-				{
-					if (getPixels()[j][i] == 0xffff0000)
-						cout << "r";
-					else if (getPixels()[j][i] == 0xff00ff00)
-						cout << "g";
-					else if (getPixels()[j][i] == 0xff0000ff)
-						cout << "b";
-					else if (getPixels()[j][i] == 0xffffff00)
-						cout << "j";
-				}
-				cout << endl;
-			}*/
 			
 			return true;
 		}
@@ -256,7 +239,7 @@ namespace GEngine
 	
 	bool BMPImage::decode16BitsData()
 	{
-		int nb_pix = getWidth() * getHeight();
+		/*int nb_pix = getWidth() * getHeight();
 		int nb_pix_read = m_image_data.size() / (16 / 8);
 		int pix_color;
 		int r, g, b;
@@ -264,7 +247,7 @@ namespace GEngine
 		if (nb_pix == nb_pix_read)
 		{}
 		else
-			cerr << "BMP image : wrong number of pixel read" << endl;
+			cerr << "BMP image : wrong number of pixel read" << endl;*/
 		
 		return false;
 	}
