@@ -57,4 +57,15 @@ namespace GEngine
 	{
 		return data;
 	}
+	
+	
+	unsigned int Bitmap::getWidth()
+	{
+		return width;
+	}
+	
+	unsigned int Bitmap::getHeight()
+	{
+		return height;
+	}
 }
