@@ -15,6 +15,7 @@ namespace GEngine
             bool createBuffer(unsigned long buffer_size);
             bool allocBuffer();
             void addVertexData(std::vector<uint16_t> *indexes);
+            void addData(void *data, size_t data_size);
 	};
 }
 

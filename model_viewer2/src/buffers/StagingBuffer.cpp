@@ -17,7 +17,7 @@ namespace GEngine
 		VkBufferCreateInfo buffer_info = {};
 		buffer_info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		buffer_info.size = buffer_size;
-        buffer_info.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
+		buffer_info.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
 		buffer_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 		size = buffer_size;
 
@@ -53,10 +53,15 @@ namespace GEngine
 
 	void StagingBuffer::addVertexData(vector<uint16_t> *indexes)
 	{
-		void *data;
-		vkMapMemory(device->getVulkanObject(), dev_memory, 0, size, 0, &data);
-		memcpy(data, indexes->data(), size);
-		vkUnmapMemory(device->getVulkanObject(), dev_memory);
+		addData(indexes->data(), indexes->size() * sizeof(uint16_t));
 		nb_vertices = indexes->size();
+	}
+	
+	void StagingBuffer::addData(void *data, size_t data_size)
+	{
+		void *buffer_data;
+		vkMapMemory(device->getVulkanObject(), dev_memory, 0, size, 0, &buffer_data);
+		memcpy(buffer_data, data, data_size);
+		vkUnmapMemory(device->getVulkanObject(), dev_memory);
 	}
 }
