@@ -7,44 +7,26 @@ using namespace std;
 
 namespace GEngine
 {
-	CommandBuffers::CommandBuffers(Device *dev)
+	CommandBuffers::CommandBuffers(Device *dev, CommandPool *pool)
 	{
-		command_pool = VK_NULL_HANDLE;
 		device = dev;
+		command_pool = pool;
 	}
 
 	CommandBuffers::~CommandBuffers()
 	{
-		if (command_pool != VK_NULL_HANDLE)
-		{
-			vkDestroyCommandPool(device->getVulkanObject(), command_pool, nullptr);
-		}
-	}
-
-	void CommandBuffers::createCommandPool(PhysicalDevice *phys_dev)
-	{
-		VkCommandPoolCreateInfo pool_create_infos = {};
-		pool_create_infos.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		pool_create_infos.queueFamilyIndex = phys_dev->getGraphicIndex();
-		pool_create_infos.flags = 0;
-
-		if (vkCreateCommandPool(device->getVulkanObject(), &pool_create_infos, nullptr, &command_pool) != VK_SUCCESS)
-		{
-			command_pool = VK_NULL_HANDLE;
-			cerr << "Failed to create command pool" << endl;
-		}
-		
-		img.createSemaphore(device);
-		render.createSemaphore(device);
 	}
 
 	void CommandBuffers::createCommandBuffers(Framebuffers *frame_buffers)
 	{
+		img.createSemaphore(device);
+		render.createSemaphore(device);
+		
 		command_buffers.resize(frame_buffers->getSize(), VK_NULL_HANDLE);
 
 		VkCommandBufferAllocateInfo command_buffer_alloc_infos = {};
 		command_buffer_alloc_infos.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		command_buffer_alloc_infos.commandPool = command_pool;
+		command_buffer_alloc_infos.commandPool = command_pool->getVulkanObject();
 		command_buffer_alloc_infos.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 		command_buffer_alloc_infos.commandBufferCount = command_buffers.size();
 
@@ -61,7 +43,7 @@ namespace GEngine
 	    VkCommandBufferAllocateInfo alloc_info = {};
         alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        alloc_info.commandPool = command_pool;
+        alloc_info.commandPool = command_pool->getVulkanObject();
         alloc_info.commandBufferCount = 1;
         VkCommandBuffer command_buffer;
         if(vkAllocateCommandBuffers(device->getVulkanObject(), &alloc_info, &command_buffer) != VK_SUCCESS)
@@ -94,7 +76,7 @@ namespace GEngine
             cerr << "Error submitting command buffer to queue" << endl;
          }
         vkQueueWaitIdle(device->getGraphicQueue());
-        vkFreeCommandBuffers(device->getVulkanObject(), command_pool, 1, &command_buffer);
+        vkFreeCommandBuffers(device->getVulkanObject(), command_pool->getVulkanObject(), 1, &command_buffer);
     }
     
     void CommandBuffers::beginCommandBufferAndRenderPass(RenderPass *render_pass, Framebuffers *framebuffers, SwapChain *sc)

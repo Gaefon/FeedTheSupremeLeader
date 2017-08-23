@@ -15,6 +15,7 @@ namespace GEngine
     GEngineWrapper::~GEngineWrapper()
     {
         delete g_command_buffers;
+        delete g_command_pool;
         /*delete g_index_buffer;
         delete g_staging_buffer2;
         delete g_vertex_buffer;
@@ -84,8 +85,9 @@ namespace GEngine
     
     void GEngineWrapper::initCmdBuffers()
     {
-        g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice());
-		g_command_buffers->createCommandPool(g_physical_device);
+    	g_command_pool = new CommandPool(g_engine->getLogicalDevice());
+		g_command_pool->createCommandPool();
+        g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice(), g_command_pool);
     }
 
     void GEngineWrapper::beginCommandBufferAndRenderPass()

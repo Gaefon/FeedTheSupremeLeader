@@ -12,12 +12,15 @@
 #include <buffers/IndexBuffer.h>
 #include <DescriptorSet.h>
 
+#include <commands/CommandPool.h>
+
 namespace GEngine
 {
 	class CommandBuffers
 	{
 		private:
-			VkCommandPool command_pool;
+			//VkCommandPool command_pool;
+			CommandPool *command_pool;
 			std::vector<VkCommandBuffer> command_buffers;
 
 			Semaphore img;
@@ -26,11 +29,11 @@ namespace GEngine
 			Device *device;
 
 		public:
-			CommandBuffers(Device *dev);
+			CommandBuffers(Device *dev, CommandPool *pool);
 			~CommandBuffers();
-            void copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size);
-			void createCommandPool(PhysicalDevice *phys_dev);
 			void createCommandBuffers(Framebuffers *frame_buffers);
+			
+            void copyBufferCommand(VkBuffer src_buffer, VkBuffer dst_buffer, VkDeviceSize size);
 
 			void beginCommandBufferAndRenderPass(RenderPass *render_pass, Framebuffers *framebuffers, SwapChain *sc);
 			void startRecording(Pipeline *pipeline, VertexBuffer *vertex_buffer, IndexBuffer *index_buffer);

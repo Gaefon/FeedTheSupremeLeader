@@ -13,6 +13,7 @@
 #include <buffers/UniformBuffer.h>
 #include <DepthTest.h>
 #include <Camera.h>
+#include <commands/CommandPool.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <list>
@@ -44,6 +45,7 @@ namespace GEngine
 			PhysicalDevice *g_physical_device;
 			SwapChain *g_swapchain;
 			DepthTest *g_depth_test;
+			CommandPool *g_command_pool;
 			CommandBuffers *g_command_buffers;
 			RenderPass *g_render_pass;
 			Framebuffers *g_framebuffers;
