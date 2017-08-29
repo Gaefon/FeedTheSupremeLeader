@@ -35,6 +35,7 @@ SRC =	src/GEngine.cpp\
 		src/bitmaps/Bitmap.cpp\
 		src/bitmaps/BMPImage.cpp\
 		src/commands/CommandPool.cpp\
+		src/commands/SingleCommandBuffer.cpp\
 		src/pool/PipelinePool.cpp\
 		src/GEngineWrapper.cpp\
 		src/VertexBufferData.cpp\
