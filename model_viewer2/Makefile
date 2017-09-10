@@ -50,6 +50,7 @@ SRC =	src/GEngine.cpp\
 		src/models/Scene.cpp\
 		src/models/Vertex.cpp\
 		src/Camera.cpp\
+		src/Sampler.cpp\
 		main2.cpp
 
 VERT =	Shaders/2d_dummy.vert
