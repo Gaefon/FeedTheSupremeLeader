@@ -112,6 +112,11 @@ namespace GEngine
 	{
 		return buffer;
 	}
+	
+	VkDeviceMemory *Buffer::getVulkanDeviceMemory()
+	{
+		return &dev_memory;
+	}
 
 	unsigned int Buffer::getNbVertices()
 	{

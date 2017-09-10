@@ -28,6 +28,8 @@
 				bool createImage(uint32_t width, uint32_t height, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage);
 				void destroyImage();
 				
+				void bindToBuffer(Buffer *buffer);
+				
 				VkImage *getVulkanObject();
 				
 				void transitionImageLayout(VkImageLayout new_layout, SingleCommandBuffer *command_buffer);

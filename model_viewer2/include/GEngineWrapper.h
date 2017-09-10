@@ -37,6 +37,7 @@ namespace GEngine
 			Window *getWindow();
 			SwapChain *getSwapchain();
 			RenderPass *getRenderPass();
+			CommandPool *getCommandPool();
 
 		private:
 			Engine *g_engine;

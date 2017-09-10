@@ -122,6 +122,7 @@ int main(void)
 	cube.addIndex(4);
 	
 	cube.setMaterial(&mat1);
+	//cube.setTexture(&tex);
 	
 	//scene.addModel(&model1);
 	//scene.addModel(&model2);

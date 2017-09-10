@@ -7,6 +7,7 @@
 #include <models/Vertex.h>
 
 #include <models/Material.h>
+#include <models/Texture.h>
 
 #include <glm/glm.hpp>
 /*#include <glm/gtc/type_ptr.hpp>*/
@@ -24,7 +25,8 @@ namespace GEngine
 			std::vector<Vertex *> arr_vertices;
 			std::vector<uint16_t> arr_indexes;
 			Material *material;
-
+			Texture *texture;
+			
 			std::vector<std::string> splitStr(std::string data, std::string delimeter = " ");
 			void loadFile(std::string file_name);
 			int findVertexIndex(std::vector<int *> *vertex_indexes, int *vert);
@@ -37,7 +39,9 @@ namespace GEngine
 			std::vector<Vertex *> getVertices();
 			std::vector<uint16_t> getIndexes();
 			void setMaterial(Material *mat);
+			void setTexture(Texture *tex);
 			Material *getMaterial();
+			Texture *getTexture();
 			int getNbVertices();
 	};
 }

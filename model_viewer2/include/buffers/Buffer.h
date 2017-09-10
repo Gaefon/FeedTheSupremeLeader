@@ -14,7 +14,6 @@ namespace GEngine
             VkBuffer buffer;
 			VkDeviceMemory dev_memory;
 			unsigned int nb_vertices;
-			unsigned int findSuitableMemory(unsigned int filter, VkMemoryPropertyFlags flags, VkPhysicalDeviceMemoryProperties *mem_properties);
 			size_t size;
 			Device *device;
 
@@ -26,10 +25,12 @@ namespace GEngine
 			bool createBuffer(unsigned long buffer_size, VkBufferUsageFlags usage_flags);
             bool allocBuffer(VkMemoryPropertyFlags memory_flags);
 			void bindToDevice();
+			unsigned int findSuitableMemory(unsigned int filter, VkMemoryPropertyFlags flags, VkPhysicalDeviceMemoryProperties *mem_properties);
 			void addVertexData(std::vector<VertexBufferData> *vertices);
 			virtual void setNbVertices(unsigned int nb);
 
 			VkBuffer getVulkanBuffer();
+			VkDeviceMemory *getVulkanDeviceMemory();
 			unsigned int getNbVertices();
 			size_t getBufferSize();
 	};

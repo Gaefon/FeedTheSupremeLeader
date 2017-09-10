@@ -12,6 +12,7 @@ namespace GEngine
 
 	Model::Model()
 	{
+		texture = nullptr;
 	}
 
 	Model::Model(string file_name)
@@ -50,15 +51,26 @@ namespace GEngine
 		material = mat;
 	}
 	
+	void Model::setTexture(Texture *tex)
+	{
+		texture = tex;
+	}
+	
 	Material *Model::getMaterial()
 	{
 		return material;
+	}
+	
+	Texture *Model::getTexture()
+	{
+		return texture;
 	}
 	
 	int Model::getNbVertices()
 	{
 		return arr_vertices.size();
 	}
+	
 
 	vector<string> Model::splitStr(string data, string delimiter)
 	{

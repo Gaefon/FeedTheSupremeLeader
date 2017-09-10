@@ -70,6 +70,26 @@ namespace GEngine
 		}
 	}
 	
+	void Image::bindToBuffer(Buffer *buffer)
+	{
+		VkMemoryRequirements mem_requirements;
+		vkGetImageMemoryRequirements(device->getVulkanObject(), m_image, &mem_requirements);
+		
+		VkPhysicalDeviceMemoryProperties properties;
+		//device->getPhysicalDevice()->getMemoryProperties(&properties);
+		vkGetPhysicalDeviceMemoryProperties(device->getPhysicalDevice()->getVulkanObject(), &properties);
+
+		VkMemoryAllocateInfo alloc_info = {};
+		alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		alloc_info.allocationSize = mem_requirements.size;
+		alloc_info.memoryTypeIndex = buffer->findSuitableMemory(mem_requirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, &properties);
+
+		if (vkAllocateMemory(device->getVulkanObject(), &alloc_info, nullptr, buffer->getVulkanDeviceMemory()) != VK_SUCCESS)
+			cerr << "failed to allocate image memory!" << endl;
+		
+		vkBindImageMemory(device->getVulkanObject(), m_image, *(buffer->getVulkanDeviceMemory()), 0);
+	}
+	
 	VkImage *Image::getVulkanObject()
 	{
 		return &m_image;

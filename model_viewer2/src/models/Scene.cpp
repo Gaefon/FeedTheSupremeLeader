@@ -48,6 +48,8 @@ namespace GEngine
 				all_vertices.at(position).v_color = (*itr)->getColor();
 				position++;
 			}
+			if ((*it)->getTexture() != nullptr)
+				(*it)->getTexture()->prepareTexture(wrapper->getCommandPool());
 			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes(), camera);
 		}
 		

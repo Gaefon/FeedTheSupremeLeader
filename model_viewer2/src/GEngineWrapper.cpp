@@ -135,6 +135,11 @@ namespace GEngine
     {
     	return g_render_pass;
     }
+    
+    CommandPool *GEngineWrapper::getCommandPool()
+    {
+    	return g_command_pool;
+    }
 
     void GEngineWrapper::startDrawing()
     {
