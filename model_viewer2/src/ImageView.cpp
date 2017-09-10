@@ -4,16 +4,24 @@ using namespace std;
 
 namespace GEngine
 {
-    ImageView::ImageView(Device *device, Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat)
+	ImageView::ImageView(Device *dev)
+	{
+		device = dev;
+		image_view = VK_NULL_HANDLE;
+	}
+
+    ImageView::ImageView(Device *dev, Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat)
     {
+	    device = dev;
 	    image_view = VK_NULL_HANDLE;
-        createImageViewKHR(device, vkImage, vkSurfaceFormat);
+        createImageViewKHR(vkImage, vkSurfaceFormat);
     }
     
-	ImageView::ImageView(Device *device, Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags)
+	ImageView::ImageView(Device *dev, Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags)
 	{
+		device = dev;
 		image_view = VK_NULL_HANDLE;
-		createImageView(device, vkImage, format, aspect_flags);
+		createImageView(vkImage, format, aspect_flags);
 	}
 
 	ImageView::~ImageView()
@@ -24,11 +32,10 @@ namespace GEngine
     
     // TODO : Deprecate this method.
     // replace with createImageView(Device *, Image *, VkFormat, VkImageAspectFlags)
-    void ImageView::createImageViewKHR(Device *device, Image *image, VkSurfaceFormatKHR *vkSurfaceFormat)
+    void ImageView::createImageViewKHR(Image *image, VkSurfaceFormatKHR *vkSurfaceFormat)
     {
 		image_view = VK_NULL_HANDLE;
 		VkImageViewCreateInfo createInfo = {};
-		this->device = device;
 		createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		createInfo.image = *image->getVulkanObject();
 		createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
@@ -51,7 +58,7 @@ namespace GEngine
 		}
     }
     
-    void ImageView::createImageView(Device *device, Image *image, VkFormat format, VkImageAspectFlags aspect_flags)
+    void ImageView::createImageView(Image *image, VkFormat format, VkImageAspectFlags aspect_flags)
     {
 		VkImageViewCreateInfo view_info = {};
 		view_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;

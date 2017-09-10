@@ -5,6 +5,7 @@
 
 #include <Device.h>
 #include <Image.h>
+#include <ImageView.h>
 #include <bitmaps/BMPImage.h>
 #include <buffers/StagingBuffer.h>
 #include <commands/CommandPool.h>
@@ -18,6 +19,9 @@ namespace GEngine
 			Image image;
 			Bitmap *bitmap;
 			StagingBuffer buffer;
+			ImageView image_view;
+			
+			
 		public:
 			Texture(Device *dev, Bitmap *bmp);
 			~Texture();

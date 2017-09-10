@@ -12,12 +12,15 @@
 		        VkImageView image_view;
 		        Device *device;
 		        
-		        void createImageViewKHR(Device *device, Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat);
-		        void createImageView(Device *device, Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags);
+		        void createImageViewKHR(Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat);
 		    public:
-		        ImageView(Device *device, Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat);
-		        ImageView(Device *device, Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags);
+		    	ImageView(Device *dev);
+		        ImageView(Device *dev, Image *vkImage, VkSurfaceFormatKHR *vkSurfaceFormat);
+		        ImageView(Device *dev, Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags);
 		        ~ImageView();
+		        
+		        void createImageView(Image *vkImage, VkFormat format, VkImageAspectFlags aspect_flags);
+		        
 		        VkImageView getVulkanObject();
 		};
 	}
