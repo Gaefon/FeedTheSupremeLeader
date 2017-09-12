@@ -93,7 +93,7 @@ namespace GEngine
 			std::map<int, ArgumentType> *getArgumentPosition();
 			
 			void setVerticesAndIndexes(std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes);
-			void updateDescriptorSet();
+			void updateDescriptorSet(Texture *tex);
 			
 			VertexBuffer *getVertexBuffer();
 			IndexBuffer *getIndexBuffer();

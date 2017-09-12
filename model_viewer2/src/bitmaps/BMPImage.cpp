@@ -48,11 +48,11 @@ namespace GEngine
 		fd->read((char*) &reserved, sizeof(reserved));
 		fd->read((char*) &m_offset, sizeof(m_offset));
 		
-		cout  << "====== HEADER ======" << endl;
+		/*cout  << "====== HEADER ======" << endl;
 		cout << "signature : " << hex << signature << endl;
 		cout << "size : " << dec << m_size << endl;
 		cout << "reserved : " << hex << reserved << endl;
-		cout << "offset : " << dec << m_offset << endl;
+		cout << "offset : " << dec << m_offset << endl;*/
 		
 		if (signature != BITMAP_SIGNATURE)
 		{
@@ -95,7 +95,7 @@ namespace GEngine
 		fd->read((char*) &m_nb_color_palette, sizeof(m_nb_color_palette));
 		fd->read((char*) &nb_important_color, sizeof(nb_important_color));
 		
-		cout  << "====== HEADER ======" << endl;
+		/*cout  << "====== HEADER ======" << endl;
 		cout << "header_size : " << hex << header_size << endl;
 		cout << "width : " << dec << width << endl;
 		cout << "height : " << dec << height << endl;
@@ -108,7 +108,7 @@ namespace GEngine
 		cout << "pix_per_meter_x : " << dec << pix_per_meter_x << endl;
 		cout << "pix_per_meter_y : " << dec << pix_per_meter_y << endl;
 		cout << "m_nb_color_palette : " << dec << m_nb_color_palette << endl;
-		cout << "nb_important_color : " << dec << nb_important_color << endl;
+		cout << "nb_important_color : " << dec << nb_important_color << endl;*/
 		
 		
 		fd->seekg(BITMAP_HEADER_SIZE + header_size, std::ios::beg);
@@ -216,13 +216,13 @@ namespace GEngine
 		{
 			for (int i = 0; i < nb_pix; i++)
 			{
-				pix_color = 0x000000ff;
+				pix_color = 0xff000000;
 				// little endian
 				b = m_image_data.at(3 * i);
 				g = m_image_data.at(3 * i + 1);
 				r = m_image_data.at(3 * i + 2);
 				
-				pix_color |= (r << 24) | (g << 16) | (b << 8);
+				pix_color |= (b << 16) | (g << 8) | r;
 				//cout << hex << pix_color << endl;
 				
 				// start from the bottom

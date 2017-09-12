@@ -11,9 +11,10 @@ namespace GEngine
     {
 	    glm::vec3 v_position;
 	    glm::vec3 v_color;
+	    glm::vec2 v_uv;
 	    
 		static VkVertexInputBindingDescription *getBindingDescription();
-		static std::array<VkVertexInputAttributeDescription, 2> *getAttributeDescriptions();
+		static std::array<VkVertexInputAttributeDescription, 3> *getAttributeDescriptions();
 
     };
 }

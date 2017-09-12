@@ -9,9 +9,9 @@ namespace GEngine
         return binding_description;
     }
 
-    array<VkVertexInputAttributeDescription, 2> *VertexBufferData::getAttributeDescriptions()
+    array<VkVertexInputAttributeDescription, 3> *VertexBufferData::getAttributeDescriptions()
     {
-		array<VkVertexInputAttributeDescription, 2> *attributeDescriptions = new array<VkVertexInputAttributeDescription, 2>();
+		array<VkVertexInputAttributeDescription, 3> *attributeDescriptions = new array<VkVertexInputAttributeDescription, 3>();
 		//array<VkVertexInputAttributeDescription, 2> attributeDescriptions = {};
 		attributeDescriptions->at(0).binding = 0;
 		attributeDescriptions->at(0).location = 0;
@@ -22,6 +22,11 @@ namespace GEngine
 		attributeDescriptions->at(1).location = 1;
 		attributeDescriptions->at(1).format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions->at(1).offset = offsetof(VertexBufferData, v_color);
+		
+		attributeDescriptions->at(2).binding = 0;
+		attributeDescriptions->at(2).location = 2;
+		attributeDescriptions->at(2).format = VK_FORMAT_R32G32_SFLOAT;
+		attributeDescriptions->at(2).offset = offsetof(VertexBufferData, v_uv);
 		
 		return attributeDescriptions;
     }

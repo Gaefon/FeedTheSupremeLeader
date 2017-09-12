@@ -1,6 +1,7 @@
 #include <DescriptorSet.h>
 
 #include <iostream>
+#include <array>
 
 using namespace std;
 
@@ -34,25 +35,39 @@ namespace GEngine
 		return true;
 	}
 	
-	void DescriptorSet::updateDescriptorSet(UniformBuffer *buffer, size_t size)
+	void DescriptorSet::updateDescriptorSet(UniformBuffer *buffer, Texture *tex, size_t size)
 	{
 		VkDescriptorBufferInfo buffer_info = {};
 		buffer_info.buffer = buffer->getVulkanBuffer();
 		buffer_info.offset = 0;
 		buffer_info.range = size;
 		
-		VkWriteDescriptorSet descriptor_write = {};
-		descriptor_write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptor_write.dstSet = descriptor_set;
-		descriptor_write.dstBinding = 0;
-		descriptor_write.dstArrayElement = 0;
-		descriptor_write.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		descriptor_write.descriptorCount = 1;
-		descriptor_write.pBufferInfo = &buffer_info;
-		descriptor_write.pImageInfo = nullptr;
-		descriptor_write.pTexelBufferView = nullptr;
+		VkDescriptorImageInfo image_info = {};
+		image_info.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+		image_info.imageView = tex->getImageView()->getVulkanObject();
+		image_info.sampler = *(tex->getSampler()->getVulkanObject());
 		
-		vkUpdateDescriptorSets(device->getVulkanObject(), 1, &descriptor_write, 0, nullptr);
+		array<VkWriteDescriptorSet, 2> descriptor_write = {};
+		
+		descriptor_write[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptor_write[0].dstSet = descriptor_set;
+		descriptor_write[0].dstBinding = 0;
+		descriptor_write[0].dstArrayElement = 0;
+		descriptor_write[0].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+		descriptor_write[0].descriptorCount = 1;
+		descriptor_write[0].pBufferInfo = &buffer_info;
+		descriptor_write[0].pImageInfo = nullptr;
+		descriptor_write[0].pTexelBufferView = nullptr;
+		
+		descriptor_write[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+		descriptor_write[1].dstSet = descriptor_set;
+		descriptor_write[1].dstBinding = 1;
+		descriptor_write[1].dstArrayElement = 0;
+		descriptor_write[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+		descriptor_write[1].descriptorCount = 1;
+		descriptor_write[1].pImageInfo = &image_info;
+		
+		vkUpdateDescriptorSets(device->getVulkanObject(), descriptor_write.size(), descriptor_write.data(), 0, nullptr);
 		
 	}
 	

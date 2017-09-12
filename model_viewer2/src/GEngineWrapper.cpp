@@ -97,12 +97,12 @@ namespace GEngine
     }
 
     // passer les vertices et les index en arguments depuis l'objet Scene
-	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes, Camera *camera)
+	void GEngineWrapper::startRecording(Pipeline *pipeline, vector<VertexBufferData> vertices, vector<uint16_t> indexes, Texture *tex, Camera *camera)
     {
 		pipeline->setVerticesAndIndexes(vertices, indexes);
 		pipeline->getUniformBuffer()->setMatrix(camera->getModelView(), camera->getProjection());
 		
-		pipeline->updateDescriptorSet();
+		pipeline->updateDescriptorSet(tex);
 		
 		g_command_buffers->copyBufferCommand(pipeline->getVertexStagingBuffer()->getVulkanBuffer(), pipeline->getVertexBuffer()->getVulkanBuffer(), sizeof(VertexBufferData) * vertices.size());
 		g_command_buffers->copyBufferCommand(pipeline->getIndexStagingBuffer()->getVulkanBuffer(), pipeline->getIndexBuffer()->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());

@@ -9,15 +9,16 @@
 		class Sampler
 		{
 			private:
-				Device *device;
-				
+				Device *device;				
 				VkSampler m_sampler;
 				
+				void createSampler();
 			public:
 				Sampler(Device *dev);
 				~Sampler();
 				
-				void createSampler();
+				VkSampler *getVulkanObject();
+				
 		};
 	}
 	

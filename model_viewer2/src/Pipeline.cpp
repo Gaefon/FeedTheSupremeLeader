@@ -26,7 +26,7 @@ namespace GEngine
 
 	void Pipeline::setVertexInput()
 	{
-		array<VkVertexInputAttributeDescription, 2> *attrs_desc = VertexBufferData::getAttributeDescriptions();
+		array<VkVertexInputAttributeDescription, 3> *attrs_desc = VertexBufferData::getAttributeDescriptions();
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 1;
@@ -298,9 +298,9 @@ namespace GEngine
 		
 	}
 	
-	void Pipeline::updateDescriptorSet()
+	void Pipeline::updateDescriptorSet(Texture *tex)
 	{
-		m_descriptor_set.updateDescriptorSet(&g_uniform_buffer, sizeof(UniformBuffer::UniformBufferObject));
+		m_descriptor_set.updateDescriptorSet(&g_uniform_buffer, tex, sizeof(UniformBuffer::UniformBufferObject));
 	}
 	
 	VertexBuffer *Pipeline::getVertexBuffer()

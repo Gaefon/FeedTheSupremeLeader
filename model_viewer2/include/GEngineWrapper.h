@@ -30,7 +30,7 @@ namespace GEngine
 			~GEngineWrapper();
 
 			void beginCommandBufferAndRenderPass();
-			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes, Camera *camera);
+			void startRecording(Pipeline *pipeline, std::vector<VertexBufferData> vertices, std::vector<uint16_t> indexes, Texture *tex, Camera *camera);
 			void endCommandBufferAndRenderPass();
 			void startDrawing();
 			Engine *getEngine();

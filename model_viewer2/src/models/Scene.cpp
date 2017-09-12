@@ -46,11 +46,12 @@ namespace GEngine
 			{
 				all_vertices.at(position).v_position = (*itr)->getPosition();
 				all_vertices.at(position).v_color = (*itr)->getColor();
+				all_vertices.at(position).v_uv = (*itr)->getUv();
 				position++;
 			}
 			if ((*it)->getTexture() != nullptr)
 				(*it)->getTexture()->prepareTexture(wrapper->getCommandPool());
-			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes(), camera);
+			wrapper->startRecording((*it)->getMaterial()->getPipeline(), all_vertices, (*it)->getIndexes(), (*it)->getTexture(), camera);
 		}
 		
 		wrapper->endCommandBufferAndRenderPass();

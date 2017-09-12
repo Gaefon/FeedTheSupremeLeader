@@ -9,6 +9,8 @@ namespace GEngine
 	Sampler::Sampler(Device *dev)
 	{
 		device = dev;
+		m_sampler = VK_NULL_HANDLE;
+		createSampler();
 	}
 	
 	Sampler::~Sampler()
@@ -39,11 +41,15 @@ namespace GEngine
 		sampler_info.minLod = 0.0f;
 		sampler_info.maxLod = 0.0f;
 		
-		
 		if (vkCreateSampler(device->getVulkanObject(), &sampler_info, nullptr, &m_sampler) != VK_SUCCESS)
 		{
 			m_sampler = VK_NULL_HANDLE;
 			cerr << "failed to create texture sampler!" << endl;
 		}
+	}
+	
+	VkSampler *Sampler::getVulkanObject()
+	{
+		return &m_sampler;
 	}
 }

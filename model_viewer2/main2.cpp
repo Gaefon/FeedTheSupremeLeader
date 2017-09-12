@@ -5,6 +5,7 @@
 #include <Shader.h>
 #include <pool/PipelinePool.h>
 #include <Camera.h>
+#include <Sampler.h>
 
 #include <models/Scene.h>
 #include <models/Model.h>
@@ -45,7 +46,7 @@ int main(void)
 	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
 	PipelinePool::getInstance()->createPipeline(1, stupid_vert, stupid_frag, &g_engine_wrapper);
 	
-	glm::vec3 cam_pos(1.5f, 1.5f, 3.0f);
+	glm::vec3 cam_pos(1.0f, 1.0f, 2.0f);
 	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
 	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
 	Camera camera;
@@ -54,14 +55,16 @@ int main(void)
 	
 	//g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
 	
-	BMPImage plop("../ressources/test.bmp");
+	BMPImage plop("../ressources/textures/farm.bmp");
 	//BMPImage plop("../ressources/fuckdatshit_bad_number_bytes_per_lines.bmp");
 	
 	
 	Scene scene;
 	Material mat1(PipelinePool::getInstance()->getPipeline(0));
 	Material mat2(PipelinePool::getInstance()->getPipeline(1));
+	Sampler sampler(g_engine_wrapper.getEngine()->getLogicalDevice());
 	Texture tex(g_engine_wrapper.getEngine()->getLogicalDevice(), &plop);
+	tex.setSampler(&sampler);
 	
 	Model model1;
 	Model model2;
@@ -97,14 +100,14 @@ int main(void)
 	model2.setMaterial(&mat2);
 	
 	Model cube;
-	cube.addVertice(new Vertex({0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
-	cube.addVertice(new Vertex({0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
-	cube.addVertice(new Vertex({-0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
-	cube.addVertice(new Vertex({-0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}));
-	cube.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
-	cube.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
-	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
-	cube.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	cube.addVertice(new Vertex({0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 1.0f}));
+	cube.addVertice(new Vertex({0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 0.0f}));
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f}));
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f}));
+	cube.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 1.0f}));
+	cube.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 0.0f}));
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f}));
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f}));
 	
 	
 	cube.addIndex(0);
@@ -122,7 +125,7 @@ int main(void)
 	cube.addIndex(4);
 	
 	cube.setMaterial(&mat1);
-	//cube.setTexture(&tex);
+	cube.setTexture(&tex);
 	
 	//scene.addModel(&model1);
 	//scene.addModel(&model2);

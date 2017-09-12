@@ -5,6 +5,7 @@
 	#include <DescriptorPool.h>
 	#include <buffers/UniformBuffer.h>
 	#include <Device.h>
+	#include <models/Texture.h>
 	
 	namespace GEngine
 	{
@@ -20,7 +21,7 @@
 				~DescriptorSet();
 				
 				bool createDescriptorSet(Device *dev, DescriptorPool *desc_pool, VkDescriptorSetLayout *descriptor_set_layouts);
-				void updateDescriptorSet(UniformBuffer *buffer, size_t size);
+				void updateDescriptorSet(UniformBuffer *buffer, Texture *tex, size_t size);
 				
 				VkDescriptorSet *getVulkanObject();
 		};
