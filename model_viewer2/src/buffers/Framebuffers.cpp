@@ -22,7 +22,7 @@ namespace GEngine
 		framebuffers.clear();
 	}
 
-	bool Framebuffers::createFramebuffer(SwapChain *swap_chain, RenderPass *render_pass)
+	bool Framebuffers::createFramebuffer(SwapChain *swap_chain, RenderPass *render_pass, DepthTest *depth_test)
 	{
 		framebuffers.resize(swap_chain->getImageViews().size(), VK_NULL_HANDLE);
 
@@ -30,13 +30,17 @@ namespace GEngine
 
 		for (unsigned int i = 0; i < list_img_views.size(); i++)
 		{
-			VkImageView attachments[] = { list_img_views[i]->getVulkanObject() };
+			array<VkImageView, 2> attachments = 
+			{
+				list_img_views[i]->getVulkanObject(),
+				depth_test->getImageView()->getVulkanObject()
+			};
 
 			VkFramebufferCreateInfo framebuffer_infos = {};
 			framebuffer_infos.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 			framebuffer_infos.renderPass = render_pass->getVulkanObject();
-			framebuffer_infos.attachmentCount = 1;
-			framebuffer_infos.pAttachments = attachments;
+			framebuffer_infos.attachmentCount = attachments.size();
+			framebuffer_infos.pAttachments = attachments.data();
 			framebuffer_infos.width = swap_chain->getExtent().width;
 			framebuffer_infos.height = swap_chain->getExtent().height;
 			framebuffer_infos.layers = 1;

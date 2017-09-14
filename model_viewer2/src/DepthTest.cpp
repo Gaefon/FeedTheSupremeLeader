@@ -16,12 +16,12 @@ namespace GEngine
 		if (depth_image_view != nullptr)
 		{
 			vkFreeMemory(device->getVulkanObject(), depth_image_memory, nullptr);
-			//delete depth_image_view;
+			delete depth_image_view;
 		}
 		depth_image.destroyImage();
 	}
 	
-	bool DepthTest::createDepthTest(SwapChain *sw)
+	bool DepthTest::createDepthTest(SwapChain *sw, CommandPool *pool)
 	{
 		unsigned int width = sw->getExtent().width;
 		unsigned int height = sw->getExtent().height;
@@ -46,6 +46,20 @@ namespace GEngine
         vkBindImageMemory(device->getVulkanObject(), *(depth_image.getVulkanObject()), depth_image_memory, 0);
 		
 		depth_image_view = new ImageView(device, &depth_image, depth_format, VK_IMAGE_ASPECT_DEPTH_BIT);
+		
+		
+		SingleCommandBuffer cmd(device);
+		cmd.createCommandBuffer(pool);
+		cmd.begin();
+		
+		VkImageAspectFlags aspect_mask = VK_IMAGE_ASPECT_DEPTH_BIT;
+
+		if (hasStencilComponent(depth_format))
+			aspect_mask |= VK_IMAGE_ASPECT_STENCIL_BIT;
+		
+		depth_image.transitionImageLayout(VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, &cmd, aspect_mask);
+		cmd.end();
+		cmd.submit();
 		
 		return true;
 	}
@@ -93,6 +107,11 @@ namespace GEngine
 	bool DepthTest::hasStencilComponent(VkFormat format)
 	{
 		return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
+	}
+	
+	ImageView *DepthTest::getImageView()
+	{
+		return depth_image_view;
 	}
 
 }

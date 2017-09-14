@@ -5,6 +5,7 @@
 
 #include <Device.h>
 #include <SwapChain.h>
+#include <DepthTest.h>
 
 namespace GEngine
 {
@@ -18,7 +19,7 @@ namespace GEngine
 			RenderPass(Device *dev);
 			~RenderPass();
 			
-			bool initRenderPass(SwapChain *swap_chain);
+			bool initRenderPass(SwapChain *swap_chain, DepthTest *depth_test);
 			
 			VkRenderPass getVulkanObject();
 			

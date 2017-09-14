@@ -34,11 +34,11 @@ namespace GEngine
 		initEngine("test");
 		initDevices();
 		initSwapChain();
+		initCmdPool();
 		initDepthTest();
 		initRenderPass();
 		initFrameBuffers();
 		initCmdBuffers();
-
     }
 
     void GEngineWrapper::initEngine(string engine_name)
@@ -67,26 +67,30 @@ namespace GEngine
 	void GEngineWrapper::initDepthTest()
 	{
 		g_depth_test = new DepthTest(g_engine->getLogicalDevice());
-		g_depth_test->createDepthTest(g_swapchain);
+		g_depth_test->createDepthTest(g_swapchain, g_command_pool);
 	}
 
     void GEngineWrapper::initRenderPass()
     {
         g_render_pass = new RenderPass(g_engine->getLogicalDevice());
-        g_render_pass->initRenderPass(g_swapchain);
+        g_render_pass->initRenderPass(g_swapchain, g_depth_test);
 
     }
 
     void GEngineWrapper::initFrameBuffers()
     {
     	g_framebuffers = new Framebuffers(g_engine->getLogicalDevice());
-		g_framebuffers->createFramebuffer(g_swapchain, g_render_pass);
+		g_framebuffers->createFramebuffer(g_swapchain, g_render_pass, g_depth_test);
+    }
+    
+    void GEngineWrapper::initCmdPool()
+    {
+    	g_command_pool = new CommandPool(g_engine->getLogicalDevice());
+		g_command_pool->createCommandPool();
     }
     
     void GEngineWrapper::initCmdBuffers()
     {
-    	g_command_pool = new CommandPool(g_engine->getLogicalDevice());
-		g_command_pool->createCommandPool();
         g_command_buffers = new CommandBuffers(g_engine->getLogicalDevice(), g_command_pool);
     }
 

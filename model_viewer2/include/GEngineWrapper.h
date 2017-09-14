@@ -60,6 +60,7 @@ namespace GEngine
 			void initDepthTest();
 			void initRenderPass();
 			void initCmdBuffers();
+			void initCmdPool();
 			void initFrameBuffers();
 	};
 }

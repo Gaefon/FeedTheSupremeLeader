@@ -223,6 +223,20 @@ namespace GEngine
 
 		pipeline_info.basePipelineHandle = VK_NULL_HANDLE;
 		//pipeline_info.basePipelineIndex = -1;
+		
+		VkPipelineDepthStencilStateCreateInfo depth_stencil = {};
+		depth_stencil.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
+		depth_stencil.depthTestEnable = VK_TRUE;
+		depth_stencil.depthWriteEnable = VK_TRUE;
+		depth_stencil.depthCompareOp = VK_COMPARE_OP_LESS;
+		depth_stencil.depthBoundsTestEnable = VK_FALSE;
+		depth_stencil.minDepthBounds = 0.0f; // Optional
+		depth_stencil.maxDepthBounds = 1.0f; // Optional
+		depth_stencil.stencilTestEnable = VK_FALSE;
+		depth_stencil.front = {}; // Optional
+		depth_stencil.back = {}; // Optional
+
+		pipeline_info.pDepthStencilState = &depth_stencil;
 
 		// erreur de segmentation je sais pas pourquoi, trop fatigué
 		int ret = vkCreateGraphicsPipelines(logical_device->getVulkanObject(), VK_NULL_HANDLE, 1, &pipeline_info, nullptr, &pipeline);

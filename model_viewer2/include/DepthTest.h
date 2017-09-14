@@ -20,14 +20,16 @@
 				ImageView *depth_image_view;
 				
 				VkFormat findSupportedFormat(VkImageTiling tiling, VkFormatFeatureFlags features);
-				VkFormat findDepthFormat();
 				bool hasStencilComponent(VkFormat format);
 				unsigned int findMemoryType(unsigned int type_filter, VkMemoryPropertyFlags properties);
 			public:
 				DepthTest(Device *dev);
 				~DepthTest();
 				
-				bool createDepthTest(SwapChain *sw);
+				VkFormat findDepthFormat();
+				bool createDepthTest(SwapChain *sw, CommandPool *pool);
+				
+				ImageView *getImageView();
 		};
 	}
 	

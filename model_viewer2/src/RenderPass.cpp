@@ -20,7 +20,7 @@ namespace GEngine
 		}
 	}
 	
-	bool RenderPass::initRenderPass(SwapChain *swap_chain)
+	bool RenderPass::initRenderPass(SwapChain *swap_chain, DepthTest *depth_test)
 	{
 		VkAttachmentDescription color_attachment;
 		color_attachment = {};
@@ -38,10 +38,28 @@ namespace GEngine
 		color_attachment_ref.attachment = 0;
 		color_attachment_ref.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 		
+		/*depth format*/
+		VkAttachmentDescription depth_attachment = {};
+		depth_attachment.format = depth_test->findDepthFormat();
+		depth_attachment.samples = VK_SAMPLE_COUNT_1_BIT;
+		depth_attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+		depth_attachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		depth_attachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+		depth_attachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+		depth_attachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		depth_attachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+		
+		VkAttachmentReference depth_attachment_ref = {};
+		depth_attachment_ref.attachment = 1;
+		depth_attachment_ref.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+		
+		
+		
 		VkSubpassDescription sub_pass = {};
 		sub_pass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 		sub_pass.colorAttachmentCount = 1;
 		sub_pass.pColorAttachments = &color_attachment_ref;
+		sub_pass.pDepthStencilAttachment = &depth_attachment_ref;
 		
 		VkSubpassDependency dependency = {};
 		dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
@@ -51,10 +69,11 @@ namespace GEngine
 		dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 		dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
 		
+		std::array<VkAttachmentDescription, 2> attachments = {color_attachment, depth_attachment};
 		VkRenderPassCreateInfo render_pass_info = {};
 		render_pass_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-		render_pass_info.attachmentCount = 1;
-		render_pass_info.pAttachments = &color_attachment;
+		render_pass_info.attachmentCount = attachments.size();
+		render_pass_info.pAttachments = attachments.data();
 		render_pass_info.subpassCount = 1;
 		render_pass_info.pSubpasses = &sub_pass;
         render_pass_info.dependencyCount = 1;

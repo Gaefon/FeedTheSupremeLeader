@@ -22,7 +22,7 @@ namespace GEngine
 			Framebuffers(Device *dev);
 			~Framebuffers();
 			
-			bool createFramebuffer(SwapChain *swap_chain, RenderPass *render_pass);
+			bool createFramebuffer(SwapChain *swap_chain, RenderPass *render_pass, DepthTest *depth_test);
 			unsigned int getSize();
 			VkFramebuffer getVulkanObject(int i);
 	};
