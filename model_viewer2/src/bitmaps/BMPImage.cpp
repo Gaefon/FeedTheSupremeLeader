@@ -102,8 +102,6 @@ namespace GEngine
 		cout << "planes : " << dec << planes << endl;
 		cout << "bit_count : " << dec << m_bit_count << endl;
 		cout << "compression : " << hex << m_compression << endl;
-		
-		
 		cout << "size_image : " << hex << size_image << endl;
 		cout << "pix_per_meter_x : " << dec << pix_per_meter_x << endl;
 		cout << "pix_per_meter_y : " << dec << pix_per_meter_y << endl;
@@ -226,7 +224,7 @@ namespace GEngine
 				//cout << hex << pix_color << endl;
 				
 				// start from the bottom
-				setPixel(i % getWidth(), getHeight() - i / getHeight() - 1, pix_color);
+				setPixel(i % getWidth(), getHeight() - i  / getWidth() - 1, pix_color);
 			}
 			
 			return true;
