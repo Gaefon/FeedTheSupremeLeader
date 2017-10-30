@@ -28,11 +28,11 @@ namespace GEngine
 
 			Device *logical_device;
 			
-			StagingBuffer g_staging_buffer;
-			StagingBuffer g_staging_buffer2;
-			VertexBuffer g_vertex_buffer;
-			IndexBuffer g_index_buffer;
-			UniformBuffer g_uniform_buffer;
+			StagingBuffer g_staging_buffer; // model
+			StagingBuffer g_staging_buffer2; // model
+			VertexBuffer g_vertex_buffer; // model
+			IndexBuffer g_index_buffer; // model
+			UniformBuffer g_uniform_buffer; // camera
 			
 			DescriptorPool m_descriptor_pool;
 			DescriptorSet m_descriptor_set;
