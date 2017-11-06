@@ -13,6 +13,8 @@ namespace GEngine
 			VkSemaphore semaphore;
 			Device *device;
 			
+			void destroySemaphore();
+			
 		public:
 			Semaphore();
 			~Semaphore();
@@ -20,7 +22,7 @@ namespace GEngine
 			VkSemaphore getVulkanObject();
 			
 			void createSemaphore(Device *dev);
-			void destroySemaphore();
+			bool isAllocated();
 	};
 }
 

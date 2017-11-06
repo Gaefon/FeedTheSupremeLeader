@@ -19,8 +19,11 @@ namespace GEngine
 
 	void CommandBuffers::createCommandBuffers(Framebuffers *frame_buffers)
 	{
-		img.createSemaphore(device);
-		render.createSemaphore(device);
+		if (!img.isAllocated())
+			img.createSemaphore(device);
+		
+		if (!render.isAllocated())
+			render.createSemaphore(device);
 		
 		command_buffers.resize(frame_buffers->getSize(), VK_NULL_HANDLE);
 
@@ -81,7 +84,6 @@ namespace GEngine
     
     void CommandBuffers::beginCommandBufferAndRenderPass(RenderPass *render_pass, Framebuffers *framebuffers, SwapChain *sc)
     {
-		
 		for (unsigned int i = 0; i < command_buffers.size(); i++)
 		{
 			VkCommandBufferBeginInfo begin_info = {};

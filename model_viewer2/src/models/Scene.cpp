@@ -34,7 +34,7 @@ namespace GEngine
 
 	void Scene::render(GEngineWrapper *wrapper, Camera *camera)
 	{
-	    wrapper->beginCommandBufferAndRenderPass();
+		wrapper->beginCommandBufferAndRenderPass();
 	    
 		for (vector<Model *>::iterator it = m_list_model.begin(); it != m_list_model.end(); ++it)
 		{

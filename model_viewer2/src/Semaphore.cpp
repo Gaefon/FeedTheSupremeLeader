@@ -35,6 +35,11 @@ namespace GEngine
 		}
 	}
 	
+	bool Semaphore::isAllocated()
+	{
+		return (semaphore != VK_NULL_HANDLE);
+	}
+	
 	void Semaphore::destroySemaphore()
 	{
 		if (device != nullptr && semaphore != VK_NULL_HANDLE)

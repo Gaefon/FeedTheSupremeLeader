@@ -195,7 +195,7 @@ int main(void)
 		mouse_event->poll();
 		
 		cam_pos.x = 2.0 * cos(2 * M_PI * angle / 360.0f);
-		cam_pos.y = 2.0 * sin(2 * M_PI * angle / 360.0f);;
+		cam_pos.y = 2.0 * sin(2 * M_PI * angle / 360.0f);
 		camera.setLookAt(cam_pos, cam_target, cam_vert);
 		angle = (angle + 1) % 360;
 		scene.render(&g_engine_wrapper, &camera);
