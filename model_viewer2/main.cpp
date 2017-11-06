@@ -1,113 +1,219 @@
-#include <stdlib.h>
-
-#include <GL/glew.h>
-#include <GL/gl.h>
-#include <SDL2/SDL.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
+#include <GEngineWrapper.h>
+#include <Window.h>
+#include <events/KeyboardPoller.h>
+#include <events/MousePoller.h>
 #include <Shader.h>
+#include <pool/PipelinePool.h>
 #include <Camera.h>
-#include <Model.h>
-#include <Scene.h>
-#include <SDLTexture.h>
-#include <helper/DebugHelper.h>
+#include <Sampler.h>
 
-int main(int argc, char **argv)
+#include <models/Scene.h>
+#include <models/Model.h>
+#include <models/Texture.h>
+
+#include <bitmaps/BMPImage.h>
+
+#include <string>
+
+#include <unistd.h>
+#include <math.h>
+
+using namespace GEngine;
+using namespace std;
+
+int main(void)
 {
-	(void) argc;
-	(void) argv;
-
-	SDL_Window *window;
-	SDL_GLContext gl_context(0);
-	bool finished = false;
-	float angle = 0.0f;
-	SDL_Event event;
-	Scene scene;
-	Camera camera;
-	glm::vec3 cam_pos(2.0f, 2.0f, 2.0f);
-	glm::vec3 cam_target(1.0f, 1.0f, 1.0f);
-	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
-
-
-	SDL_Init(SDL_INIT_VIDEO);
-
-	// antialiasing
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
-
-
-	window = SDL_CreateWindow("lol", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
-	gl_context = SDL_GL_CreateContext(window);
-
-	camera.setPerspectice(90.0f, 800.0f / 600.0f, 0.1f, 100.0f);
-
-	scene.setCamera(&camera);
-
-	GLenum err = glewInit();
-
-	if (err != GLEW_OK)
-	{
-		std::cerr << "fail glew init : " << err << std::endl;
-		exit(-1);
-	}
-
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	glEnable(GL_DEPTH_TEST);
-
-	Shader shader_color("Shaders/3d_color.vert", "Shaders/3d_color.frag");
-	shader_color.load();
-	Shader shader_tex("Shaders/3d_texture.vert", "Shaders/3d_texture.frag");
-	shader_tex.load();
+	Window *window;
+	KeyboardPoller *key_event;
+	MousePoller *mouse_event;
+	list<string> extensions;
 	
-	DebugHelper::initShader(&shader_color);
+	// std::vector<VertexBufferData> vertices;
+	// std::vector<uint16_t> indexes;
+	
 
+	glfwInit();
 
-	SDLTexture tex(argv[2]);
-	Model model(argv[1]);
-	model.setShader(&shader_tex);
-	model.setTexture(&tex);
+	window = new Window("Heroes never die !", 800, 600);
+	key_event = new KeyboardPoller(window);
+	mouse_event = new MousePoller(window);
 
-	Model floor;
-	floor.setShader(&shader_color);
-	floor.addVertice(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(6.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
+	GEngineWrapper g_engine_wrapper(window);
+	
+	// create the pipeline
+	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *stupid_frag = new Shader(string("Shaders/2d_stupid.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *stupid_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	
+	PipelinePool::getInstance()->createPipeline(0, shader_vert, shader_frag, &g_engine_wrapper);
+	PipelinePool::getInstance()->createPipeline(1, stupid_vert, stupid_frag, &g_engine_wrapper);
+	
+	glm::vec3 cam_pos(2.0f, 2.0f, 2.0f);
+	glm::vec3 cam_target(0.0f, 0.0f, 0.0f);
+	glm::vec3 cam_vert(0.0f, 0.0f, 1.0f);
+	Camera camera;
+	camera.setPerspective(90.0f, (float) window->getWidth() / (float) window->getHeight(), 0.1f, 100.0f);
+	camera.setLookAt(cam_pos, cam_target, cam_vert);
+	
+	//g_engine_wrapper.startRecording(PipelinePool::getInstance()->getPipeline(0), vertices, indexes);
+	
+	BMPImage plop("../ressources/test.bmp");
+	//BMPImage plop("../ressources/fuckdatshit_bad_number_bytes_per_lines.bmp");
+	
+	
+	Scene scene;
+	Material mat1(PipelinePool::getInstance()->getPipeline(0));
+	Material mat2(PipelinePool::getInstance()->getPipeline(1));
+	Sampler sampler(g_engine_wrapper.getEngine()->getLogicalDevice());
+	Texture tex(g_engine_wrapper.getEngine()->getLogicalDevice(), &plop);
+	tex.setSampler(&sampler);
+	
+	Model model1;
+	Model model2;
 
-	floor.addVertice(glm::vec3(6.0f, 0.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(0.0f, 6.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.addVertice(glm::vec3(6.0f, 6.0f, 0.0f), glm::vec3(0.023f, 0.456f, 0.014f), glm::vec3(0.0f, 0.0f, 1.0f));
-	floor.createModel();
+	model1.addVertice(new Vertex({0.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model1.addVertice(new Vertex({-1.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model1.addVertice(new Vertex({-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model1.addVertice(new Vertex({1.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	
+	model1.addIndex(0);
+	model1.addIndex(1);
+	model1.addIndex(2);
+	model1.addIndex(0);
+	model1.addIndex(3);
+	model1.addIndex(4);
+	
+	model1.setMaterial(&mat1);
+	
+	model2.addVertice(new Vertex({0.0f, -1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+	model2.addVertice(new Vertex({-1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	model2.addVertice(new Vertex({-1.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model2.addVertice(new Vertex({1.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+	model2.addVertice(new Vertex({1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}));
+	
+	model2.addIndex(0);
+	model2.addIndex(1);
+	model2.addIndex(2);
+	model2.addIndex(0);
+	model2.addIndex(3);
+	model2.addIndex(4);
+	
+	model2.setMaterial(&mat2);
+	
+	Model cube;
+	
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 0.6666f}));
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.75f, 0.6666f}));
+	cube.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.75f, 0.3333f}));
+	cube.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 0.3333f}));
+	
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.25f, 0.6666f}));
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.5f, 0.6666f}));
+	cube.addVertice(new Vertex({0.5f, 0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.5f, 0.3333f}));	
+	cube.addVertice(new Vertex({0.5f, -0.5f, 1.0f}, {0.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.25f, 0.3333f}));
+	
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.6666f}));
+	cube.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.3333f}));
+	
+	cube.addVertice(new Vertex({0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.25f, 0.0f}));
+	cube.addVertice(new Vertex({0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.5f, 0.0f}));
+	
+	cube.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.5f, 1.0f}));
+	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.25f, 1.0f}));
+	
+	
+	cube.addIndex(0);
+	cube.addIndex(1);	
+	cube.addIndex(2);	
+	cube.addIndex(2);
+	cube.addIndex(3);
+	cube.addIndex(0);
+	
+	cube.addIndex(5);
+	cube.addIndex(4);
+	cube.addIndex(6);	
+	cube.addIndex(6);
+	cube.addIndex(4);
+	cube.addIndex(7);
+	
+	cube.addIndex(6);
+	cube.addIndex(1);
+	cube.addIndex(5);
+	cube.addIndex(6);
+	cube.addIndex(2);
+	cube.addIndex(1);
+	
+	cube.addIndex(4);
+	cube.addIndex(8);
+	cube.addIndex(7);
+	cube.addIndex(7);
+	cube.addIndex(8);
+	cube.addIndex(9);
+	
+	cube.addIndex(6);
+	cube.addIndex(7);
+	cube.addIndex(11);
+	cube.addIndex(11);
+	cube.addIndex(7);
+	cube.addIndex(10);
+	
+	cube.addIndex(4);
+	cube.addIndex(5);
+	cube.addIndex(13);
+	cube.addIndex(5);
+	cube.addIndex(12);
+	cube.addIndex(13);
+	
+	cube.setMaterial(&mat1);
+	cube.setTexture(&tex);
+	
+	//scene.addModel(&model1);
+	//scene.addModel(&model2);
+	scene.addModel(&cube);
+	
 
-	scene.addModel(&floor);
-	scene.addModel(&model);
-
-	while(!finished)
+	scene.render(&g_engine_wrapper, &camera);
+	int angle = 0;
+	while (!window->shouldClose())
 	{
-		while (SDL_PollEvent(&event))
+		key_event->poll();
+		
+		for (KeyEvent *evt: key_event->getEvents())
+			cout << (int) evt->getKey() << " " << evt->isPressed() << endl;
+			
+		for (MouseEvent *evt : mouse_event->getEvents())
 		{
-			if(event.type == SDL_QUIT)
-				finished = true;
+			/*if (evt->getType() == MouseEvent::Type::position)
+				cout << "X = " << evt->getPosX() << " // Y = " << evt->getPosY() << endl;
+			else if (evt->getType() == MouseEvent::Type::scroll)
+				cout << "SCROLL :: X = " << evt->getOffsetX() << " // Y = " << evt->getOffsetY() << endl;
+			else
+				cout << "Button = " << (int) evt->getType() << " // pressed = " << evt->isPressed() << endl;*/
 		}
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		cam_pos.x = cos(angle / 360 * 2 * M_PI) * 3.0f + 1.0f;
-		cam_pos.y = sin(angle / 360 * 2 * M_PI) * 3.0f + 1.0f;
+		mouse_event->poll();
+		
+		cam_pos.x = 2.0 * cos(2 * M_PI * angle / 360.0f);
+		cam_pos.y = 2.0 * sin(2 * M_PI * angle / 360.0f);;
 		camera.setLookAt(cam_pos, cam_target, cam_vert);
-
-		scene.render();
-
-		SDL_GL_SwapWindow(window);
-		++angle;
-		//SDL_Delay(16.6666666f);
+		angle = (angle + 1) % 360;
+		scene.render(&g_engine_wrapper, &camera);
+		g_engine_wrapper.startDrawing();
+		usleep(20000);
+		
 	}
-	SDL_GL_DeleteContext(gl_context);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	
+	g_engine_wrapper.getEngine()->getLogicalDevice()->waitIdle();
+
+	//delete shader_frag;
+	//delete shader_vert;
+	//delete stupid_frag;
+	//delete stupid_vert;
+
+	delete key_event;
+	delete window;
+	glfwTerminate();
+
 	return 0;
 }
