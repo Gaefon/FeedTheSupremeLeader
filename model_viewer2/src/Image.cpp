@@ -25,7 +25,7 @@ namespace GEngine
 	
 	bool Image::createImage(uint32_t width, uint32_t height, VkFormat format)
 	{
-		return createImage(width, height, format, VK_IMAGE_LAYOUT_PREINITIALIZED, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT);
+		return createImage(width, height, format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT);
 	}
 	
 	bool Image::createImage(uint32_t width, uint32_t height, VkFormat format, VkImageLayout layout, VkImageUsageFlags usage)
@@ -117,6 +117,8 @@ namespace GEngine
 		barrier.subresourceRange.baseArrayLayer = 0;
 		barrier.subresourceRange.layerCount = 1;
 		
+		cout << "old_layout : " << m_layout << endl;
+		
 		if (m_layout == VK_IMAGE_LAYOUT_UNDEFINED && new_layout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
 		{
 			barrier.srcAccessMask = 0;
@@ -143,6 +145,7 @@ namespace GEngine
 		}
 		else
 		{
+			cout << "else" << endl;
 			barrier.srcAccessMask = 0; // TODO
 			barrier.dstAccessMask = 0; // TODO
 		}
