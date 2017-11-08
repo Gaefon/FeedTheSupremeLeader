@@ -32,6 +32,7 @@
 				
 				VkImage *getVulkanObject();
 				
+				void reinitLayout();
 				void transitionImageLayout(VkImageLayout new_layout, SingleCommandBuffer *command_buffer);
 				void transitionImageLayout(VkImageLayout new_layout, SingleCommandBuffer *command_buffer, VkImageAspectFlags aspect_mask);
 				void copyFromBuffer(Buffer *buffer, SingleCommandBuffer *command_buffer);

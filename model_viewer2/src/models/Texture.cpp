@@ -70,6 +70,8 @@ namespace GEngine
 	
 	void Texture::prepareTexture(CommandPool *pool)
 	{
+		image.reinitLayout();
+	
 		SingleCommandBuffer cmd(device);
 		cmd.createCommandBuffer(pool);
 		cmd.begin();

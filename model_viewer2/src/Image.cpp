@@ -95,6 +95,13 @@ namespace GEngine
 		return &m_image;
 	}
 	
+	
+	
+	void Image::reinitLayout()
+	{
+		m_layout = VK_IMAGE_LAYOUT_UNDEFINED;
+	}
+	
 	void Image::transitionImageLayout(VkImageLayout new_layout, SingleCommandBuffer *command_buffer)
 	{
 		transitionImageLayout(new_layout, command_buffer, VK_IMAGE_ASPECT_COLOR_BIT);
@@ -117,8 +124,6 @@ namespace GEngine
 		barrier.subresourceRange.baseArrayLayer = 0;
 		barrier.subresourceRange.layerCount = 1;
 		
-		cout << "old_layout : " << m_layout << endl;
-		
 		if (m_layout == VK_IMAGE_LAYOUT_UNDEFINED && new_layout == VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL)
 		{
 			barrier.srcAccessMask = 0;
@@ -135,7 +140,7 @@ namespace GEngine
 			source_stage = VK_PIPELINE_STAGE_TRANSFER_BIT;
 			destination_stage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
 		}
-		else if (/*m_layout == VK_IMAGE_LAYOUT_UNDEFINED && */new_layout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+		else if (m_layout == VK_IMAGE_LAYOUT_UNDEFINED && new_layout == VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
 		{
 			barrier.srcAccessMask = 0;
 			barrier.dstAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
@@ -153,6 +158,7 @@ namespace GEngine
 		vkCmdPipelineBarrier(*(command_buffer->getVulkanObject()), source_stage, destination_stage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 		
 		m_layout = new_layout;
+		
 	}
 	
 	void Image::copyFromBuffer(Buffer *buffer, SingleCommandBuffer *command_buffer)
