@@ -25,4 +25,3 @@ void main()
 	vert_color = color;
 	vert_uv = uv;
 }
-
