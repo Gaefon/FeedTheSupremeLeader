@@ -31,15 +31,19 @@ namespace GEngine
 	int Shader::loadAndReadFile(string filename)
 	{
 		ifstream file(filename, std::ios::ate);
-
+        int missing_size = 0;
 		if(!file.is_open())
 		{
 		    cerr << "File " << filename << " could not be opened!" << endl;
 		    return 0;
 		}
 		size_t file_size = (size_t)file.tellg();
+        if(file_size % 4 != 0)
+        {
+            missing_size = 4 - (file_size % 4);
+        }
 		file.seekg(0);
-		buffer.resize(file_size, 0);
+		buffer.resize(file_size + missing_size, 0);
 		file.read(buffer.data(), file_size);
 		file.close();
 		return 1;
