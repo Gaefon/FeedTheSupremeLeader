@@ -9,15 +9,17 @@ namespace GEngine
 	{
 		device = dev;
 		depth_image_view = nullptr;
+		depth_image_memory = VK_NULL_HANDLE;
 	}
 	
 	DepthTest::~DepthTest()
 	{
-		if (depth_image_view != nullptr)
-		{
+		if (depth_image_memory != VK_NULL_HANDLE)
 			vkFreeMemory(device->getVulkanObject(), depth_image_memory, nullptr);
+			
+		if (depth_image_view != nullptr)
 			delete depth_image_view;
-		}
+		
 		depth_image.destroyImage();
 	}
 	
