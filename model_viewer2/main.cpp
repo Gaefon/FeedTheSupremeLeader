@@ -17,7 +17,7 @@
 
 #include <unistd.h>
 #include <math.h>
-#define M_PI 3.14
+
 using namespace GEngine;
 using namespace std;
 
