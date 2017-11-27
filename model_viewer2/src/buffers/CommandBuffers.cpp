@@ -140,7 +140,7 @@ namespace GEngine
 			vkCmdEndRenderPass(command_buffers[i]);
 
 			if (vkEndCommandBuffer(command_buffers[i]) != VK_SUCCESS)
-				cerr << "failed to record command buffer" << endl;
+				cerr << "failed to end command buffer" << endl;
 		}
 	}
 
