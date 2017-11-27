@@ -41,8 +41,8 @@ int main(void)
 	GEngineWrapper g_engine_wrapper(window);
 
 	// create the pipeline
-	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
-	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *shader_frag = new Shader(string("Shaders/2d_dummy.frag.spv"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
+	Shader *shader_vert = new Shader(string("Shaders/2d_dummy.vert.spv"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *stupid_frag = new Shader(string("Shaders/2d_stupid.frag"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 	Shader *stupid_vert = new Shader(string("Shaders/2d_stupid.vert"), string("main"), g_engine_wrapper.getEngine()->getLogicalDevice());
 

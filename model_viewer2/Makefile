@@ -75,7 +75,7 @@ RM = rm -rf
 
 
 
-all:		$(NAME)
+all:		$(NAME) shaders
 
 $(NAME):	$(OBJ)
 			$(CXX) $(OBJ) -o $(NAME) $(LDFLAGS)

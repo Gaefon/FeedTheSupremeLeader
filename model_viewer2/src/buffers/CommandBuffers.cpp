@@ -48,7 +48,9 @@ namespace GEngine
         alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
         alloc_info.commandPool = command_pool->getVulkanObject();
         alloc_info.commandBufferCount = 1;
+        
         VkCommandBuffer command_buffer;
+        
         if(vkAllocateCommandBuffers(device->getVulkanObject(), &alloc_info, &command_buffer) != VK_SUCCESS)
         {
             cerr << "Error allocating staging buffers" << endl;
@@ -74,10 +76,10 @@ namespace GEngine
         submit_info.commandBufferCount = 1;
         submit_info.pCommandBuffers = &(command_buffer);
 
-         if(vkQueueSubmit(device->getGraphicQueue(), 1, &submit_info, VK_NULL_HANDLE) != VK_SUCCESS)
-         {
-            cerr << "Error submitting command buffer to queue" << endl;
-         }
+		if(vkQueueSubmit(device->getGraphicQueue(), 1, &submit_info, VK_NULL_HANDLE) != VK_SUCCESS)
+		{
+			cerr << "Error submitting command buffer to queue" << endl;
+		}
         vkQueueWaitIdle(device->getGraphicQueue());
         vkFreeCommandBuffers(device->getVulkanObject(), command_pool->getVulkanObject(), 1, &command_buffer);
     }
@@ -147,7 +149,7 @@ namespace GEngine
 	void CommandBuffers::draw(SwapChain *sc)
 	{
 		unsigned int img_index;
-
+		
 		vkAcquireNextImageKHR(device->getVulkanObject(), sc->getVulkanObject(), numeric_limits<uint64_t>::max(), img.getVulkanObject(), VK_NULL_HANDLE, &img_index);
 
 		VkSubmitInfo submit_info = {};
@@ -181,7 +183,9 @@ namespace GEngine
 
         present_info.pImageIndices = &img_index;
 
-        vkQueuePresentKHR(device->getPresentQueue(), &present_info);
+		vkQueuePresentKHR(device->getPresentQueue(), &present_info);
+		
+		vkQueueWaitIdle(device->getGraphicQueue());
 
 	}
 }
