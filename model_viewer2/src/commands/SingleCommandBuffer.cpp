@@ -5,16 +5,22 @@ namespace GEngine
 	SingleCommandBuffer::SingleCommandBuffer(Device *dev)
 	{
 		command_buffer = VK_NULL_HANDLE;
+		m_command_pool = nullptr;
 		device = dev;
 	}
 	
 	SingleCommandBuffer::~SingleCommandBuffer()
 	{
+		/*if (m_command_pool != nullptr && command_buffer != VK_NULL_HANDLE)
+		{
+			vkFreeCommandBuffers(device->getVulkanObject(), m_command_pool->getVulkanObject(), 1, &command_buffer);
+		}*/
 	}
 	
 	void SingleCommandBuffer::createCommandBuffer(CommandPool *command_pool)
 	{
 		VkCommandBufferAllocateInfo alloc_info = {};
+		m_command_pool = command_pool;
 		alloc_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		alloc_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 		alloc_info.commandPool = command_pool->getVulkanObject();

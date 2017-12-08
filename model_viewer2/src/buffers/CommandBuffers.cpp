@@ -25,18 +25,30 @@ namespace GEngine
 		if (!render.isAllocated())
 			render.createSemaphore(device);
 		
-		command_buffers.resize(frame_buffers->getSize(), VK_NULL_HANDLE);
-
-		VkCommandBufferAllocateInfo command_buffer_alloc_infos = {};
-		command_buffer_alloc_infos.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		command_buffer_alloc_infos.commandPool = command_pool->getVulkanObject();
-		command_buffer_alloc_infos.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		command_buffer_alloc_infos.commandBufferCount = command_buffers.size();
-
-
-		if (vkAllocateCommandBuffers(device->getVulkanObject(), &command_buffer_alloc_infos, command_buffers.data()) != VK_SUCCESS)
+		if (command_buffers.size() < frame_buffers->getSize())
 		{
-			cerr << "Error allocating command buffers" << endl;
+			command_buffers.resize(frame_buffers->getSize(), VK_NULL_HANDLE);
+
+			VkCommandBufferAllocateInfo command_buffer_alloc_infos = {};
+			command_buffer_alloc_infos.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+			command_buffer_alloc_infos.commandPool = command_pool->getVulkanObject();
+			command_buffer_alloc_infos.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+			command_buffer_alloc_infos.commandBufferCount = command_buffers.size();
+
+
+			if (vkAllocateCommandBuffers(device->getVulkanObject(), &command_buffer_alloc_infos, command_buffers.data()) != VK_SUCCESS)
+			{
+				cerr << "Error allocating command buffers" << endl;
+			}
+		}
+		else
+		{
+			// reset all the command buffers
+			for (unsigned int i = 0; i < command_buffers.size(); i++)
+			{
+				if (vkResetCommandBuffer(command_buffers.at(i), 0) != VK_SUCCESS)
+					cerr << "failed to reset the command buffer : " << to_string(i) << endl;
+			}
 		}
 		
 	}

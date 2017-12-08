@@ -12,6 +12,7 @@
 		{
 			private:
 				VkCommandBuffer command_buffer;
+				CommandPool *m_command_pool;
 				Device *device;
 			public:
 				SingleCommandBuffer(Device *dev);

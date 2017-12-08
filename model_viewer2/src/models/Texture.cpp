@@ -15,6 +15,10 @@ namespace GEngine
 		bitmap = bmp;
 		device = dev;
 		
+		cmd = nullptr;
+		cmd_copy = nullptr;
+		cmd_trans = nullptr;
+		
 		buffer.createBuffer(bitmap->getWidth() * bitmap->getHeight() * sizeof(uint32_t));
 		buffer.allocBuffer();
 		buffer.bindToDevice();
@@ -36,6 +40,22 @@ namespace GEngine
 		image_view.createImageView(&image, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_ASPECT_COLOR_BIT);
 	}
 	
+	Texture::~Texture()
+	{
+		if (cmd != nullptr)
+			delete cmd;
+		
+		if (cmd_copy != nullptr)
+			delete cmd_copy;
+		
+		if (cmd_trans != nullptr)
+			delete cmd_trans;
+		
+		image.destroyImage();
+		
+		delete data;
+	}
+	
 	void Texture::setSampler(Sampler *smplr)
 	{
 		m_sampler = smplr;
@@ -44,13 +64,6 @@ namespace GEngine
 	Sampler *Texture::getSampler()
 	{
 		return m_sampler;
-	}
-	
-	Texture::~Texture()
-	{
-		image.destroyImage();
-		
-		delete data;
 	}
 	
 	Bitmap *Texture::getBitmap()
@@ -71,27 +84,36 @@ namespace GEngine
 	void Texture::prepareTexture(CommandPool *pool)
 	{
 		image.reinitLayout();
-	
-		SingleCommandBuffer cmd(device);
-		cmd.createCommandBuffer(pool);
-		cmd.begin();
-		image.transitionImageLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, &cmd);
-		cmd.end();
-		cmd.submit();
 		
-		SingleCommandBuffer cmd_copy(device);
-		cmd_copy.createCommandBuffer(pool);
-		cmd_copy.begin();
-		image.copyFromBuffer(&buffer, &cmd_copy);
-		cmd_copy.end();
-		cmd_copy.submit();
+		if (cmd == nullptr)
+		{
+			cmd = new SingleCommandBuffer(device);
+			cmd->createCommandBuffer(pool);
+		}
+		cmd->begin();
+		image.transitionImageLayout(VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, cmd);
+		cmd->end();
+		cmd->submit();
 		
-		SingleCommandBuffer cmd_trans(device);
-		cmd_trans.createCommandBuffer(pool);
-		cmd_trans.begin();
-		image.transitionImageLayout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, &cmd_trans);
-		cmd_trans.end();
-		cmd_trans.submit();
+		if (cmd_copy == nullptr)
+		{
+			cmd_copy = new SingleCommandBuffer(device);
+			cmd_copy->createCommandBuffer(pool);
+		}
+		cmd_copy->begin();
+		image.copyFromBuffer(&buffer, cmd_copy);
+		cmd_copy->end();
+		cmd_copy->submit();
+		
+		if (cmd_trans == nullptr)
+		{
+			cmd_trans= new SingleCommandBuffer(device);
+			cmd_trans->createCommandBuffer(pool);
+		}
+		cmd_trans->begin();
+		image.transitionImageLayout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, cmd_trans);
+		cmd_trans->end();
+		cmd_trans->submit();
 	}
 }
 

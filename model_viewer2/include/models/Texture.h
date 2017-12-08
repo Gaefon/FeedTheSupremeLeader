@@ -26,6 +26,10 @@ namespace GEngine
 			
 			unsigned int *data;
 			
+			SingleCommandBuffer *cmd;
+			SingleCommandBuffer *cmd_copy;
+			SingleCommandBuffer *cmd_trans;
+			
 			
 		public:
 			Texture(Device *dev, Bitmap *bmp);
