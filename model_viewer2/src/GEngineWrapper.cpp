@@ -105,9 +105,8 @@ namespace GEngine
     {
 		pipeline->setVerticesAndIndexes(vertices, indexes);
 		pipeline->getUniformBuffer()->setMatrix(camera->getModelView(), camera->getProjection());
-		
+	    
 		pipeline->updateDescriptorSet(tex);
-		
 		g_command_buffers->copyBufferCommand(pipeline->getVertexStagingBuffer()->getVulkanBuffer(), pipeline->getVertexBuffer()->getVulkanBuffer(), sizeof(VertexBufferData) * vertices.size());
 		g_command_buffers->copyBufferCommand(pipeline->getIndexStagingBuffer()->getVulkanBuffer(), pipeline->getIndexBuffer()->getVulkanBuffer(), sizeof(uint16_t) * indexes.size());
 		//g_command_buffers->createCommandBuffers(g_framebuffers);

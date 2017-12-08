@@ -102,7 +102,7 @@ int main(void)
 
 	model2.setMaterial(&mat2);
 
-	Model cube;
+	/*Model cube("../ressources/models/cube.obj");
 
 	cube.addVertice(new Vertex({-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 0.6666f}));
 	cube.addVertice(new Vertex({-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, {0.75f, 0.6666f}));
@@ -169,9 +169,15 @@ int main(void)
 	cube.setMaterial(&mat1);
 	cube.setTexture(&tex);
 
-	//scene.addModel(&model1);
-	//scene.addModel(&model2);
-	scene.addModel(&cube);
+	scene.addModel(&cube);*/
+	
+	BMPImage img_farm("../ressources/textures/school.bmp");
+	Texture tex_farm(g_engine_wrapper.getEngine()->getLogicalDevice(), &img_farm);
+	tex_farm.setSampler(&sampler);
+	Model farm("../ressources/models/school.obj");
+	farm.setMaterial(&mat1);
+	farm.setTexture(&tex_farm);
+	scene.addModel(&farm);
 
 
 	scene.render(&g_engine_wrapper, &camera);

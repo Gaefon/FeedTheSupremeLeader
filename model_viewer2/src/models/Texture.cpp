@@ -15,12 +15,12 @@ namespace GEngine
 		bitmap = bmp;
 		device = dev;
 		
-		buffer.createBuffer(bitmap->getWidth() * bitmap->getHeight() * sizeof(uint32_t));		
+		buffer.createBuffer(bitmap->getWidth() * bitmap->getHeight() * sizeof(uint32_t));
 		buffer.allocBuffer();
 		buffer.bindToDevice();
 		
 		// invert pixels because texture begin at the bottom
-		data = new unsigned int[bitmap->getWidth() * bitmap->getHeight()];
+		data = new uint32_t[bitmap->getWidth() * bitmap->getHeight()];
 		for (unsigned int i = 0; i < bitmap->getHeight(); i++)
 		{
 			void *line = &(bitmap->getPixels()[(bitmap->getHeight() - i - 1) * bitmap->getWidth()]);

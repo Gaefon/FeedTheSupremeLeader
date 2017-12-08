@@ -152,11 +152,12 @@ namespace GEngine
 		
 		vkAcquireNextImageKHR(device->getVulkanObject(), sc->getVulkanObject(), numeric_limits<uint64_t>::max(), img.getVulkanObject(), VK_NULL_HANDLE, &img_index);
 
+		VkSemaphore wait_semaphores[] = { img.getVulkanObject() };
+		//VkPipelineStageFlags wait_stages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
+		VkPipelineStageFlags wait_stages[] = {VK_PIPELINE_STAGE_TRANSFER_BIT};
+		
 		VkSubmitInfo submit_info = {};
 		submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
-		VkSemaphore wait_semaphores[] = { img.getVulkanObject() };
-		VkPipelineStageFlags wait_stages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
 		submit_info.waitSemaphoreCount = 1;
 		submit_info.pWaitSemaphores = wait_semaphores;
 		submit_info.pWaitDstStageMask = wait_stages;
