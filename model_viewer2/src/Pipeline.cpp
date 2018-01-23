@@ -26,7 +26,7 @@ namespace GEngine
 
 	void Pipeline::setVertexInput()
 	{
-		array<VkVertexInputAttributeDescription, 3> *attrs_desc = VertexBufferData::getAttributeDescriptions();
+		array<VkVertexInputAttributeDescription, 4> *attrs_desc = VertexBufferData::getAttributeDescriptions();
 		vertex_input_info = {};
 		vertex_input_info.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertex_input_info.vertexBindingDescriptionCount = 1;

@@ -47,6 +47,7 @@ namespace GEngine
 				all_vertices.at(position).v_position = (*itr)->getPosition();
 				all_vertices.at(position).v_color = (*itr)->getColor();
 				all_vertices.at(position).v_uv = (*itr)->getUv();
+				all_vertices.at(position).v_normal = (*itr)->getNormal();
 				position++;
 			}
 			
